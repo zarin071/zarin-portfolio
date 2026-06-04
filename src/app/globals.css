@@ -61,7 +61,7 @@
   }
 
   .card-hover {
-    @apply card hover:border-ink/20 dark:hover:border-darkWarmGray/30 hover:shadow-lg hover:-translate-y-1;
+    @apply card hover:border-ink/30 dark:hover:border-darkWarmGray/50 hover:shadow-md hover:-translate-y-0.5 transition-all duration-300;
   }
 }
 
@@ -69,4 +69,13 @@
   .text-balance {
     text-wrap: balance;
   }
+
+  .animate-pulse-gentle {
+    animation: pulse-gentle 2s ease-in-out infinite;
+  }
+}
+
+@keyframes pulse-gentle {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.4; }
 }

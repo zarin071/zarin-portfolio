@@ -56,7 +56,7 @@ export default function Work() {
               ))}
             </div>
 
-            <h3 className="heading-md mb-2 group-hover:text-accent transition-colors duration-300">
+            <h3 className="heading-md mb-2 group-hover:opacity-60 transition-opacity duration-300">
               {project.title}
             </h3>
 
@@ -90,9 +90,10 @@ export default function Work() {
             <div className="flex flex-wrap gap-3 items-center">
               <Link
                 href={`/work/${project.id}`}
-                className="inline-flex items-center gap-1.5 font-sans text-sm uppercase tracking-[0.1em] text-accent hover:text-ink dark:hover:text-darkInk transition-colors duration-300"
+                className="inline-flex items-center gap-1.5 font-sans text-sm uppercase tracking-[0.1em] text-ink dark:text-darkInk group-hover:opacity-60 transition-opacity duration-300"
               >
-                View details →
+                View details
+                <span className="group-hover:translate-x-1 transition-transform duration-300">→</span>
               </Link>
 
               {project.caseStudy && (

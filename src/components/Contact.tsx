@@ -83,7 +83,7 @@ export default function Contact() {
 
           <button
             type="submit"
-            className="font-sans text-sm uppercase tracking-[0.15em] px-8 py-3 bg-ink dark:bg-darkInk text-cream dark:text-darkBg rounded-full hover:bg-ink/90 dark:hover:bg-darkInk/90 transition-all duration-300"
+            className="font-sans text-sm uppercase tracking-[0.15em] px-8 py-3 bg-ink dark:bg-darkInk text-cream dark:text-darkBg rounded-full hover:opacity-80 hover:shadow-sm transition-all duration-300"
           >
             Send Message
           </button>

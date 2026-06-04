@@ -102,7 +102,7 @@ export default function About() {
             ))}
           </div>
           <div className="flex flex-col items-center justify-center p-8 bg-subtle/30 dark:bg-darkSubtle/30 rounded-2xl border border-subtle dark:border-darkSubtle">
-            <span className="font-serif text-6xl md:text-7xl text-accent mb-3">
+            <span className="font-serif text-6xl md:text-7xl mb-3">
               {facets[active].stat}
             </span>
             <p className="font-sans text-sm uppercase tracking-[0.15em] text-warmGray dark:text-darkWarmGray text-center">

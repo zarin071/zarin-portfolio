@@ -37,7 +37,7 @@ export default function Nav({ onChatOpen }: { onChatOpen: () => void }) {
         <div className="flex items-center justify-between h-16 md:h-20">
           <a
             href="/"
-            className="font-serif text-2xl md:text-3xl font-semibold tracking-tight text-ink dark:text-darkInk hover:text-accent transition-colors"
+            className="font-serif text-2xl md:text-3xl font-semibold tracking-tight text-ink dark:text-darkInk hover:opacity-60 transition-opacity duration-300"
           >
             Z.
           </a>
@@ -78,7 +78,7 @@ export default function Nav({ onChatOpen }: { onChatOpen: () => void }) {
             </a>
             <button
               onClick={onChatOpen}
-              className="font-sans text-sm uppercase tracking-[0.15em] px-4 py-2 bg-accent text-cream rounded-full hover:bg-accent/90 transition-all duration-300"
+              className="font-sans text-sm uppercase tracking-[0.15em] px-4 py-2 bg-accent text-cream rounded-full hover:opacity-80 hover:shadow-sm transition-all duration-300"
             >
               Say Hello
             </button>

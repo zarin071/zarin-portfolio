@@ -56,7 +56,7 @@ export default function WorkIndex() {
                 className="group flex flex-col md:flex-row md:items-center justify-between p-5 md:p-6 card-hover gap-3"
               >
                 <div className="flex-1">
-                  <h2 className="font-serif text-xl md:text-2xl group-hover:text-accent transition-colors duration-300">
+                  <h2 className="font-serif text-xl md:text-2xl group-hover:opacity-60 transition-opacity duration-300">
                     {project.title}
                   </h2>
                   <p className="font-sans text-sm text-warmGray dark:text-darkWarmGray mt-1">

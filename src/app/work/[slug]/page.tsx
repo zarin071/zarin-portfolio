@@ -105,7 +105,7 @@ function ProjectPage() {
                   href={project.caseStudy}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="font-sans text-sm uppercase tracking-[0.15em] px-6 py-2.5 bg-ink dark:bg-darkInk text-cream dark:text-darkBg rounded-full hover:bg-ink/90 dark:hover:bg-darkInk/90 transition-all"
+                  className="font-sans text-sm uppercase tracking-[0.15em] px-6 py-2.5 bg-ink dark:bg-darkInk text-cream dark:text-darkBg rounded-full hover:opacity-80 hover:shadow-sm transition-all"
                 >
                   View case study ↗
                 </a>
@@ -229,7 +229,7 @@ function ProjectPage() {
                 href={project.caseStudy}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="font-sans text-sm uppercase tracking-[0.15em] px-8 py-3 bg-ink dark:bg-darkInk text-cream dark:text-darkBg rounded-full hover:bg-ink/90 dark:hover:bg-darkInk/90 transition-all"
+                className="font-sans text-sm uppercase tracking-[0.15em] px-8 py-3 bg-ink dark:bg-darkInk text-cream dark:text-darkBg rounded-full hover:opacity-80 hover:shadow-sm transition-all"
               >
                 View full case study ↗
               </a>
@@ -239,7 +239,7 @@ function ProjectPage() {
                 href={project.projectLink}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="font-sans text-sm uppercase tracking-[0.15em] px-8 py-3 bg-accent text-cream rounded-full hover:bg-accent/90 transition-all"
+                className="font-sans text-sm uppercase tracking-[0.15em] px-8 py-3 bg-accent text-cream rounded-full hover:opacity-80 hover:shadow-sm transition-all"
               >
                 Visit live project ↗
               </a>

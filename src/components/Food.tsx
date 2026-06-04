@@ -41,10 +41,10 @@ export default function Food() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-50px" }}
             transition={{ duration: 0.5, delay: i * 0.1 }}
-            className="group p-6 card hover:border-accent/20 transition-all duration-500"
+            className="group p-6 card hover:border-ink/20 dark:hover:border-darkInk/30 transition-all duration-500"
           >
             <div className="flex items-center gap-3 mb-4">
-              <span className="font-sans text-xs uppercase tracking-[0.1em] px-3 py-1 bg-accent/10 text-accent rounded-full">
+              <span className="font-sans text-xs uppercase tracking-[0.1em] px-3 py-1 bg-ink/10 text-ink dark:bg-darkInk/10 dark:text-darkInk rounded-full">
                 {post.category}
               </span>
               <span className="font-sans text-xs text-warmGray dark:text-darkWarmGray">
@@ -52,7 +52,7 @@ export default function Food() {
               </span>
             </div>
 
-            <h3 className="font-serif text-xl md:text-2xl mb-3 group-hover:text-accent transition-colors duration-300 leading-snug">
+            <h3 className="font-serif text-xl md:text-2xl mb-3 group-hover:opacity-60 transition-opacity duration-300 leading-snug">
               {post.title}
             </h3>
 
