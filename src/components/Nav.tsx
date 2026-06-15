@@ -7,7 +7,6 @@ import { useTheme } from "./ThemeProvider"
 const navItems = [
   { label: "Work", href: "#work" },
   { label: "About", href: "#about" },
-  { label: "Food", href: "#food" },
   { label: "Playground", href: "/playground" },
 ]
 

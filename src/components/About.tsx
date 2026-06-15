@@ -17,28 +17,16 @@ const facets = [
     statLabel: "Years bridging design & code",
   },
   {
-    id: "food",
-    title: "The Food Historian",
-    subtitle: "Why wasabi with sushi? Let me tell you.",
-    content: [
-      "I believe food tells the story of civilisation. Every dish has a history, a trade route, a cultural collision behind it. Why did the Mughals bring biryani to India? Why is dal chawal the ultimate comfort food across every Indian state?",
-      "I explore cuisines the way I approach design — with research, curiosity, and a deep need to understand the 'why' behind the surface.",
-      "My All About Food section is where I write these stories. It's my side passion project and the best conversation starter at any dinner table.",
+    id: "person",
+    title: "The Person",
+    subtitle: "A food connoisseur and a striker",
+    content: [ "Outside of design, I'm passionate about two pursuits that constantly challenge how I think: mixed martial arts and food.",
+    "As an MMA striker, I've learned discipline, preparation, resilience, and the ability to adapt under pressure are lessons I carry into every problem. The sport has taught me to embrace discomfort, stay focused on continuous improvement, and remain calm when navigating complexity.",
+"Food is where my curiosity takes a different form.","I'm fascinated not just by what goes into a dish, but why. Why does a recipe use a particular ingredient? What role does it actually play? Could another ingredient achieve the same result? Is there a different technique that would create a better outcome?",
+      ,
     ],
     stat: "∞",
-    statLabel: "Questions about food",
-  },
-  {
-    id: "bjj",
-    title: "The BJJ Learner",
-    subtitle: "Flow state · Discipline · Controlled energy",
-    content: [
-      "Brazilian Jiu-Jitsu taught me something design school never could: the value of controlled failure. You tap out. You learn. You get back on the mat.",
-      "BJJ is often called 'human chess' — it's about leverage, positioning, and reading your opponent's next move before they make it. Sound familiar? That's exactly what great product design requires.",
-      "The mat keeps me humble, disciplined, and always learning. It's the closest thing to a design process in physical form.",
-    ],
-    stat: "♟",
-    statLabel: "Human chess mindset",
+    statLabel: "Questions about food and fight",
   },
 ]
 

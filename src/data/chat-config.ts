@@ -70,7 +70,7 @@ export const chatConfig: ChatEntry[] = [
     question: "What are your top skills?",
     category: "Skills",
     answer:
-      "I operate at the intersection of three worlds:\n\n🎨 Design & UX Engineering — Interaction design, prototyping (Hi-Fi & Lo-Fi), design systems, micro-animations, responsive UI, accessibility (WCAG).\n\n🤖 AI & Emerging Tech — Generative AI product design, AI-powered prototyping, working with Claude, Cursor, and opencode for production-grade code.\n\n💻 Front-End Development — HTML5, CSS3, JavaScript (ES6+), React.\n\nI also bring strong UX research, A/B testing, and stakeholder communication skills from years of cross-functional collaboration.",
+      "I operate at the intersection of three worlds:\n\n🎨 Design & UX Engineering — I work across the full product lifecycle—from discovery and user research to design systems, prototyping, implementation collaboration, and measuring product success through user and business metrics. Interaction design, prototyping (Hi-Fi & Lo-Fi), design systems, micro-animations, responsive UI, accessibility (WCAG).\n\n🤖 AI & Emerging Tech — Generative AI product design, AI-powered prototyping, working with Claude, Cursor, and opencode for production-grade code.\n\n💻 Front-End Development — HTML5, CSS3, JavaScript (ES6+), React.\n\nI also bring strong UX research, A/B testing, and stakeholder communication skills from years of cross-functional collaboration.",
   },
   {
     id: "ai-tools",
