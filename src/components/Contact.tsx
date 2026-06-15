@@ -2,6 +2,29 @@
 
 import { motion } from "framer-motion"
 
+const contactDetails = [
+  {
+    label: "Email",
+    value: "zarinsolanki.work@gmail.com",
+    href: "mailto:zarinsolanki.work@gmail.com",
+  },
+  {
+    label: "Phone",
+    value: "+91-7666757809",
+    href: "tel:+917666757809",
+  },
+  {
+    label: "LinkedIn",
+    value: "linkedin.com/in/zarin-solanki",
+    href: "https://www.linkedin.com/in/zarin-solanki/",
+  },
+  {
+    label: "Resume",
+    value: "View Resume \u2197",
+    href: "/resume.pdf",
+  },
+]
+
 export default function Contact() {
   return (
     <section id="contact" className="section-container">
@@ -38,56 +61,24 @@ export default function Contact() {
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, margin: "-100px" }}
         transition={{ delay: 0.2 }}
-        className="max-w-xl"
+        className="grid grid-cols-1 sm:grid-cols-2 gap-6 max-w-2xl"
       >
-        <form
-          onSubmit={(e) => e.preventDefault()}
-          className="space-y-6"
-        >
-          <div className="grid md:grid-cols-2 gap-6">
-            <div>
-              <label htmlFor="name" className="block font-sans text-sm uppercase tracking-[0.1em] text-warmGray dark:text-darkWarmGray mb-2">
-                Name
-              </label>
-              <input
-                type="text"
-                id="name"
-                className="w-full px-4 py-3 bg-transparent border-b border-subtle dark:border-darkSubtle focus:border-ink dark:focus:border-darkInk outline-none transition-colors font-serif text-lg text-ink dark:text-darkInk"
-                placeholder="Your name"
-              />
-            </div>
-            <div>
-              <label htmlFor="email" className="block font-sans text-sm uppercase tracking-[0.1em] text-warmGray dark:text-darkWarmGray mb-2">
-                Email
-              </label>
-              <input
-                type="email"
-                id="email"
-                className="w-full px-4 py-3 bg-transparent border-b border-subtle dark:border-darkSubtle focus:border-ink dark:focus:border-darkInk outline-none transition-colors font-serif text-lg text-ink dark:text-darkInk"
-                placeholder="your@email.com"
-              />
-            </div>
-          </div>
-
-          <div>
-            <label htmlFor="message" className="block font-sans text-sm uppercase tracking-[0.1em] text-warmGray dark:text-darkWarmGray mb-2">
-              Message
-            </label>
-            <textarea
-              id="message"
-              rows={4}
-              className="w-full px-4 py-3 bg-transparent border-b border-subtle dark:border-darkSubtle focus:border-ink dark:focus:border-darkInk outline-none transition-colors font-serif text-lg resize-none text-ink dark:text-darkInk"
-              placeholder="Tell me about your project..."
-            />
-          </div>
-
-          <button
-            type="submit"
-            className="font-sans text-sm uppercase tracking-[0.15em] px-8 py-3 bg-ink dark:bg-darkInk text-cream dark:text-darkBg rounded-full hover:opacity-80 hover:shadow-sm transition-all duration-300"
+        {contactDetails.map((detail) => (
+          <a
+            key={detail.label}
+            href={detail.href}
+            target={detail.href.startsWith("http") ? "_blank" : undefined}
+            rel={detail.href.startsWith("http") ? "noopener noreferrer" : undefined}
+            className="group p-6 rounded-2xl border border-subtle dark:border-darkSubtle hover:border-ink dark:hover:border-darkInk transition-all duration-300"
           >
-            Send Message
-          </button>
-        </form>
+            <p className="font-sans text-xs uppercase tracking-[0.1em] text-warmGray dark:text-darkWarmGray mb-2">
+              {detail.label}
+            </p>
+            <p className="font-serif text-lg text-ink dark:text-darkInk group-hover:opacity-70 transition-opacity">
+              {detail.value}
+            </p>
+          </a>
+        ))}
       </motion.div>
     </section>
   )

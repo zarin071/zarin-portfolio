@@ -60,7 +60,7 @@ export const chatPresets: ChatPreset[] = [
     question: "Are you open to freelance / full-time opportunities?",
     category: "General",
     answer:
-      "I'm currently open to interesting conversations! Whether it's freelance projects, full-time roles, or collaborations that sit at the intersection of design and engineering — I'd love to hear from you. Drop me a message through the contact form or reach out on LinkedIn.",
+      "I'm currently open to interesting conversations! Whether it's freelance projects, full-time roles, or collaborations that sit at the intersection of design and engineering — I'd love to hear from you. Reach out on LinkedIn or drop me an email.",
   },
   {
     id: "live-prototypes",
