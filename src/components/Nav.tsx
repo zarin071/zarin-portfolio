@@ -1,6 +1,7 @@
 "use client"
 
-import { useState, useEffect } from "react"
+import { useState, useEffect, useCallback } from "react"
+import { useRouter, usePathname } from "next/navigation"
 import { motion, AnimatePresence } from "framer-motion"
 import { useTheme } from "./ThemeProvider"
 
@@ -14,6 +15,25 @@ export default function Nav({ onChatOpen }: { onChatOpen: () => void }) {
   const [scrolled, setScrolled] = useState(false)
   const [mobileOpen, setMobileOpen] = useState(false)
   const { theme, toggle } = useTheme()
+  const router = useRouter()
+  const pathname = usePathname()
+
+  const handleNavClick = useCallback(
+    (href: string) => {
+      if (href.startsWith("#")) {
+        const sectionId = href.slice(1)
+        if (pathname === "/") {
+          const el = document.getElementById(sectionId)
+          if (el) el.scrollIntoView({ behavior: "smooth" })
+        } else {
+          router.push(`/${href}`)
+        }
+      } else {
+        router.push(href)
+      }
+    },
+    [pathname, router]
+  )
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 50)
@@ -36,6 +56,7 @@ export default function Nav({ onChatOpen }: { onChatOpen: () => void }) {
         <div className="flex items-center justify-between h-16 md:h-20">
           <a
             href="/"
+            onClick={(e) => { e.preventDefault(); handleNavClick("/") }}
             className="font-serif text-2xl md:text-3xl font-semibold tracking-tight text-ink dark:text-darkInk hover:opacity-60 transition-opacity duration-300"
           >
             Z.
@@ -43,13 +64,13 @@ export default function Nav({ onChatOpen }: { onChatOpen: () => void }) {
 
           <div className="hidden md:flex items-center gap-8">
             {navItems.map((item) => (
-              <a
+              <button
                 key={item.href}
-                href={item.href}
+                onClick={() => handleNavClick(item.href)}
                 className="font-sans text-sm uppercase tracking-[0.15em] text-warmGray dark:text-darkWarmGray hover:text-ink dark:hover:text-darkInk transition-colors"
               >
                 {item.label}
-              </a>
+              </button>
             ))}
 
             <button
@@ -123,14 +144,13 @@ export default function Nav({ onChatOpen }: { onChatOpen: () => void }) {
           >
             <div className="px-6 py-6 flex flex-col gap-4">
               {navItems.map((item) => (
-                <a
+                <button
                   key={item.href}
-                  href={item.href}
-                  onClick={() => setMobileOpen(false)}
-                  className="font-sans text-sm uppercase tracking-[0.15em] text-warmGray dark:text-darkWarmGray hover:text-ink dark:hover:text-darkInk transition-colors"
+                  onClick={() => { handleNavClick(item.href); setMobileOpen(false) }}
+                  className="font-sans text-sm uppercase tracking-[0.15em] text-warmGray dark:text-darkWarmGray hover:text-ink dark:hover:text-darkInk transition-colors text-left"
                 >
                   {item.label}
-                </a>
+                </button>
               ))}
               <div className="flex gap-3 pt-4 border-t border-subtle dark:border-darkSubtle">
                 <a

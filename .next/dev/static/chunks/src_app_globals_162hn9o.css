@@ -678,8 +678,8 @@ body {
   max-height: none;
 }
 
-.min-h-\[300px\] {
-  min-height: 300px;
+.min-h-\[200px\] {
+  min-height: 200px;
 }
 
 .min-h-\[80vh\] {
@@ -754,10 +754,6 @@ body {
   max-width: none;
 }
 
-.max-w-xl {
-  max-width: 36rem;
-}
-
 .flex-1 {
   flex: 1;
 }
@@ -805,8 +801,8 @@ body {
   }
 }
 
-.resize-none {
-  resize: none;
+.grid-cols-1 {
+  grid-template-columns: repeat(1, minmax(0, 1fr));
 }
 
 .flex-col {
@@ -875,12 +871,6 @@ body {
   --tw-space-y-reverse: 0;
   margin-top: calc(1rem * calc(1 - var(--tw-space-y-reverse)));
   margin-bottom: calc(1rem * var(--tw-space-y-reverse));
-}
-
-.space-y-6 > :not([hidden]) ~ :not([hidden]) {
-  --tw-space-y-reverse: 0;
-  margin-top: calc(1.5rem * calc(1 - var(--tw-space-y-reverse)));
-  margin-bottom: calc(1.5rem * var(--tw-space-y-reverse));
 }
 
 .overflow-hidden {
@@ -1401,6 +1391,11 @@ body {
   color: #6b6b6b80;
 }
 
+.hover\:border-ink:hover {
+  --tw-border-opacity: 1;
+  border-color: rgb(17 17 17 / var(--tw-border-opacity, 1));
+}
+
 .hover\:border-ink\/30:hover {
   border-color: #1111114d;
 }
@@ -1454,11 +1449,6 @@ body {
   box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
 }
 
-.focus\:border-ink:focus {
-  --tw-border-opacity: 1;
-  border-color: rgb(17 17 17 / var(--tw-border-opacity, 1));
-}
-
 .focus\:border-ink\/50:focus {
   border-color: #11111180;
 }
@@ -1474,6 +1464,10 @@ body {
 
 .group:hover .group-hover\:opacity-60 {
   opacity: .6;
+}
+
+.group:hover .group-hover\:opacity-70 {
+  opacity: .7;
 }
 
 .dark\:border-darkSubtle:is(.dark *) {
@@ -1582,6 +1576,11 @@ body {
   color: #88888880;
 }
 
+.dark\:hover\:border-darkInk:hover:is(.dark *) {
+  --tw-border-opacity: 1;
+  border-color: rgb(237 237 237 / var(--tw-border-opacity, 1));
+}
+
 .dark\:hover\:border-darkInk\/30:hover:is(.dark *) {
   border-color: #ededed4d;
 }
@@ -1617,13 +1616,14 @@ body {
   color: #edededb3;
 }
 
-.dark\:focus\:border-darkInk:focus:is(.dark *) {
-  --tw-border-opacity: 1;
-  border-color: rgb(237 237 237 / var(--tw-border-opacity, 1));
-}
-
 .dark\:focus\:border-darkInk\/50:focus:is(.dark *) {
   border-color: #ededed80;
+}
+
+@media (min-width: 640px) {
+  .sm\:grid-cols-2 {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
 }
 
 @media (min-width: 768px) {

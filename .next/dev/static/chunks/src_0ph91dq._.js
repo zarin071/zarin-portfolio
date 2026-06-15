@@ -79,12 +79,14 @@ __turbopack_context__.s([
 ]);
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/next/dist/compiled/react/jsx-dev-runtime.js [app-client] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/next/dist/compiled/react/index.js [app-client] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$navigation$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/next/navigation.js [app-client] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$framer$2d$motion$2f$dist$2f$es$2f$render$2f$components$2f$motion$2f$proxy$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/framer-motion/dist/es/render/components/motion/proxy.mjs [app-client] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$framer$2d$motion$2f$dist$2f$es$2f$components$2f$AnimatePresence$2f$index$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/framer-motion/dist/es/components/AnimatePresence/index.mjs [app-client] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ThemeProvider$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/src/components/ThemeProvider.tsx [app-client] (ecmascript)");
 ;
 var _s = __turbopack_context__.k.signature();
 "use client";
+;
 ;
 ;
 ;
@@ -107,6 +109,28 @@ function Nav({ onChatOpen }) {
     const [scrolled, setScrolled] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])(false);
     const [mobileOpen, setMobileOpen] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])(false);
     const { theme, toggle } = (0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ThemeProvider$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useTheme"])();
+    const router = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$navigation$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useRouter"])();
+    const pathname = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$navigation$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["usePathname"])();
+    const handleNavClick = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useCallback"])({
+        "Nav.useCallback[handleNavClick]": (href)=>{
+            if (href.startsWith("#")) {
+                const sectionId = href.slice(1);
+                if (pathname === "/") {
+                    const el = document.getElementById(sectionId);
+                    if (el) el.scrollIntoView({
+                        behavior: "smooth"
+                    });
+                } else {
+                    router.push(`/${href}`);
+                }
+            } else {
+                router.push(href);
+            }
+        }
+    }["Nav.useCallback[handleNavClick]"], [
+        pathname,
+        router
+    ]);
     (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useEffect"])({
         "Nav.useEffect": ()=>{
             const handleScroll = {
@@ -140,23 +164,27 @@ function Nav({ onChatOpen }) {
                     children: [
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("a", {
                             href: "/",
+                            onClick: (e)=>{
+                                e.preventDefault();
+                                handleNavClick("/");
+                            },
                             className: "font-serif text-2xl md:text-3xl font-semibold tracking-tight text-ink dark:text-darkInk hover:opacity-60 transition-opacity duration-300",
                             children: "Z."
                         }, void 0, false, {
                             fileName: "[project]/src/components/Nav.tsx",
-                            lineNumber: 37,
+                            lineNumber: 57,
                             columnNumber: 11
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                             className: "hidden md:flex items-center gap-8",
                             children: [
-                                navItems.map((item)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("a", {
-                                        href: item.href,
+                                navItems.map((item)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
+                                        onClick: ()=>handleNavClick(item.href),
                                         className: "font-sans text-sm uppercase tracking-[0.15em] text-warmGray dark:text-darkWarmGray hover:text-ink dark:hover:text-darkInk transition-colors",
                                         children: item.label
                                     }, item.href, false, {
                                         fileName: "[project]/src/components/Nav.tsx",
-                                        lineNumber: 46,
+                                        lineNumber: 67,
                                         columnNumber: 15
                                     }, this)),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
@@ -175,12 +203,12 @@ function Nav({ onChatOpen }) {
                                             d: "M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"
                                         }, void 0, false, {
                                             fileName: "[project]/src/components/Nav.tsx",
-                                            lineNumber: 62,
+                                            lineNumber: 83,
                                             columnNumber: 19
                                         }, this)
                                     }, void 0, false, {
                                         fileName: "[project]/src/components/Nav.tsx",
-                                        lineNumber: 61,
+                                        lineNumber: 82,
                                         columnNumber: 17
                                     }, this) : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("svg", {
                                         width: "18",
@@ -197,25 +225,25 @@ function Nav({ onChatOpen }) {
                                                 r: "5"
                                             }, void 0, false, {
                                                 fileName: "[project]/src/components/Nav.tsx",
-                                                lineNumber: 66,
+                                                lineNumber: 87,
                                                 columnNumber: 19
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("path", {
                                                 d: "M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"
                                             }, void 0, false, {
                                                 fileName: "[project]/src/components/Nav.tsx",
-                                                lineNumber: 67,
+                                                lineNumber: 88,
                                                 columnNumber: 19
                                             }, this)
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/src/components/Nav.tsx",
-                                        lineNumber: 65,
+                                        lineNumber: 86,
                                         columnNumber: 17
                                     }, this)
                                 }, void 0, false, {
                                     fileName: "[project]/src/components/Nav.tsx",
-                                    lineNumber: 55,
+                                    lineNumber: 76,
                                     columnNumber: 13
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("a", {
@@ -224,7 +252,7 @@ function Nav({ onChatOpen }) {
                                     children: "Resume"
                                 }, void 0, false, {
                                     fileName: "[project]/src/components/Nav.tsx",
-                                    lineNumber: 72,
+                                    lineNumber: 93,
                                     columnNumber: 13
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
@@ -233,13 +261,13 @@ function Nav({ onChatOpen }) {
                                     children: "Say Hello"
                                 }, void 0, false, {
                                     fileName: "[project]/src/components/Nav.tsx",
-                                    lineNumber: 78,
+                                    lineNumber: 99,
                                     columnNumber: 13
                                 }, this)
                             ]
                         }, void 0, true, {
                             fileName: "[project]/src/components/Nav.tsx",
-                            lineNumber: 44,
+                            lineNumber: 65,
                             columnNumber: 11
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -261,12 +289,12 @@ function Nav({ onChatOpen }) {
                                             d: "M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"
                                         }, void 0, false, {
                                             fileName: "[project]/src/components/Nav.tsx",
-                                            lineNumber: 94,
+                                            lineNumber: 115,
                                             columnNumber: 19
                                         }, this)
                                     }, void 0, false, {
                                         fileName: "[project]/src/components/Nav.tsx",
-                                        lineNumber: 93,
+                                        lineNumber: 114,
                                         columnNumber: 17
                                     }, this) : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("svg", {
                                         width: "18",
@@ -283,25 +311,25 @@ function Nav({ onChatOpen }) {
                                                 r: "5"
                                             }, void 0, false, {
                                                 fileName: "[project]/src/components/Nav.tsx",
-                                                lineNumber: 98,
+                                                lineNumber: 119,
                                                 columnNumber: 19
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("path", {
                                                 d: "M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"
                                             }, void 0, false, {
                                                 fileName: "[project]/src/components/Nav.tsx",
-                                                lineNumber: 99,
+                                                lineNumber: 120,
                                                 columnNumber: 19
                                             }, this)
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/src/components/Nav.tsx",
-                                        lineNumber: 97,
+                                        lineNumber: 118,
                                         columnNumber: 17
                                     }, this)
                                 }, void 0, false, {
                                     fileName: "[project]/src/components/Nav.tsx",
-                                    lineNumber: 87,
+                                    lineNumber: 108,
                                     columnNumber: 13
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
@@ -313,44 +341,44 @@ function Nav({ onChatOpen }) {
                                             className: `block w-6 h-[1.5px] bg-ink dark:bg-darkInk transition-all duration-300 ${mobileOpen ? "rotate-45 translate-y-[5.5px]" : ""}`
                                         }, void 0, false, {
                                             fileName: "[project]/src/components/Nav.tsx",
-                                            lineNumber: 108,
+                                            lineNumber: 129,
                                             columnNumber: 15
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
                                             className: `block w-6 h-[1.5px] bg-ink dark:bg-darkInk transition-all duration-300 ${mobileOpen ? "opacity-0" : ""}`
                                         }, void 0, false, {
                                             fileName: "[project]/src/components/Nav.tsx",
-                                            lineNumber: 109,
+                                            lineNumber: 130,
                                             columnNumber: 15
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
                                             className: `block w-6 h-[1.5px] bg-ink dark:bg-darkInk transition-all duration-300 ${mobileOpen ? "-rotate-45 -translate-y-[5.5px]" : ""}`
                                         }, void 0, false, {
                                             fileName: "[project]/src/components/Nav.tsx",
-                                            lineNumber: 110,
+                                            lineNumber: 131,
                                             columnNumber: 15
                                         }, this)
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/src/components/Nav.tsx",
-                                    lineNumber: 103,
+                                    lineNumber: 124,
                                     columnNumber: 13
                                 }, this)
                             ]
                         }, void 0, true, {
                             fileName: "[project]/src/components/Nav.tsx",
-                            lineNumber: 86,
+                            lineNumber: 107,
                             columnNumber: 11
                         }, this)
                     ]
                 }, void 0, true, {
                     fileName: "[project]/src/components/Nav.tsx",
-                    lineNumber: 36,
+                    lineNumber: 56,
                     columnNumber: 9
                 }, this)
             }, void 0, false, {
                 fileName: "[project]/src/components/Nav.tsx",
-                lineNumber: 35,
+                lineNumber: 55,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$framer$2d$motion$2f$dist$2f$es$2f$components$2f$AnimatePresence$2f$index$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["AnimatePresence"], {
@@ -371,14 +399,16 @@ function Nav({ onChatOpen }) {
                     children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                         className: "px-6 py-6 flex flex-col gap-4",
                         children: [
-                            navItems.map((item)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("a", {
-                                    href: item.href,
-                                    onClick: ()=>setMobileOpen(false),
-                                    className: "font-sans text-sm uppercase tracking-[0.15em] text-warmGray dark:text-darkWarmGray hover:text-ink dark:hover:text-darkInk transition-colors",
+                            navItems.map((item)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
+                                    onClick: ()=>{
+                                        handleNavClick(item.href);
+                                        setMobileOpen(false);
+                                    },
+                                    className: "font-sans text-sm uppercase tracking-[0.15em] text-warmGray dark:text-darkWarmGray hover:text-ink dark:hover:text-darkInk transition-colors text-left",
                                     children: item.label
                                 }, item.href, false, {
                                     fileName: "[project]/src/components/Nav.tsx",
-                                    lineNumber: 126,
+                                    lineNumber: 147,
                                     columnNumber: 17
                                 }, this)),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -390,7 +420,7 @@ function Nav({ onChatOpen }) {
                                         children: "Resume"
                                     }, void 0, false, {
                                         fileName: "[project]/src/components/Nav.tsx",
-                                        lineNumber: 136,
+                                        lineNumber: 156,
                                         columnNumber: 17
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
@@ -402,41 +432,43 @@ function Nav({ onChatOpen }) {
                                         children: "Say Hello"
                                     }, void 0, false, {
                                         fileName: "[project]/src/components/Nav.tsx",
-                                        lineNumber: 142,
+                                        lineNumber: 162,
                                         columnNumber: 17
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/src/components/Nav.tsx",
-                                lineNumber: 135,
+                                lineNumber: 155,
                                 columnNumber: 15
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/src/components/Nav.tsx",
-                        lineNumber: 124,
+                        lineNumber: 145,
                         columnNumber: 13
                     }, this)
                 }, void 0, false, {
                     fileName: "[project]/src/components/Nav.tsx",
-                    lineNumber: 118,
+                    lineNumber: 139,
                     columnNumber: 11
                 }, this)
             }, void 0, false, {
                 fileName: "[project]/src/components/Nav.tsx",
-                lineNumber: 116,
+                lineNumber: 137,
                 columnNumber: 7
             }, this)
         ]
     }, void 0, true, {
         fileName: "[project]/src/components/Nav.tsx",
-        lineNumber: 25,
+        lineNumber: 45,
         columnNumber: 5
     }, this);
 }
-_s(Nav, "cUKtD8kRxirKi3r53ZPP/OkAozE=", false, function() {
+_s(Nav, "4iGiBWc3LIg81y83FYzhchHe5g4=", false, function() {
     return [
-        __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ThemeProvider$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useTheme"]
+        __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ThemeProvider$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useTheme"],
+        __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$navigation$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useRouter"],
+        __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$navigation$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["usePathname"]
     ];
 });
 _c = Nav;
@@ -1406,22 +1438,26 @@ const testimonials = [
     {
         quote: "Lucky to have Zarin as key team member for some of my projects, it was easy to approach her and also explain what i needed in my projects. She carries a designer's mind and very good with her html renditions; Having worked multiple times with her, i can say she is an asset in any team.",
         name: "Dona Chakraborty",
-        role: "Business Analyst"
+        role: "Product Owner",
+        linkedin: "https://www.linkedin.com/in/dona-c-918ba761/"
     },
     {
         quote: "Zarin has been a huge support for the design projects over the years. Her design and front end knowledge is very good. She is prompt in her approach and collaborates very well with the team.",
         name: "Taarini Tiwari",
-        role: "Product Owner"
+        role: "Senior AI Product Manager",
+        linkedin: "https://www.linkedin.com/in/taarini-tewari-29a38136/"
     },
     {
         quote: "Over the course of her tenure, you demonstrated strong web integration skills while supporting the CX Factory on various projects. Your collaboration with designers from the Lyon team in structuring experiences for products like the Wiperblade Selector, Pré-home B2B, and BFG showcased your adaptability and teamwork. These interactions have been key to driving impactful results and reinforcing the team's success.",
         name: "Hugo Mourlevat",
-        role: "Design Head, Michelin"
+        role: "Design Head, Michelin",
+        linkedin: "https://www.linkedin.com/in/hugomrvt/"
     },
     {
         quote: "Zarin is one of those rare humans who's not just insanely skilled, but also makes work feel lighter and more fun. She's a developer-turned-designer with 10 years of experience, and honestly, her ability to switch between tech brain and design eye is magic. Bold, clear, and confident — she doesn't just speak up, she speaks sense. She's also the kind of teammate who'll push you to grow and send you memes when you're spiraling. I've learned so much working with her, and I wouldn't trade that for anything.",
         name: "Tanoushka Edvankar",
-        role: "Product Designer"
+        role: "Product Designer",
+        linkedin: "https://www.linkedin.com/in/tanoushkaedvankar/"
     }
 ];
 if (typeof globalThis.$RefreshHelpers$ === 'object' && globalThis.$RefreshHelpers !== null) {
@@ -1518,7 +1554,7 @@ function Testimonials() {
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                className: "relative min-h-[300px] md:min-h-[250px]",
+                className: "relative min-h-[200px] md:min-h-[250px]",
                 children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$framer$2d$motion$2f$dist$2f$es$2f$components$2f$AnimatePresence$2f$index$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["AnimatePresence"], {
                     mode: "wait",
                     children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$framer$2d$motion$2f$dist$2f$es$2f$render$2f$components$2f$motion$2f$proxy$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["motion"].blockquote, {
@@ -1554,10 +1590,47 @@ function Testimonials() {
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("footer", {
                                 children: [
-                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
-                                        className: "font-sans font-semibold text-ink dark:text-darkInk",
-                                        children: __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$data$2f$testimonials$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["testimonials"][active].name
-                                    }, void 0, false, {
+                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                        className: "flex items-center gap-2",
+                                        children: [
+                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
+                                                className: "font-sans font-semibold text-ink dark:text-darkInk",
+                                                children: __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$data$2f$testimonials$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["testimonials"][active].name
+                                            }, void 0, false, {
+                                                fileName: "[project]/src/components/Testimonials.tsx",
+                                                lineNumber: 52,
+                                                columnNumber: 17
+                                            }, this),
+                                            __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$data$2f$testimonials$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["testimonials"][active].linkedin && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("a", {
+                                                href: __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$data$2f$testimonials$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["testimonials"][active].linkedin,
+                                                target: "_blank",
+                                                rel: "noopener noreferrer",
+                                                className: "text-warmGray dark:text-darkWarmGray hover:text-ink dark:hover:text-darkInk transition-colors",
+                                                "aria-label": `${__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$data$2f$testimonials$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["testimonials"][active].name} on LinkedIn`,
+                                                children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("svg", {
+                                                    width: "18",
+                                                    height: "18",
+                                                    viewBox: "0 0 24 24",
+                                                    fill: "currentColor",
+                                                    children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("path", {
+                                                        d: "M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"
+                                                    }, void 0, false, {
+                                                        fileName: "[project]/src/components/Testimonials.tsx",
+                                                        lineNumber: 64,
+                                                        columnNumber: 23
+                                                    }, this)
+                                                }, void 0, false, {
+                                                    fileName: "[project]/src/components/Testimonials.tsx",
+                                                    lineNumber: 63,
+                                                    columnNumber: 21
+                                                }, this)
+                                            }, void 0, false, {
+                                                fileName: "[project]/src/components/Testimonials.tsx",
+                                                lineNumber: 56,
+                                                columnNumber: 19
+                                            }, this)
+                                        ]
+                                    }, void 0, true, {
                                         fileName: "[project]/src/components/Testimonials.tsx",
                                         lineNumber: 51,
                                         columnNumber: 15
@@ -1567,7 +1640,7 @@ function Testimonials() {
                                         children: __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$data$2f$testimonials$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["testimonials"][active].role
                                     }, void 0, false, {
                                         fileName: "[project]/src/components/Testimonials.tsx",
-                                        lineNumber: 54,
+                                        lineNumber: 69,
                                         columnNumber: 15
                                     }, this)
                                 ]
@@ -1600,12 +1673,12 @@ function Testimonials() {
                         "aria-label": `Testimonial ${i + 1}`
                     }, i, false, {
                         fileName: "[project]/src/components/Testimonials.tsx",
-                        lineNumber: 64,
+                        lineNumber: 79,
                         columnNumber: 11
                     }, this))
             }, void 0, false, {
                 fileName: "[project]/src/components/Testimonials.tsx",
-                lineNumber: 62,
+                lineNumber: 77,
                 columnNumber: 7
             }, this)
         ]
@@ -1635,6 +1708,28 @@ var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$framer$2d$mo
 "use client";
 ;
 ;
+const contactDetails = [
+    {
+        label: "Email",
+        value: "zarinsolanki.work@gmail.com",
+        href: "mailto:zarinsolanki.work@gmail.com"
+    },
+    {
+        label: "Phone",
+        value: "+91-7666757809",
+        href: "tel:+917666757809"
+    },
+    {
+        label: "LinkedIn",
+        value: "linkedin.com/in/zarin-solanki",
+        href: "https://www.linkedin.com/in/zarin-solanki/"
+    },
+    {
+        label: "Resume",
+        value: "View Resume \u2197",
+        href: "/resume.pdf"
+    }
+];
 function Contact() {
     return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("section", {
         id: "contact",
@@ -1657,7 +1752,7 @@ function Contact() {
                 children: "Get in Touch"
             }, void 0, false, {
                 fileName: "[project]/src/components/Contact.tsx",
-                lineNumber: 8,
+                lineNumber: 31,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$framer$2d$motion$2f$dist$2f$es$2f$render$2f$components$2f$motion$2f$proxy$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["motion"].h2, {
@@ -1681,14 +1776,14 @@ function Contact() {
                         children: "together"
                     }, void 0, false, {
                         fileName: "[project]/src/components/Contact.tsx",
-                        lineNumber: 23,
+                        lineNumber: 46,
                         columnNumber: 36
                     }, this),
                     "."
                 ]
             }, void 0, true, {
                 fileName: "[project]/src/components/Contact.tsx",
-                lineNumber: 17,
+                lineNumber: 40,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$framer$2d$motion$2f$dist$2f$es$2f$render$2f$components$2f$motion$2f$proxy$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["motion"].p, {
@@ -1708,7 +1803,7 @@ function Contact() {
                 children: "Whether you have a project in mind, a collaboration idea, or just want to chat about food history — I'd love to hear from you."
             }, void 0, false, {
                 fileName: "[project]/src/components/Contact.tsx",
-                lineNumber: 26,
+                lineNumber: 49,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$framer$2d$motion$2f$dist$2f$es$2f$render$2f$components$2f$motion$2f$proxy$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["motion"].div, {
@@ -1727,125 +1822,44 @@ function Contact() {
                 transition: {
                     delay: 0.2
                 },
-                className: "max-w-xl",
-                children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("form", {
-                    onSubmit: (e)=>e.preventDefault(),
-                    className: "space-y-6",
-                    children: [
-                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                            className: "grid md:grid-cols-2 gap-6",
-                            children: [
-                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                    children: [
-                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("label", {
-                                            htmlFor: "name",
-                                            className: "block font-sans text-sm uppercase tracking-[0.1em] text-warmGray dark:text-darkWarmGray mb-2",
-                                            children: "Name"
-                                        }, void 0, false, {
-                                            fileName: "[project]/src/components/Contact.tsx",
-                                            lineNumber: 49,
-                                            columnNumber: 15
-                                        }, this),
-                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("input", {
-                                            type: "text",
-                                            id: "name",
-                                            className: "w-full px-4 py-3 bg-transparent border-b border-subtle dark:border-darkSubtle focus:border-ink dark:focus:border-darkInk outline-none transition-colors font-serif text-lg text-ink dark:text-darkInk",
-                                            placeholder: "Your name"
-                                        }, void 0, false, {
-                                            fileName: "[project]/src/components/Contact.tsx",
-                                            lineNumber: 52,
-                                            columnNumber: 15
-                                        }, this)
-                                    ]
-                                }, void 0, true, {
-                                    fileName: "[project]/src/components/Contact.tsx",
-                                    lineNumber: 48,
-                                    columnNumber: 13
-                                }, this),
-                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                    children: [
-                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("label", {
-                                            htmlFor: "email",
-                                            className: "block font-sans text-sm uppercase tracking-[0.1em] text-warmGray dark:text-darkWarmGray mb-2",
-                                            children: "Email"
-                                        }, void 0, false, {
-                                            fileName: "[project]/src/components/Contact.tsx",
-                                            lineNumber: 60,
-                                            columnNumber: 15
-                                        }, this),
-                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("input", {
-                                            type: "email",
-                                            id: "email",
-                                            className: "w-full px-4 py-3 bg-transparent border-b border-subtle dark:border-darkSubtle focus:border-ink dark:focus:border-darkInk outline-none transition-colors font-serif text-lg text-ink dark:text-darkInk",
-                                            placeholder: "your@email.com"
-                                        }, void 0, false, {
-                                            fileName: "[project]/src/components/Contact.tsx",
-                                            lineNumber: 63,
-                                            columnNumber: 15
-                                        }, this)
-                                    ]
-                                }, void 0, true, {
-                                    fileName: "[project]/src/components/Contact.tsx",
-                                    lineNumber: 59,
-                                    columnNumber: 13
-                                }, this)
-                            ]
-                        }, void 0, true, {
-                            fileName: "[project]/src/components/Contact.tsx",
-                            lineNumber: 47,
-                            columnNumber: 11
-                        }, this),
-                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                            children: [
-                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("label", {
-                                    htmlFor: "message",
-                                    className: "block font-sans text-sm uppercase tracking-[0.1em] text-warmGray dark:text-darkWarmGray mb-2",
-                                    children: "Message"
-                                }, void 0, false, {
-                                    fileName: "[project]/src/components/Contact.tsx",
-                                    lineNumber: 73,
-                                    columnNumber: 13
-                                }, this),
-                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("textarea", {
-                                    id: "message",
-                                    rows: 4,
-                                    className: "w-full px-4 py-3 bg-transparent border-b border-subtle dark:border-darkSubtle focus:border-ink dark:focus:border-darkInk outline-none transition-colors font-serif text-lg resize-none text-ink dark:text-darkInk",
-                                    placeholder: "Tell me about your project..."
-                                }, void 0, false, {
-                                    fileName: "[project]/src/components/Contact.tsx",
-                                    lineNumber: 76,
-                                    columnNumber: 13
-                                }, this)
-                            ]
-                        }, void 0, true, {
-                            fileName: "[project]/src/components/Contact.tsx",
-                            lineNumber: 72,
-                            columnNumber: 11
-                        }, this),
-                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
-                            type: "submit",
-                            className: "font-sans text-sm uppercase tracking-[0.15em] px-8 py-3 bg-ink dark:bg-darkInk text-cream dark:text-darkBg rounded-full hover:opacity-80 hover:shadow-sm transition-all duration-300",
-                            children: "Send Message"
-                        }, void 0, false, {
-                            fileName: "[project]/src/components/Contact.tsx",
-                            lineNumber: 84,
-                            columnNumber: 11
-                        }, this)
-                    ]
-                }, void 0, true, {
-                    fileName: "[project]/src/components/Contact.tsx",
-                    lineNumber: 43,
-                    columnNumber: 9
-                }, this)
+                className: "grid grid-cols-1 sm:grid-cols-2 gap-6 max-w-2xl",
+                children: contactDetails.map((detail)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("a", {
+                        href: detail.href,
+                        target: detail.href.startsWith("http") ? "_blank" : undefined,
+                        rel: detail.href.startsWith("http") ? "noopener noreferrer" : undefined,
+                        className: "group p-6 rounded-2xl border border-subtle dark:border-darkSubtle hover:border-ink dark:hover:border-darkInk transition-all duration-300",
+                        children: [
+                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
+                                className: "font-sans text-xs uppercase tracking-[0.1em] text-warmGray dark:text-darkWarmGray mb-2",
+                                children: detail.label
+                            }, void 0, false, {
+                                fileName: "[project]/src/components/Contact.tsx",
+                                lineNumber: 74,
+                                columnNumber: 13
+                            }, this),
+                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
+                                className: "font-serif text-lg text-ink dark:text-darkInk group-hover:opacity-70 transition-opacity",
+                                children: detail.value
+                            }, void 0, false, {
+                                fileName: "[project]/src/components/Contact.tsx",
+                                lineNumber: 77,
+                                columnNumber: 13
+                            }, this)
+                        ]
+                    }, detail.label, true, {
+                        fileName: "[project]/src/components/Contact.tsx",
+                        lineNumber: 67,
+                        columnNumber: 11
+                    }, this))
             }, void 0, false, {
                 fileName: "[project]/src/components/Contact.tsx",
-                lineNumber: 36,
+                lineNumber: 59,
                 columnNumber: 7
             }, this)
         ]
     }, void 0, true, {
         fileName: "[project]/src/components/Contact.tsx",
-        lineNumber: 7,
+        lineNumber: 30,
         columnNumber: 5
     }, this);
 }
@@ -2009,7 +2023,7 @@ const chatConfig = [
         id: "about-me",
         question: "Tell me about yourself",
         category: "General",
-        answer: "Hi! I'm Zarin. I'm a design-engineer hybrid with 10+ years of experience spanning UX design, front-end development, and AI product design. I've worked across global B2B and B2C platforms at bp, Michelin, Packt Publishing, and TCS. Currently, I'm a Senior Product Designer and Capability Lead at bp, driving design maturity across India and global hubs. I'm also a food historian (ask me about wasabi and sushi!), a BJJ learner, and someone who genuinely believes the best products come from the intersection of research, code, and empathy."
+        answer: "Hi! I'm Zarin. I'm a design-engineer with 10+ years of experience spanning UX design, front-end development, and AI product design. I've worked across global B2B and B2C platforms at bp, Michelin, Packt Publishing, and TCS. Currently, I'm a Senior Product Designer and a global capability Lead at bp, driving design maturity across India and global hubs. To know more about me check out my about section."
     },
     {
         id: "resume",
@@ -2021,14 +2035,15 @@ const chatConfig = [
         id: "availability",
         question: "Are you open to freelance / full-time?",
         category: "General",
-        answer: "I'm currently open to interesting conversations! Whether it's freelance projects, full-time roles, or collaborations that sit at the intersection of design and engineering — I'd love to hear from you. Drop me a message through the contact form or reach out on LinkedIn."
+        answer: "I'm currently open to interesting conversations! Whether it's full-time roles or collaborations that sit at the intersection of design and engineering, I'd love to hear from you. Reach out on LinkedIn or drop me an email."
     },
-    {
-        id: "live-prototypes",
-        question: "Can I see live prototypes?",
-        category: "General",
-        answer: "Absolutely! Head over to my Playground section where I showcase interactive experiments, UI prototypes, and side projects. Some are built in Framer, some in React — all of them are hands-on explorations at the intersection of design and code."
-    },
+    // {
+    //   id: "live-prototypes",
+    //   question: "Can I see live prototypes?",
+    //   category: "General",
+    //   answer:
+    //     "Absolutely! Head over to my Playground section where I showcase interactive experiments, UI prototypes, and side projects. Some are built in Framer, some in React — all of them are hands-on explorations at the intersection of design and code.",
+    // },
     {
         id: "testimonials-ask",
         question: "What do people say about working with you?",
@@ -2046,14 +2061,14 @@ const chatConfig = [
         id: "ai-tools",
         question: "What AI tools do you use?",
         category: "Skills",
-        answer: "I actively work with: Claude (for rapid prototyping and production-grade code), Cursor (AI-assisted development), opencode (coding agent for complex tasks), and Framer AI. I'm deeply interested in generative AI product design — how to design interfaces and experiences that feel intuitive when AI is part of the product, not just a bolt-on feature."
+        answer: "I actively work with: Claude (for code creation and production-grade code), opencode (coding agent for complex tasks), Kimi (for decision making). I'm deeply interested in generative AI product design, how to design interfaces and experiences that feel intuitive when AI is part of the product, not just a bolt-on feature."
     },
     // ─── EXPERIENCE ─────────────────────────────────────────────
     {
         id: "experience-bp",
         question: "What do you do at bp?",
         category: "Experience",
-        answer: "At bp, I'm a Senior Product Designer and Capability Lead. I lead the design capability function within bp's India hub and across global teams — defining best practices, establishing design frameworks, and setting the strategic vision for design maturity. I led the end-to-end rebranding of bpcore (bp's enterprise design system), and I designed the internal Product and Projects Hub SharePoint site. I also mentor product designers across levels and lead talent acquisition to grow the team."
+        answer: "At bp, I'm a Senior Product Designer and global capability Lead. I lead the design capability function within bp's India hub and across global teams , defining best practices, establishing design frameworks, and setting the strategic vision for design maturity. I led the end-to-end rebranding of bpcore (bp's enterprise design system), and I designed the internal Product and Projects Hub site. I also mentor product designers across levels and I am a part of talent acquisition to grow the team."
     },
     {
         id: "experience-michelin",
@@ -2066,20 +2081,7 @@ const chatConfig = [
         id: "design-process",
         question: "Tell me about your design process",
         category: "Process",
-        answer: "My process is rooted in research but moves fast. It typically follows:\n\n1. 🔍 Research — User interviews, usability testing, competitive analysis, data synthesis\n2. 💡 Ideate — Sketching, design sprints, information architecture\n3. ✏️ Prototype — Low to high fidelity, from paper to Figma to code\n4. 🧪 Test — A/B testing, usability studies, stakeholder reviews\n5. 🚀 Ship — Production-ready UI with clean handoff (or I build it myself in React)\n6. 📊 Measure — Track impact, iterate based on data\n\nWhat sets me apart is that I can take a design from Figma all the way to deployed code — no handoff gap."
-    },
-    // ─── PERSONAL ───────────────────────────────────────────────
-    {
-        id: "favorite-food",
-        question: "What's your favorite food?",
-        category: "Personal",
-        answer: "Oh, this is a dangerous question for a food historian! I love exploring cuisines and understanding the 'why' behind dishes. Why is wasabi served with sushi? Why did dal chawal become India's comfort food? Check out my All About Food section for deep dives into the history and culture of what we eat. If you put a gun to my head — a perfectly made biryani or a bowl of well-made ramen on a rainy day. Depends on the mood!"
-    },
-    {
-        id: "food-blog",
-        question: "Tell me about your food blog",
-        category: "Personal",
-        answer: "I have a section called 'All About Food' where I write about the history, culture, and science behind food. I'm fascinated by questions like 'Why wasabi with sushi?' (spoiler: it's not just for heat — it has antimicrobial properties and complements the fatty fish). It's my way of exploring the world through cuisine. Go check it out!"
+        answer: "My process is rooted in research but moves fast. It typically follows:\n\n1. 🔍 Research — User interviews, usability testing, competitive analysis, data synthesis\n2. 💡 Ideate — Setting up design sprints, information architecture,  setting up systems for designs\n3. ✏️ Rapid Prototyping — Using LLM's to create ideas and setting up screens with an MVP for rapid prototyping.\n4. 🧪 Test — A/B testing, usability studies, stakeholder reviews\n5. 🚀 Ship — Production-ready UI with clean handoff (or I build it myself in React)\n6. 📊 Measure — Track impact, iterate based on data\n\nWhat sets me apart is that I can take a design from Figma all the way to deployed code — no handoff gap."
     }
 ];
 if (typeof globalThis.$RefreshHelpers$ === 'object' && globalThis.$RefreshHelpers !== null) {
