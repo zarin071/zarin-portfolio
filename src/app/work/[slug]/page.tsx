@@ -22,9 +22,8 @@ function ProjectPage() {
     offset: ["start start", "end start"],
   })
 
-  const heroScale = useTransform(scrollYProgress, [0, 1], [1, 0.85])
-  const heroOpacity = useTransform(scrollYProgress, [0, 0.4], [1, 0])
-  const heroY = useTransform(scrollYProgress, [0, 1], [0, 100])
+  const heroScale = useTransform(scrollYProgress, [0, 1], [1, 0.94])
+  const heroOpacity = useTransform(scrollYProgress, [0, 0.6], [1, 0.15])
 
   if (!project) {
     return (
@@ -57,24 +56,47 @@ function ProjectPage() {
       <Nav onChatOpen={() => setChatOpen(true)} />
 
       {/* ── Hero ── */}
-      <motion.section
-        ref={sectionRef}
-        style={{ scale: heroScale, opacity: heroOpacity, y: heroY }}
-        className="relative min-h-[80vh] md:min-h-[90vh] flex items-center justify-center overflow-hidden"
-      >
-        <div className="absolute inset-0 bg-gradient-to-b from-accent/5 to-transparent dark:from-accent/10" />
-        <div className="section-container text-center relative z-10">
+      <section ref={sectionRef} className="pt-28 md:pt-32 pb-4">
+        <div className="w-full px-6 md:px-10 lg:px-16">
+          <motion.div
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5 }}
+          >
+            <Link
+              href="/#work"
+              className="inline-flex items-center gap-1.5 font-sans text-sm uppercase tracking-[0.15em] text-warmGray dark:text-darkWarmGray hover:text-ink dark:hover:text-darkInk transition-colors"
+            >
+              <span>←</span> All projects
+            </Link>
+          </motion.div>
+
+          {/* Cover art — mirrors the Work cards */}
+          <motion.div
+            style={{ scale: heroScale, opacity: heroOpacity, background: project.cover ?? "#E5E5E5" }}
+            className="relative mt-6 rounded-3xl overflow-hidden aspect-[16/9] md:aspect-[21/9]"
+          >
+            <div className="absolute -top-10 -left-10 w-56 h-56 rounded-full bg-white/30 blur-3xl" />
+            <div className="absolute -bottom-12 right-0 w-72 h-72 rounded-full bg-black/10 blur-3xl" />
+            {project.coverLabel && (
+              <span className="absolute bottom-5 left-5 font-sans text-xs uppercase tracking-[0.12em] text-ink/70">
+                {project.coverLabel}
+              </span>
+            )}
+          </motion.div>
+
+          {/* Title + meta */}
           <motion.div
             variants={stagger}
             initial="hidden"
             animate="show"
-            className="max-w-4xl mx-auto"
+            className="mt-10 max-w-4xl"
           >
-            <motion.div variants={fadeUp} className="flex flex-wrap justify-center gap-2 mb-6">
+            <motion.div variants={fadeUp} className="flex flex-wrap gap-2 mb-5">
               {project.tags.map((tag) => (
                 <span
                   key={tag}
-                  className="font-sans text-xs uppercase tracking-[0.1em] px-3 py-1 bg-accent/10 text-accent rounded-full"
+                  className="font-sans text-xs uppercase tracking-[0.1em] px-3 py-1 bg-subtle/60 dark:bg-darkSubtle/60 rounded-full text-warmGray dark:text-darkWarmGray"
                 >
                   {tag}
                 </span>
@@ -85,7 +107,7 @@ function ProjectPage() {
               {project.title}
             </motion.h1>
 
-            <motion.p variants={fadeUp} className="font-sans text-lg md:text-xl text-warmGray dark:text-darkWarmGray mb-3">
+            <motion.p variants={fadeUp} className="body-lg mb-3 max-w-2xl">
               {project.subtitle}
             </motion.p>
 
@@ -93,13 +115,7 @@ function ProjectPage() {
               {project.role} · {project.timeline}
             </motion.p>
 
-            <motion.div variants={fadeUp} className="flex flex-wrap justify-center gap-4 mt-10">
-              <Link
-                href="/#work"
-                className="font-sans text-sm uppercase tracking-[0.15em] px-6 py-2.5 border border-ink/20 dark:border-darkWarmGray/30 rounded-full hover:bg-ink/5 dark:hover:bg-darkInk/5 transition-all"
-              >
-                ← All projects
-              </Link>
+            <motion.div variants={fadeUp} className="flex flex-wrap gap-4 mt-8">
               {project.caseStudy && (
                 <a
                   href={project.caseStudy}
@@ -123,17 +139,7 @@ function ProjectPage() {
             </motion.div>
           </motion.div>
         </div>
-
-        <motion.div
-          animate={{ y: [0, 8, 0] }}
-          transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
-          className="absolute bottom-8 left-1/2 -translate-x-1/2"
-        >
-          <div className="w-5 h-8 border-2 border-ink/20 dark:border-darkWarmGray/30 rounded-full flex items-start justify-center p-1">
-            <div className="w-1 h-2 bg-ink/40 dark:bg-darkWarmGray/30 rounded-full" />
-          </div>
-        </motion.div>
-      </motion.section>
+      </section>
 
       {/* ── Content ── */}
       <section className="section-container">

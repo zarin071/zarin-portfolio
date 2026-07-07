@@ -2,9 +2,93 @@
 
 import { motion } from "framer-motion"
 import Link from "next/link"
-import { projects } from "@/data/projects"
+import { projects, type Project } from "@/data/projects"
+
+function CoverArt({ project, large }: { project: Project; large?: boolean }) {
+  return (
+    <div
+      className={`relative w-full overflow-hidden rounded-2xl ${large ? "aspect-[16/9]" : "aspect-[16/10]"}`}
+      style={{ background: project.cover ?? "#E5E5E5" }}
+    >
+      {/* soft depth blobs */}
+      <div className="absolute -top-8 -left-8 w-40 h-40 rounded-full bg-white/30 blur-2xl" />
+      <div className="absolute -bottom-10 right-0 w-52 h-52 rounded-full bg-black/10 blur-2xl" />
+
+      {/* subtle image-placeholder scale on hover */}
+      <div className="absolute inset-0 transition-transform duration-500 group-hover:scale-[1.04]" />
+
+      {project.coverLabel && (
+        <span className="absolute bottom-4 left-4 font-sans text-xs uppercase tracking-[0.12em] text-ink/70">
+          {project.coverLabel}
+        </span>
+      )}
+
+      {/* view arrow on hover */}
+      <span className="absolute bottom-4 right-4 w-10 h-10 rounded-full bg-ink text-cream flex items-center justify-center opacity-0 translate-y-2 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300">
+        ↗
+      </span>
+    </div>
+  )
+}
+
+function ProjectMeta({ project }: { project: Project }) {
+  return (
+    <>
+      <div className="flex items-baseline justify-between gap-4 mt-5">
+        <h3 className="heading-md group-hover:opacity-60 transition-opacity duration-300">
+          {project.title}
+        </h3>
+        <span className="font-sans text-sm text-warmGray dark:text-darkWarmGray shrink-0">
+          {project.timeline}
+        </span>
+      </div>
+      <p className="body-base mt-1">{project.subtitle}</p>
+      <div className="flex flex-wrap gap-2 mt-4">
+        {project.tags.map((tag) => (
+          <span
+            key={tag}
+            className="font-sans text-xs uppercase tracking-[0.1em] px-3 py-1 bg-subtle/50 dark:bg-darkSubtle/50 rounded-full text-warmGray dark:text-darkWarmGray"
+          >
+            {tag}
+          </span>
+        ))}
+      </div>
+    </>
+  )
+}
+
+function ExternalLinks({ project }: { project: Project }) {
+  if (!project.projectLink && !project.caseStudy) return null
+  return (
+    <div className="flex flex-wrap gap-4 mt-4">
+      {project.projectLink && (
+        <a
+          href={project.projectLink}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="font-sans text-sm uppercase tracking-[0.1em] text-warmGray dark:text-darkWarmGray hover:text-ink dark:hover:text-darkInk transition-colors"
+        >
+          Live project ↗
+        </a>
+      )}
+      {project.caseStudy && (
+        <a
+          href={project.caseStudy}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="font-sans text-sm uppercase tracking-[0.1em] text-warmGray dark:text-darkWarmGray hover:text-ink dark:hover:text-darkInk transition-colors"
+        >
+          Case study ↗
+        </a>
+      )}
+    </div>
+  )
+}
 
 export default function Work() {
+  const featured = projects.find((p) => p.featured)
+  const rest = projects.filter((p) => p !== featured)
+
   return (
     <section id="work" className="section-container">
       <motion.p
@@ -22,102 +106,51 @@ export default function Work() {
         viewport={{ once: true, margin: "-100px" }}
         className="heading-lg text-balance mb-4"
       >
-        Projects that <span className="italic">moved</span> the needle.
+        Projects that <span className="font-serif italic font-normal">moved</span> the needle.
       </motion.h2>
 
       <motion.p
         initial={{ opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, margin: "-100px" }}
-        className="body-lg mb-16 max-w-2xl"
+        className="body-lg mb-14 max-w-2xl"
       >
-        From enterprise design systems to AI-enhanced platforms — each project
-        with measurable impact.
+        From conversational AI to sustainability tools and design systems —
+        each project shipped with measurable impact.
       </motion.p>
 
-      <div className="grid md:grid-cols-2 gap-6 md:gap-8">
-        {projects.map((project, i) => (
+      {/* Featured project — full width */}
+      {featured && (
+        <motion.article
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-50px" }}
+          transition={{ duration: 0.5 }}
+          className="mb-8 md:mb-12"
+        >
+          <Link href={`/work/${featured.id}`} className="group block">
+            <CoverArt project={featured} large />
+            <ProjectMeta project={featured} />
+          </Link>
+          <ExternalLinks project={featured} />
+        </motion.article>
+      )}
+
+      {/* Remaining projects — 2-up grid */}
+      <div className="grid md:grid-cols-2 gap-8 md:gap-10">
+        {rest.map((project, i) => (
           <motion.article
             key={project.id}
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-50px" }}
-            transition={{ duration: 0.5, delay: i * 0.05 }}
-            className="group relative p-6 md:p-8 card-hover"
+            transition={{ duration: 0.5, delay: i * 0.08 }}
           >
-            <div className="flex flex-wrap gap-2 mb-4">
-              {project.tags.map((tag) => (
-                <span
-                  key={tag}
-                  className="font-sans text-xs uppercase tracking-[0.1em] px-3 py-1 bg-subtle/50 dark:bg-darkSubtle/50 rounded-full text-warmGray dark:text-darkWarmGray"
-                >
-                  {tag}
-                </span>
-              ))}
-            </div>
-
-            <h3 className="heading-md mb-2 group-hover:opacity-60 transition-opacity duration-300">
-              {project.title}
-            </h3>
-
-            <p className="font-sans text-sm text-warmGray dark:text-darkWarmGray mb-4 uppercase tracking-[0.05em]">
-              {project.role} · {project.timeline}
-            </p>
-
-            <div className="mb-3">
-              <p className="font-sans text-xs uppercase tracking-[0.1em] text-warmGray dark:text-darkWarmGray mb-1">
-                Problem
-              </p>
-              <p className="body-base">{project.problem}</p>
-            </div>
-
-            <div className="mb-3">
-              <p className="font-sans text-xs uppercase tracking-[0.1em] text-warmGray dark:text-darkWarmGray mb-1">
-                Approach
-              </p>
-              <p className="body-base">{project.approach}</p>
-            </div>
-
-            <div className="p-3 bg-subtle/20 dark:bg-darkSubtle/20 rounded-xl border border-subtle/50 dark:border-darkSubtle/50 mb-4">
-              <p className="font-sans text-xs uppercase tracking-[0.1em] text-warmGray dark:text-darkWarmGray mb-1">
-                Impact
-              </p>
-              <p className="font-serif text-sm text-ink dark:text-darkInk">
-                {project.impact}
-              </p>
-            </div>
-
-            <div className="flex flex-wrap gap-3 items-center">
-              <Link
-                href={`/work/${project.id}`}
-                className="inline-flex items-center gap-1.5 font-sans text-sm uppercase tracking-[0.1em] text-ink dark:text-darkInk group-hover:opacity-60 transition-opacity duration-300"
-              >
-                View details
-                <span className="group-hover:translate-x-1 transition-transform duration-300">→</span>
-              </Link>
-
-              {project.caseStudy && (
-                <a
-                  href={project.caseStudy}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center gap-1.5 font-sans text-sm uppercase tracking-[0.1em] text-warmGray dark:text-darkWarmGray hover:text-ink dark:hover:text-darkInk transition-colors duration-300"
-                >
-                  Case study ↗
-                </a>
-              )}
-
-              {project.projectLink && (
-                <a
-                  href={project.projectLink}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center gap-1.5 font-sans text-sm uppercase tracking-[0.1em] text-warmGray dark:text-darkWarmGray hover:text-ink dark:hover:text-darkInk transition-colors duration-300"
-                >
-                  Live project ↗
-                </a>
-              )}
-            </div>
+            <Link href={`/work/${project.id}`} className="group block">
+              <CoverArt project={project} />
+              <ProjectMeta project={project} />
+            </Link>
+            <ExternalLinks project={project} />
           </motion.article>
         ))}
       </div>

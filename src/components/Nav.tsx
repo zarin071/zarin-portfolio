@@ -7,8 +7,7 @@ import { useTheme } from "./ThemeProvider"
 
 const navItems = [
   { label: "Work", href: "#work" },
-  { label: "About", href: "#about" },
-  { label: "Playground", href: "/playground" },
+  { label: "About Me", href: "/about" },
 ]
 
 export default function Nav({ onChatOpen }: { onChatOpen: () => void }) {
@@ -52,7 +51,7 @@ export default function Nav({ onChatOpen }: { onChatOpen: () => void }) {
           : "bg-transparent"
       }`}
     >
-      <div className="max-w-6xl mx-auto px-6 md:px-12 lg:px-24">
+      <div className="w-full px-6 md:px-10 lg:px-16">
         <div className="flex items-center justify-between h-16 md:h-20">
           <a
             href="/"
@@ -92,6 +91,9 @@ export default function Nav({ onChatOpen }: { onChatOpen: () => void }) {
 
             <a
               href="/resume.pdf"
+              target="_blank"
+              rel="noopener noreferrer"
+              download="ZarinSolanki_Resume_2026.pdf"
               className="font-sans text-sm uppercase tracking-[0.15em] px-4 py-2 border border-ink/20 dark:border-darkWarmGray/30 rounded-full hover:bg-ink hover:text-cream dark:hover:bg-darkInk dark:hover:text-darkBg transition-all duration-300"
             >
               Resume
@@ -155,6 +157,9 @@ export default function Nav({ onChatOpen }: { onChatOpen: () => void }) {
               <div className="flex gap-3 pt-4 border-t border-subtle dark:border-darkSubtle">
                 <a
                   href="/resume.pdf"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  download="ZarinSolanki_Resume_2026.pdf"
                   className="font-sans text-sm uppercase tracking-[0.15em] px-4 py-2 border border-ink/20 dark:border-darkWarmGray/30 rounded-full hover:bg-ink hover:text-cream dark:hover:bg-darkInk dark:hover:text-darkBg transition-all"
                 >
                   Resume

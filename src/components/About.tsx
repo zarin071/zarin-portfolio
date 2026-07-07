@@ -34,26 +34,26 @@ export default function About() {
   const [active, setActive] = useState(0)
 
   return (
-    <section id="about" className="section-container">
+    <section id="about" className="w-full px-6 md:px-10 lg:px-16 py-20 md:py-24">
       <motion.p
         initial={{ opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, margin: "-100px" }}
-        className="section-label"
+        className="section-label mb-3"
       >
-        About
+        About Me
       </motion.p>
 
       <motion.h2
         initial={{ opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, margin: "-100px" }}
-        className="heading-lg text-balance mb-12"
+        className="heading-lg mb-6"
       >
-        Who is <span className="italic">Zarin</span>?
+        Who is <span className="font-serif italic font-normal">Zarin</span>?
       </motion.h2>
 
-      <div className="flex gap-2 mb-10 border-b border-subtle dark:border-darkSubtle">
+      <div className="flex gap-2 mb-6 border-b border-subtle dark:border-darkSubtle">
         {facets.map((facet, i) => (
           <button
             key={facet.id}
@@ -80,20 +80,20 @@ export default function About() {
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0, y: -20 }}
           transition={{ duration: 0.3, ease: "easeInOut" }}
-          className="grid md:grid-cols-3 gap-8"
+          className="grid md:grid-cols-3 gap-6"
         >
-          <div className="md:col-span-2 space-y-4">
+          <div className="md:col-span-2 space-y-3">
             {facets[active].content.map((paragraph, i) => (
               <p key={i} className="body-base">
                 {paragraph}
               </p>
             ))}
           </div>
-          <div className="flex flex-col items-center justify-center p-8 bg-subtle/30 dark:bg-darkSubtle/30 rounded-2xl border border-subtle dark:border-darkSubtle">
-            <span className="font-serif text-6xl md:text-7xl mb-3">
+          <div className="flex flex-col items-start justify-center p-6 bg-subtle/30 dark:bg-darkSubtle/30 rounded-2xl border border-subtle dark:border-darkSubtle">
+            <span className="font-serif text-5xl md:text-6xl mb-2">
               {facets[active].stat}
             </span>
-            <p className="font-sans text-sm uppercase tracking-[0.15em] text-warmGray dark:text-darkWarmGray text-center">
+            <p className="font-sans text-sm uppercase tracking-[0.15em] text-warmGray dark:text-darkWarmGray text-left">
               {facets[active].statLabel}
             </p>
           </div>

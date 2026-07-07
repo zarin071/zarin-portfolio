@@ -12,12 +12,50 @@ interface Message {
 
 const categories = Array.from(new Set(chatConfig.map((c) => c.category)))
 
+// Lightweight keyword matcher: scores each entry by how many meaningful
+// words from the user's message appear in its question/answer/category.
+const STOP_WORDS = new Set([
+  "the", "a", "an", "and", "or", "to", "of", "in", "on", "is", "are", "do",
+  "you", "your", "me", "i", "what", "whats", "how", "can", "tell", "about",
+  "for", "with", "have", "did", "was", "were", "at", "any", "some", "please",
+])
+
+function findBestMatch(message: string): (typeof chatConfig)[number] | null {
+  const tokens = message
+    .toLowerCase()
+    .replace(/[^a-z0-9₂\s]/g, " ")
+    .split(/\s+/)
+    .filter((w) => w.length > 1 && !STOP_WORDS.has(w))
+
+  if (tokens.length === 0) return null
+
+  let best: (typeof chatConfig)[number] | null = null
+  let bestScore = 0
+
+  for (const entry of chatConfig) {
+    const haystack = `${entry.question} ${entry.category} ${entry.answer}`.toLowerCase()
+    const qHaystack = `${entry.question} ${entry.category}`.toLowerCase()
+    let score = 0
+    for (const token of tokens) {
+      if (qHaystack.includes(token)) score += 3 // question/category hits weigh more
+      else if (haystack.includes(token)) score += 1
+    }
+    if (score > bestScore) {
+      bestScore = score
+      best = entry
+    }
+  }
+
+  // Require at least one solid hit to avoid noisy matches.
+  return bestScore >= 2 ? best : null
+}
+
 export default function ChatWidget({ isOpen, onToggle }: { isOpen: boolean; onToggle: () => void }) {
   const [messages, setMessages] = useState<Message[]>([
     {
       id: "welcome",
       type: "bot",
-      text: "👋 Hi there! Pick a question below to learn more about Zarin, or type your own.",
+      text: "👋 Hi, I'm Zarin's assistant — ask me anything about her work, experience, skills, or projects. Pick a question below, or type your own.",
     },
   ])
   const [input, setInput] = useState("")
@@ -74,11 +112,7 @@ export default function ChatWidget({ isOpen, onToggle }: { isOpen: boolean; onTo
     ])
 
     setTimeout(() => {
-      const matched = chatConfig.find(
-        (c) =>
-          c.question.toLowerCase().includes(userMsg.toLowerCase()) ||
-          userMsg.toLowerCase().includes(c.question.toLowerCase().split(" ").slice(0, 3).join(" "))
-      )
+      const matched = findBestMatch(userMsg)
 
       if (matched) {
         setLastEntry(matched)
@@ -86,7 +120,7 @@ export default function ChatWidget({ isOpen, onToggle }: { isOpen: boolean; onTo
 
       const response = matched
         ? matched.answer
-        : `I don't have an exact answer for that yet! Try one of the suggested questions above.`
+        : `Good question — I don't have a scripted answer for that one. Try a topic like experience, projects, skills, or contact, or reach Zarin directly at zarinsolanki.work@gmail.com.`
 
       setMessages((prev) => [
         ...prev,
@@ -102,7 +136,7 @@ export default function ChatWidget({ isOpen, onToggle }: { isOpen: boolean; onTo
       {
         id: "welcome",
         type: "bot",
-        text: "👋 Hi there! Pick a question below to learn more about Zarin, or type your own.",
+        text: "👋 Hi, I'm Zarin's assistant — ask me anything about her work, experience, skills, or projects. Pick a question below, or type your own.",
       },
     ])
     setSelectedCategory(null)
@@ -321,7 +355,7 @@ export default function ChatWidget({ isOpen, onToggle }: { isOpen: boolean; onTo
 
               <div className="px-4 pb-3 text-center dark:bg-darkBg flex-shrink-0">
                 <p className="font-sans text-[10px] text-warmGray/50 dark:text-darkWarmGray/50">
-                  Edit questions in src/data/chat-config.ts
+                  Answers are based on Zarin&apos;s real experience
                 </p>
               </div>
             </motion.div>
