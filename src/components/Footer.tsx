@@ -35,12 +35,6 @@ export default function Footer() {
             </a>
           </div>
         </div>
-
-        <div className="mt-8 pt-8 border-t border-subtle dark:border-darkSubtle text-center">
-          <p className="font-sans text-xs text-warmGray dark:text-darkWarmGray">
-            Built with ♥ by Z + opencode
-          </p>
-        </div>
       </div>
     </footer>
   )
