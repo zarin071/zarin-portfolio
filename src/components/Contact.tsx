@@ -41,9 +41,9 @@ export default function Contact() {
         initial={{ opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, margin: "-100px" }}
-        className="heading-lg text-balance mb-4"
+        className="font-syne font-medium text-[clamp(2rem,4.4vw,4.5rem)] leading-[1.05] tracking-tight text-balance mb-6"
       >
-        Let&apos;s build something <span className="italic">together</span>.
+        Let&apos;s build something <span className="font-serif italic font-normal">together</span>.
       </motion.h2>
 
       <motion.p

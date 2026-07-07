@@ -1,6 +1,6 @@
 export const resumeData = {
   name: "Zarin Solanki",
-  title: "UX Engineer  |  AI Product Designer  |  Design Engineer",
+  title: "UX Researcher  |  AI Product Designer  |  Design Engineer",
   phone: "+91-7666757809",
   email: "zarinsolanki.work@gmail.com",
   linkedin: "linkedin.com/in/zarin-solanki",

@@ -1,4 +1,5 @@
-@import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,500;9..144,600;9..144,700&family=Inter:wght@300;400;500;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400;1,500;1,600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -11,6 +12,8 @@
 
   body {
     @apply bg-cream text-ink font-sans antialiased transition-colors duration-300;
+    /* guards against transient horizontal scroll during the 3D page entrance */
+    overflow-x: hidden;
   }
 
   .dark body,
@@ -29,7 +32,7 @@
 
 @layer components {
   .section-container {
-    @apply max-w-6xl mx-auto px-6 md:px-12 lg:px-24 py-24 md:py-32;
+    @apply w-full px-6 md:px-10 lg:px-16 py-20 md:py-24;
   }
 
   .section-label {
@@ -37,15 +40,15 @@
   }
 
   .heading-xl {
-    @apply font-serif text-5xl md:text-7xl lg:text-8xl leading-tight;
+    @apply font-syne font-semibold tracking-tight text-5xl md:text-7xl lg:text-8xl leading-tight;
   }
 
   .heading-lg {
-    @apply font-serif text-3xl md:text-5xl leading-tight;
+    @apply font-syne font-semibold tracking-tight text-3xl md:text-5xl leading-tight;
   }
 
   .heading-md {
-    @apply font-serif text-2xl md:text-3xl leading-snug;
+    @apply font-syne font-semibold tracking-tight text-2xl md:text-3xl leading-snug;
   }
 
   .body-lg {
@@ -78,4 +81,70 @@
 @keyframes pulse-gentle {
   0%, 100% { opacity: 1; }
   50% { opacity: 0.4; }
+}
+
+/* ── Hero animated visual: soft floating gradient blobs ───────────── */
+.hero-blob {
+  position: absolute;
+  border-radius: 9999px;
+  filter: blur(70px);
+  opacity: 0.55;
+  will-change: transform;
+}
+.dark .hero-blob { opacity: 0.32; }
+
+.hero-blob--1 {
+  width: 32rem; height: 32rem;
+  top: -6rem; right: -4rem;
+  background: radial-gradient(circle at 30% 30%, #C9BEFF, transparent 70%);
+  animation: blob-float 18s ease-in-out infinite;
+}
+.hero-blob--2 {
+  width: 26rem; height: 26rem;
+  bottom: -6rem; left: -4rem;
+  background: radial-gradient(circle at 30% 30%, #B4E4C4, transparent 70%);
+  animation: blob-float 22s ease-in-out infinite reverse;
+}
+.hero-blob--3 {
+  width: 22rem; height: 22rem;
+  top: 30%; left: 45%;
+  background: radial-gradient(circle at 30% 30%, #FFD5A6, transparent 70%);
+  animation: blob-float 26s ease-in-out infinite;
+}
+
+@keyframes blob-float {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  33%      { transform: translate(4%, -6%) scale(1.08); }
+  66%      { transform: translate(-5%, 4%) scale(0.95); }
+}
+
+/* ── 3D page entrance (About Me): tilts up out of depth, then resets clean ── */
+.about-3d-enter {
+  transform-origin: center top;
+  animation: about3dEnter 0.75s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+@keyframes about3dEnter {
+  from {
+    opacity: 0;
+    transform: perspective(1400px) rotateX(18deg) translateY(70px) scale(0.97);
+  }
+  to {
+    opacity: 1;
+    transform: none; /* fully clears the perspective context — no leftover overflow */
+  }
+}
+
+/* Respect users who prefer reduced motion — freeze decorative animation. */
+@media (prefers-reduced-motion: reduce) {
+  .hero-blob,
+  .animate-pulse-gentle {
+    animation: none !important;
+  }
+  .about-3d-enter {
+    animation: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+  }
+  html { scroll-behavior: auto; }
 }

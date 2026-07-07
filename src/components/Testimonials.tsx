@@ -15,7 +15,7 @@ export default function Testimonials() {
   }, [])
 
   return (
-    <section className="section-container bg-subtle/20 dark:bg-darkSubtle/20">
+    <section className="w-full px-6 md:px-10 lg:px-16 py-20 md:py-24 bg-subtle/20 dark:bg-darkSubtle/20">
       <motion.p
         initial={{ opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}
@@ -29,12 +29,12 @@ export default function Testimonials() {
         initial={{ opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, margin: "-100px" }}
-        className="heading-lg text-balance mb-16"
+        className="heading-lg text-balance mb-10"
       >
-        Kind words from <span className="italic">people I&apos;ve worked with</span>.
+        Kind words from <span className="font-serif italic font-normal">people I&apos;ve worked with</span>.
       </motion.h2>
 
-      <div className="relative min-h-[200px] md:min-h-[250px]">
+      <div className="relative min-h-[160px] md:min-h-[190px]">
         <AnimatePresence mode="wait">
           <motion.blockquote
             key={active}
@@ -42,7 +42,7 @@ export default function Testimonials() {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -30 }}
             transition={{ duration: 0.5, ease: "easeInOut" }}
-            className="max-w-4xl mx-auto"
+            className="max-w-4xl"
           >
             <p className="font-serif text-xl md:text-2xl lg:text-3xl leading-relaxed text-balance mb-8 italic text-ink dark:text-darkInk">
               &ldquo;{testimonials[active].quote}&rdquo;
@@ -74,7 +74,7 @@ export default function Testimonials() {
         </AnimatePresence>
       </div>
 
-      <div className="flex justify-center gap-2 mt-8">
+      <div className="flex justify-start gap-2 mt-6">
         {testimonials.map((_, i) => (
           <button
             key={i}

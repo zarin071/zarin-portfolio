@@ -1,7 +1,7 @@
 export default function Footer() {
   return (
     <footer className="border-t border-subtle dark:border-darkSubtle">
-      <div className="max-w-6xl mx-auto px-6 md:px-12 lg:px-24 py-12 md:py-16">
+      <div className="w-full px-6 md:px-10 lg:px-16 py-12 md:py-16">
         <div className="flex flex-col md:flex-row items-center justify-between gap-6">
           <div className="text-center md:text-left">
             <p className="font-serif text-xl font-semibold tracking-tight text-ink dark:text-darkInk">

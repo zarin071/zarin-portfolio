@@ -7,8 +7,12 @@ module.exports = {
   theme: {
     extend: {
       fontFamily: {
-        serif: ['Fraunces', 'Georgia', 'serif'],
-        sans: ['Inter', 'system-ui', 'sans-serif'],
+        // Two typefaces only: Syne (display/headings) + Poppins (everything else).
+        // `serif` is kept as an alias so existing `font-serif` accent classes
+        // resolve to Poppins — no third font loads.
+        sans: ['Poppins', 'system-ui', 'sans-serif'],
+        serif: ['Poppins', 'system-ui', 'sans-serif'],
+        syne: ['Syne', 'ui-sans-serif', 'system-ui', 'sans-serif'],
       },
       colors: {
         cream: '#FFFFFF',
@@ -20,6 +24,8 @@ module.exports = {
         darkInk: '#EDEDED',
         darkSubtle: '#2A2A2A',
         darkWarmGray: '#888888',
+        highlight: '#E9FF00',      // hero name accent — dark mode (chartreuse-yellow)
+        highlightSoft: '#A87F00',  // hero name accent — light mode (gold, AA-large on cream)
       },
       animation: {
         'fade-in': 'fadeIn 0.8s ease-out forwards',
