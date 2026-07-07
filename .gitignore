@@ -1,11 +1,6 @@
 node_modules
-<<<<<<< HEAD
 .next
-.DS_Store
-=======
-.next/
 dist
 .DS_Store
 *.log
 .claude/
->>>>>>> db57c804d1efb4c0720074736fc3b3128d77e097
