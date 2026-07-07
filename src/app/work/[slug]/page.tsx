@@ -4,7 +4,7 @@ import { useParams } from "next/navigation"
 import Link from "next/link"
 import { motion, useScroll, useTransform } from "framer-motion"
 import { useRef } from "react"
-import { projects } from "@/data/projects"
+import { projects, type Benefit } from "@/data/projects"
 import ThemeProvider from "@/components/ThemeProvider"
 import Nav from "@/components/Nav"
 import Footer from "@/components/Footer"
@@ -150,6 +150,18 @@ function ProjectPage() {
           viewport={{ once: true, margin: "-100px" }}
           className="max-w-4xl mx-auto space-y-24"
         >
+          {/* Overview */}
+          {project.overview && (
+            <motion.div variants={fadeUp}>
+              <p className="font-sans text-xs uppercase tracking-[0.2em] text-warmGray dark:text-darkWarmGray mb-4">
+                Overview
+              </p>
+              <p className="font-serif text-2xl md:text-3xl leading-relaxed text-ink dark:text-darkInk text-balance">
+                {project.overview}
+              </p>
+            </motion.div>
+          )}
+
           {/* Problem */}
           <motion.div variants={fadeUp} className="grid md:grid-cols-3 gap-8">
             <div>
@@ -221,6 +233,116 @@ function ProjectPage() {
               </div>
             </div>
           </motion.div>
+
+          {/* What it offers */}
+          {project.offers && project.offers.length > 0 && (
+            <>
+              <motion.div className="w-full h-[1px] bg-subtle dark:bg-darkSubtle" variants={fadeUp} />
+              <motion.div variants={fadeUp} className="grid md:grid-cols-3 gap-8">
+                <div>
+                  <span className="font-serif text-7xl md:text-8xl text-accent/20 dark:text-accent/30 font-bold leading-none">
+                    04
+                  </span>
+                  <p className="font-sans text-xs uppercase tracking-[0.2em] text-warmGray dark:text-darkWarmGray mt-2">
+                    What it offers
+                  </p>
+                </div>
+                <div className="md:col-span-2">
+                  <ul className="space-y-4">
+                    {project.offers.map((item) => (
+                      <li key={item} className="flex gap-4 items-start">
+                        <span className="mt-2.5 w-2 h-2 rounded-full bg-accent shrink-0" />
+                        <span className="font-serif text-lg md:text-xl leading-relaxed text-ink dark:text-darkInk">
+                          {item}
+                        </span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              </motion.div>
+            </>
+          )}
+
+          {/* Benefits */}
+          {project.benefits && project.benefits.length > 0 && (
+            <>
+              <motion.div className="w-full h-[1px] bg-subtle dark:bg-darkSubtle" variants={fadeUp} />
+              <motion.div variants={fadeUp} className="grid md:grid-cols-3 gap-8">
+                <div>
+                  <span className="font-serif text-7xl md:text-8xl text-accent/20 dark:text-accent/30 font-bold leading-none">
+                    05
+                  </span>
+                  <p className="font-sans text-xs uppercase tracking-[0.2em] text-warmGray dark:text-darkWarmGray mt-2">
+                    Benefits
+                  </p>
+                </div>
+                <div className="md:col-span-2 grid sm:grid-cols-2 gap-4">
+                  {project.benefits.map((benefit: Benefit) => (
+                    <div
+                      key={benefit.audience}
+                      className="p-6 bg-subtle/20 dark:bg-darkSubtle/20 rounded-2xl border border-subtle/50 dark:border-darkSubtle/50"
+                    >
+                      <p className="font-sans text-xs uppercase tracking-[0.15em] text-accent mb-2">
+                        {benefit.audience}
+                      </p>
+                      <p className="font-serif text-base leading-relaxed text-ink dark:text-darkInk">
+                        {benefit.detail}
+                      </p>
+                    </div>
+                  ))}
+                </div>
+              </motion.div>
+            </>
+          )}
+
+          {/* Soundbites */}
+          {project.soundbites && project.soundbites.length > 0 && (
+            <>
+              <motion.div className="w-full h-[1px] bg-subtle dark:bg-darkSubtle" variants={fadeUp} />
+              <motion.div variants={fadeUp} className="grid md:grid-cols-3 gap-8">
+                <div>
+                  <span className="font-serif text-7xl md:text-8xl text-accent/20 dark:text-accent/30 font-bold leading-none">
+                    06
+                  </span>
+                  <p className="font-sans text-xs uppercase tracking-[0.2em] text-warmGray dark:text-darkWarmGray mt-2">
+                    Feedback
+                  </p>
+                </div>
+                <div className="md:col-span-2 space-y-4">
+                  {project.soundbites.map((quote) => (
+                    <blockquote
+                      key={quote}
+                      className="pl-5 border-l-2 border-accent/40 font-serif text-lg leading-relaxed text-ink dark:text-darkInk italic"
+                    >
+                      &ldquo;{quote}&rdquo;
+                    </blockquote>
+                  ))}
+                </div>
+              </motion.div>
+            </>
+          )}
+
+          {/* Roadmap */}
+          {project.roadmap && (
+            <>
+              <motion.div className="w-full h-[1px] bg-subtle dark:bg-darkSubtle" variants={fadeUp} />
+              <motion.div variants={fadeUp} className="grid md:grid-cols-3 gap-8">
+                <div>
+                  <span className="font-serif text-7xl md:text-8xl text-accent/20 dark:text-accent/30 font-bold leading-none">
+                    07
+                  </span>
+                  <p className="font-sans text-xs uppercase tracking-[0.2em] text-warmGray dark:text-darkWarmGray mt-2">
+                    Roadmap
+                  </p>
+                </div>
+                <div className="md:col-span-2">
+                  <p className="font-serif text-xl md:text-2xl leading-relaxed text-ink dark:text-darkInk">
+                    {project.roadmap}
+                  </p>
+                </div>
+              </motion.div>
+            </>
+          )}
 
           {/* Links */}
           <motion.div variants={fadeUp} className="flex flex-wrap gap-4 justify-center pt-8">
