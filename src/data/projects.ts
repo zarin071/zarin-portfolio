@@ -34,9 +34,74 @@ export interface Project {
   impact: string
   caseStudy?: string
   projectLink?: string
+  /** CSS background value for the card cover art (placeholder until real screenshots land). */
+  cover?: string
+  /** Short label overlaid on the cover, e.g. a category. */
+  coverLabel?: string
+  /** Marks the hero/featured project (rendered full-width). */
+  featured?: boolean
 }
 
+/*
+  ─────────────────────────────────────────────────────────────
+  FEATURED — exactly 3 projects (see docs/DESIGN-SPEC.md §4).
+  To change the featured set, keep the count at 3 unless the spec
+  is updated, and record the change in docs/CHANGELOG.md.
+  ─────────────────────────────────────────────────────────────
+*/
 export const projects: Project[] = [
+  {
+    id: "ai-dealer-booking",
+    title: "Conversational AI — Dealer Booking",
+    subtitle: "Find and book a tyre-service dealer through conversation, not navigation",
+    role: "Conversational Designer",
+    timeline: "2024",
+    tags: ["AI", "Conversational Design", "Generative AI"],
+    problem: "To book a tyre-change service, customers had to navigate the entire Michelin site — searching for a nearby dealer, comparing options, and stepping through a multi-screen booking flow. The journey was long and easy to abandon.",
+    approach: "Designed a generative-AI chatbot that finds and books a dealer entirely through conversation. Defined the conversation flows, the AI's persona and tone, and mapped the journey from a simple intent (\"I need a tyre change\") to a confirmed dealer booking — no manual site browsing required.",
+    impact: "Collapsed dealer discovery and booking into a single conversation, removing the need to browse the website and cutting friction in the tyre-service journey.",
+    cover: "linear-gradient(135deg, #EDE9FF 0%, #C9BEFF 45%, #7C6BE6 100%)",
+    coverLabel: "Conversational AI",
+    featured: true,
+  },
+  {
+    id: "fleet-co2-calculator",
+    title: "Fleet CO₂ Emissions Calculator",
+    subtitle: "An interactive sustainability tool for Michelin Connected Fleet",
+    role: "Product Designer + Front-End Developer",
+    timeline: "2023",
+    tags: ["Sustainability", "Data-Driven UI", "Front-End"],
+    problem: "Fleet managers had no easy way to baseline their vehicles' carbon footprint. Sustainability reporting (CSRD, TCFD) is complex and inaccessible to non-experts, yet the pressure to measure and cut emissions was rising.",
+    approach: "Designed and built an interactive fuel-saving calculator that takes fleet composition and monthly fuel-consumption inputs and returns estimated CO₂ emissions and savings with a breakdown by fuel type. Applied data-driven UI principles to make dense emissions data legible, and collaborated across design, data science, and engineering.",
+    impact: "Gave fleet managers an accessible starting point for measuring emissions and improved retention through a clearer end-to-end journey. Featured on Michelin Connected Fleet.",
+    projectLink: "https://b2b.michelin.in/fuel-saving-calculator",
+    caseStudy: "https://connectedfleet.michelin.com/blog/calculate-co2-emissions/",
+    cover: "linear-gradient(135deg, #E4F5E6 0%, #B4E4C4 45%, #4FA986 100%)",
+    coverLabel: "Sustainability Tool",
+  },
+  {
+    id: "packt-design-system",
+    title: "Packt Design System",
+    subtitle: "Scalable component library for a content-rich tech platform",
+    role: "UI/UX Designer + Front-End Developer",
+    timeline: "2018",
+    tags: ["Design System", "Front-End", "Web Development"],
+    problem: "Packt Publishing's platform serving emerging tech content (AI, data science, cloud) lacked a unified component library, causing inconsistent UI and slow design-to-development handoffs.",
+    approach: "Built a reusable design system and component library from the ground up. Established a shared language between design and engineering through documented patterns and production-ready React components.",
+    impact: "Reduced design-to-development handoff time by 30% and accelerated delivery of new product features.",
+    projectLink: "https://www.packtpub.com/en-in",
+    cover: "linear-gradient(135deg, #FFF0DA 0%, #FFD5A6 45%, #E08A55 100%)",
+    coverLabel: "Design System",
+  },
+]
+
+/*
+  ─────────────────────────────────────────────────────────────
+  ARCHIVED — not shown on the site, kept for future reuse.
+  Move an item back into `projects` above to feature it again.
+  ─────────────────────────────────────────────────────────────
+*/
+export const archivedProjects: Project[] = [
   {
     id: "bpcore-design-system",
     title: "bpcore Design System Rebrand",
@@ -73,18 +138,6 @@ export const projects: Project[] = [
     caseStudy: "https://drive.google.com/file/d/1i9dOy6aSlfkm_KfQDBXXzcpmJQFIeOGD/view",
   },
   {
-    id: "packt-design-system",
-    title: "Packt Design System",
-    subtitle: "Scalable component library for content-rich tech platform",
-    role: "UI/UX Designer + Front-End Developer",
-    timeline: "2018",
-    tags: ["Design System", "Front-End", "Web Development"],
-    problem: "Packt Publishing's platform serving emerging tech content (AI, data science, cloud) lacked a unified component library, causing inconsistent UI and slow design-to-development handoffs.",
-    approach: "Built a reusable design system and component library from the ground up. Established shared language between design and engineering through documented patterns and production-ready React components.",
-    impact: "Reduced design-to-development handoff time by 30% and accelerated delivery of new product features.",
-    projectLink: "https://www.packtpub.com/en-in",
-  },
-  {
     id: "swiggy-nux",
     title: "Swiggy NUX",
     subtitle: "Onboarding redesign for India's leading food delivery platform",
@@ -107,28 +160,5 @@ export const projects: Project[] = [
     impact: "15% conversion rate uplift. Michelin Champions Award 2022.",
     projectLink: "https://us.michelin-lifestyle.com/en/promotions/wiper-blades",
     caseStudy: "https://drive.google.com/file/d/1rrTo4JeVvg8_xkQc_Z-r8GtoAe7XtLGO/view",
-  },
-  {
-    id: "ai-chatbot-michelin",
-    title: "AI-Powered Chatbot — Michelin",
-    subtitle: "Generative AI chatbot for tyre service booking",
-    role: "Conversational Designer",
-    timeline: "2024",
-    tags: ["AI", "Conversational Design", "Generative AI"],
-    problem: "Customers faced friction when trying to book tyre change services through traditional website navigation.",
-    approach: "Contributed as conversational designer to introduce a generative AI-powered chatbot. Designed conversation flows, defined AI persona and tone, and mapped user journeys from discovery to booking completion.",
-    impact: "Reduced customer journey friction for tyre service bookings through conversational AI.",
-  },
-  {
-    id: "fuel-savings-tool",
-    title: "AI-Enhanced B2B Fuel Savings Tool",
-    subtitle: "CO2 reduction and fuel savings features for Michelin B2B",
-    role: "Product Designer",
-    timeline: "2023",
-    tags: ["AI", "B2B", "Data-Driven UI"],
-    problem: "Michelin's B2B platform needed AI-enhanced tools for CO2 reduction and fuel savings, but user retention was low due to poor end-to-end journey design.",
-    approach: "Redesigned end-to-end user journeys applying data-driven UI principles. Collaborated across design, data science, and engineering workstreams to integrate AI features seamlessly.",
-    impact: "Improved user retention through redesigned end-to-end journeys.",
-    projectLink: "https://b2b.michelin.in/fuel-saving-calculator",
   },
 ]
