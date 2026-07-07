@@ -13,10 +13,8 @@ export const useTheme = () => useContext(ThemeContext)
 
 export default function ThemeProvider({ children }: { children: React.ReactNode }) {
   const [theme, setTheme] = useState<Theme>("light")
-  const [mounted, setMounted] = useState(false)
 
   useEffect(() => {
-    setMounted(true)
     const stored = localStorage.getItem("theme") as Theme | null
     if (stored) {
       setTheme(stored)
@@ -34,8 +32,6 @@ export default function ThemeProvider({ children }: { children: React.ReactNode 
     document.documentElement.classList.toggle("dark", next === "dark")
     localStorage.setItem("theme", next)
   }
-
-  if (!mounted) return <>{children}</>
 
   return (
     <ThemeContext.Provider value={{ theme, toggle }}>

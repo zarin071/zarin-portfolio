@@ -83,6 +83,20 @@
   50% { opacity: 0.4; }
 }
 
+/* Chat FAB — CSS entrance avoids SSR/hydration style-attribute mismatch */
+.chat-fab {
+  animation: chat-fab-enter 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) 2s both;
+}
+
+@keyframes chat-fab-enter {
+  from { transform: scale(0); }
+  to   { transform: scale(1); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .chat-fab { animation: none; }
+}
+
 /* ── Hero animated visual: soft floating gradient blobs ───────────── */
 .hero-blob {
   position: absolute;
