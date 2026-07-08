@@ -61,7 +61,7 @@ export default function Contact() {
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, margin: "-100px" }}
         transition={{ delay: 0.2 }}
-        className="grid grid-cols-1 sm:grid-cols-2 gap-6 max-w-2xl"
+        className="grid grid-cols-1 sm:grid-cols-2 gap-6 w-full"
       >
         {contactDetails.map((detail) => (
           <a

@@ -52,18 +52,45 @@
                   Rendered as a 2-up card grid.
                   Use audience as the card label (e.g. "Leadership", "Delivery Teams").
 
-  soundbites    → Section 06 "Feedback" — string[]
+  personas      → Section "Personas" — Persona[]  ({ role, scope, need })
+                  Rendered as a leadership ladder (order top→bottom = ascending
+                  seniority). Use for "who it's for" across an org hierarchy,
+                  e.g. VP → SVP → Group Leadership → CEO.
+
+  soundbites    → "Feedback" section — string[]
                   Each string becomes a blockquote with an accent left-border.
                   Use real stakeholder quotes or anonymised feedback.
 
-  roadmap       → Section 07 "Roadmap" — single paragraph string.
+  roadmap       → "Roadmap" section — single paragraph string.
                   What's planned next; what the product will become.
+
+  (Section numbers on the detail page are assigned automatically in render
+  order, so adding/removing an optional section renumbers the rest cleanly.)
   ──────────────────────────────────────────────────────────────────────────
 */
 
 export interface Benefit {
   audience: string
   detail: string
+}
+
+export interface Persona {
+  role: string   // title / seniority label, e.g. "VP", "SVP", "CEO"
+  scope: string  // one-line remit, e.g. "Owns an organisation's delivery"
+  need: string   // what this persona needs and how the product serves it
+}
+
+export interface Discovery {
+  summary: string      // how the research was run and what it revealed
+  questions: string[]  // the key research prompts / themes explored
+}
+
+export interface Phase {
+  name: string     // short label, e.g. "MVP 1"
+  title: string    // what the phase delivers
+  status: "shipped" | "current" | "next" | "future"
+  summary: string  // 1-3 sentences on the phase
+  items?: string[] // optional bullet highlights
 }
 
 export interface Project {
@@ -83,8 +110,12 @@ export interface Project {
   featured?: boolean
   // Rich detail-page sections (optional — see template above)
   overview?: string
+  origin?: string[]        // backstory paragraphs (unnumbered narrative)
+  discovery?: Discovery    // research section (numbered)
   offers?: string[]
   benefits?: Benefit[]
+  personas?: Persona[]
   soundbites?: string[]
-  roadmap?: string
+  roadmap?: string         // short lead-in above the phases
+  phases?: Phase[]         // MVP roadmap breakdown
 }
