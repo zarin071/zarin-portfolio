@@ -21,6 +21,10 @@ const dash: Project = {
   coverLabel: "Digital Analytics",
   featured: false,
 
+  // Confidential client work — gate the detail page behind a password.
+  // Change or remove this value to control access (see _types.ts).
+  password: "bp-dash-2025",
+
   // ── Rich sections ────────────────────────────────────────────────────────
 
   overview:

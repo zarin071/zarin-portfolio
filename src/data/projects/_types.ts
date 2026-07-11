@@ -30,6 +30,16 @@
   caseStudy     → "View case study ↗" button — PDF, Google Drive, Notion, etc.
   projectLink   → "Live project ↗" button   — live URL
 
+  ACCESS CONTROL (optional)
+  ─────────────────────────
+  password      → If set, the /work/<id> case-study page is gated behind a
+                  password screen and the Work-grid card shows a "Locked" badge.
+                  The visitor must type this exact string to view the study;
+                  a successful unlock is remembered for the browser session.
+                  ⚠️ This is a client-side deterrent, NOT real security — the
+                  value ships in the site bundle, so never use a sensitive
+                  password here. Leave the field out to keep a project public.
+
   CARD VISUALS (work grid + detail page hero)
   ────────────────────────────────────────────
   cover         → CSS background value for the cover art card.
@@ -78,6 +88,7 @@ export interface Project {
   impact: string
   caseStudy?: string
   projectLink?: string
+  password?: string
   cover?: string
   coverLabel?: string
   featured?: boolean
