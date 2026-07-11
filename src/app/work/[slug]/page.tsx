@@ -21,6 +21,7 @@ function ProjectPage() {
   const { scrollYProgress } = useScroll({
     target: sectionRef,
     offset: ["start start", "end start"],
+    layoutEffect: false,
   })
 
   const heroScale = useTransform(scrollYProgress, [0, 1], [1, 0.94])
