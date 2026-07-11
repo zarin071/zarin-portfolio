@@ -9,6 +9,7 @@ import ThemeProvider from "@/components/ThemeProvider"
 import Nav from "@/components/Nav"
 import Footer from "@/components/Footer"
 import ChatWidget from "@/components/ChatWidget"
+import PasswordGate from "@/components/PasswordGate"
 import { useState } from "react"
 
 function ProjectPage() {
@@ -54,6 +55,8 @@ function ProjectPage() {
   return (
     <ThemeProvider>
       <Nav onChatOpen={() => setChatOpen(true)} />
+
+      <PasswordGate id={project.id} password={project.password} title={project.title}>
 
       {/* ── Hero ── */}
       <section ref={sectionRef} className="pt-28 md:pt-32 pb-4">
@@ -375,6 +378,8 @@ function ProjectPage() {
           </motion.div>
         </motion.div>
       </section>
+
+      </PasswordGate>
 
       <Footer />
       <ChatWidget isOpen={chatOpen} onToggle={() => setChatOpen((prev) => !prev)} />
