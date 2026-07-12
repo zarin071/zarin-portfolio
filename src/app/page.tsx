@@ -8,7 +8,6 @@ import TrustedBy from "@/components/TrustedBy"
 import About from "@/components/About"
 import Work from "@/components/Work"
 import Testimonials from "@/components/Testimonials"
-import Guestbook from "@/components/Guestbook"
 import Contact from "@/components/Contact"
 import Footer from "@/components/Footer"
 import ChatWidget from "@/components/ChatWidget"
@@ -25,7 +24,6 @@ export default function Home() {
         <About />
         <Work />
         <Testimonials />
-        <Guestbook />
         <Contact />
       </main>
       <Footer />
