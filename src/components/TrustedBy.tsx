@@ -19,7 +19,7 @@ export default function TrustedBy() {
       <div className="w-full px-6 md:px-10 lg:px-16 py-8 md:py-10">
         <div className="flex flex-col md:flex-row md:items-center gap-6 md:gap-12">
           <p className="font-sans text-xs uppercase tracking-[0.2em] text-warmGray dark:text-darkWarmGray shrink-0">
-            Worked with
+            Worked at
           </p>
           <div className="flex flex-wrap items-center gap-x-10 gap-y-5 md:gap-x-14">
             {companies.map((c, i) => (

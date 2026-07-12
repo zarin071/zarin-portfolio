@@ -19,7 +19,7 @@ export const testimonials: Testimonial[] = [
     linkedin: "https://www.linkedin.com/in/taarini-tewari-29a38136/",
   },
   {
-    quote: "Over the course of her tenure, you demonstrated strong web integration skills while supporting the CX Factory on various projects. Your collaboration with designers from the Lyon team in structuring experiences for products like the Wiperblade Selector, Pré-home B2B, and BFG showcased your adaptability and teamwork. These interactions have been key to driving impactful results and reinforcing the team's success.",
+    quote: "Over the course of her tenure, Zarin demonstrated strong web integration skills while supporting the CX Factory on various projects. Her collaboration with designers from the Lyon team in structuring experiences for products like the Wiperblade Selector, Pré-home B2B, and BFG showcased her adaptability and teamwork. These interactions were key to driving impactful results and reinforcing the team's success.",
     name: "Hugo Mourlevat",
     role: "Design Head, Michelin",
     linkedin: "https://www.linkedin.com/in/hugomrvt/",

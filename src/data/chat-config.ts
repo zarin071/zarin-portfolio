@@ -25,35 +25,35 @@ export const chatConfig: ChatEntry[] = [
   {
     id: "about-me",
     question: "Tell me about yourself",
-    category: "General",
+    category: "About",
     answer:
       "Hi! I'm Zarin — a design-engineer hybrid with 10+ years across UX design, front-end development, and AI product design. I've shipped B2B, B2C, and SaaS work at bp, Michelin, Packt Publishing, and TCS. Today I'm a Senior Product Designer & Capability Lead at bp, driving design maturity across India and global hubs. What makes me a bit different: I can take an idea from research, through design, all the way to deployed React code — no handoff gap.",
   },
   {
     id: "years",
     question: "How many years of experience do you have?",
-    category: "General",
+    category: "About",
     answer:
       "10+ years, and the arc tells a story:\n\n• TCS (2015–2017) — Assistant Systems Engineer, enterprise systems\n• Packt Publishing (2017–2020) — UI/UX + front-end development\n• Michelin (2020–2025) — UI & front-end, award-winning B2C/B2B work\n• bp (2025–present) — Senior Product Designer & Capability Lead\n\nCode → design → strategy. I've grown across all three.",
   },
   {
     id: "resume",
     question: "Can I see your resume?",
-    category: "General",
+    category: "About",
     answer:
       "Absolutely — hit the “Resume” button in the top navigation to open the full PDF. It covers my roles at bp, Michelin, Packt, and TCS with detailed, measurable impact.",
   },
   {
     id: "availability",
     question: "Are you open to opportunities?",
-    category: "General",
+    category: "About",
     answer:
       "I'm always open to interesting conversations — full-time roles or collaborations that sit at the intersection of design and engineering. The fastest way to reach me is LinkedIn or email (see the Contact questions).",
   },
   {
     id: "testimonials-ask",
     question: "What do people say about working with you?",
-    category: "General",
+    category: "About",
     answer:
       'The kindest words come from people I\'ve worked with directly. Dona calls me "an asset in any team." Tanoushka says I\'m "one of those rare humans who\'s not just insanely skilled, but also makes work feel lighter and more fun." Hugo from Michelin highlighted my adaptability and teamwork. Scroll down to the testimonials section to read them all.',
   },
@@ -152,7 +152,7 @@ export const chatConfig: ChatEntry[] = [
   {
     id: "design-process",
     question: "Tell me about your design process",
-    category: "Process",
+    category: "How I work",
     answer:
       "Rooted in research, but it moves fast:\n\n1. 🔍 Research — interviews, usability testing, competitive analysis, data synthesis\n2. 💡 Ideate — design sprints, information architecture, systems thinking\n3. ✏️ Rapid prototype — LLM-assisted ideation and MVP screens to move quickly\n4. 🧪 Test — A/B testing, usability studies, stakeholder reviews\n5. 🚀 Ship — production-ready UI with clean handoff (or I build it in React)\n6. 📊 Measure — track impact, iterate on data\n\nMy edge: I can take a design from Figma all the way to deployed code.",
   },
@@ -161,21 +161,21 @@ export const chatConfig: ChatEntry[] = [
   {
     id: "education",
     question: "What's your educational background?",
-    category: "Background",
+    category: "Personal",
     answer:
       "I hold a Bachelor of Engineering in Electronics & Telecommunications from M.H. Saboo Siddik College of Engineering, Mumbai (2011–2015). I've since added focused certifications: Product Design in AI, Object-Oriented UX Fundamentals, Figma UI/UX Essentials, and a Webflow Certified Developer credential.",
   },
   {
     id: "awards",
     question: "Have you won any awards?",
-    category: "Background",
+    category: "Personal",
     answer:
       "Yes — the Michelin Champions Award for B2C websites in both 2022 and 2023, and a Go-Getter Award for a B2B website at Michelin. They recognised research-informed, measurable design work.",
   },
   {
     id: "personal",
     question: "What are you like outside of work?",
-    category: "Background",
+    category: "Personal",
     answer:
       "Two obsessions keep me sharp: mixed martial arts and food. As an MMA striker I've learned discipline, preparation, and staying calm under pressure — I carry that into every hard problem. Food is where my curiosity runs wild: not just what's in a dish, but *why* — which ingredient does what, and whether a different technique would do it better.",
   },

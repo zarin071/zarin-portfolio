@@ -55,7 +55,7 @@ export default function ChatWidget({ isOpen, onToggle }: { isOpen: boolean; onTo
     {
       id: "welcome",
       type: "bot",
-      text: "👋 Hi, I'm Zarin's assistant — ask me anything about her work, experience, skills, or projects. Pick a question below, or type your own.",
+      text: "👋 Hi, I'm Zarin's assistant — ask me anything about my work, experience, skills, or projects. Pick a question below, or type your own.",
     },
   ])
   const [input, setInput] = useState("")
@@ -136,7 +136,7 @@ export default function ChatWidget({ isOpen, onToggle }: { isOpen: boolean; onTo
       {
         id: "welcome",
         type: "bot",
-        text: "👋 Hi, I'm Zarin's assistant — ask me anything about her work, experience, skills, or projects. Pick a question below, or type your own.",
+        text: "👋 Hi, I'm Zarin's assistant — ask me anything about my work, experience, skills, or projects. Pick a question below, or type your own.",
       },
     ])
     setSelectedCategory(null)
@@ -323,7 +323,7 @@ export default function ChatWidget({ isOpen, onToggle }: { isOpen: boolean; onTo
                       onClick={handleReset}
                       className="w-full py-2.5 rounded-xl border border-subtle dark:border-darkSubtle font-sans text-xs uppercase tracking-[0.1em] text-warmGray dark:text-darkWarmGray hover:bg-ink/5 dark:hover:bg-darkInk/5 hover:text-ink dark:hover:text-darkInk transition-all"
                     >
-                      ← Start over — ask something else
+                      ↺ Ask something else
                     </button>
                   </div>
                 )}

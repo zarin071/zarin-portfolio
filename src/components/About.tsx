@@ -6,7 +6,7 @@ import { motion, AnimatePresence } from "framer-motion"
 const facets = [
   {
     id: "professional",
-    title: "The Professional",
+    title: "The Designer-Engineer",
     subtitle: "Design-engineer hybrid · 10+ years",
     content: [
       "Senior Product Designer & Capability Lead at bp, driving design maturity across India and global hubs. Lead the bpcore enterprise design system rebrand. Mentor designers, define best practices, and embed design strategy into organisational goals.",
@@ -20,13 +20,13 @@ const facets = [
     id: "person",
     title: "The Person",
     subtitle: "A food connoisseur and a striker",
-    content: [ "Outside of design, I'm passionate about two pursuits that constantly challenge how I think: mixed martial arts and food.",
-    "As an MMA striker, I've learned discipline, preparation, resilience, and the ability to adapt under pressure are lessons I carry into every problem. The sport has taught me to embrace discomfort, stay focused on continuous improvement, and remain calm when navigating complexity.",
-"Food is where my curiosity takes a different form.","I'm fascinated not just by what goes into a dish, but why. Why does a recipe use a particular ingredient? What role does it actually play? Could another ingredient achieve the same result? Is there a different technique that would create a better outcome?",
-      ,
+    content: [
+      "Outside of design, I'm passionate about two pursuits that constantly challenge how I think: mixed martial arts and food.",
+      "As an MMA striker, I've learned that discipline, preparation, resilience, and the ability to adapt under pressure are lessons that carry into every problem. The sport has taught me to embrace discomfort, stay focused on continuous improvement, and remain calm when navigating complexity.",
+      "Food is where my curiosity takes a different form. I'm fascinated not just by what goes into a dish, but why. Why does a recipe use a particular ingredient? What role does it actually play? Could another ingredient achieve the same result? Is there a different technique that would create a better outcome?",
     ],
     stat: "∞",
-    statLabel: "Questions about food and fight",
+    statLabel: "Questions about food and form",
   },
 ]
 
@@ -50,7 +50,7 @@ export default function About() {
         viewport={{ once: true, margin: "-100px" }}
         className="heading-lg mb-6"
       >
-        Who is <span className="font-serif italic font-normal">Zarin</span>?
+        Who I am
       </motion.h2>
 
       <div className="flex gap-2 mb-6 border-b border-subtle dark:border-darkSubtle">

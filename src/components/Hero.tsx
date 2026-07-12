@@ -21,10 +21,9 @@ export default function Hero({ onChatOpen }: { onChatOpen: () => void }) {
           transition={{ duration: 0.6, ease }}
           className="section-label mb-6"
         >
-          Zarin Solanki · Based in India
+          Zarin Solanki · Senior Product Designer
         </motion.p>
 
-        {/* Tri-tone editorial headline: solid intro, muted middle, solid close, accent name */}
         <motion.h1
           initial={{ opacity: 0, y: 24 }}
           animate={{ opacity: 1, y: 0 }}
@@ -33,11 +32,19 @@ export default function Hero({ onChatOpen }: { onChatOpen: () => void }) {
         >
           <span className="text-ink dark:text-darkInk">Hi, I&apos;m </span>
           <span className="text-highlightSoft dark:text-highlight font-semibold">Zarin</span>
-          <span className="text-ink dark:text-darkInk">, a multi-disciplinary digital product designer.</span>{" "}
-          Always at the intersection of cutting-edge innovation and user-centric
-          design. With a decade of navigating ambiguity with{" "}
-          <span className="text-ink dark:text-darkInk">grit and craft.</span>
+          <span className="text-ink dark:text-darkInk"> — a design-engineer hybrid.</span>{" "}
+          I take ideas from research through design to shipped React code, with a decade of doing it at{" "}
+          <span className="text-ink dark:text-darkInk">bp, Michelin, and beyond.</span>
         </motion.h1>
+
+        <motion.p
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.3, ease }}
+          className="body-lg mt-6 max-w-2xl"
+        >
+          Design meets engineering. Curiosity meets craft.
+        </motion.p>
 
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -55,7 +62,7 @@ export default function Hero({ onChatOpen }: { onChatOpen: () => void }) {
             onClick={onChatOpen}
             className="font-sans text-sm uppercase tracking-[0.15em] px-8 py-3.5 border border-ink/20 dark:border-darkWarmGray/30 rounded-full hover:bg-ink/5 dark:hover:bg-darkInk/5 transition-all duration-300"
           >
-            Say hello
+            Ask me anything
           </button>
         </motion.div>
       </div>

@@ -9,11 +9,6 @@ const contactDetails = [
     href: "mailto:zarinsolanki.work@gmail.com",
   },
   {
-    label: "Phone",
-    value: "+91-7666757809",
-    href: "tel:+917666757809",
-  },
-  {
     label: "LinkedIn",
     value: "linkedin.com/in/zarin-solanki",
     href: "https://www.linkedin.com/in/zarin-solanki/",
@@ -43,7 +38,7 @@ export default function Contact() {
         viewport={{ once: true, margin: "-100px" }}
         className="font-syne font-medium text-[clamp(2rem,4.4vw,4.5rem)] leading-[1.05] tracking-tight text-balance mb-6"
       >
-        Let&apos;s build something <span className="font-serif italic font-normal">together</span>.
+        Ready to close the gap between design and <span className="font-serif italic font-normal">shipped code</span>?
       </motion.h2>
 
       <motion.p
@@ -52,8 +47,7 @@ export default function Contact() {
         viewport={{ once: true, margin: "-100px" }}
         className="body-lg mb-12 max-w-2xl"
       >
-        Whether you have a project in mind, a collaboration idea, or just want to
-        chat about food history — I&apos;d love to hear from you.
+        Whether you have a project in mind, an open role, or a collaboration idea — I&apos;d love to hear from you.
       </motion.p>
 
       <motion.div

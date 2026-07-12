@@ -4,8 +4,8 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "predeploy": "npm run dev",
-    "deploy": "gh-pages -d dist",
+    "predeploy": "next build",
+    "deploy": "gh-pages -d out --nojekyll",
     "dev": "next dev",
     "build": "next build",
     "start": "next start",

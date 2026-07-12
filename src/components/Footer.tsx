@@ -8,7 +8,7 @@ export default function Footer() {
               Z.
             </p>
             <p className="font-sans text-sm text-warmGray dark:text-darkWarmGray mt-1">
-              Design meets engineering. Curiosity meets craft.
+              © 2026 Zarin Solanki
             </p>
           </div>
 

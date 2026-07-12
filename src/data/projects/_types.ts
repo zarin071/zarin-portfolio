@@ -76,6 +76,25 @@ export interface Benefit {
   detail: string
 }
 
+export interface Persona {
+  role: string
+  scope: string
+  need: string
+}
+
+export interface Phase {
+  name: string
+  title: string
+  status: "current" | "next" | "future" | string
+  summary: string
+  items: string[]
+}
+
+export interface Discovery {
+  summary: string
+  questions: string[]
+}
+
 export interface Project {
   id: string
   title: string
@@ -94,8 +113,12 @@ export interface Project {
   featured?: boolean
   // Rich detail-page sections (optional — see template above)
   overview?: string
+  origin?: string[]
   offers?: string[]
   benefits?: Benefit[]
   soundbites?: string[]
   roadmap?: string
+  discovery?: Discovery
+  personas?: Persona[]
+  phases?: Phase[]
 }

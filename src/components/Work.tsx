@@ -126,7 +126,7 @@ export default function Work() {
         viewport={{ once: true, margin: "-100px" }}
         className="heading-lg text-balance mb-4"
       >
-        Projects that <span className="font-serif italic font-normal">moved</span> the needle.
+        Projects that <span className="font-serif italic font-normal">shipped</span>.
       </motion.h2>
 
       <motion.p
@@ -135,8 +135,7 @@ export default function Work() {
         viewport={{ once: true, margin: "-100px" }}
         className="body-lg mb-14 max-w-2xl"
       >
-        From conversational AI to sustainability tools and design systems —
-        each project shipped with measurable impact.
+        Conversational AI, sustainability tools, enterprise design systems — shipped with measurable outcomes across B2B and B2C platforms at bp, Michelin, and beyond.
       </motion.p>
 
       {/* Featured project — full width */}
