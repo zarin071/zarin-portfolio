@@ -7,38 +7,35 @@
 .easter-egg {
   display: inline-block;
   cursor: pointer;
-  opacity: 0.32;
-  font-size: 0.88em;
+  opacity: 0.72;
+  font-size: 1em;
   line-height: 1;
   padding: 0 0.1em;
   border-radius: 4px;
   outline-offset: 3px;
-  transition: opacity 0.2s ease, transform 0.18s ease;
+  transition: opacity 0.18s ease, transform 0.18s ease;
   user-select: none;
   -webkit-user-select: none;
   position: relative;
   font-style: normal;
-  filter: saturate(0.6);
 }
 
 .easter-egg:hover {
   opacity: 1;
-  transform: scale(1.35) rotate(-5deg);
-  filter: saturate(1);
+  transform: scale(1.4) rotate(-6deg);
 }
 
 .easter-egg:focus-visible {
   opacity: 1;
   outline: 2px dashed currentColor;
-  transform: scale(1.2);
-  filter: saturate(1);
+  transform: scale(1.3);
 }
 
 .easter-egg[data-found="true"] {
-  opacity: 0.5;
+  opacity: 0.35;
   cursor: default;
   pointer-events: none;
-  filter: saturate(1) grayscale(0.3);
+  filter: grayscale(0.5);
 }
 
 /* ─── HUD ──────────────────────────────────────────────────────── */
