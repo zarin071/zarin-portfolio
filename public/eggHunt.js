@@ -378,28 +378,25 @@
 
   function submitHunter(name, email) {
     var cfg = window.EGG_HUNT_CONFIG || {}
-    if (!cfg.emailjsServiceId || !cfg.emailjsTemplateId || !cfg.emailjsPublicKey) {
-      return Promise.resolve()
-    }
-    return fetch("https://api.emailjs.com/api/v1.0/email/send", {
+    if (!cfg.web3formsKey) return Promise.resolve()
+
+    return fetch("https://api.web3forms.com/submit", {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
+      headers: { "Content-Type": "application/json", "Accept": "application/json" },
       body: JSON.stringify({
-        service_id:  cfg.emailjsServiceId,
-        template_id: cfg.emailjsTemplateId,
-        user_id:     cfg.emailjsPublicKey,
-        template_params: {
-          from_name:  name || "Anonymous Hunter",
-          from_email: email,
-          message: [
-            "🥚 Egg Hunt Completed!",
-            "Score: "       + state.score,
-            "Eggs: "        + state.found.length + "/" + TOTAL,
-            "Best combo: "  + state.comboBest + "×",
-          ].join("\n"),
-        },
+        access_key: cfg.web3formsKey,
+        name:       name || "Anonymous Hunter",
+        email:      email,
+        subject:    "🥚 Egg Hunt — Wall of Hunters",
+        message: [
+          "Score: "      + state.score + " pts",
+          "Eggs found: " + state.found.length + "/" + TOTAL,
+          "Best combo: " + state.comboBest + "×",
+        ].join("\n"),
       }),
-    }).then(function (r) { if (!r.ok) throw new Error("send failed") })
+    })
+      .then(function (r) { return r.json() })
+      .then(function (data) { if (!data.success) throw new Error("web3forms failed") })
   }
 
   /* ─── Persistent found-state via injected <style> (survives React re-renders) */
