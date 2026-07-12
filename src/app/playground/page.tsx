@@ -1,25 +1,305 @@
 "use client"
 
-import { motion } from "framer-motion"
-import { useState } from "react"
+import { motion, AnimatePresence } from "framer-motion"
+import { useState, useEffect, useCallback } from "react"
 import ThemeProvider from "@/components/ThemeProvider"
 import Nav from "@/components/Nav"
 import Footer from "@/components/Footer"
 import ChatWidget from "@/components/ChatWidget"
+import { auditSkills } from "@/data/audit-skills"
+
+// ─── Inline password gate (sessionStorage, same pattern as PasswordGate) ───
+
+function useUnlock(id: string, password: string) {
+  const key = `zp-playground:${id}`
+  const [unlocked, setUnlocked] = useState(false)
+  const [ready, setReady] = useState(false)
+
+  useEffect(() => {
+    try { if (sessionStorage.getItem(key) === "1") setUnlocked(true) } catch {}
+    setReady(true)
+  }, [key])
+
+  const unlock = useCallback((val: string) => {
+    if (val === password) {
+      try { sessionStorage.setItem(key, "1") } catch {}
+      setUnlocked(true)
+      return true
+    }
+    return false
+  }, [key, password])
+
+  return { unlocked, ready, unlock }
+}
+
+function LockGate({ id, password, children }: { id: string; password: string; children: React.ReactNode }) {
+  const { unlocked, ready, unlock } = useUnlock(id, password)
+  const [val, setVal] = useState("")
+  const [error, setError] = useState(false)
+
+  if (!ready) return null
+  if (unlocked) return <>{children}</>
+
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 8 }}
+      animate={{ opacity: 1, y: 0 }}
+      className="mt-6 p-8 rounded-2xl border border-subtle dark:border-darkSubtle bg-subtle/20 dark:bg-darkSubtle/20"
+    >
+      <div className="max-w-xs mx-auto text-center">
+        <div className="w-10 h-10 mx-auto mb-4 rounded-xl border border-subtle dark:border-darkSubtle flex items-center justify-center">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round">
+            <rect x="3" y="11" width="18" height="11" rx="2" />
+            <path d="M7 11V7a5 5 0 0 1 10 0v4" />
+          </svg>
+        </div>
+        <p className="font-sans text-sm text-warmGray dark:text-darkWarmGray mb-4">Enter password to access</p>
+        <form
+          onSubmit={(e) => {
+            e.preventDefault()
+            const ok = unlock(val)
+            if (!ok) { setError(true); setVal("") }
+          }}
+          className="flex flex-col gap-3"
+        >
+          <input
+            type="password"
+            value={val}
+            autoFocus
+            onChange={(e) => { setVal(e.target.value); setError(false) }}
+            placeholder="Password"
+            className="w-full px-4 py-2.5 rounded-full border border-subtle dark:border-darkSubtle bg-transparent text-center text-sm text-ink dark:text-darkInk focus:outline-none focus:border-ink dark:focus:border-darkInk transition-colors placeholder:text-warmGray/50"
+          />
+          {error && <p className="text-xs text-red-500">Incorrect — try again.</p>}
+          <button
+            type="submit"
+            className="w-full py-2.5 rounded-full bg-ink dark:bg-darkInk text-cream dark:text-darkBg text-xs font-medium uppercase tracking-wide hover:opacity-80 transition-opacity"
+          >
+            Unlock
+          </button>
+        </form>
+        <p className="mt-4 text-xs text-warmGray dark:text-darkWarmGray">
+          Need access?{" "}
+          <a href="mailto:zarinsolanki.work@gmail.com" className="underline hover:text-ink dark:hover:text-darkInk">
+            Request it
+          </a>
+        </p>
+      </div>
+    </motion.div>
+  )
+}
+
+// ─── Audit skills viewer ────────────────────────────────────────────────────
+
+const base = process.env.NEXT_PUBLIC_BASE_PATH ?? ""
+
+function AuditToolkit() {
+  const [selected, setSelected] = useState(auditSkills[0].id)
+  const [content, setContent] = useState<Record<string, string>>({})
+  const [loading, setLoading] = useState(false)
+  const [copied, setCopied] = useState(false)
+
+  const skill = auditSkills.find((s) => s.id === selected)!
+
+  useEffect(() => {
+    if (content[selected]) return
+    setLoading(true)
+    fetch(`${base}/audit-skills/${skill.file}`)
+      .then((r) => r.text())
+      .then((text) => {
+        setContent((prev) => ({ ...prev, [selected]: text }))
+        setLoading(false)
+      })
+      .catch(() => setLoading(false))
+  }, [selected, skill.file, content])
+
+  const copy = async () => {
+    const text = content[selected]
+    if (!text) return
+    await navigator.clipboard.writeText(text)
+    setCopied(true)
+    setTimeout(() => setCopied(false), 2000)
+  }
+
+  const daily = auditSkills.filter((s) => s.type === "daily")
+  const quarterly = auditSkills.filter((s) => s.type === "quarterly")
+
+  return (
+    <div className="mt-6 rounded-2xl border border-subtle dark:border-darkSubtle overflow-hidden" style={{ height: 640 }}>
+      <div className="flex h-full">
+        {/* Sidebar */}
+        <div className="w-56 shrink-0 border-r border-subtle dark:border-darkSubtle overflow-y-auto flex flex-col bg-subtle/10 dark:bg-darkSubtle/10">
+          <div className="px-4 pt-4 pb-2">
+            <p className="font-sans text-[9px] uppercase tracking-[0.15em] text-warmGray dark:text-darkWarmGray mb-2">Daily</p>
+            {daily.map((s) => (
+              <button
+                key={s.id}
+                onClick={() => setSelected(s.id)}
+                className={`w-full text-left px-3 py-2 rounded-lg mb-0.5 text-xs transition-all ${
+                  selected === s.id
+                    ? "bg-ink dark:bg-darkInk text-cream dark:text-darkBg font-medium"
+                    : "text-warmGray dark:text-darkWarmGray hover:text-ink dark:hover:text-darkInk hover:bg-subtle/40 dark:hover:bg-darkSubtle/40"
+                }`}
+              >
+                {s.name}
+              </button>
+            ))}
+          </div>
+          <div className="px-4 pt-3 pb-4">
+            <p className="font-sans text-[9px] uppercase tracking-[0.15em] text-warmGray dark:text-darkWarmGray mb-2">Quarterly</p>
+            {quarterly.map((s) => (
+              <button
+                key={s.id}
+                onClick={() => setSelected(s.id)}
+                className={`w-full text-left px-3 py-2 rounded-lg mb-0.5 text-xs transition-all ${
+                  selected === s.id
+                    ? "bg-ink dark:bg-darkInk text-cream dark:text-darkBg font-medium"
+                    : "text-warmGray dark:text-darkWarmGray hover:text-ink dark:hover:text-darkInk hover:bg-subtle/40 dark:hover:bg-darkSubtle/40"
+                }`}
+              >
+                {s.name}
+              </button>
+            ))}
+          </div>
+        </div>
+
+        {/* Content pane */}
+        <div className="flex-1 flex flex-col min-w-0">
+          <div className="flex items-center justify-between px-6 py-3 border-b border-subtle dark:border-darkSubtle shrink-0">
+            <div>
+              <p className="font-syne font-medium text-sm text-ink dark:text-darkInk">{skill.name}</p>
+              <p className="text-xs text-warmGray dark:text-darkWarmGray">{skill.description}</p>
+            </div>
+            <button
+              onClick={copy}
+              className="shrink-0 ml-4 inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full border border-subtle dark:border-darkSubtle text-xs text-warmGray dark:text-darkWarmGray hover:text-ink dark:hover:text-darkInk hover:border-ink/30 dark:hover:border-darkInk/30 transition-all"
+            >
+              {copied ? (
+                <>
+                  <svg width="11" height="11" viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" /></svg>
+                  Copied
+                </>
+              ) : (
+                <>
+                  <svg width="11" height="11" viewBox="0 0 12 12" fill="none"><rect x="4" y="4" width="7" height="7" rx="1" stroke="currentColor" strokeWidth="1.2" /><path d="M8 4V2a1 1 0 00-1-1H2a1 1 0 00-1 1v5a1 1 0 001 1h2" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" /></svg>
+                  Copy skill
+                </>
+              )}
+            </button>
+          </div>
+
+          <div className="flex-1 overflow-y-auto px-6 py-5">
+            {loading ? (
+              <div className="flex items-center justify-center h-full">
+                <span className="w-4 h-4 rounded-full border border-current border-t-transparent animate-spin text-warmGray" />
+              </div>
+            ) : (
+              <pre className="font-mono text-xs leading-relaxed text-ink/80 dark:text-darkInk/80 whitespace-pre-wrap break-words">
+                {content[selected] ?? ""}
+              </pre>
+            )}
+          </div>
+        </div>
+      </div>
+    </div>
+  )
+}
+
+// ─── Analytics agent overview ────────────────────────────────────────────────
+
+function AnalyticsAgent() {
+  const capabilities = [
+    { label: "Event tracking", detail: "Validation, naming standard, auto-taxonomy" },
+    { label: "Sessions & profiles", detail: "Identity stitching, user timelines" },
+    { label: "Funnels, retention, cohorts", detail: "Journeys, adoption, conversion, churn prediction" },
+    { label: "Anomaly detection", detail: "AI root-cause analysis with query evidence" },
+    { label: "Natural-language queries", detail: "Ask the agent; it calls real engines for answers" },
+    { label: "Dashboard", detail: "Event Explorer, Funnels, Retention, AI Chat" },
+    { label: "Connectors", detail: "Slack, webhooks, BigQuery, plugin system" },
+  ]
+
+  return (
+    <div className="mt-6 rounded-2xl border border-subtle dark:border-darkSubtle overflow-hidden">
+      <div className="px-8 py-8">
+        <div className="flex items-start justify-between gap-6 mb-8">
+          <div>
+            <p className="font-sans text-[10px] uppercase tracking-[0.15em] text-warmGray dark:text-darkWarmGray mb-2">Architecture</p>
+            <code className="font-mono text-xs text-ink/70 dark:text-darkInk/70 bg-subtle/40 dark:bg-darkSubtle/40 px-3 py-1.5 rounded-lg block">
+              SDK → Agent → Database → Dashboard → AI Insights
+            </code>
+          </div>
+          <a
+            href="https://github.com/zarin071/AI-analytics-agent"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="shrink-0 inline-flex items-center gap-2 px-4 py-2 rounded-full border border-subtle dark:border-darkSubtle text-xs text-warmGray dark:text-darkWarmGray hover:text-ink dark:hover:text-darkInk hover:border-ink/30 transition-all"
+          >
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z" />
+            </svg>
+            View on GitHub
+          </a>
+        </div>
+
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          {capabilities.map((c) => (
+            <div key={c.label} className="flex gap-3 p-4 rounded-xl border border-subtle dark:border-darkSubtle">
+              <div className="w-1.5 h-1.5 rounded-full bg-ink dark:bg-darkInk mt-1.5 shrink-0" />
+              <div>
+                <p className="font-sans text-sm font-medium text-ink dark:text-darkInk">{c.label}</p>
+                <p className="text-xs text-warmGray dark:text-darkWarmGray mt-0.5">{c.detail}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        <div className="mt-6 p-4 rounded-xl bg-subtle/30 dark:bg-darkSubtle/30 border border-subtle dark:border-darkSubtle">
+          <p className="font-sans text-xs text-warmGray dark:text-darkWarmGray">
+            <span className="font-medium text-ink dark:text-darkInk">Stack:</span>{" "}
+            Node 20 · PostgreSQL · Claude API · React Dashboard · Docker · pnpm workspaces
+          </p>
+        </div>
+      </div>
+    </div>
+  )
+}
+
+// ─── Playground page ─────────────────────────────────────────────────────────
+
+const ANALYTICS_PW = process.env.NEXT_PUBLIC_PLAYGROUND_ANALYTICS_PW ?? ""
+const AUDIT_PW = process.env.NEXT_PUBLIC_PLAYGROUND_AUDIT_PW ?? ""
 
 const experiments = [
   {
     id: "birthdate",
     title: "The Day You Arrived",
-    description: "Enter your birthdate and travel back to the exact day you joined the world — the #1 song, weather, world events, leaders, your zodiac and more.",
+    description:
+      "Enter your birthdate and travel back to the exact day you joined the world — the #1 song, weather, world events, leaders, your zodiac and more.",
     tag: "Interactive",
-    src: "https://zarin071.github.io/Birthdate",
+    locked: false,
+  },
+  {
+    id: "analytics",
+    title: "AI Analytics Agent Platform",
+    description:
+      "A production-ready, portable Mixpanel-class analytics platform with a built-in AI agent. Copy into any project, edit one config file, and funnels, retention, cohorts, anomaly detection, and natural-language insights work automatically.",
+    tag: "Platform",
+    locked: true,
+  },
+  {
+    id: "audit",
+    title: "Design System Audit Toolkit",
+    description:
+      "11 AI skills that run your design system like it has a full-time ops lead. 9 daily skills that prevent design debt, 2 quarterly audits that score system health — so you can put a number in front of leadership.",
+    tag: "AI Skills",
+    locked: true,
   },
 ]
 
 export default function Playground() {
   const [chatOpen, setChatOpen] = useState(false)
   const [active, setActive] = useState<string | null>(null)
+  const [showLock, setShowLock] = useState<string | null>(null)
 
   return (
     <ThemeProvider>
@@ -52,7 +332,7 @@ export default function Playground() {
           A sandbox for interactive work at the intersection of design and code.
         </motion.p>
 
-        <div className="space-y-8">
+        <div className="space-y-10">
           {experiments.map((exp, i) => (
             <motion.div
               key={exp.id}
@@ -61,44 +341,87 @@ export default function Playground() {
               transition={{ delay: 0.3 + i * 0.1 }}
             >
               {/* Card header */}
-              <div className="flex items-start justify-between gap-6 mb-4">
+              <div className="flex items-start justify-between gap-6">
                 <div>
-                  <span className="inline-block font-sans text-[10px] uppercase tracking-[0.12em] px-2.5 py-1 border border-subtle dark:border-darkSubtle rounded-full text-warmGray dark:text-darkWarmGray mb-3">
-                    {exp.tag}
-                  </span>
-                  <h2 className="font-syne font-medium text-2xl text-ink dark:text-darkInk mb-1">
-                    {exp.title}
-                  </h2>
-                  <p className="text-sm text-warmGray dark:text-darkWarmGray max-w-xl">
-                    {exp.description}
-                  </p>
+                  <div className="flex items-center gap-2 mb-3">
+                    <span className="inline-block font-sans text-[10px] uppercase tracking-[0.12em] px-2.5 py-1 border border-subtle dark:border-darkSubtle rounded-full text-warmGray dark:text-darkWarmGray">
+                      {exp.tag}
+                    </span>
+                    {exp.locked && (
+                      <span className="inline-flex items-center gap-1 font-sans text-[10px] uppercase tracking-[0.12em] px-2.5 py-1 border border-subtle dark:border-darkSubtle rounded-full text-warmGray dark:text-darkWarmGray">
+                        <svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
+                          <rect x="3" y="11" width="18" height="11" rx="2" />
+                          <path d="M7 11V7a5 5 0 0 1 10 0v4" />
+                        </svg>
+                        Locked
+                      </span>
+                    )}
+                  </div>
+                  <h2 className="font-syne font-medium text-2xl text-ink dark:text-darkInk mb-1">{exp.title}</h2>
+                  <p className="text-sm text-warmGray dark:text-darkWarmGray max-w-2xl">{exp.description}</p>
                 </div>
                 <button
-                  onClick={() => setActive(active === exp.id ? null : exp.id)}
+                  onClick={() => {
+                    if (active === exp.id) {
+                      setActive(null)
+                      setShowLock(null)
+                    } else if (exp.locked) {
+                      setActive(exp.id)
+                      setShowLock(exp.id)
+                    } else {
+                      setActive(exp.id)
+                      setShowLock(null)
+                    }
+                  }}
                   className="shrink-0 font-sans text-xs uppercase tracking-[0.12em] px-4 py-2 rounded-full border border-ink/20 dark:border-darkInk/20 hover:bg-ink hover:text-cream dark:hover:bg-darkInk dark:hover:text-darkBg transition-all duration-200"
                 >
-                  {active === exp.id ? "Close" : "Launch →"}
+                  {active === exp.id ? "Close" : exp.locked ? "Unlock →" : "Launch →"}
                 </button>
               </div>
 
-              {/* Iframe embed */}
-              {active === exp.id && (
-                <motion.div
-                  initial={{ opacity: 0, height: 0 }}
-                  animate={{ opacity: 1, height: 720 }}
-                  exit={{ opacity: 0, height: 0 }}
-                  transition={{ type: "spring", stiffness: 200, damping: 28 }}
-                  className="rounded-2xl overflow-hidden border border-subtle dark:border-darkSubtle"
-                >
-                  <iframe
-                    src={exp.src}
-                    title={exp.title}
-                    className="w-full h-full"
-                    style={{ height: 720 }}
-                    loading="lazy"
-                    allow="fullscreen"
-                  />
-                </motion.div>
+              {/* Content */}
+              <AnimatePresence>
+                {active === exp.id && (
+                  <motion.div
+                    initial={{ opacity: 0, height: 0 }}
+                    animate={{ opacity: 1, height: "auto" }}
+                    exit={{ opacity: 0, height: 0 }}
+                    transition={{ type: "spring", stiffness: 200, damping: 28 }}
+                  >
+                    {exp.id === "birthdate" && (
+                      <div
+                        className="mt-6 rounded-2xl overflow-hidden border border-subtle dark:border-darkSubtle"
+                        style={{ height: 720 }}
+                      >
+                        <iframe
+                          src="https://zarin071.github.io/Birthdate"
+                          title="The Day You Arrived"
+                          className="w-full h-full"
+                          style={{ height: 720 }}
+                          loading="lazy"
+                          allow="fullscreen"
+                        />
+                      </div>
+                    )}
+
+                    {exp.id === "analytics" && (
+                      <LockGate id="analytics" password={ANALYTICS_PW}>
+                        <AnalyticsAgent />
+                      </LockGate>
+                    )}
+
+                    {exp.id === "audit" && (
+                      <LockGate id="audit" password={AUDIT_PW}>
+                        <AuditToolkit />
+                      </LockGate>
+                    )}
+                  </motion.div>
+                )}
+              </AnimatePresence>
+
+              {/* Divider */}
+              {i < experiments.length - 1 && (
+                <div className="mt-10 border-t border-subtle dark:border-darkSubtle" />
               )}
             </motion.div>
           ))}
