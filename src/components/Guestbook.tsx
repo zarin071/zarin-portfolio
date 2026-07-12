@@ -19,8 +19,8 @@ export default function Guestbook() {
 
     const key = process.env.NEXT_PUBLIC_WEB3FORMS_KEY
     if (!key) {
-      setSubmitted({ name: name || "Anonymous", message: message || "" })
-      setStatus("done")
+      console.error("Web3Forms key missing — set NEXT_PUBLIC_WEB3FORMS_KEY")
+      setStatus("error")
       return
     }
 
@@ -28,7 +28,13 @@ export default function Guestbook() {
       const res = await fetch("https://api.web3forms.com/submit", {
         method: "POST",
         headers: { "Content-Type": "application/json", Accept: "application/json" },
-        body: JSON.stringify({ access_key: key, name, email, message }),
+        body: JSON.stringify({
+          access_key: key,
+          subject: "New guestbook entry — portfolio",
+          name: name || "Anonymous",
+          email,
+          message: message || "(no message)",
+        }),
       })
       const data = await res.json()
       if (!data.success) throw new Error(data.message)
