@@ -1,6 +1,7 @@
 "use client"
 
 import { motion } from "framer-motion"
+import { useTheme } from "./ThemeProvider"
 
 const base = process.env.NEXT_PUBLIC_BASE_PATH ?? ""
 
@@ -12,6 +13,9 @@ const companies = [
 ]
 
 export default function TrustedBy() {
+  const { theme } = useTheme()
+  const defaultFilter = theme === "dark" ? "grayscale(1) invert(1)" : "grayscale(1)"
+
   return (
     <section aria-label="Companies I've worked with" className="border-y border-subtle dark:border-darkSubtle">
       <div className="w-full px-6 md:px-10 lg:px-16 py-8 md:py-10">
@@ -28,10 +32,11 @@ export default function TrustedBy() {
                 loading="lazy"
                 initial={{ opacity: 0, y: 10 }}
                 whileInView={{ opacity: 0.6, y: 0 }}
-                whileHover={{ opacity: 1 }}
+                whileHover={{ opacity: 1, filter: "grayscale(0) invert(0)" }}
                 viewport={{ once: true }}
-                transition={{ duration: 0.4, delay: i * 0.08 }}
-                className={`${c.h} w-auto object-contain grayscale dark:invert`}
+                transition={{ duration: 0.3, delay: i * 0.08 }}
+                style={{ filter: defaultFilter }}
+                className={`${c.h} w-auto object-contain cursor-pointer`}
               />
             ))}
           </div>
