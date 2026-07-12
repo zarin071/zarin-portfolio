@@ -101,7 +101,7 @@ export const chatConfig: ChatEntry[] = [
     question: "How was your experience at Michelin?",
     category: "Experience",
     answer:
-      "Nearly 5 years (Oct 2020–Aug 2025) as Assistant Manager, UI & Front-End Development. Highlights:\n\n• 15% uplift in B2C conversion via research-informed A/B testing\n• AI-enhanced B2B CO₂-reduction & fuel-savings tools\n• Conversational designer on a gen-AI chatbot for dealer booking\n• Design system that cut design-to-dev handoff time by 30%\n• 21% lift in CRM dashboard engagement\n• Michelin Champions Award, 2022 and 2023",
+      "Nearly 5 years (Oct 2020–Aug 2025) as Assistant Manager, UI & Front-End Development. Highlights:\n\n• Measurable B2C conversion growth via research-informed A/B testing\n• AI-enhanced B2B CO₂-reduction & fuel-savings tools\n• Conversational designer on a gen-AI chatbot for dealer booking\n• Design system that cut design-to-dev handoff time by 30%\n• Significant CRM dashboard engagement lift through user-centred redesign\n• Michelin Champions Award, 2022 and 2023",
   },
   {
     id: "experience-packt",

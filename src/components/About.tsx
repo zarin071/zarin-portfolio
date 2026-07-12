@@ -10,7 +10,7 @@ const facets = [
     subtitle: "Design-engineer hybrid · 10+ years",
     content: [
       "Senior Product Designer & Capability Lead at bp, driving design maturity across India and global hubs. Lead the bpcore enterprise design system rebrand. Mentor designers, define best practices, and embed design strategy into organisational goals.",
-      "Before bp: nearly 5 years at Michelin where I delivered a 15% uplift in conversion rates, built reusable design systems cutting handoff time by 30%, improved CRM engagement by 21%, and won the Michelin Champions Award two years in a row.",
+      "Before bp: nearly 5 years at Michelin designing across B2C and B2B — research-informed work that measurably moved conversion and engagement, design systems that cut handoff time by 30%, and a Michelin Champions Award two years running.",
       "Earlier: UI/UX at Packt Publishing, engineering at TCS. Full arc from code to design to strategy.",
     ],
     stat: "10+",
