@@ -1,15 +1,14 @@
 "use client"
 
-import Image from "next/image"
 import { motion } from "framer-motion"
 
-const MotionImage = motion(Image)
+const base = process.env.NEXT_PUBLIC_BASE_PATH ?? ""
 
 const companies = [
-  { name: "bp", src: "/logos/bp.svg", h: 44 },
-  { name: "Michelin", src: "/logos/michelin.png", h: 44 },
-  { name: "Packt", src: "/logos/packt.png", h: 24 },
-  { name: "Tata Consultancy Services", src: "/logos/tcs.png", h: 28 },
+  { name: "bp", src: `${base}/logos/bp.svg`, h: "h-9 md:h-11" },
+  { name: "Michelin", src: `${base}/logos/michelin.png`, h: "h-9 md:h-11" },
+  { name: "Packt", src: `${base}/logos/packt.png`, h: "h-5 md:h-6" },
+  { name: "Tata Consultancy Services", src: `${base}/logos/tcs.png`, h: "h-6 md:h-7" },
 ]
 
 export default function TrustedBy() {
@@ -22,19 +21,17 @@ export default function TrustedBy() {
           </p>
           <div className="flex flex-wrap items-center gap-x-10 gap-y-5 md:gap-x-14">
             {companies.map((c, i) => (
-              <MotionImage
+              <motion.img
                 key={c.name}
                 src={c.src}
                 alt={c.name}
-                height={c.h}
-                width={0}
-                style={{ width: "auto", height: c.h }}
+                loading="lazy"
                 initial={{ opacity: 0, y: 10 }}
                 whileInView={{ opacity: 0.6, y: 0 }}
                 whileHover={{ opacity: 1 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.4, delay: i * 0.08 }}
-                className="object-contain grayscale dark:invert"
+                className={`${c.h} w-auto object-contain grayscale dark:invert`}
               />
             ))}
           </div>
