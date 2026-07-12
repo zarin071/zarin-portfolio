@@ -17,24 +17,25 @@ export default function Guestbook() {
     if (!email) return
     setStatus("loading")
 
-    const id = process.env.NEXT_PUBLIC_FORMSPREE_ID
-    if (!id) {
-      // dev fallback — just show success
+    const key = process.env.NEXT_PUBLIC_WEB3FORMS_KEY
+    if (!key) {
       setSubmitted({ name: name || "Anonymous", message: message || "" })
       setStatus("done")
       return
     }
 
     try {
-      const res = await fetch(`https://formspree.io/f/${id}`, {
+      const res = await fetch("https://api.web3forms.com/submit", {
         method: "POST",
         headers: { "Content-Type": "application/json", Accept: "application/json" },
-        body: JSON.stringify({ name, email, message }),
+        body: JSON.stringify({ access_key: key, name, email, message }),
       })
-      if (!res.ok) throw new Error()
+      const data = await res.json()
+      if (!data.success) throw new Error(data.message)
       setSubmitted({ name: name || "Anonymous", message: message || "" })
       setStatus("done")
-    } catch {
+    } catch (err) {
+      console.error("Guestbook submit error:", err)
       setStatus("error")
     }
   }
