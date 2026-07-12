@@ -17,27 +17,28 @@ export default function Guestbook() {
     if (!email) return
     setStatus("loading")
 
-    const key = process.env.NEXT_PUBLIC_WEB3FORMS_KEY
-    if (!key) {
-      console.error("Web3Forms key missing — set NEXT_PUBLIC_WEB3FORMS_KEY")
+    const serviceId = process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID
+    const templateId = process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID
+    const publicKey = process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY
+
+    if (!serviceId || !templateId || !publicKey) {
+      console.error("EmailJS env vars missing")
       setStatus("error")
       return
     }
 
     try {
-      const res = await fetch("https://api.web3forms.com/submit", {
-        method: "POST",
-        headers: { "Content-Type": "application/json", Accept: "application/json" },
-        body: JSON.stringify({
-          access_key: key,
-          subject: "New guestbook entry — portfolio",
-          name: name || "Anonymous",
-          email,
+      const emailjs = await import("@emailjs/browser")
+      await emailjs.send(
+        serviceId,
+        templateId,
+        {
+          from_name: name || "Anonymous",
+          from_email: email,
           message: message || "(no message)",
-        }),
-      })
-      const data = await res.json()
-      if (!data.success) throw new Error(data.message)
+        },
+        { publicKey }
+      )
       setSubmitted({ name: name || "Anonymous", message: message || "" })
       setStatus("done")
     } catch (err) {
