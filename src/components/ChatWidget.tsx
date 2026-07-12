@@ -10,10 +10,9 @@ interface Message {
   text: string
 }
 
-const categories = Array.from(new Set(chatConfig.map((c) => c.category)))
+const STARTER_IDS = ["about-me", "projects-overview", "can-you-code"]
+const starters = chatConfig.filter((c) => STARTER_IDS.includes(c.id))
 
-// Lightweight keyword matcher: scores each entry by how many meaningful
-// words from the user's message appear in its question/answer/category.
 const STOP_WORDS = new Set([
   "the", "a", "an", "and", "or", "to", "of", "in", "on", "is", "are", "do",
   "you", "your", "me", "i", "what", "whats", "how", "can", "tell", "about",
@@ -37,7 +36,7 @@ function findBestMatch(message: string): (typeof chatConfig)[number] | null {
     const qHaystack = `${entry.question} ${entry.category}`.toLowerCase()
     let score = 0
     for (const token of tokens) {
-      if (qHaystack.includes(token)) score += 3 // question/category hits weigh more
+      if (qHaystack.includes(token)) score += 3
       else if (haystack.includes(token)) score += 1
     }
     if (score > bestScore) {
@@ -46,8 +45,42 @@ function findBestMatch(message: string): (typeof chatConfig)[number] | null {
     }
   }
 
-  // Require at least one solid hit to avoid noisy matches.
   return bestScore >= 2 ? best : null
+}
+
+// Staggered chip list — each chip fades+slides in 150ms after the previous
+function ChipList({
+  items,
+  onSelect,
+  listKey,
+}: {
+  items: (typeof chatConfig)
+  onSelect: (entry: (typeof chatConfig)[0]) => void
+  listKey: string
+}) {
+  return (
+    <motion.div
+      key={listKey}
+      className="flex flex-wrap gap-2"
+      initial="hidden"
+      animate="visible"
+      variants={{ visible: { transition: { staggerChildren: 0.15 } } }}
+    >
+      {items.map((entry) => (
+        <motion.button
+          key={entry.id}
+          onClick={() => onSelect(entry)}
+          variants={{
+            hidden: { opacity: 0, y: 6 },
+            visible: { opacity: 1, y: 0, transition: { type: "spring", stiffness: 300, damping: 24 } },
+          }}
+          className="font-sans text-xs px-3 py-2 border border-subtle dark:border-darkSubtle rounded-full hover:bg-ink/5 dark:hover:bg-darkInk/5 hover:border-ink/30 dark:hover:border-darkInk/30 transition-colors text-left text-ink dark:text-darkInk"
+        >
+          {entry.question}
+        </motion.button>
+      ))}
+    </motion.div>
+  )
 }
 
 export default function ChatWidget({ isOpen, onToggle }: { isOpen: boolean; onToggle: () => void }) {
@@ -55,27 +88,26 @@ export default function ChatWidget({ isOpen, onToggle }: { isOpen: boolean; onTo
     {
       id: "welcome",
       type: "bot",
-      text: "👋 Hi, I'm Zarin's assistant — ask me anything about my work, experience, skills, or projects. Pick a question below, or type your own.",
+      text: "👋 Hi, I'm Zarin's assistant. Pick a question below or type your own.",
     },
   ])
   const [input, setInput] = useState("")
-  const [selectedCategory, setSelectedCategory] = useState<string | null>(null)
-  const [showPresets, setShowPresets] = useState(true)
   const [isModal, setIsModal] = useState(false)
   const [showScrollHint, setShowScrollHint] = useState(false)
   const [lastEntry, setLastEntry] = useState<(typeof chatConfig)[0] | null>(null)
+  const [answerCount, setAnswerCount] = useState(0)
+  const [seenIds, setSeenIds] = useState<Set<string>>(new Set(STARTER_IDS as string[]))
+
   const messagesEndRef = useRef<HTMLDivElement>(null)
   const scrollRef = useRef<HTMLDivElement>(null)
   const inputRef = useRef<HTMLInputElement>(null)
 
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" })
-  }, [messages])
+  }, [messages, lastEntry])
 
   useEffect(() => {
-    if (isOpen) {
-      setTimeout(() => inputRef.current?.focus(), 300)
-    }
+    if (isOpen) setTimeout(() => inputRef.current?.focus(), 300)
   }, [isOpen])
 
   useEffect(() => {
@@ -89,8 +121,9 @@ export default function ChatWidget({ isOpen, onToggle }: { isOpen: boolean; onTo
   }, [messages])
 
   const handlePresetClick = (entry: (typeof chatConfig)[0]) => {
-    setShowPresets(false)
     setLastEntry(entry)
+    setAnswerCount((n) => n + 1)
+    setSeenIds((prev) => new Set(Array.from(prev).concat(entry.id)))
     setMessages((prev) => [
       ...prev,
       { id: `user-${Date.now()}`, type: "user", text: entry.question },
@@ -104,7 +137,6 @@ export default function ChatWidget({ isOpen, onToggle }: { isOpen: boolean; onTo
 
     const userMsg = input.trim()
     setInput("")
-    setSelectedCategory(null)
 
     setMessages((prev) => [
       ...prev,
@@ -113,14 +145,15 @@ export default function ChatWidget({ isOpen, onToggle }: { isOpen: boolean; onTo
 
     setTimeout(() => {
       const matched = findBestMatch(userMsg)
-
       if (matched) {
         setLastEntry(matched)
+        setAnswerCount((n) => n + 1)
+        setSeenIds((prev) => new Set<string>(Array.from(prev).concat(matched.id)))
       }
 
       const response = matched
         ? matched.answer
-        : `Good question — I don't have a scripted answer for that one. Try a topic like experience, projects, skills, or contact, or reach Zarin directly at zarinsolanki.work@gmail.com.`
+        : `Good question — I don't have a scripted answer for that. Try asking about experience, projects, skills, or contact. Or reach Zarin directly at zarinsolanki.work@gmail.com.`
 
       setMessages((prev) => [
         ...prev,
@@ -130,27 +163,33 @@ export default function ChatWidget({ isOpen, onToggle }: { isOpen: boolean; onTo
   }
 
   const handleReset = () => {
-    setShowPresets(true)
     setLastEntry(null)
+    setAnswerCount(0)
+    setSeenIds(new Set(STARTER_IDS as string[]))
     setMessages([
       {
         id: "welcome",
         type: "bot",
-        text: "👋 Hi, I'm Zarin's assistant — ask me anything about my work, experience, skills, or projects. Pick a question below, or type your own.",
+        text: "👋 Hi, I'm Zarin's assistant. Pick a question below or type your own.",
       },
     ])
-    setSelectedCategory(null)
   }
 
-  const filteredPresets = selectedCategory
-    ? chatConfig.filter((c) => c.category === selectedCategory)
-    : chatConfig
-
-  const hasAnswers = messages.length > 1
-
+  // 2 related questions from same category, not yet seen
   const relatedQuestions = lastEntry
-    ? chatConfig.filter((c) => c.category === lastEntry.category && c.id !== lastEntry.id).slice(0, 3)
+    ? chatConfig
+        .filter((c) => c.category === lastEntry.category && !seenIds.has(c.id))
+        .slice(0, 2)
     : []
+
+  // Fallback to different category if current category exhausted
+  const followUps =
+    relatedQuestions.length > 0
+      ? relatedQuestions
+      : chatConfig.filter((c) => !seenIds.has(c.id)).slice(0, 2)
+
+  const hasAnswers = answerCount > 0
+  const showStarters = !hasAnswers
 
   const panelClasses = isModal
     ? "fixed inset-4 md:inset-10 z-50 w-auto h-auto max-w-none max-h-none rounded-2xl"
@@ -161,10 +200,7 @@ export default function ChatWidget({ isOpen, onToggle }: { isOpen: boolean; onTo
       <motion.button
         onClick={onToggle}
         initial={{ scale: 0 }}
-        animate={{
-          scale: 1,
-          transition: { delay: 2, type: "spring", stiffness: 260, damping: 20 },
-        }}
+        animate={{ scale: 1, transition: { delay: 2, type: "spring", stiffness: 260, damping: 20 } }}
         whileHover={{ scale: 1.1 }}
         whileTap={{ scale: 0.9 }}
         className="fixed bottom-6 right-6 z-50 w-14 h-14 bg-ink dark:bg-darkInk text-cream dark:text-darkBg rounded-full shadow-lg flex items-center justify-center hover:opacity-80 transition-opacity"
@@ -193,12 +229,13 @@ export default function ChatWidget({ isOpen, onToggle }: { isOpen: boolean; onTo
               />
             )}
             <motion.div
-              initial={{ opacity: 0, y: isModal ? 0 : 100, scale: isModal ? 0.95 : 0.95 }}
+              initial={{ opacity: 0, y: isModal ? 0 : 100, scale: 0.95 }}
               animate={{ opacity: 1, y: 0, scale: 1 }}
               exit={{ opacity: 0, y: isModal ? 0 : 100, scale: 0.95 }}
               transition={{ type: "spring", stiffness: 300, damping: 30 }}
               className={`${panelClasses} bg-cream dark:bg-darkBg shadow-2xl border border-subtle dark:border-darkSubtle/60 flex flex-col overflow-hidden`}
             >
+              {/* Header */}
               <div className="flex items-center justify-between px-5 py-4 border-b border-subtle dark:border-darkSubtle bg-ink dark:bg-[#1A1A1A] text-cream flex-shrink-0">
                 <div className="flex items-center gap-3">
                   <div className="w-8 h-8 bg-cream text-ink dark:bg-darkInk dark:text-darkBg rounded-full flex items-center justify-center font-serif text-sm font-semibold">
@@ -233,6 +270,7 @@ export default function ChatWidget({ isOpen, onToggle }: { isOpen: boolean; onTo
                 </div>
               </div>
 
+              {/* Messages */}
               <div ref={scrollRef} className="flex-1 overflow-y-auto p-4 space-y-4 dark:bg-darkBg scroll-smooth">
                 {showScrollHint && (
                   <div className="text-center">
@@ -256,74 +294,37 @@ export default function ChatWidget({ isOpen, onToggle }: { isOpen: boolean; onTo
                   </div>
                 ))}
 
-                {relatedQuestions.length > 0 && (
-                  <div className="pt-3 border-t border-subtle/50 dark:border-darkSubtle/30">
+                {/* Starter questions — shown only before any answer */}
+                {showStarters && (
+                  <ChipList
+                    items={starters}
+                    onSelect={handlePresetClick}
+                    listKey="starters"
+                  />
+                )}
+
+                {/* Follow-up questions — iterative, appear after each answer */}
+                {hasAnswers && followUps.length > 0 && (
+                  <div className="pt-1">
                     <p className="font-sans text-[10px] uppercase tracking-[0.12em] text-warmGray/60 dark:text-darkWarmGray/60 mb-2.5">
-                      Related questions
+                      {relatedQuestions.length > 0 ? "Related" : "You might also ask"}
                     </p>
-                    <div className="flex flex-wrap gap-2">
-                      {relatedQuestions.map((entry) => (
-                        <button
-                          key={entry.id}
-                          onClick={() => handlePresetClick(entry)}
-                          className="font-sans text-xs px-3 py-2 border border-subtle dark:border-darkSubtle rounded-full hover:bg-ink/5 dark:hover:bg-darkInk/5 hover:border-ink/30 dark:hover:border-darkInk/30 transition-all duration-200 text-left text-ink dark:text-darkInk"
-                        >
-                          {entry.question}
-                        </button>
-                      ))}
-                    </div>
+                    <ChipList
+                      items={followUps}
+                      onSelect={handlePresetClick}
+                      listKey={`followup-${answerCount}`}
+                    />
                   </div>
                 )}
 
-                {showPresets && (
-                  <>
-                    <div className="flex gap-1.5 pt-2 flex-wrap">
-                      <button
-                        onClick={() => setSelectedCategory(null)}
-                        className={`font-sans text-[11px] uppercase tracking-[0.1em] px-2.5 py-1 rounded-full transition-all ${
-                          selectedCategory === null
-                            ? "bg-ink dark:bg-darkInk text-cream dark:text-darkBg"
-                            : "bg-subtle/30 dark:bg-darkSubtle/30 text-warmGray dark:text-darkWarmGray hover:bg-subtle/50 dark:hover:bg-darkSubtle/50"
-                        }`}
-                      >
-                        All
-                      </button>
-                      {categories.map((cat) => (
-                        <button
-                          key={cat}
-                          onClick={() => setSelectedCategory(cat)}
-                          className={`font-sans text-[11px] uppercase tracking-[0.1em] px-2.5 py-1 rounded-full transition-all ${
-                            selectedCategory === cat
-                              ? "bg-ink dark:bg-darkInk text-cream dark:text-darkBg"
-                              : "bg-subtle/30 dark:bg-darkSubtle/30 text-warmGray dark:text-darkWarmGray hover:bg-subtle/50 dark:hover:bg-darkSubtle/50"
-                          }`}
-                        >
-                          {cat}
-                        </button>
-                      ))}
-                    </div>
-
-                    <div className="flex flex-wrap gap-2">
-                      {filteredPresets.map((entry) => (
-                        <button
-                          key={entry.id}
-                          onClick={() => handlePresetClick(entry)}
-                          className="font-sans text-xs px-3 py-2 border border-subtle dark:border-darkSubtle rounded-full hover:bg-ink/5 dark:hover:bg-darkInk/5 hover:border-ink/30 dark:hover:border-darkInk/30 transition-all duration-200 text-left text-ink dark:text-darkInk"
-                        >
-                          {entry.question}
-                        </button>
-                      ))}
-                    </div>
-                  </>
-                )}
-
-                {hasAnswers && !showPresets && (
-                  <div className="pt-4 border-t border-subtle dark:border-darkSubtle">
+                {/* Reset */}
+                {hasAnswers && (
+                  <div className="pt-3 border-t border-subtle dark:border-darkSubtle">
                     <button
                       onClick={handleReset}
                       className="w-full py-2.5 rounded-xl border border-subtle dark:border-darkSubtle font-sans text-xs uppercase tracking-[0.1em] text-warmGray dark:text-darkWarmGray hover:bg-ink/5 dark:hover:bg-darkInk/5 hover:text-ink dark:hover:text-darkInk transition-all"
                     >
-                      ↺ Ask something else
+                      ↺ Start over
                     </button>
                   </div>
                 )}
@@ -331,6 +332,7 @@ export default function ChatWidget({ isOpen, onToggle }: { isOpen: boolean; onTo
                 <div ref={messagesEndRef} />
               </div>
 
+              {/* Input */}
               <form onSubmit={handleSend} className="p-4 border-t border-subtle dark:border-darkSubtle dark:bg-darkBg flex-shrink-0">
                 <div className="flex gap-2">
                   <input
