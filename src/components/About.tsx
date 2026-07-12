@@ -18,7 +18,7 @@ export default function About() {
         className="section-label mb-3"
       >
         About Me{" "}
-        <span className="easter-egg" data-egg="egg-3" aria-hidden="true">◆</span>
+        <span className="easter-egg" data-egg="egg-3" aria-hidden="true">✨</span>
       </motion.p>
 
       <motion.h2
@@ -48,7 +48,7 @@ export default function About() {
         <div className="flex flex-col items-start justify-center p-6 bg-subtle/30 dark:bg-darkSubtle/30 rounded-2xl border border-subtle dark:border-darkSubtle">
           <span className="font-serif text-5xl md:text-6xl mb-2">
             10+{" "}
-            <span className="easter-egg" data-egg="egg-4" aria-hidden="true" style={{ fontSize: "0.4em" }}>⌘</span>
+            <span className="easter-egg" data-egg="egg-4" aria-hidden="true" style={{ fontSize: "0.45em" }}>🎯</span>
           </span>
           <p className="font-sans text-sm uppercase tracking-[0.15em] text-warmGray dark:text-darkWarmGray text-left">
             Years bridging design &amp; code

@@ -2,7 +2,7 @@
 
 import { motion } from "framer-motion"
 import Link from "next/link"
-import { experiments } from "@/data/playground"
+import { experiments } from "@/data/playground/index"
 
 export default function PlaygroundTeaser() {
   return (

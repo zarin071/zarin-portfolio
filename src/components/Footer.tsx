@@ -5,12 +5,12 @@ export default function Footer() {
         <div className="flex flex-col md:flex-row items-center justify-between gap-6">
           <div className="text-center md:text-left">
             <p className="font-serif text-xl font-semibold tracking-tight text-ink dark:text-darkInk">
-              <span className="easter-egg" data-egg="egg-10" aria-hidden="true" style={{ fontSize: "0.7em", verticalAlign: "super" }}>★</span>
+              <span className="easter-egg" data-egg="egg-10" aria-hidden="true" style={{ fontSize: "0.7em", verticalAlign: "super" }}>🌟</span>
               Z.
             </p>
             <p className="font-sans text-sm text-warmGray dark:text-darkWarmGray mt-1">
               © 2026 Zarin Solanki{" "}
-              <span className="easter-egg" data-egg="egg-9" aria-hidden="true">∞</span>
+              <span className="easter-egg" data-egg="egg-9" aria-hidden="true">🦄</span>
             </p>
           </div>
 

@@ -44,7 +44,7 @@ export default function Hero({ onChatOpen }: { onChatOpen: () => void }) {
           className="body-lg mt-6 max-w-2xl"
         >
           Design meets engineering. Curiosity meets craft.{" "}
-          <span className="easter-egg" data-egg="egg-1" aria-hidden="true">▸</span>
+          <span className="easter-egg" data-egg="egg-1" aria-hidden="true">🥚</span>
         </motion.p>
 
         <motion.div
@@ -65,7 +65,7 @@ export default function Hero({ onChatOpen }: { onChatOpen: () => void }) {
           >
             Ask me anything
           </button>
-          <span className="easter-egg self-center" data-egg="egg-2" aria-hidden="true" style={{ fontSize: "0.8rem" }}>&lt;/&gt;</span>
+          <span className="easter-egg self-center" data-egg="egg-2" aria-hidden="true">👾</span>
         </motion.div>
       </div>
     </section>

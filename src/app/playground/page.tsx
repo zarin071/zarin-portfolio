@@ -7,7 +7,7 @@ import Nav from "@/components/Nav"
 import Footer from "@/components/Footer"
 import ChatWidget from "@/components/ChatWidget"
 import { auditSkills } from "@/data/audit-skills"
-import { experiments } from "@/data/playground"
+import { experiments } from "@/data/playground/index"
 
 // ─── Audit skills viewer ────────────────────────────────────────────────────
 

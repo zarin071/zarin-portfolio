@@ -414,6 +414,43 @@
     foundStyleEl.textContent = sel + "{opacity:.45!important;pointer-events:none!important;text-decoration:line-through!important;text-decoration-thickness:1px!important;cursor:default!important}"
   }
 
+  /* ─── Top notification banner ────────────────────────────────── */
+
+  var NOTIF_KEY = "egg_notif_dismissed_v2"
+
+  function showNotif() {
+    if (state.completed) return
+    try { if (sessionStorage.getItem(NOTIF_KEY)) return } catch (e) {}
+    if (document.getElementById("egg-notif")) return
+
+    var notif = document.createElement("div")
+    notif.id = "egg-notif"
+    notif.innerHTML =
+      '<div class="egg-notif-inner">' +
+        '<span class="egg-notif-text">🥚&nbsp; 10 Easter eggs are hiding on this page — can you find them all?</span>' +
+        '<button class="egg-notif-close" aria-label="Dismiss">✕</button>' +
+      '</div>'
+    document.body.appendChild(notif)
+
+    var closeBtn = notif.querySelector(".egg-notif-close")
+    function dismiss() {
+      notif.style.transition = "top 0.35s ease-in, opacity 0.3s ease"
+      notif.style.opacity = "0"
+      notif.style.top = "-80px"
+      setTimeout(function () { notif.remove() }, 380)
+      try { sessionStorage.setItem(NOTIF_KEY, "1") } catch (e) {}
+    }
+
+    closeBtn.addEventListener("click", dismiss)
+
+    requestAnimationFrame(function () {
+      setTimeout(function () { notif.classList.add("egg-notif-visible") }, 50)
+    })
+
+    var autoDismiss = setTimeout(dismiss, 7000)
+    closeBtn.addEventListener("click", function () { clearTimeout(autoDismiss) }, { once: true })
+  }
+
   /* ─── Init ────────────────────────────────────────────────────── */
 
   function init() {
@@ -426,6 +463,8 @@
 
     if (state.completed && !state.submitted) {
       setTimeout(showModal, 900)
+    } else {
+      setTimeout(showNotif, 2200)
     }
   }
 
