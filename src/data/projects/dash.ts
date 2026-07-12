@@ -7,7 +7,7 @@ const dash: Project = {
   role: "Product Designer",
   timeline: "2025 — Present",
   tags: ["Product Design", "Data Analytics", "Enterprise", "AI/ML"],
-  password: "bp-dash-2025", 
+  password: process.env.NEXT_PUBLIC_WORK_PASSWORD ?? "",
 
   problem:
     "bp's digital delivery business entity lacked a central, real-time view of performance. Critical data was scattered across multiple portfolios and detailed Power BIs,PDFS, PPTs making it slow to manage budgets, headcount, and delivery status — and hard to spot when projects were heading off-track before late surprises derailed quarterly outcomes.",

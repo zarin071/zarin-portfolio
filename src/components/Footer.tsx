@@ -5,10 +5,12 @@ export default function Footer() {
         <div className="flex flex-col md:flex-row items-center justify-between gap-6">
           <div className="text-center md:text-left">
             <p className="font-serif text-xl font-semibold tracking-tight text-ink dark:text-darkInk">
+              <span className="easter-egg" data-egg="egg-10" aria-hidden="true" style={{ fontSize: "0.7em", verticalAlign: "super" }}>★</span>
               Z.
             </p>
             <p className="font-sans text-sm text-warmGray dark:text-darkWarmGray mt-1">
-              © 2026 Zarin Solanki
+              © 2026 Zarin Solanki{" "}
+              <span className="easter-egg" data-egg="egg-9" aria-hidden="true">∞</span>
             </p>
           </div>
 
@@ -34,6 +36,16 @@ export default function Footer() {
               Resume
             </a>
           </div>
+        </div>
+
+        <div id="privacy-note" className="mt-8 pt-6 border-t border-subtle/50 dark:border-darkSubtle/50 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
+          <p className="font-sans text-xs text-warmGray/60 dark:text-darkWarmGray/60 max-w-md leading-relaxed">
+            🔍 There are 10 secrets hidden across this site — find them all for a surprise.
+            Any email shared via the Easter Egg Hunt is used only to add you to the Wall of Hunters and is never sold or shared.
+          </p>
+          <p className="font-sans text-xs text-warmGray/40 dark:text-darkWarmGray/40 shrink-0">
+            Built with Next.js &amp; Framer Motion
+          </p>
         </div>
       </div>
     </footer>

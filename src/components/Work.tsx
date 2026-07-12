@@ -117,7 +117,8 @@ export default function Work() {
         viewport={{ once: true, margin: "-100px" }}
         className="section-label"
       >
-        Selected Work
+        Selected Work{" "}
+        <span className="easter-egg" data-egg="egg-5" aria-hidden="true">⚡</span>
       </motion.p>
 
       <motion.h2
@@ -126,7 +127,8 @@ export default function Work() {
         viewport={{ once: true, margin: "-100px" }}
         className="heading-lg text-balance mb-4"
       >
-        Projects that <span className="font-serif italic font-normal">shipped</span>.
+        Projects that <span className="font-serif italic font-normal">shipped</span>.{" "}
+        <span className="easter-egg" data-egg="egg-6" aria-hidden="true">◯</span>
       </motion.h2>
 
       <motion.p

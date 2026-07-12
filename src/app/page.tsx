@@ -11,6 +11,7 @@ import Testimonials from "@/components/Testimonials"
 import Contact from "@/components/Contact"
 import Footer from "@/components/Footer"
 import ChatWidget from "@/components/ChatWidget"
+import PlaygroundTeaser from "@/components/PlaygroundTeaser"
 
 export default function Home() {
   const [chatOpen, setChatOpen] = useState(false)
@@ -23,6 +24,7 @@ export default function Home() {
         <TrustedBy />
         <About />
         <Work />
+        <PlaygroundTeaser />
         <Testimonials />
         <Contact />
       </main>

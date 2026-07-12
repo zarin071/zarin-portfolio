@@ -1,5 +1,8 @@
 import type { Metadata } from "next"
+import Script from "next/script"
 import "./globals.css"
+
+const base = process.env.NEXT_PUBLIC_BASE_PATH ?? ""
 
 export const metadata: Metadata = {
   title: "Zarin Solanki — UX Researcher & AI Product Designer",
@@ -27,9 +30,14 @@ export default function RootLayout({
             `,
           }}
         />
+        <link rel="stylesheet" href={`${base}/eggHunt.css`} />
       </head>
       <body className="min-h-screen bg-cream dark:bg-darkBg text-ink dark:text-darkInk font-sans antialiased transition-colors duration-300">
         {children}
+        <Script id="egg-hunt-config" strategy="beforeInteractive">
+          {`window.EGG_HUNT_CONFIG={emailjsServiceId:"${process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID ?? ""}",emailjsTemplateId:"${process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID ?? ""}",emailjsPublicKey:"${process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY ?? ""}"};`}
+        </Script>
+        <Script src={`${base}/eggHunt.js`} strategy="afterInteractive" />
       </body>
     </html>
   )

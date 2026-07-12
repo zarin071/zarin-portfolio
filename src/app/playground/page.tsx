@@ -1,93 +1,13 @@
 "use client"
 
 import { motion, AnimatePresence } from "framer-motion"
-import { useState, useEffect, useCallback } from "react"
+import { useState, useEffect } from "react"
 import ThemeProvider from "@/components/ThemeProvider"
 import Nav from "@/components/Nav"
 import Footer from "@/components/Footer"
 import ChatWidget from "@/components/ChatWidget"
 import { auditSkills } from "@/data/audit-skills"
-
-// ─── Inline password gate (sessionStorage, same pattern as PasswordGate) ───
-
-function useUnlock(id: string, password: string) {
-  const key = `zp-playground:${id}`
-  const [unlocked, setUnlocked] = useState(false)
-  const [ready, setReady] = useState(false)
-
-  useEffect(() => {
-    try { if (sessionStorage.getItem(key) === "1") setUnlocked(true) } catch {}
-    setReady(true)
-  }, [key])
-
-  const unlock = useCallback((val: string) => {
-    if (val === password) {
-      try { sessionStorage.setItem(key, "1") } catch {}
-      setUnlocked(true)
-      return true
-    }
-    return false
-  }, [key, password])
-
-  return { unlocked, ready, unlock }
-}
-
-function LockGate({ id, password, children }: { id: string; password: string; children: React.ReactNode }) {
-  const { unlocked, ready, unlock } = useUnlock(id, password)
-  const [val, setVal] = useState("")
-  const [error, setError] = useState(false)
-
-  if (!ready) return null
-  if (unlocked) return <>{children}</>
-
-  return (
-    <motion.div
-      initial={{ opacity: 0, y: 8 }}
-      animate={{ opacity: 1, y: 0 }}
-      className="mt-6 p-8 rounded-2xl border border-subtle dark:border-darkSubtle bg-subtle/20 dark:bg-darkSubtle/20"
-    >
-      <div className="max-w-xs mx-auto text-center">
-        <div className="w-10 h-10 mx-auto mb-4 rounded-xl border border-subtle dark:border-darkSubtle flex items-center justify-center">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round">
-            <rect x="3" y="11" width="18" height="11" rx="2" />
-            <path d="M7 11V7a5 5 0 0 1 10 0v4" />
-          </svg>
-        </div>
-        <p className="font-sans text-sm text-warmGray dark:text-darkWarmGray mb-4">Enter password to access</p>
-        <form
-          onSubmit={(e) => {
-            e.preventDefault()
-            const ok = unlock(val)
-            if (!ok) { setError(true); setVal("") }
-          }}
-          className="flex flex-col gap-3"
-        >
-          <input
-            type="password"
-            value={val}
-            autoFocus
-            onChange={(e) => { setVal(e.target.value); setError(false) }}
-            placeholder="Password"
-            className="w-full px-4 py-2.5 rounded-full border border-subtle dark:border-darkSubtle bg-transparent text-center text-sm text-ink dark:text-darkInk focus:outline-none focus:border-ink dark:focus:border-darkInk transition-colors placeholder:text-warmGray/50"
-          />
-          {error && <p className="text-xs text-red-500">Incorrect — try again.</p>}
-          <button
-            type="submit"
-            className="w-full py-2.5 rounded-full bg-ink dark:bg-darkInk text-cream dark:text-darkBg text-xs font-medium uppercase tracking-wide hover:opacity-80 transition-opacity"
-          >
-            Unlock
-          </button>
-        </form>
-        <p className="mt-4 text-xs text-warmGray dark:text-darkWarmGray">
-          Need access?{" "}
-          <a href="mailto:zarinsolanki.work@gmail.com" className="underline hover:text-ink dark:hover:text-darkInk">
-            Request it
-          </a>
-        </p>
-      </div>
-    </motion.div>
-  )
-}
+import { experiments } from "@/data/playground"
 
 // ─── Audit skills viewer ────────────────────────────────────────────────────
 
@@ -264,42 +184,29 @@ function AnalyticsAgent() {
   )
 }
 
+// ─── Contact CTA ─────────────────────────────────────────────────────────────
+
+function ContactCTA({ label }: { label: string }) {
+  return (
+    <div className="mt-5 p-4 rounded-xl bg-subtle/30 dark:bg-darkSubtle/30 border border-subtle dark:border-darkSubtle flex items-center justify-between gap-4">
+      <p className="font-sans text-xs text-warmGray dark:text-darkWarmGray">
+        {label}
+      </p>
+      <a
+        href="mailto:zarinsolanki.work@gmail.com"
+        className="shrink-0 inline-flex items-center gap-1.5 px-4 py-2 rounded-full bg-ink dark:bg-darkInk text-cream dark:text-darkBg text-xs font-medium hover:opacity-80 transition-opacity"
+      >
+        Contact me →
+      </a>
+    </div>
+  )
+}
+
 // ─── Playground page ─────────────────────────────────────────────────────────
-
-const ANALYTICS_PW = process.env.NEXT_PUBLIC_PLAYGROUND_ANALYTICS_PW ?? ""
-const AUDIT_PW = process.env.NEXT_PUBLIC_PLAYGROUND_AUDIT_PW ?? ""
-
-const experiments = [
-  {
-    id: "birthdate",
-    title: "The Day You Arrived",
-    description:
-      "Enter your birthdate and travel back to the exact day you joined the world — the #1 song, weather, world events, leaders, your zodiac and more.",
-    tag: "Interactive",
-    locked: false,
-  },
-  {
-    id: "analytics",
-    title: "AI Analytics Agent Platform",
-    description:
-      "A production-ready, portable Mixpanel-class analytics platform with a built-in AI agent. Copy into any project, edit one config file, and funnels, retention, cohorts, anomaly detection, and natural-language insights work automatically.",
-    tag: "Platform",
-    locked: true,
-  },
-  {
-    id: "audit",
-    title: "Design System Audit Toolkit",
-    description:
-      "11 AI skills that run your design system like it has a full-time ops lead. 9 daily skills that prevent design debt, 2 quarterly audits that score system health — so you can put a number in front of leadership.",
-    tag: "AI Skills",
-    locked: true,
-  },
-]
 
 export default function Playground() {
   const [chatOpen, setChatOpen] = useState(false)
   const [active, setActive] = useState<string | null>(null)
-  const [showLock, setShowLock] = useState<string | null>(null)
 
   return (
     <ThemeProvider>
@@ -340,46 +247,24 @@ export default function Playground() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.3 + i * 0.1 }}
             >
-              {/* Card header */}
               <div className="flex items-start justify-between gap-6">
                 <div>
                   <div className="flex items-center gap-2 mb-3">
                     <span className="inline-block font-sans text-[10px] uppercase tracking-[0.12em] px-2.5 py-1 border border-subtle dark:border-darkSubtle rounded-full text-warmGray dark:text-darkWarmGray">
                       {exp.tag}
                     </span>
-                    {exp.locked && (
-                      <span className="inline-flex items-center gap-1 font-sans text-[10px] uppercase tracking-[0.12em] px-2.5 py-1 border border-subtle dark:border-darkSubtle rounded-full text-warmGray dark:text-darkWarmGray">
-                        <svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
-                          <rect x="3" y="11" width="18" height="11" rx="2" />
-                          <path d="M7 11V7a5 5 0 0 1 10 0v4" />
-                        </svg>
-                        Locked
-                      </span>
-                    )}
                   </div>
                   <h2 className="font-syne font-medium text-2xl text-ink dark:text-darkInk mb-1">{exp.title}</h2>
                   <p className="text-sm text-warmGray dark:text-darkWarmGray max-w-2xl">{exp.description}</p>
                 </div>
                 <button
-                  onClick={() => {
-                    if (active === exp.id) {
-                      setActive(null)
-                      setShowLock(null)
-                    } else if (exp.locked) {
-                      setActive(exp.id)
-                      setShowLock(exp.id)
-                    } else {
-                      setActive(exp.id)
-                      setShowLock(null)
-                    }
-                  }}
+                  onClick={() => setActive(active === exp.id ? null : exp.id)}
                   className="shrink-0 font-sans text-xs uppercase tracking-[0.12em] px-4 py-2 rounded-full border border-ink/20 dark:border-darkInk/20 hover:bg-ink hover:text-cream dark:hover:bg-darkInk dark:hover:text-darkBg transition-all duration-200"
                 >
-                  {active === exp.id ? "Close" : exp.locked ? "Unlock →" : "Launch →"}
+                  {active === exp.id ? "Close" : "View →"}
                 </button>
               </div>
 
-              {/* Content */}
               <AnimatePresence>
                 {active === exp.id && (
                   <motion.div
@@ -405,21 +290,22 @@ export default function Playground() {
                     )}
 
                     {exp.id === "analytics" && (
-                      <LockGate id="analytics" password={ANALYTICS_PW}>
+                      <>
                         <AnalyticsAgent />
-                      </LockGate>
+                        <ContactCTA label="Want to deploy this in your product or explore a collaboration?" />
+                      </>
                     )}
 
                     {exp.id === "audit" && (
-                      <LockGate id="audit" password={AUDIT_PW}>
+                      <>
                         <AuditToolkit />
-                      </LockGate>
+                        <ContactCTA label="Want the full toolkit configured for your design system?" />
+                      </>
                     )}
                   </motion.div>
                 )}
               </AnimatePresence>
 
-              {/* Divider */}
               {i < experiments.length - 1 && (
                 <div className="mt-10 border-t border-subtle dark:border-darkSubtle" />
               )}
