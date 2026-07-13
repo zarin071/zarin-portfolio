@@ -30,5 +30,13 @@ error), so the page is always complete.
 | `2026-iconography.jpg` | Iconography |
 | `2026-layout.jpg` | 12→4 column grid + breakpoints |
 
-## Next — bp
-Reserved chapter in the storyline; add images + copy when that study is ready.
+## bp — bpCore (scaling to enterprise)
+| File | Slot |
+| --- | --- |
+| `bp-core-tiers.png` | The federated four-tier model (in place) |
+| `bp-atomic.png` | Atomic design structure — *placeholder until added* |
+| `bp-brand-2025.png` | 2025 brand refresh in bpCore — *placeholder until added* |
+
+The atomic-design and brand-refresh diagrams came in as `.emf` (Windows vector)
+in the source doc and couldn't be converted here — export them as PNG from the
+Confluence/Figma source and drop them in with the names above.

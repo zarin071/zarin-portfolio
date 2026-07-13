@@ -85,6 +85,7 @@ export interface Benefit {
 export interface Figure {
   alt: string
   src?: string          // e.g. "/packt/2018-style-guide.png" (base path added at render)
+  srcDark?: string      // optional dark-mode variant, shown when the .dark theme is active
   caption?: string
   placeholder?: string  // label shown in the placeholder box until `src` is set
   span?: "full" | "half"

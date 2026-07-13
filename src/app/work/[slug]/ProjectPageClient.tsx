@@ -3,7 +3,8 @@
 import { useParams } from "next/navigation"
 import Link from "next/link"
 import { motion, useScroll, useTransform, type Variants } from "framer-motion"
-import { useRef, useState } from "react"
+import { useRef, useState, useEffect } from "react"
+import { createPortal } from "react-dom"
 import { projects, type Benefit, type Persona, type Phase, type Discovery, type Chapter, type Figure, type ProcessStep } from "@/data/projects"
 import ThemeProvider from "@/components/ThemeProvider"
 import Nav from "@/components/Nav"
@@ -19,25 +20,64 @@ const base = process.env.NEXT_PUBLIC_BASE_PATH ?? ""
    placeholder box so the layout is complete before the artwork lands. */
 function FigureBlock({ figure }: { figure: Figure }) {
   const ratio = figure.ratio ?? "16 / 9"
-  const src = figure.src ? (figure.src.startsWith("/") ? `${base}${figure.src}` : figure.src) : null
+  const withBase = (s?: string) => (s ? (s.startsWith("/") ? `${base}${s}` : s) : null)
+  const src = withBase(figure.src)
+  const srcDark = withBase(figure.srcDark)
   const [errored, setErrored] = useState(false)
+  const [open, setOpen] = useState(false)
   const showImg = src && !errored
+  const objPos = figure.focus === "top" ? "object-top" : "object-center"
+
+  // Lock body scroll + close on Escape while the lightbox is open.
+  useEffect(() => {
+    if (!open) return
+    const prev = document.body.style.overflow
+    document.body.style.overflow = "hidden"
+    const onKey = (e: KeyboardEvent) => { if (e.key === "Escape") setOpen(false) }
+    window.addEventListener("keydown", onKey)
+    return () => {
+      document.body.style.overflow = prev
+      window.removeEventListener("keydown", onKey)
+    }
+  }, [open])
 
   return (
     <figure className={figure.span === "half" ? "" : "sm:col-span-2"}>
       <div
         style={{ aspectRatio: ratio }}
-        className="relative w-full overflow-hidden rounded-2xl border border-subtle/60 dark:border-darkSubtle/60 bg-subtle/30 dark:bg-darkSubtle/30"
+        className="group/fig relative w-full overflow-hidden rounded-2xl border border-subtle/60 dark:border-darkSubtle/60 bg-subtle/30 dark:bg-darkSubtle/30"
       >
         {showImg ? (
-          // eslint-disable-next-line @next/next/no-img-element
-          <img
-            src={src}
-            alt={figure.alt}
-            loading="lazy"
-            onError={() => setErrored(true)}
-            className={`absolute inset-0 h-full w-full object-cover ${figure.focus === "top" ? "object-top" : "object-center"}`}
-          />
+          <button
+            type="button"
+            onClick={() => setOpen(true)}
+            aria-label={`View ${figure.alt} full size`}
+            className="absolute inset-0 h-full w-full cursor-zoom-in"
+          >
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src={src}
+              alt={figure.alt}
+              loading="lazy"
+              onError={() => setErrored(true)}
+              className={`absolute inset-0 h-full w-full object-cover transition-transform duration-500 group-hover/fig:scale-[1.03] ${objPos} ${srcDark ? "dark:hidden" : ""}`}
+            />
+            {srcDark && (
+              // eslint-disable-next-line @next/next/no-img-element
+              <img
+                src={srcDark}
+                alt={figure.alt}
+                loading="lazy"
+                className={`absolute inset-0 h-full w-full object-cover transition-transform duration-500 group-hover/fig:scale-[1.03] ${objPos} hidden dark:block`}
+              />
+            )}
+            <span className="absolute bottom-3 right-3 flex items-center gap-1.5 rounded-full bg-ink/70 px-2.5 py-1 text-[10px] uppercase tracking-[0.12em] text-cream opacity-0 backdrop-blur-sm transition-opacity duration-300 group-hover/fig:opacity-100">
+              <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                <path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7" />
+              </svg>
+              Expand
+            </span>
+          </button>
         ) : (
           <div className="absolute inset-0 flex flex-col items-center justify-center gap-2 p-6 text-center">
             <span className="font-sans text-[10px] uppercase tracking-[0.2em] text-warmGray/70 dark:text-darkWarmGray/70">
@@ -54,14 +94,58 @@ function FigureBlock({ figure }: { figure: Figure }) {
           {figure.caption}
         </figcaption>
       )}
+
+      {/* Lightbox — portaled to <body> so `fixed` covers the viewport
+          regardless of framer-motion transforms/opacity on ancestors.
+          Image fits to width; tall boards scroll vertically. */}
+      {open && showImg && typeof document !== "undefined" && createPortal(
+        <div
+          className="fixed inset-0 z-[9999] flex flex-col bg-black/85 backdrop-blur-sm"
+          onClick={() => setOpen(false)}
+          role="dialog"
+          aria-modal="true"
+          aria-label={figure.alt}
+        >
+          <div className="flex items-center justify-between gap-4 px-4 py-3 md:px-6">
+            <span className="font-sans text-xs text-cream/70 truncate">{figure.caption ?? figure.alt}</span>
+            <button
+              type="button"
+              onClick={() => setOpen(false)}
+              aria-label="Close"
+              className="shrink-0 flex h-9 w-9 items-center justify-center rounded-full bg-white/10 text-cream hover:bg-white/20 transition-colors"
+            >
+              ✕
+            </button>
+          </div>
+          <div className="flex-1 overflow-y-auto overscroll-contain px-3 pb-8 md:px-6">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src={src}
+              alt={figure.alt}
+              onClick={(e) => e.stopPropagation()}
+              className={`mx-auto block w-full rounded-lg shadow-2xl ${srcDark ? "dark:hidden" : ""}`}
+            />
+            {srcDark && (
+              // eslint-disable-next-line @next/next/no-img-element
+              <img
+                src={srcDark}
+                alt={figure.alt}
+                onClick={(e) => e.stopPropagation()}
+                className="mx-auto hidden w-full rounded-lg shadow-2xl dark:block"
+              />
+            )}
+          </div>
+        </div>,
+        document.body
+      )}
     </figure>
   )
 }
 
 const eraBadgeClass: Record<string, string> = {
-  past: "bg-subtle dark:bg-darkSubtle text-warmGray dark:text-darkWarmGray",
+  past: "bg-subtle dark:bg-darkSubtle text-ink dark:text-darkInk border border-transparent dark:border-darkWarmGray/25",
   current: "bg-accent/15 text-accent",
-  future: "bg-warmGray/10 dark:bg-darkWarmGray/10 text-warmGray/70 dark:text-darkWarmGray/70",
+  future: "bg-warmGray/10 dark:bg-darkInk/40 text-warmGray dark:text-darkInk border border-transparent dark:border-darkWarmGray/25",
 }
 
 /* One act of the storyline — era badge, prose, figure grid and takeaways. */
@@ -84,7 +168,7 @@ function ChapterBlock({ chapter, fadeUp }: { chapter: Chapter; fadeUp: Variants 
           {chapter.title}
         </h3>
 
-        <div className="space-y-4 max-w-2xl">
+        <div className="space-y-4 max-w-3xl">
           {chapter.body.map((para, i) => (
             <p key={i} className="font-serif text-lg md:text-xl leading-relaxed text-ink/90 dark:text-darkInk/90">
               {para}
@@ -296,7 +380,7 @@ export default function ProjectPageClient() {
             initial="hidden"
             whileInView="show"
             viewport={{ once: true, margin: "-100px" }}
-            className="max-w-7xl space-y-20 md:space-y-24"
+            className="w-full space-y-20 md:space-y-24"
           >
             {/* Overview */}
             {project.overview && (
@@ -304,7 +388,7 @@ export default function ProjectPageClient() {
                 <p className="font-sans text-xs uppercase tracking-[0.2em] text-warmGray dark:text-darkWarmGray mb-4">
                   Overview
                 </p>
-                <p className="font-serif text-2xl md:text-3xl leading-relaxed text-ink dark:text-darkInk text-balance">
+                <p className="font-serif text-2xl md:text-3xl leading-relaxed text-ink dark:text-darkInk text-balance max-w-5xl">
                   {project.overview}
                 </p>
               </motion.div>
@@ -341,7 +425,7 @@ export default function ProjectPageClient() {
                     </h3>
                   )}
                   {project.processIntro && (
-                    <p className="font-serif text-lg md:text-xl leading-relaxed text-ink/90 dark:text-darkInk/90 max-w-2xl mb-10">
+                    <p className="font-serif text-lg md:text-xl leading-relaxed text-ink/90 dark:text-darkInk/90 max-w-3xl mb-10">
                       {project.processIntro}
                     </p>
                   )}
