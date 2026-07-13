@@ -104,21 +104,26 @@
   padding: 0;
   border: none;
   border-radius: 50%;
-  background: rgba(245, 240, 232, 0.2);
-  color: #F5F0E8;
+  /* Solid light chip with a dark glyph — reads clearly on the dark pill in
+     both light and dark themes, where a translucent light-on-light ✕ washed out. */
+  background: rgba(245, 240, 232, 0.92);
+  color: #1E1B16;
   font-family: sans-serif;
   font-size: 11px;
+  font-weight: 700;
   line-height: 1;
   cursor: pointer;
-  transition: background 0.15s, color 0.15s;
+  transition: background 0.15s, color 0.15s, transform 0.15s;
   -webkit-appearance: none;
   appearance: none;
 }
 
 .egg-hud-hide:hover {
-  background: rgba(245, 240, 232, 0.32);
-  color: #FFFFFF;
+  background: #FFFFFF;
+  color: #000000;
 }
+
+.egg-hud-hide:active { transform: scale(0.92); }
 
 #egg-hud.egg-hud-complete .egg-hud-hide { display: flex; }
 
@@ -490,13 +495,12 @@
     left: 16px;
   }
 
-  /* Bigger, higher-contrast hide button so it's tappable and visible. */
+  /* Bigger tap target on phones; keep the solid high-contrast chip. */
   .egg-hud-hide {
-    width: 24px;
-    height: 24px;
-    font-size: 12px;
-    margin-left: 5px;
-    background: rgba(245, 240, 232, 0.26);
+    width: 26px;
+    height: 26px;
+    font-size: 13px;
+    margin-left: 6px;
   }
 
   /* The notification is a full-width bar on phones so the text can wrap
