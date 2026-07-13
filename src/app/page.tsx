@@ -5,10 +5,13 @@ import ThemeProvider from "@/components/ThemeProvider"
 import Nav from "@/components/Nav"
 import Hero from "@/components/Hero"
 import TrustedBy from "@/components/TrustedBy"
+import About from "@/components/About"
 import Work from "@/components/Work"
+import Testimonials from "@/components/Testimonials"
 import Contact from "@/components/Contact"
 import Footer from "@/components/Footer"
 import ChatWidget from "@/components/ChatWidget"
+import PlaygroundTeaser from "@/components/PlaygroundTeaser"
 
 export default function Home() {
   const [chatOpen, setChatOpen] = useState(false)
@@ -19,7 +22,10 @@ export default function Home() {
       <main>
         <Hero onChatOpen={() => setChatOpen(true)} />
         <TrustedBy />
+        <About />
         <Work />
+        <PlaygroundTeaser />
+        <Testimonials />
         <Contact />
       </main>
       <Footer />

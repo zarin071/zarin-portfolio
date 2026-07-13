@@ -1,5 +1,8 @@
 import type { Metadata } from "next"
+import Script from "next/script"
 import "./globals.css"
+
+const base = process.env.NEXT_PUBLIC_BASE_PATH ?? ""
 
 export const metadata: Metadata = {
   title: "Zarin Solanki — UX Researcher & AI Product Designer",
@@ -13,7 +16,7 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="en" className="scroll-smooth" suppressHydrationWarning>
+    <html lang="en" className="scroll-smooth" data-scroll-behavior="smooth" suppressHydrationWarning>
       <head>
         <script
           dangerouslySetInnerHTML={{
@@ -27,9 +30,14 @@ export default function RootLayout({
             `,
           }}
         />
+        <link rel="stylesheet" href={`${base}/eggHunt.css`} />
       </head>
       <body className="min-h-screen bg-cream dark:bg-darkBg text-ink dark:text-darkInk font-sans antialiased transition-colors duration-300">
         {children}
+        <Script id="egg-hunt-config" strategy="beforeInteractive">
+          {`window.EGG_HUNT_CONFIG={web3formsKey:"${process.env.NEXT_PUBLIC_WEB3FORMS_KEY ?? ""}"};`}
+        </Script>
+        <Script src={`${base}/eggHunt.js`} strategy="afterInteractive" />
       </body>
     </html>
   )

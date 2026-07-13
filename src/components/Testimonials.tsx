@@ -1,21 +1,34 @@
 "use client"
 
-import { useState, useEffect } from "react"
+import { useState, useEffect, useRef, useCallback } from "react"
 import { motion, AnimatePresence } from "framer-motion"
 import { testimonials } from "@/data/testimonials"
 
 export default function Testimonials() {
   const [active, setActive] = useState(0)
+  const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null)
 
-  useEffect(() => {
-    const interval = setInterval(() => {
+  const startInterval = useCallback(() => {
+    intervalRef.current = setInterval(() => {
       setActive((prev) => (prev + 1) % testimonials.length)
     }, 6000)
-    return () => clearInterval(interval)
   }, [])
 
+  const stopInterval = useCallback(() => {
+    if (intervalRef.current) clearInterval(intervalRef.current)
+  }, [])
+
+  useEffect(() => {
+    startInterval()
+    return stopInterval
+  }, [startInterval, stopInterval])
+
   return (
-    <section className="w-full px-6 md:px-10 lg:px-16 py-20 md:py-24 bg-subtle/20 dark:bg-darkSubtle/20">
+    <section
+      className="w-full px-6 md:px-10 lg:px-16 py-20 md:py-24 bg-subtle/20 dark:bg-darkSubtle/20"
+      onMouseEnter={stopInterval}
+      onMouseLeave={startInterval}
+    >
       <motion.p
         initial={{ opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}
@@ -31,7 +44,7 @@ export default function Testimonials() {
         viewport={{ once: true, margin: "-100px" }}
         className="heading-lg text-balance mb-10"
       >
-        Kind words from <span className="font-serif italic font-normal">people I&apos;ve worked with</span>.
+        What the <span className="font-serif italic font-normal">people I&apos;ve built things with</span> say.
       </motion.h2>
 
       <div className="relative min-h-[160px] md:min-h-[190px]">

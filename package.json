@@ -4,14 +4,15 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "predeploy": "npm run dev",
-    "deploy": "gh-pages -d dist",
+    "predeploy": "next build",
+    "deploy": "gh-pages -d out --nojekyll",
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
     "lint": "next lint"
   },
   "dependencies": {
+    "@emailjs/browser": "^4.4.1",
     "framer-motion": "^11.0.0",
     "next": "^16.2.7",
     "react": "^18.3.0",

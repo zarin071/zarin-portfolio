@@ -4,22 +4,58 @@ import { motion } from "framer-motion"
 import Link from "next/link"
 import { projects, type Project } from "@/data/projects"
 
+const base = process.env.NEXT_PUBLIC_BASE_PATH ?? ""
+
 function CoverArt({ project, large }: { project: Project; large?: boolean }) {
+  const coverSrc = project.coverImage
+    ? project.coverImage.startsWith("/") ? `${base}${project.coverImage}` : project.coverImage
+    : null
   return (
     <div
       className={`relative w-full overflow-hidden rounded-2xl ${large ? "aspect-[16/9]" : "aspect-[16/10]"}`}
       style={{ background: project.cover ?? "#E5E5E5" }}
     >
-      {/* soft depth blobs */}
-      <div className="absolute -top-8 -left-8 w-40 h-40 rounded-full bg-white/30 blur-2xl" />
-      <div className="absolute -bottom-10 right-0 w-52 h-52 rounded-full bg-black/10 blur-2xl" />
-
-      {/* subtle image-placeholder scale on hover */}
-      <div className="absolute inset-0 transition-transform duration-500 group-hover:scale-[1.04]" />
+      {coverSrc ? (
+        // eslint-disable-next-line @next/next/no-img-element
+        <img
+          src={coverSrc}
+          alt=""
+          loading="lazy"
+          className="absolute inset-0 h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.04]"
+        />
+      ) : (
+        <>
+          {/* soft depth blobs */}
+          <div className="absolute -top-8 -left-8 w-40 h-40 rounded-full bg-white/30 blur-2xl" />
+          <div className="absolute -bottom-10 right-0 w-52 h-52 rounded-full bg-black/10 blur-2xl" />
+          {/* subtle image-placeholder scale on hover */}
+          <div className="absolute inset-0 transition-transform duration-500 group-hover:scale-[1.04]" />
+        </>
+      )}
 
       {project.coverLabel && (
         <span className="absolute bottom-4 left-4 font-sans text-xs uppercase tracking-[0.12em] text-ink/70">
           {project.coverLabel}
+        </span>
+      )}
+
+      {project.password && (
+        <span className="absolute top-4 left-4 inline-flex items-center gap-1.5 font-sans text-xs uppercase tracking-[0.12em] text-ink/70 bg-cream/70 backdrop-blur-sm rounded-full px-3 py-1">
+          <svg
+            width="12"
+            height="12"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2.5"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            aria-hidden="true"
+          >
+            <rect x="3" y="11" width="18" height="11" rx="2" />
+            <path d="M7 11V7a5 5 0 0 1 10 0v4" />
+          </svg>
+          Locked
         </span>
       )}
 
@@ -97,7 +133,8 @@ export default function Work() {
         viewport={{ once: true, margin: "-100px" }}
         className="section-label"
       >
-        Selected Work
+        Selected Work{" "}
+        <span className="easter-egg" data-egg="egg-5" aria-hidden="true">🔥</span>
       </motion.p>
 
       <motion.h2
@@ -106,7 +143,8 @@ export default function Work() {
         viewport={{ once: true, margin: "-100px" }}
         className="heading-lg text-balance mb-4"
       >
-        Projects that <span className="font-serif italic font-normal">moved</span> the needle.
+        Projects that <span className="font-serif italic font-normal">shipped</span>.{" "}
+        <span className="easter-egg" data-egg="egg-6" aria-hidden="true">🚀</span>
       </motion.h2>
 
       <motion.p
@@ -115,8 +153,7 @@ export default function Work() {
         viewport={{ once: true, margin: "-100px" }}
         className="body-lg mb-14 max-w-2xl"
       >
-        From conversational AI to sustainability tools and design systems —
-        each project shipped with measurable impact.
+        Conversational AI, sustainability tools, enterprise design systems — shipped with measurable outcomes across B2B and B2C platforms at bp, Michelin, and beyond.
       </motion.p>
 
       {/* Featured project — full width */}

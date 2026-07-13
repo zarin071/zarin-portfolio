@@ -30,6 +30,16 @@
   caseStudy     → "View case study ↗" button — PDF, Google Drive, Notion, etc.
   projectLink   → "Live project ↗" button   — live URL
 
+  ACCESS CONTROL (optional)
+  ─────────────────────────
+  password      → If set, the /work/<id> case-study page is gated behind a
+                  password screen and the Work-grid card shows a "Locked" badge.
+                  The visitor must type this exact string to view the study;
+                  a successful unlock is remembered for the browser session.
+                  ⚠️ This is a client-side deterrent, NOT real security — the
+                  value ships in the site bundle, so never use a sensitive
+                  password here. Leave the field out to keep a project public.
+
   CARD VISUALS (work grid + detail page hero)
   ────────────────────────────────────────────
   cover         → CSS background value for the cover art card.
@@ -105,17 +115,24 @@ export interface Project {
   impact: string
   caseStudy?: string
   projectLink?: string
+  password?: string
   cover?: string
+  coverImage?: string   // /packt/cover.jpg — real hero/card image (base path added at render); `cover` gradient shows behind while it loads
   coverLabel?: string
   featured?: boolean
   // Rich detail-page sections (optional — see template above)
   overview?: string
-  origin?: string[]        // backstory paragraphs (unnumbered narrative)
-  discovery?: Discovery    // research section (numbered)
+  origin?: string[]
   offers?: string[]
   benefits?: Benefit[]
   personas?: Persona[]
   soundbites?: string[]
-  roadmap?: string         // short lead-in above the phases
-  phases?: Phase[]         // MVP roadmap breakdown
+  roadmap?: string
+  discovery?: Discovery
+  personas?: Persona[]
+  phases?: Phase[]
+  narrative?: Chapter[]   // illustrated storyline timeline (see Chapter above)
+  processTitle?: string   // heading for the process walkthrough
+  processIntro?: string   // lead paragraph above the steps
+  process?: ProcessStep[] // numbered "how it's built" walkthrough
 }

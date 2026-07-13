@@ -8,6 +8,8 @@ import { useTheme } from "./ThemeProvider"
 const navItems = [
   { label: "Work", href: "#work" },
   { label: "About Me", href: "/about" },
+  { label: "Playground", href: "/playground" },
+  { label: "Contact", href: "#contact" },
 ]
 
 export default function Nav({ onChatOpen }: { onChatOpen: () => void }) {
@@ -102,7 +104,7 @@ export default function Nav({ onChatOpen }: { onChatOpen: () => void }) {
               onClick={onChatOpen}
               className="font-sans text-sm uppercase tracking-[0.15em] px-4 py-2 bg-accent text-cream rounded-full hover:opacity-80 hover:shadow-sm transition-all duration-300"
             >
-              Say Hello
+              Ask me anything
             </button>
           </div>
 
@@ -168,7 +170,7 @@ export default function Nav({ onChatOpen }: { onChatOpen: () => void }) {
                   onClick={() => { onChatOpen(); setMobileOpen(false) }}
                   className="font-sans text-sm uppercase tracking-[0.15em] px-4 py-2 bg-accent text-cream rounded-full"
                 >
-                  Say Hello
+                  Ask me anything
                 </button>
               </div>
             </div>
