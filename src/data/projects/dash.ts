@@ -78,7 +78,6 @@ const dash: Project = {
 
   personas: [
     {
-<<<<<<< HEAD
       role: "Delivery Team (Squad / Pod)",
       scope: "Plans and delivers at the atomic team level.",
       need: "To report how effectively, efficiently and on-budget they deliver without the manual PowerPoint and CSV handoffs — DASH captures performance at source through the ADO feed, so effort goes into the work, not re-presenting it.",
@@ -144,26 +143,6 @@ const dash: Project = {
         "AI-powered decision support and forecasting",
         "An intelligent assistant that augments leadership decisions",
       ],
-=======
-      role: "VP",
-      scope: "Owns an organisation's delivery, budget, and headcount.",
-      need: "Controlled organisation headcount reporting and resource optimisation, alongside budget variances for their teams — the VP-visibility view DASH was built to surface, replacing scattered sources with one real-time picture.",
-    },
-    {
-      role: "SVP",
-      scope: "Oversees multiple portfolios and functions.",
-      need: "A consolidated view of finance, delivery status, and TRM across teams, with the Strategy Cockpit proactively flagging where intervention or escalation is needed — before late surprises derail the quarter.",
-    },
-    {
-      role: "Group Leadership (EVP)",
-      scope: "Accountable for a whole business line's performance.",
-      need: "Trustworthy, high-level performance signals for strategic decisions — one integrated hub rather than a stack of detailed Power BIs — improving decision speed and the integrity of the data behind them.",
-    },
-    {
-      role: "CEO",
-      scope: "Enterprise-wide accountability.",
-      need: "Confidence that delivery is on track and value is landing, seen at the highest level without digging into the detail — DASH positioned as a driver of cultural and organisational change, not just reporting.",
->>>>>>> 4d0390fa1b7a4abd4689923ad53cd10a1127a083
     },
   ],
 
@@ -177,51 +156,6 @@ const dash: Project = {
     "DASH should support better project controls, not just analytics.",
     "Capturing business case evolution would help track scope, cost and value over time.",
   ],
-<<<<<<< HEAD
-=======
-
-  roadmap:
-    "DASH is delivered in MVP phases, each building on the last — from a single source of truth, to proactive action, to AI-driven foresight. It continues to evolve on team feedback, with efficiency and effectiveness (not solely reporting) as the goal.",
-
-  phases: [
-    {
-      name: "MVP 1",
-      title: "Integrated 360° reporting hub",
-      status: "current",
-      summary:
-        "Where DASH is today. Disparate, manually-collated sources are integrated via Palantir Foundry and given business logic through its ontology, then surfaced as one standardised, real-time view of performance across the full reporting chain — team to portfolio to VP to SVP to EVP. It replaces the PowerPoint, screenshot and CSV handoffs with a single source of truth.",
-      items: [
-        "Data integration across finance, headcount, delivery status and TRM",
-        "Standardised, real-time 360° performance view for the full reporting chain",
-        "Tailored front-end experience beyond the out-of-the-box Workshop UI",
-      ],
-    },
-    {
-      name: "MVP 2",
-      title: "Triggers, automations & actionable insights",
-      status: "next",
-      summary:
-        "Moving from reporting to action. The Strategy Cockpit proactively alerts teams and leaders when intervention or escalation is needed, and automations prepare the insights so decisions and pivots happen faster — because insights are only as good as what you execute on.",
-      items: [
-        "Proactive alerting and escalation triggers",
-        "Automated insight preparation to cut manual overhead",
-        "Faster, more accurate decisions and quicker team pivots",
-      ],
-    },
-    {
-      name: "MVP 3",
-      title: "AI intelligence & value realisation",
-      status: "future",
-      summary:
-        "The longer-term vision. ML/AI learning insights and recommendations, full investment-planning integration, and live value-realisation tracking — positioning DASH as a driver of cultural and organisational change, not just reporting.",
-      items: [
-        "ML/AI learning insights and recommendations",
-        "Full investment-planning integration",
-        "Live value-realisation tracking",
-      ],
-    },
-  ],
->>>>>>> 4d0390fa1b7a4abd4689923ad53cd10a1127a083
 }
 
 export default dash

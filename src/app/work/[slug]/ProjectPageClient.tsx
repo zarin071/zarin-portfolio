@@ -800,7 +800,7 @@ export default function ProjectPageClient() {
                           {phase.summary}
                         </p>
                         <ul className="space-y-2">
-                          {phase.items.map((item) => (
+                          {(phase.items ?? []).map((item) => (
                             <li key={item} className="flex gap-3 items-start">
                               <span className="mt-2 w-1.5 h-1.5 rounded-full bg-accent shrink-0" />
                               <span className="font-sans text-sm leading-relaxed text-warmGray dark:text-darkWarmGray">

@@ -96,11 +96,40 @@ export interface Discovery {
 }
 
 export interface Phase {
-  name: string     // short label, e.g. "MVP 1"
-  title: string    // what the phase delivers
-  status: "shipped" | "current" | "next" | "future"
-  summary: string  // 1-3 sentences on the phase
-  items?: string[] // optional bullet highlights
+  name: string      // short label, e.g. "MVP 1"
+  title: string     // what the phase delivers
+  status: "shipped" | "current" | "next" | "future" | string
+  summary: string   // 1-3 sentences on the phase
+  items?: string[]  // optional bullet highlights
+}
+
+export interface Figure {
+  alt: string
+  src?: string          // e.g. "/packt/2018-style-guide.png" (base path added at render)
+  srcDark?: string      // optional dark-mode variant, shown when the .dark theme is active
+  caption?: string
+  placeholder?: string  // label shown in the placeholder box until `src` is set
+  span?: "full" | "half"
+  ratio?: string        // CSS aspect-ratio, e.g. "16 / 9" (default) or "4 / 3"
+  focus?: "top" | "center"  // crop anchor for tall images (default center)
+}
+
+export interface ProcessStep {
+  step: string    // "01"
+  title: string
+  detail: string
+  tools?: string[]  // chips, e.g. ["get_variable_defs", "Code Connect"]
+}
+
+export interface Chapter {
+  era: string                             // short badge, e.g. "2018"
+  kicker: string                          // eyebrow label, e.g. "The style guide"
+  title: string
+  status?: "past" | "current" | "future"  // styles the era badge / reserved state
+  body: string[]                          // paragraphs
+  figures?: Figure[]
+  highlights?: string[]                   // bulleted takeaways
+  reserved?: boolean                      // renders a "coming soon" placeholder chapter
 }
 
 export interface Project {
@@ -117,10 +146,10 @@ export interface Project {
   projectLink?: string
   password?: string
   cover?: string
-  coverImage?: string   // /packt/cover.jpg — real hero/card image (base path added at render); `cover` gradient shows behind while it loads
+  coverImage?: string   // /packt/cover.jpg — real hero/card image (base path added at render)
   coverLabel?: string
   featured?: boolean
-  // Rich detail-page sections (optional — see template above)
+  // Rich detail-page sections (optional)
   overview?: string
   origin?: string[]
   offers?: string[]
@@ -129,10 +158,9 @@ export interface Project {
   soundbites?: string[]
   roadmap?: string
   discovery?: Discovery
-  personas?: Persona[]
   phases?: Phase[]
-  narrative?: Chapter[]   // illustrated storyline timeline (see Chapter above)
-  processTitle?: string   // heading for the process walkthrough
-  processIntro?: string   // lead paragraph above the steps
-  process?: ProcessStep[] // numbered "how it's built" walkthrough
+  narrative?: Chapter[]
+  processTitle?: string
+  processIntro?: string
+  process?: ProcessStep[]
 }
