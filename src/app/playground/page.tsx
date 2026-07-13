@@ -257,17 +257,8 @@ function AuditToolkit({ password }: { password?: string }) {
 // ─── Analytics agent overview ────────────────────────────────────────────────
 
 function AnalyticsAgent({ password }: { password?: string }) {
-  const [unlocked, setUnlocked] = useState(false)
-
-  useEffect(() => {
-    try {
-      if (sessionStorage.getItem("zp-unlocked:analytics") === "1") setUnlocked(true)
-    } catch { /* sessionStorage unavailable */ }
-  }, [])
-
   const unlock = () => {
-    try { sessionStorage.setItem("zp-unlocked:analytics", "1") } catch { /* ignore */ }
-    setUnlocked(true)
+    window.open("https://github.com/zarin071/AI-analytics-agent", "_blank", "noopener,noreferrer")
   }
 
   const capabilities = [
@@ -291,14 +282,7 @@ function AnalyticsAgent({ password }: { password?: string }) {
             </code>
           </div>
           <div className="shrink-0">
-            {unlocked ? (
-              <span className="inline-flex items-center gap-1.5 px-4 py-2 rounded-full bg-emerald-500/12 text-emerald-600 dark:text-emerald-400 text-xs font-medium">
-                <svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M2 6l3 3 5-5" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" /></svg>
-                Access unlocked
-              </span>
-            ) : (
-              <AccessControl subject="Access request — AI Analytics Agent Platform" password={password} onUnlock={unlock} />
-            )}
+            <AccessControl subject="Access request — AI Analytics Agent Platform" password={password} onUnlock={unlock} />
           </div>
         </div>
 
@@ -321,14 +305,6 @@ function AnalyticsAgent({ password }: { password?: string }) {
           </p>
         </div>
 
-        {unlocked && (
-          <div className="mt-4 p-4 rounded-xl bg-emerald-500/8 border border-emerald-500/20">
-            <p className="font-sans text-xs text-ink dark:text-darkInk">
-              <span className="font-medium">You&rsquo;re in.</span>{" "}
-              Email me and I&rsquo;ll share the private repo, a deployment walkthrough, and the one-file config template.
-            </p>
-          </div>
-        )}
       </div>
     </div>
   )
