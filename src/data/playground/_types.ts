@@ -15,4 +15,8 @@ export interface PlaygroundExperiment {
   description: string
   tag: string
   preview: string
+  /* Optional client-side access password. When set, the experiment's gated
+     content offers a "Have password?" unlock alongside "Get access".
+     ⚠️ Ships in the bundle — a casual deterrent, not real security. */
+  password?: string
 }
