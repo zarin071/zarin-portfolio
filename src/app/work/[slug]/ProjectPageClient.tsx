@@ -26,7 +26,6 @@ function FigureBlock({ figure }: { figure: Figure }) {
   const [errored, setErrored] = useState(false)
   const [open, setOpen] = useState(false)
   const showImg = src && !errored
-  const objPos = figure.focus === "top" ? "object-top" : "object-center"
 
   // Lock body scroll + close on Escape while the lightbox is open.
   useEffect(() => {
@@ -42,43 +41,44 @@ function FigureBlock({ figure }: { figure: Figure }) {
   }, [open])
 
   return (
-    <figure className={figure.span === "half" ? "" : "sm:col-span-2"}>
-      <div
-        style={{ aspectRatio: ratio }}
-        className="group/fig relative w-full overflow-hidden rounded-2xl border border-subtle/60 dark:border-darkSubtle/60 bg-subtle/30 dark:bg-darkSubtle/30"
-      >
-        {showImg ? (
-          <button
-            type="button"
-            onClick={() => setOpen(true)}
-            aria-label={`View ${figure.alt} full size`}
-            className="absolute inset-0 h-full w-full cursor-zoom-in"
-          >
-            {/* eslint-disable-next-line @next/next/no-img-element */}
+    <figure className="w-full">
+      {showImg ? (
+        <button
+          type="button"
+          onClick={() => setOpen(true)}
+          aria-label={`View ${figure.alt} full size`}
+          className="group/fig relative block w-full cursor-zoom-in overflow-hidden rounded-2xl border border-subtle/60 dark:border-darkSubtle/60 bg-subtle/30 dark:bg-darkSubtle/30"
+        >
+          {/* Fit to width — the whole image shows at its natural aspect ratio. */}
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src={src}
+            alt={figure.alt}
+            loading="lazy"
+            onError={() => setErrored(true)}
+            className={`block h-auto w-full ${srcDark ? "dark:hidden" : ""}`}
+          />
+          {srcDark && (
+            // eslint-disable-next-line @next/next/no-img-element
             <img
-              src={src}
+              src={srcDark}
               alt={figure.alt}
               loading="lazy"
-              onError={() => setErrored(true)}
-              className={`absolute inset-0 h-full w-full object-cover transition-transform duration-500 group-hover/fig:scale-[1.03] ${objPos} ${srcDark ? "dark:hidden" : ""}`}
+              className="hidden h-auto w-full dark:block"
             />
-            {srcDark && (
-              // eslint-disable-next-line @next/next/no-img-element
-              <img
-                src={srcDark}
-                alt={figure.alt}
-                loading="lazy"
-                className={`absolute inset-0 h-full w-full object-cover transition-transform duration-500 group-hover/fig:scale-[1.03] ${objPos} hidden dark:block`}
-              />
-            )}
-            <span className="absolute bottom-3 right-3 flex items-center gap-1.5 rounded-full bg-ink/70 px-2.5 py-1 text-[10px] uppercase tracking-[0.12em] text-cream opacity-0 backdrop-blur-sm transition-opacity duration-300 group-hover/fig:opacity-100">
-              <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-                <path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7" />
-              </svg>
-              Expand
-            </span>
-          </button>
-        ) : (
+          )}
+          <span className="absolute bottom-3 right-3 flex items-center gap-1.5 rounded-full bg-ink/70 px-2.5 py-1 text-[10px] uppercase tracking-[0.12em] text-cream opacity-0 backdrop-blur-sm transition-opacity duration-300 group-hover/fig:opacity-100">
+            <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+              <path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7" />
+            </svg>
+            Expand
+          </span>
+        </button>
+      ) : (
+        <div
+          style={{ aspectRatio: ratio }}
+          className="relative w-full overflow-hidden rounded-2xl border border-subtle/60 dark:border-darkSubtle/60 bg-subtle/30 dark:bg-darkSubtle/30"
+        >
           <div className="absolute inset-0 flex flex-col items-center justify-center gap-2 p-6 text-center">
             <span className="font-sans text-[10px] uppercase tracking-[0.2em] text-warmGray/70 dark:text-darkWarmGray/70">
               Image
@@ -87,8 +87,8 @@ function FigureBlock({ figure }: { figure: Figure }) {
               {figure.placeholder ?? figure.alt}
             </span>
           </div>
-        )}
-      </div>
+        </div>
+      )}
       {figure.caption && (
         <figcaption className="mt-3 font-sans text-xs leading-relaxed text-warmGray dark:text-darkWarmGray">
           {figure.caption}
@@ -186,7 +186,7 @@ function ChapterBlock({ chapter, fadeUp }: { chapter: Chapter; fadeUp: Variants 
         )}
 
         {chapter.figures && chapter.figures.length > 0 && (
-          <div className="mt-8 grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div className="mt-8 flex flex-col gap-6">
             {chapter.figures.map((figure) => (
               <FigureBlock key={figure.alt} figure={figure} />
             ))}
