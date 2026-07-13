@@ -1,7 +1,7 @@
 "use client"
 
 import { motion, AnimatePresence } from "framer-motion"
-import { useState, useEffect } from "react"
+import { useState, useEffect, type FormEvent } from "react"
 import ThemeProvider from "@/components/ThemeProvider"
 import Nav from "@/components/Nav"
 import Footer from "@/components/Footer"
@@ -20,17 +20,119 @@ const EXTERNAL_LINKS: Record<string, string> = {
 
 const FREE_SKILLS = new Set(["ux-copy-reviewer", "design-critique-partner"])
 
-function AuditToolkit() {
+const CONTACT_EMAIL = "zarinsolanki.work@gmail.com"
+
+// ─── Access control: "Have password?" + "Get access" ────────────────────────
+// Two options — enter a password to unlock now, or request access by email.
+
+function AccessControl({
+  subject,
+  password,
+  onUnlock,
+}: {
+  subject: string
+  password?: string
+  onUnlock: () => void
+}) {
+  const [showPw, setShowPw] = useState(false)
+  const [value, setValue] = useState("")
+  const [error, setError] = useState(false)
+
+  const mailto = `mailto:${CONTACT_EMAIL}?subject=${encodeURIComponent(subject)}`
+
+  const submit = (e: FormEvent) => {
+    e.preventDefault()
+    if (password && value.trim() === password) {
+      setError(false)
+      onUnlock()
+    } else {
+      setError(true)
+    }
+  }
+
+  if (showPw) {
+    return (
+      <form onSubmit={submit} className="flex w-full max-w-xs flex-col items-center gap-2.5">
+        <div className="flex w-full gap-2">
+          <input
+            type="password"
+            autoFocus
+            value={value}
+            onChange={(e) => { setValue(e.target.value); setError(false) }}
+            placeholder="Enter password"
+            aria-label="Access password"
+            aria-invalid={error}
+            className="min-w-0 flex-1 rounded-full border border-subtle bg-subtle/40 px-4 py-2.5 font-sans text-sm text-ink transition-colors placeholder:text-warmGray/60 focus:border-accent focus:outline-none dark:border-darkSubtle dark:bg-darkSubtle/40 dark:text-darkInk dark:placeholder:text-darkWarmGray/60"
+          />
+          <button
+            type="submit"
+            className="shrink-0 rounded-full bg-ink px-4 py-2.5 text-xs font-medium text-cream transition-opacity hover:opacity-80 dark:bg-darkInk dark:text-darkBg"
+          >
+            Unlock
+          </button>
+        </div>
+        {error && (
+          <p className="font-sans text-xs text-red-500" role="alert">Incorrect password — try again.</p>
+        )}
+        <div className="flex items-center gap-3 font-sans text-xs">
+          <button type="button" onClick={() => { setShowPw(false); setError(false) }} className="text-warmGray transition-colors hover:text-ink dark:text-darkWarmGray dark:hover:text-darkInk">
+            ← Back
+          </button>
+          <span className="text-warmGray/40">·</span>
+          <a href={mailto} className="text-accent hover:underline">Get access instead</a>
+        </div>
+      </form>
+    )
+  }
+
+  return (
+    <div className="flex flex-wrap items-center justify-center gap-2.5">
+      {password && (
+        <button
+          type="button"
+          onClick={() => setShowPw(true)}
+          className="inline-flex items-center gap-2 rounded-full border border-ink/20 px-5 py-2.5 text-xs font-medium text-ink transition-all hover:bg-ink/5 dark:border-darkInk/25 dark:text-darkInk dark:hover:bg-darkInk/10"
+        >
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+            <rect x="3" y="11" width="18" height="11" rx="2" />
+            <path d="M7 11V7a5 5 0 0 1 10 0v4" />
+          </svg>
+          Have a password?
+        </button>
+      )}
+      <a
+        href={mailto}
+        className="inline-flex items-center gap-2 rounded-full bg-ink px-5 py-2.5 text-xs font-medium text-cream transition-opacity hover:opacity-80 dark:bg-darkInk dark:text-darkBg"
+      >
+        Get access →
+      </a>
+    </div>
+  )
+}
+
+function AuditToolkit({ password }: { password?: string }) {
   const [selected, setSelected] = useState("design-critique-partner")
   const [content, setContent] = useState<Record<string, string>>({})
   const [loading, setLoading] = useState(false)
   const [copied, setCopied] = useState(false)
+  const [unlocked, setUnlocked] = useState(false)
 
   const skill = auditSkills.find((s) => s.id === selected)!
-  const isFree = FREE_SKILLS.has(selected)
+  const viewable = FREE_SKILLS.has(selected) || unlocked
 
   useEffect(() => {
-    if (!isFree) return
+    try {
+      if (sessionStorage.getItem("zp-unlocked:audit") === "1") setUnlocked(true)
+    } catch { /* sessionStorage unavailable */ }
+  }, [])
+
+  const unlock = () => {
+    try { sessionStorage.setItem("zp-unlocked:audit", "1") } catch { /* ignore */ }
+    setUnlocked(true)
+  }
+
+  useEffect(() => {
+    if (!viewable) return
     if (content[selected]) return
     setLoading(true)
     fetch(`${base}/audit-skills/${skill.file}`)
@@ -40,7 +142,7 @@ function AuditToolkit() {
         setLoading(false)
       })
       .catch(() => setLoading(false))
-  }, [selected, skill.file, content, isFree])
+  }, [selected, skill.file, content, viewable])
 
   const copy = async () => {
     const text = content[selected]
@@ -99,7 +201,7 @@ function AuditToolkit() {
               <p className="font-syne font-medium text-sm text-ink dark:text-darkInk">{skill.name}</p>
               <p className="text-xs text-warmGray dark:text-darkWarmGray">{skill.description}</p>
             </div>
-            {isFree && (
+            {viewable && (
               <button
                 onClick={copy}
                 className="shrink-0 ml-4 inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full border border-subtle dark:border-darkSubtle text-xs text-warmGray dark:text-darkWarmGray hover:text-ink dark:hover:text-darkInk hover:border-ink/30 dark:hover:border-darkInk/30 transition-all"
@@ -120,7 +222,7 @@ function AuditToolkit() {
           </div>
 
           <div className="flex-1 overflow-y-auto px-6 py-5">
-            {!isFree ? (
+            {!viewable ? (
               <div className="flex flex-col items-center justify-center h-full gap-4 text-center">
                 <div className="w-10 h-10 rounded-xl border border-subtle dark:border-darkSubtle flex items-center justify-center text-warmGray dark:text-darkWarmGray">
                   <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round">
@@ -130,14 +232,11 @@ function AuditToolkit() {
                 </div>
                 <div>
                   <p className="font-syne font-medium text-sm text-ink dark:text-darkInk mb-1">{skill.name}</p>
-                  <p className="text-xs text-warmGray dark:text-darkWarmGray max-w-xs">{skill.description}</p>
+                  <p className="text-xs text-warmGray dark:text-darkWarmGray max-w-xs">
+                    Locked. Enter the password to unlock all 11 skills, or request access.
+                  </p>
                 </div>
-                <a
-                  href="mailto:zarinsolanki.work@gmail.com"
-                  className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-ink dark:bg-darkInk text-cream dark:text-darkBg text-xs font-medium hover:opacity-80 transition-opacity"
-                >
-                  Contact me for access →
-                </a>
+                <AccessControl subject={`Access request — Design System Audit Toolkit`} password={password} onUnlock={unlock} />
               </div>
             ) : loading ? (
               <div className="flex items-center justify-center h-full">
@@ -157,7 +256,20 @@ function AuditToolkit() {
 
 // ─── Analytics agent overview ────────────────────────────────────────────────
 
-function AnalyticsAgent() {
+function AnalyticsAgent({ password }: { password?: string }) {
+  const [unlocked, setUnlocked] = useState(false)
+
+  useEffect(() => {
+    try {
+      if (sessionStorage.getItem("zp-unlocked:analytics") === "1") setUnlocked(true)
+    } catch { /* sessionStorage unavailable */ }
+  }, [])
+
+  const unlock = () => {
+    try { sessionStorage.setItem("zp-unlocked:analytics", "1") } catch { /* ignore */ }
+    setUnlocked(true)
+  }
+
   const capabilities = [
     { label: "Event tracking", detail: "Validation, naming standard, auto-taxonomy" },
     { label: "Sessions & profiles", detail: "Identity stitching, user timelines" },
@@ -178,12 +290,16 @@ function AnalyticsAgent() {
               SDK → Agent → Database → Dashboard → AI Insights
             </code>
           </div>
-          <a
-            href="mailto:zarinsolanki.work@gmail.com"
-            className="shrink-0 inline-flex items-center gap-2 px-4 py-2 rounded-full bg-ink dark:bg-darkInk text-cream dark:text-darkBg text-xs font-medium hover:opacity-80 transition-opacity"
-          >
-            Get access →
-          </a>
+          <div className="shrink-0">
+            {unlocked ? (
+              <span className="inline-flex items-center gap-1.5 px-4 py-2 rounded-full bg-emerald-500/12 text-emerald-600 dark:text-emerald-400 text-xs font-medium">
+                <svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M2 6l3 3 5-5" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" /></svg>
+                Access unlocked
+              </span>
+            ) : (
+              <AccessControl subject="Access request — AI Analytics Agent Platform" password={password} onUnlock={unlock} />
+            )}
+          </div>
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
@@ -204,6 +320,15 @@ function AnalyticsAgent() {
             Node 20 · PostgreSQL · Claude API · React Dashboard · Docker · pnpm workspaces
           </p>
         </div>
+
+        {unlocked && (
+          <div className="mt-4 p-4 rounded-xl bg-emerald-500/8 border border-emerald-500/20">
+            <p className="font-sans text-xs text-ink dark:text-darkInk">
+              <span className="font-medium">You&rsquo;re in.</span>{" "}
+              Email me and I&rsquo;ll share the private repo, a deployment walkthrough, and the one-file config template.
+            </p>
+          </div>
+        )}
       </div>
     </div>
   )
@@ -328,14 +453,14 @@ export default function Playground() {
 
                     {exp.id === "analytics" && (
                       <>
-                        <AnalyticsAgent />
+                        <AnalyticsAgent password={exp.password} />
                         <ContactCTA label="Want to deploy this in your product or explore a collaboration?" />
                       </>
                     )}
 
                     {exp.id === "audit" && (
                       <>
-                        <AuditToolkit />
+                        <AuditToolkit password={exp.password} />
                         <ContactCTA label="Want the full toolkit configured for your design system?" />
                       </>
                     )}
