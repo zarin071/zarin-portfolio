@@ -12,7 +12,7 @@
   ═══════════════════════════════════════════════════════════════════════════
 */
 
-export type { Project, Benefit, Persona, Phase, Discovery } from "./_types"
+export type { Project, Benefit, Persona, Phase, Discovery, Chapter, Figure } from "./_types"
 
 import dash from "./dash"
 import aiDealerBooking from "./ai-dealer-booking"
