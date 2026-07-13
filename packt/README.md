@@ -33,10 +33,12 @@ error), so the page is always complete.
 ## bp — bpCore (scaling to enterprise)
 | File | Slot |
 | --- | --- |
-| `bp-core-tiers.png` | The federated four-tier model (in place) |
-| `bp-atomic.png` | Atomic design structure — *placeholder until added* |
-| `bp-brand-2025.png` | 2025 brand refresh in bpCore — *placeholder until added* |
+| `bp-core-tiers.png` / `bp-core-tiers-dark.png` | The federated four-tier model (light + dark) |
+| `bp-before.jpg` | Before — varied adoption, cloned/disconnected components |
+| `bp-unified.jpg` | Now — a unified, federated System of Systems |
+| `bp-tiers-governance.jpg` | Tiered governance — owners + standards per tier |
+| `bp-contribution.jpg` | Contribution framework — promote up the tiers |
+| `bp-showcase.jpg` | Design showcase — primitives / components / kits |
+| `bp-benefits.jpg` | Benefits — designed for Figma, integrated with bp, built for AI |
 
-The atomic-design and brand-refresh diagrams came in as `.emf` (Windows vector)
-in the source doc and couldn't be converted here — export them as PNG from the
-Confluence/Figma source and drop them in with the names above.
+The `.jpg` boards are the bpCore guild-session slides (footers cropped).
