@@ -10,11 +10,11 @@ import type { Project } from "./_types"
 
 const packtDesignSystem: Project = {
   id: "packt-design-system",
-  title: "Packt Design System",
+  title: "Packt Design System ",
   subtitle:
-    "From a 2018 style guide to an AI-assisted design system for Packt & Packt Hub — the same problem, revisited with Claude and the Figma MCP.",
+    "From a 2018 style guide to an AI-assisted design system for Packt & Packt Hub — the same problem, revisited with Claude and the Figma MCP. Further implemented at bp as bpCore, a federated design system for dozens of teams and products.",
   role: "Design Systems · UI/UX · Front-End",
-  timeline: "2018 → 2026",
+  timeline: "2018 (revisited 2026)",
   tags: ["Design System", "Figma MCP", "AI-assisted", "Front-End"],
 
   problem:
@@ -24,7 +24,7 @@ const packtDesignSystem: Project = {
     "I revisited the problem twice, eight years apart. In 2018 I built a style guide: documented colour, type and components handed to engineering. In 2026 I redesigned it as a real system — tokens as the single source of truth, Figma variables wired to code through the Figma MCP and Code Connect, and Claude doing the scaffolding, documentation and drift audits.",
 
   impact:
-    "The result is one token core that themes cleanly across two brands — Packt and Packt Hub — with design and code that stay in lockstep instead of drifting apart the moment a team ships.",
+    "The result is one token core that themes cleanly across two brands — Packt and Packt Hub — with design and code that stay in lockstep instead of drifting apart the moment a team ships.This also helped at bp, where I scaled the same principles to a federated design system for dozens of teams and products, with a single source of truth flowing down and real usage flowing back up.",
 
   overview:
     "This is a case study told across eight years. The same goal — a consistent, scalable UI for a content-rich tech platform — approached first as a style guide in 2018, then reimagined in 2026 as an AI-assisted design system. It's a story about what changed: the tooling, the definition of \"done\", and how much of the busywork now belongs to the machine.",
