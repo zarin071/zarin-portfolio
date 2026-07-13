@@ -178,6 +178,45 @@
         if (e.key === "Enter" || e.key === " ") { e.preventDefault(); findEgg(id, el) }
       })
     })
+
+    setupScrollReveal(els)
+  }
+
+  /* ─── Scroll reveal ───────────────────────────────────────────── */
+  /* Reveal each egg with a pop as it scrolls into view instead of showing
+     them all at once. Eggs already on screen (or found) are left untouched,
+     so nothing flashes and already-collected eggs keep their found styling. */
+
+  var scrollObserver = null
+
+  function setupScrollReveal(els) {
+    if (scrollObserver) { scrollObserver.disconnect(); scrollObserver = null }
+    if (!("IntersectionObserver" in window)) return
+
+    var reduce = false
+    try { reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches } catch (e) {}
+    if (reduce) return
+
+    scrollObserver = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (!entry.isIntersecting) return
+        var el = entry.target
+        scrollObserver.unobserve(el)
+        el.classList.add("egg-revealing")
+        el.classList.remove("egg-prereveal")
+        setTimeout(function () { el.classList.remove("egg-revealing") }, 650)
+      })
+    }, { threshold: 0, rootMargin: "0px 0px -8% 0px" })
+
+    var revealLine = window.innerHeight * 0.9
+    els.forEach(function (el) {
+      if (el.getAttribute("data-found") === "true") return
+      if (el.classList.contains("egg-prereveal")) return
+      // Leave eggs already in view alone; only arm the ones further down.
+      if (el.getBoundingClientRect().top < revealLine) return
+      el.classList.add("egg-prereveal")
+      scrollObserver.observe(el)
+    })
   }
 
   /* ─── Find egg ────────────────────────────────────────────────── */
