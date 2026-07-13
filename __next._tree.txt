@@ -1,3 +1,3 @@
-:HL["/zarin-portfolio/_next/static/chunks/2mta-z4nue0ab.css","style"]
+:HL["/zarin-portfolio/_next/static/chunks/2x73a57axcgt3.css","style"]
 :HL["/zarin-portfolio/eggHunt.css","style"]
-0:{"tree":{"name":"","param":null,"prefetchHints":16,"slots":{"children":{"name":"__PAGE__","param":null,"prefetchHints":0,"slots":null}}},"staleTime":300,"buildId":"2jDjfBLp7Zi67CTkuESWA"}
+0:{"tree":{"name":"","param":null,"prefetchHints":16,"slots":{"children":{"name":"__PAGE__","param":null,"prefetchHints":0,"slots":null}}},"staleTime":300,"buildId":"Y49cl2f-7-XAWl3IPnoxe"}
