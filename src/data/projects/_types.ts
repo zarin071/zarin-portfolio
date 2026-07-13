@@ -76,6 +76,36 @@ export interface Benefit {
   detail: string
 }
 
+/*
+  Figure — an image slot inside a narrative chapter.
+  Drop the real asset into  public/packt/  and set `src` to  /packt/<file>.
+  While `src` is empty the page renders a labelled placeholder box, so the
+  layout is complete before the artwork arrives.
+*/
+export interface Figure {
+  alt: string
+  src?: string          // e.g. "/packt/2018-style-guide.png" (base path added at render)
+  caption?: string
+  placeholder?: string  // label shown in the placeholder box until `src` is set
+  span?: "full" | "half"
+  ratio?: string        // CSS aspect-ratio, e.g. "16 / 9" (default) or "4 / 3"
+}
+
+/*
+  Chapter — one act of a case-study storyline (e.g. "2018 → 2026 → next").
+  Rendered as a vertical timeline of illustrated sections.
+*/
+export interface Chapter {
+  era: string                                   // short badge, e.g. "2018"
+  kicker: string                                // eyebrow label, e.g. "The style guide"
+  title: string
+  status?: "past" | "current" | "future"        // styles the era badge / reserved state
+  body: string[]                                 // paragraphs
+  figures?: Figure[]
+  highlights?: string[]                          // bulleted takeaways
+  reserved?: boolean                             // renders a "coming soon" placeholder chapter
+}
+
 export interface Persona {
   role: string
   scope: string
@@ -121,4 +151,5 @@ export interface Project {
   discovery?: Discovery
   personas?: Persona[]
   phases?: Phase[]
+  narrative?: Chapter[]   // illustrated storyline timeline (see Chapter above)
 }

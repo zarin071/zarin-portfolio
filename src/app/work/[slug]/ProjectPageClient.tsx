@@ -4,7 +4,7 @@ import { useParams } from "next/navigation"
 import Link from "next/link"
 import { motion, useScroll, useTransform, type Variants } from "framer-motion"
 import { useRef, useState } from "react"
-import { projects, type Benefit, type Persona, type Phase, type Discovery } from "@/data/projects"
+import { projects, type Benefit, type Persona, type Phase, type Discovery, type Chapter, type Figure } from "@/data/projects"
 import ThemeProvider from "@/components/ThemeProvider"
 import Nav from "@/components/Nav"
 import Footer from "@/components/Footer"
@@ -12,6 +12,119 @@ import ChatWidget from "@/components/ChatWidget"
 import PasswordGate from "@/components/PasswordGate"
 
 type Project = NonNullable<ReturnType<typeof projects.find>>
+
+const base = process.env.NEXT_PUBLIC_BASE_PATH ?? ""
+
+/* A single figure — real image when `src` is set, otherwise a labelled
+   placeholder box so the layout is complete before the artwork lands. */
+function FigureBlock({ figure }: { figure: Figure }) {
+  const ratio = figure.ratio ?? "16 / 9"
+  const src = figure.src ? (figure.src.startsWith("/") ? `${base}${figure.src}` : figure.src) : null
+  const [errored, setErrored] = useState(false)
+  const showImg = src && !errored
+
+  return (
+    <figure className={figure.span === "half" ? "" : "sm:col-span-2"}>
+      <div
+        style={{ aspectRatio: ratio }}
+        className="relative w-full overflow-hidden rounded-2xl border border-subtle/60 dark:border-darkSubtle/60 bg-subtle/30 dark:bg-darkSubtle/30"
+      >
+        {showImg ? (
+          // eslint-disable-next-line @next/next/no-img-element
+          <img
+            src={src}
+            alt={figure.alt}
+            loading="lazy"
+            onError={() => setErrored(true)}
+            className="absolute inset-0 h-full w-full object-cover"
+          />
+        ) : (
+          <div className="absolute inset-0 flex flex-col items-center justify-center gap-2 p-6 text-center">
+            <span className="font-sans text-[10px] uppercase tracking-[0.2em] text-warmGray/70 dark:text-darkWarmGray/70">
+              Image
+            </span>
+            <span className="font-serif text-base text-warmGray dark:text-darkWarmGray">
+              {figure.placeholder ?? figure.alt}
+            </span>
+          </div>
+        )}
+      </div>
+      {figure.caption && (
+        <figcaption className="mt-3 font-sans text-xs leading-relaxed text-warmGray dark:text-darkWarmGray">
+          {figure.caption}
+        </figcaption>
+      )}
+    </figure>
+  )
+}
+
+const eraBadgeClass: Record<string, string> = {
+  past: "bg-subtle dark:bg-darkSubtle text-warmGray dark:text-darkWarmGray",
+  current: "bg-accent/15 text-accent",
+  future: "bg-warmGray/10 dark:bg-darkWarmGray/10 text-warmGray/70 dark:text-darkWarmGray/70",
+}
+
+/* One act of the storyline — era badge, prose, figure grid and takeaways. */
+function ChapterBlock({ chapter, fadeUp }: { chapter: Chapter; fadeUp: Variants }) {
+  const status = chapter.status ?? "current"
+  return (
+    <motion.div variants={fadeUp} className="relative grid md:grid-cols-[7rem_1fr] gap-6 md:gap-10">
+      {/* Era rail */}
+      <div className="flex md:flex-col items-center md:items-start gap-3">
+        <span className={`font-sans text-xs font-semibold tracking-[0.12em] px-3 py-1.5 rounded-full ${eraBadgeClass[status] ?? eraBadgeClass.current}`}>
+          {chapter.era}
+        </span>
+        <span className="hidden md:block w-[1px] flex-1 bg-subtle dark:bg-darkSubtle" />
+      </div>
+
+      {/* Body */}
+      <div className={`pb-4 ${chapter.reserved ? "opacity-90" : ""}`}>
+        <p className="font-sans text-xs uppercase tracking-[0.2em] text-accent mb-2">{chapter.kicker}</p>
+        <h3 className="font-serif text-2xl md:text-3xl leading-tight text-ink dark:text-darkInk mb-5 text-balance">
+          {chapter.title}
+        </h3>
+
+        <div className="space-y-4 max-w-2xl">
+          {chapter.body.map((para, i) => (
+            <p key={i} className="font-serif text-lg md:text-xl leading-relaxed text-ink/90 dark:text-darkInk/90">
+              {para}
+            </p>
+          ))}
+        </div>
+
+        {chapter.reserved && (
+          <div className="mt-6 inline-flex items-center gap-2 rounded-full border border-dashed border-warmGray/40 dark:border-darkWarmGray/40 px-4 py-1.5">
+            <span className="w-1.5 h-1.5 rounded-full bg-accent" />
+            <span className="font-sans text-xs uppercase tracking-[0.15em] text-warmGray dark:text-darkWarmGray">
+              Coming soon
+            </span>
+          </div>
+        )}
+
+        {chapter.figures && chapter.figures.length > 0 && (
+          <div className="mt-8 grid grid-cols-1 sm:grid-cols-2 gap-4">
+            {chapter.figures.map((figure) => (
+              <FigureBlock key={figure.alt} figure={figure} />
+            ))}
+          </div>
+        )}
+
+        {chapter.highlights && chapter.highlights.length > 0 && (
+          <ul className="mt-8 space-y-3">
+            {chapter.highlights.map((item) => (
+              <li key={item} className="flex gap-3 items-start">
+                <span className="mt-2 w-1.5 h-1.5 rounded-full bg-accent shrink-0" />
+                <span className="font-sans text-base leading-relaxed text-warmGray dark:text-darkWarmGray">
+                  {item}
+                </span>
+              </li>
+            ))}
+          </ul>
+        )}
+      </div>
+    </motion.div>
+  )
+}
 
 function HeroSection({ project, stagger, fadeUp }: {
   project: Project
@@ -173,6 +286,23 @@ export default function ProjectPageClient() {
                   {project.overview}
                 </p>
               </motion.div>
+            )}
+
+            {/* Narrative — illustrated storyline timeline */}
+            {project.narrative && project.narrative.length > 0 && (
+              <>
+                <motion.div className="w-full h-[1px] bg-subtle dark:bg-darkSubtle" variants={fadeUp} />
+                <motion.div variants={fadeUp}>
+                  <p className="font-sans text-xs uppercase tracking-[0.2em] text-warmGray dark:text-darkWarmGray mb-10">
+                    The evolution
+                  </p>
+                  <div className="space-y-16 md:space-y-20">
+                    {project.narrative.map((chapter) => (
+                      <ChapterBlock key={chapter.era + chapter.title} chapter={chapter} fadeUp={fadeUp} />
+                    ))}
+                  </div>
+                </motion.div>
+              </>
             )}
 
             {/* Origin */}
