@@ -33,6 +33,7 @@
     startTime: 0,
     completed: false,
     submitted: false,
+    hidden: false,
   }
 
   function loadState() {
@@ -47,6 +48,7 @@
       state.startTime  = s.startTime  || 0
       state.completed  = !!s.completed
       state.submitted  = !!s.submitted
+      state.hidden     = !!s.hidden
     } catch (e) {}
   }
 
@@ -60,6 +62,7 @@
   var hudScoreEl = null
   var hudCountEl = null
   var prevScore = 0
+  var restoreEl = null
 
   function buildHUD() {
     if (document.getElementById("egg-hud")) return
@@ -71,15 +74,52 @@
         '<span class="egg-hud-found"><span id="egg-hud-count">0</span>&thinsp;/&thinsp;' + TOTAL + '</span>' +
         '<span class="egg-hud-sep">·</span>' +
         '<span class="egg-hud-score-label"><span id="egg-hud-score">0</span>&thinsp;pts</span>' +
+        '<button class="egg-hud-hide" type="button" aria-label="Hide score" title="Hide score">✕</button>' +
       '</div>'
     document.body.appendChild(hud)
     hudScoreEl = document.getElementById("egg-hud-score")
     hudCountEl = document.getElementById("egg-hud-count")
     prevScore = state.score
 
-    if (state.found.length > 0) {
+    hud.querySelector(".egg-hud-hide").addEventListener("click", function () { setHidden(true) })
+
+    // The "hide score" control only unlocks once every egg has been found.
+    if (state.completed) hud.classList.add("egg-hud-complete")
+
+    if (state.completed && state.hidden) {
+      buildRestore()
+    } else if (state.found.length > 0) {
       hud.classList.add("egg-hud-visible")
       syncHUD(false)
+    }
+  }
+
+  /* ─── Hide / restore the score ────────────────────────────────── */
+
+  function buildRestore() {
+    if (document.getElementById("egg-restore")) return
+    restoreEl = document.createElement("button")
+    restoreEl.id = "egg-restore"
+    restoreEl.type = "button"
+    restoreEl.setAttribute("aria-label", "Show score")
+    restoreEl.setAttribute("title", "Show score")
+    restoreEl.textContent = "🥚"
+    document.body.appendChild(restoreEl)
+    restoreEl.addEventListener("click", function () { setHidden(false) })
+    requestAnimationFrame(function () {
+      setTimeout(function () { restoreEl.classList.add("egg-restore-visible") }, 30)
+    })
+  }
+
+  function setHidden(hidden) {
+    state.hidden = hidden
+    saveState()
+    if (hidden) {
+      if (hud) hud.classList.remove("egg-hud-visible")
+      buildRestore()
+    } else {
+      if (restoreEl) { restoreEl.remove(); restoreEl = null }
+      if (hud) { hud.classList.add("egg-hud-visible"); syncHUD(false) }
     }
   }
 
@@ -185,6 +225,7 @@
     if (state.found.length === TOTAL) {
       state.completed = true
       saveState()
+      if (hud) hud.classList.add("egg-hud-complete")
       setTimeout(function () {
         launchConfetti()
         setTimeout(showModal, 1400)
@@ -473,13 +514,15 @@
   window.EggHunt = {
     init: init,
     reset: function () {
-      state = { found: [], score: 0, comboCount: 0, comboBest: 1, lastFindTime: 0, startTime: 0, completed: false, submitted: false }
+      state = { found: [], score: 0, comboCount: 0, comboBest: 1, lastFindTime: 0, startTime: 0, completed: false, submitted: false, hidden: false }
       try { localStorage.removeItem(STORAGE_KEY) } catch (e) {}
       var h = document.getElementById("egg-hud")
       var m = document.getElementById("egg-modal-overlay")
+      var r = document.getElementById("egg-restore")
       if (h) h.remove()
       if (m) m.remove()
-      hud = null; hudScoreEl = null; hudCountEl = null; prevScore = 0
+      if (r) r.remove()
+      hud = null; hudScoreEl = null; hudCountEl = null; prevScore = 0; restoreEl = null
       if (foundStyleEl) { foundStyleEl.textContent = ""; foundStyleEl = null }
       document.querySelectorAll(".easter-egg").forEach(function (el) { el._eggBound = false })
       init()

@@ -92,6 +92,66 @@
   animation: egg-hud-bounce 0.38s ease-out;
 }
 
+/* ─── Hide-score button (unlocks once all eggs are found) ───────── */
+
+.egg-hud-hide {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  width: 18px;
+  height: 18px;
+  margin-left: 2px;
+  padding: 0;
+  border: none;
+  border-radius: 50%;
+  background: rgba(245, 240, 232, 0.14);
+  color: rgba(245, 240, 232, 0.7);
+  font-family: sans-serif;
+  font-size: 10px;
+  line-height: 1;
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s;
+}
+
+.egg-hud-hide:hover {
+  background: rgba(245, 240, 232, 0.26);
+  color: #F5F0E8;
+}
+
+#egg-hud.egg-hud-complete .egg-hud-hide { display: flex; }
+
+/* ─── Restore pill (shown while the score is hidden) ───────────── */
+
+#egg-restore {
+  position: fixed;
+  bottom: 24px;
+  left: 24px;
+  z-index: 9000;
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  border: none;
+  background: rgba(30, 27, 22, 0.9);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  box-shadow: 0 4px 24px rgba(0,0,0,0.22), 0 0 0 1px rgba(255,255,255,0.07);
+  font-size: 18px;
+  line-height: 1;
+  cursor: pointer;
+  opacity: 0;
+  transform: translateY(14px) scale(0.8);
+  transition:
+    opacity 0.4s cubic-bezier(0.34, 1.56, 0.64, 1),
+    transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+#egg-restore.egg-restore-visible {
+  opacity: 0.85;
+  transform: translateY(0) scale(1);
+}
+
+#egg-restore:hover { opacity: 1; }
+
 /* ─── Floating points ──────────────────────────────────────────── */
 
 .egg-float-pts {
@@ -372,6 +432,11 @@
 /* ─── Dark mode ────────────────────────────────────────────────── */
 
 .dark .egg-hud-inner {
+  background: rgba(245, 240, 232, 0.1);
+  border: 1px solid rgba(245, 240, 232, 0.08);
+}
+
+.dark #egg-restore {
   background: rgba(245, 240, 232, 0.1);
   border: 1px solid rgba(245, 240, 232, 0.08);
 }

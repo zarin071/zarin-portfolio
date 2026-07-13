@@ -13,6 +13,11 @@ import { experiments } from "@/data/playground/index"
 
 const base = process.env.NEXT_PUBLIC_BASE_PATH ?? ""
 
+// Experiments that also live as a standalone site — surfaced as an "Open ↗" link.
+const EXTERNAL_LINKS: Record<string, string> = {
+  birthdate: "https://zarin071.github.io/Birthdate",
+}
+
 const FREE_SKILLS = new Set(["ux-copy-reviewer", "design-critique-partner"])
 
 function AuditToolkit() {
@@ -277,12 +282,24 @@ export default function Playground() {
                   <h2 className="font-syne font-medium text-2xl text-ink dark:text-darkInk mb-1">{exp.title}</h2>
                   <p className="text-sm text-warmGray dark:text-darkWarmGray max-w-2xl">{exp.description}</p>
                 </div>
-                <button
-                  onClick={() => setActive(active === exp.id ? null : exp.id)}
-                  className="shrink-0 font-sans text-xs uppercase tracking-[0.12em] px-4 py-2 rounded-full border border-ink/20 dark:border-darkInk/20 hover:bg-ink hover:text-cream dark:hover:bg-darkInk dark:hover:text-darkBg transition-all duration-200"
-                >
-                  {active === exp.id ? "Close" : "View →"}
-                </button>
+                <div className="shrink-0 flex items-center gap-2">
+                  {EXTERNAL_LINKS[exp.id] && (
+                    <a
+                      href={EXTERNAL_LINKS[exp.id]}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="font-sans text-xs uppercase tracking-[0.12em] px-4 py-2 rounded-full border border-ink/20 dark:border-darkInk/20 hover:bg-ink hover:text-cream dark:hover:bg-darkInk dark:hover:text-darkBg transition-all duration-200"
+                    >
+                      Open ↗
+                    </a>
+                  )}
+                  <button
+                    onClick={() => setActive(active === exp.id ? null : exp.id)}
+                    className="font-sans text-xs uppercase tracking-[0.12em] px-4 py-2 rounded-full border border-ink/20 dark:border-darkInk/20 hover:bg-ink hover:text-cream dark:hover:bg-darkInk dark:hover:text-darkBg transition-all duration-200"
+                  >
+                    {active === exp.id ? "Close" : "View →"}
+                  </button>
+                </div>
               </div>
 
               <AnimatePresence>
