@@ -36,7 +36,7 @@ function FigureBlock({ figure }: { figure: Figure }) {
             alt={figure.alt}
             loading="lazy"
             onError={() => setErrored(true)}
-            className="absolute inset-0 h-full w-full object-cover"
+            className={`absolute inset-0 h-full w-full object-cover ${figure.focus === "top" ? "object-top" : "object-center"}`}
           />
         ) : (
           <div className="absolute inset-0 flex flex-col items-center justify-center gap-2 p-6 text-center">
@@ -160,10 +160,32 @@ function HeroSection({ project, stagger, fadeUp }: {
           style={{ scale: heroScale, opacity: heroOpacity, background: project.cover ?? "#E5E5E5" }}
           className="relative mt-6 rounded-3xl overflow-hidden aspect-[16/9] md:aspect-[21/9]"
         >
-          <div className="absolute -top-10 -left-10 w-56 h-56 rounded-full bg-white/30 blur-3xl" />
-          <div className="absolute -bottom-12 right-0 w-72 h-72 rounded-full bg-black/10 blur-3xl" />
+          {project.coverImage ? (
+            <>
+              {/* Slow Ken Burns drift on the real cover image */}
+              <motion.img
+                src={project.coverImage.startsWith("/") ? `${base}${project.coverImage}` : project.coverImage}
+                alt={`${project.title} cover`}
+                className="absolute inset-0 h-full w-full object-cover"
+                initial={{ scale: 1.06, opacity: 0 }}
+                animate={{ scale: [1.06, 1.12, 1.06], x: [0, -10, 0], opacity: 1 }}
+                transition={{
+                  opacity: { duration: 0.8, ease: "easeOut" },
+                  scale: { duration: 22, repeat: Infinity, ease: "easeInOut" },
+                  x: { duration: 22, repeat: Infinity, ease: "easeInOut" },
+                }}
+              />
+              {/* Legibility scrim for the label */}
+              <div className="absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-black/35 to-transparent" />
+            </>
+          ) : (
+            <>
+              <div className="absolute -top-10 -left-10 w-56 h-56 rounded-full bg-white/30 blur-3xl" />
+              <div className="absolute -bottom-12 right-0 w-72 h-72 rounded-full bg-black/10 blur-3xl" />
+            </>
+          )}
           {project.coverLabel && (
-            <span className="absolute bottom-5 left-5 font-sans text-xs uppercase tracking-[0.12em] text-ink/70">
+            <span className={`absolute bottom-5 left-5 font-sans text-xs uppercase tracking-[0.12em] ${project.coverImage ? "text-white/90" : "text-ink/70"}`}>
               {project.coverLabel}
             </span>
           )}

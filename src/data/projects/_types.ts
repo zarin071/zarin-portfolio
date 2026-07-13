@@ -89,6 +89,7 @@ export interface Figure {
   placeholder?: string  // label shown in the placeholder box until `src` is set
   span?: "full" | "half"
   ratio?: string        // CSS aspect-ratio, e.g. "16 / 9" (default) or "4 / 3"
+  focus?: "top" | "center"  // crop anchor for tall images (default center)
 }
 
 /*
@@ -139,6 +140,7 @@ export interface Project {
   projectLink?: string
   password?: string
   cover?: string
+  coverImage?: string   // /packt/cover.jpg — real hero/card image (base path added at render); `cover` gradient shows behind while it loads
   coverLabel?: string
   featured?: boolean
   // Rich detail-page sections (optional — see template above)
