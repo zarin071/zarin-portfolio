@@ -93,6 +93,17 @@ export interface Figure {
 }
 
 /*
+  ProcessStep — one numbered step in a "how it's built" walkthrough
+  (e.g. connecting Claude to Figma via the MCP to build a design system).
+*/
+export interface ProcessStep {
+  step: string          // "01"
+  title: string
+  detail: string
+  tools?: string[]      // chips, e.g. ["get_variable_defs", "Code Connect"]
+}
+
+/*
   Chapter — one act of a case-study storyline (e.g. "2018 → 2026 → next").
   Rendered as a vertical timeline of illustrated sections.
 */
@@ -154,4 +165,7 @@ export interface Project {
   personas?: Persona[]
   phases?: Phase[]
   narrative?: Chapter[]   // illustrated storyline timeline (see Chapter above)
+  processTitle?: string   // heading for the process walkthrough
+  processIntro?: string   // lead paragraph above the steps
+  process?: ProcessStep[] // numbered "how it's built" walkthrough
 }

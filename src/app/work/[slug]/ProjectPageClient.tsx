@@ -4,7 +4,7 @@ import { useParams } from "next/navigation"
 import Link from "next/link"
 import { motion, useScroll, useTransform, type Variants } from "framer-motion"
 import { useRef, useState } from "react"
-import { projects, type Benefit, type Persona, type Phase, type Discovery, type Chapter, type Figure } from "@/data/projects"
+import { projects, type Benefit, type Persona, type Phase, type Discovery, type Chapter, type Figure, type ProcessStep } from "@/data/projects"
 import ThemeProvider from "@/components/ThemeProvider"
 import Nav from "@/components/Nav"
 import Footer from "@/components/Footer"
@@ -141,7 +141,7 @@ function HeroSection({ project, stagger, fadeUp }: {
 
   return (
     <section ref={sectionRef} className="pt-28 md:pt-32 pb-4">
-      <div className="w-full px-6 md:px-10 lg:px-16">
+      <div className="w-full px-5 md:px-8 lg:px-10">
         <motion.div
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
@@ -290,13 +290,13 @@ export default function ProjectPageClient() {
         <HeroSection project={project} stagger={stagger} fadeUp={fadeUp} />
 
         {/* ── Content ── */}
-        <section className="section-container">
+        <section className="w-full px-5 md:px-8 lg:px-10 pt-10 pb-20 md:pb-24">
           <motion.div
             variants={stagger}
             initial="hidden"
             whileInView="show"
             viewport={{ once: true, margin: "-100px" }}
-            className="max-w-4xl mx-auto space-y-24"
+            className="max-w-7xl space-y-20 md:space-y-24"
           >
             {/* Overview */}
             {project.overview && (
@@ -321,6 +321,60 @@ export default function ProjectPageClient() {
                   <div className="space-y-16 md:space-y-20">
                     {project.narrative.map((chapter) => (
                       <ChapterBlock key={chapter.era + chapter.title} chapter={chapter} fadeUp={fadeUp} />
+                    ))}
+                  </div>
+                </motion.div>
+              </>
+            )}
+
+            {/* Process — how it's built (e.g. Claude × Figma MCP) */}
+            {project.process && project.process.length > 0 && (
+              <>
+                <motion.div className="w-full h-[1px] bg-subtle dark:bg-darkSubtle" variants={fadeUp} />
+                <motion.div variants={fadeUp}>
+                  <p className="font-sans text-xs uppercase tracking-[0.2em] text-warmGray dark:text-darkWarmGray mb-4">
+                    How it&apos;s built
+                  </p>
+                  {project.processTitle && (
+                    <h3 className="font-serif text-2xl md:text-3xl leading-tight text-ink dark:text-darkInk mb-4 text-balance">
+                      {project.processTitle}
+                    </h3>
+                  )}
+                  {project.processIntro && (
+                    <p className="font-serif text-lg md:text-xl leading-relaxed text-ink/90 dark:text-darkInk/90 max-w-2xl mb-10">
+                      {project.processIntro}
+                    </p>
+                  )}
+                  <div className="space-y-4">
+                    {project.process.map((s: ProcessStep) => (
+                      <div
+                        key={s.step}
+                        className="grid grid-cols-[2.5rem_1fr] md:grid-cols-[3.5rem_1fr] gap-4 md:gap-6 p-5 md:p-6 rounded-2xl bg-subtle/20 dark:bg-darkSubtle/20 border border-subtle/50 dark:border-darkSubtle/50"
+                      >
+                        <span className="font-serif text-3xl md:text-4xl font-bold leading-none text-accent/30 dark:text-accent/40">
+                          {s.step}
+                        </span>
+                        <div>
+                          <p className="font-serif text-lg md:text-xl text-ink dark:text-darkInk mb-2">
+                            {s.title}
+                          </p>
+                          <p className="font-sans text-base leading-relaxed text-warmGray dark:text-darkWarmGray">
+                            {s.detail}
+                          </p>
+                          {s.tools && s.tools.length > 0 && (
+                            <div className="flex flex-wrap gap-2 mt-4">
+                              {s.tools.map((t) => (
+                                <span
+                                  key={t}
+                                  className="font-mono text-[11px] tracking-tight px-2.5 py-1 rounded-md bg-accent/10 text-accent border border-accent/15"
+                                >
+                                  {t}
+                                </span>
+                              ))}
+                            </div>
+                          )}
+                        </div>
+                      </div>
                     ))}
                   </div>
                 </motion.div>
@@ -647,7 +701,7 @@ export default function ProjectPageClient() {
             )}
 
             {/* Links */}
-            <motion.div variants={fadeUp} className="flex flex-wrap gap-4 justify-center pt-8">
+            <motion.div variants={fadeUp} className="flex flex-wrap gap-4 justify-start pt-8">
               <Link
                 href="/work"
                 className="font-sans text-sm uppercase tracking-[0.15em] px-8 py-3 border border-ink/20 dark:border-darkWarmGray/30 rounded-full hover:bg-ink/5 dark:hover:bg-darkInk/5 transition-all"
