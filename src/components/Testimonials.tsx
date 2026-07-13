@@ -55,7 +55,7 @@ export default function Testimonials() {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -30 }}
             transition={{ duration: 0.5, ease: "easeInOut" }}
-            className="max-w-4xl"
+            className="w-full"
           >
             <p className="font-serif text-xl md:text-2xl lg:text-3xl leading-relaxed text-balance mb-8 italic text-ink dark:text-darkInk">
               &ldquo;{testimonials[active].quote}&rdquo;

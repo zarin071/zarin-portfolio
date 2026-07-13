@@ -3,7 +3,8 @@ import type { Project } from "./_types"
 const dash: Project = {
   id: "dash-digital-analytics-hub",
   title: "DASH — Digital Analytics Strategy Hub",
-  subtitle: "A central hub giving bp delivery teams real-time control over performance",
+  subtitle:
+    "A single, trusted pane of glass for bp's Digital & Technology performance — from the atomic team to the VP",
   role: "Product Designer",
   timeline: "2025 — Present",
   tags: ["Product Design", "Data Analytics", "Enterprise", "AI/ML"],
@@ -47,10 +48,12 @@ const dash: Project = {
   },
 
   offers: [
-    "High-level finance data to manage budgets and understand variances.",
-    "Controlled organisation headcount reporting for VP visibility and resource optimisation.",
-    "Project delivery status tracking across key activities.",
-    "Consolidated TRM third-party and application simplification reporting.",
+    "Financial & portfolio visibility — SPM integration, variance analysis, and third-party & software spend tracking.",
+    "Resource & headcount tracking — Workday headcount and Resource 360 third-party visibility.",
+    "Performance reporting — executive KPIs, top-project tracking, and a portfolio delivery overview.",
+    "Live data connectivity — a direct ADO feed, real-time updates, and core cross-system data linkages.",
+    "Simplified experience + in-tool bots — a streamlined executive page with AskMe (KPI definitions) and TalkWithData (deeper analysis) assistants.",
+    "One layer above the detail — DASH doesn't replace the deep Power BIs; it sits above them as the single integrated view.",
   ],
 
   benefits: [
@@ -65,7 +68,7 @@ const dash: Project = {
     },
     {
       audience: "Leadership",
-      detail: "Provides clear insights for strategic decisions.",
+      detail: "Provides clear, trusted insights for strategic decisions.",
     },
     {
       audience: "Data Quality",
@@ -75,6 +78,73 @@ const dash: Project = {
 
   personas: [
     {
+<<<<<<< HEAD
+      role: "Delivery Team (Squad / Pod)",
+      scope: "Plans and delivers at the atomic team level.",
+      need: "To report how effectively, efficiently and on-budget they deliver without the manual PowerPoint and CSV handoffs — DASH captures performance at source through the ADO feed, so effort goes into the work, not re-presenting it.",
+    },
+    {
+      role: "Portfolio Lead",
+      scope: "Aggregates team performance for a portfolio.",
+      need: "To see dependencies, risks and performance across their teams in one place, and hand a consistent, business-ready view up the chain — instead of re-collating spreadsheets and screenshots every cycle.",
+    },
+    {
+      role: "VP — core customer",
+      scope: "Owns a portfolio's investment, delivery, cost, capacity and value.",
+      need: "The primary customer. The VP lives the leadership rhythm — GFO, IGM, EPR, WPR — and today loses most time at the 'gather' stage, chasing owners to reconcile conflicting numbers. DASH replaces that with one trusted pane of glass, so more time goes to turning insight into decisions.",
+    },
+    {
+      role: "SVP",
+      scope: "Sponsors DASH; oversees Digital Delivery across portfolios.",
+      need: "A standardised operational view across the verticals — cross-portfolio finance, delivery and value at a glance, with the Strategy Cockpit proactively flagging where to intervene before quarterly surprises.",
+    },
+    {
+      role: "EVP",
+      scope: "Accountable for Technology performance at the top.",
+      need: "Trustworthy, high-level signals — cost tied to value, delivery on track — without dropping into the detail, so decisions are backed by data rather than reassembled reports.",
+    },
+  ],
+
+  roadmap:
+    "DASH is delivered in MVP phases, each building on the last — from a single trusted pane of glass, to connected operations and value tracking, to AI-driven foresight. Built in stages with a VP focus group, it keeps evolving on feedback, with efficiency and effectiveness (not solely reporting) as the goal.",
+
+  phases: [
+    {
+      name: "MVP 1",
+      title: "Integrated single pane of glass",
+      status: "current",
+      summary:
+        "Where DASH is today. Fragmented sources are integrated on Palantir Foundry and given business logic through the ontology, then surfaced as one standardised, real-time view across the full reporting chain — team to portfolio to VP to SVP to EVP. It replaces the manual PowerPoint, screenshot and CSV handoffs with a single source of truth.",
+      items: [
+        "Financial, portfolio, headcount and performance KPIs in one view",
+        "Live ADO feed, proven across a credible sample of boards",
+        "Simplified executive experience with AskMe & TalkWithData bots and KPI commentary",
+      ],
+    },
+    {
+      name: "MVP 2",
+      title: "Connected operations, value & smart governance",
+      status: "next",
+      summary:
+        "Extending the pane of glass to operations and value. Operational metrics fill the signal gap between forums, value tracking becomes a single source of truth, and automated triggers move DASH from reporting to proactive governance — with ADO coverage scaled across teams.",
+      items: [
+        "Operational metrics — SNOW data, MTTR and service health",
+        "Value tracking as a single source of truth (SPM + Itonics)",
+        "Automated triggers and escalations, plus scaled ADO coverage",
+      ],
+    },
+    {
+      name: "MVP 3",
+      title: "AI intelligence & decision companion",
+      status: "future",
+      summary:
+        "The longer-term vision. Self-service and predictive analytics, scenario modelling and forecasting, and an AI assistant that becomes a decision-making companion — positioning DASH as Technology's trusted decision engine, driving cultural and organisational change.",
+      items: [
+        "Self-service and predictive analytics with scenario modelling",
+        "AI-powered decision support and forecasting",
+        "An intelligent assistant that augments leadership decisions",
+      ],
+=======
       role: "VP",
       scope: "Owns an organisation's delivery, budget, and headcount.",
       need: "Controlled organisation headcount reporting and resource optimisation, alongside budget variances for their teams — the VP-visibility view DASH was built to surface, replacing scattered sources with one real-time picture.",
@@ -93,6 +163,7 @@ const dash: Project = {
       role: "CEO",
       scope: "Enterprise-wide accountability.",
       need: "Confidence that delivery is on track and value is landing, seen at the highest level without digging into the detail — DASH positioned as a driver of cultural and organisational change, not just reporting.",
+>>>>>>> 4d0390fa1b7a4abd4689923ad53cd10a1127a083
     },
   ],
 
@@ -101,9 +172,13 @@ const dash: Project = {
     "A one-stop hub for project and financial insight — exactly what delivery teams have been asking for.",
     "This is simplifying how we work and reducing the manual overhead across teams.",
     "The consolidated view is a game-changer — finally all the key data in one place.",
+    "We need a consistent driver of amber / red causes and themes — EPR is the opportunity to look for broader insight.",
+    "Where do we include measures on how digital is performing — CICD, ADO use, velocity, ageing of tickets in SNOW?",
     "DASH should support better project controls, not just analytics.",
     "Capturing business case evolution would help track scope, cost and value over time.",
   ],
+<<<<<<< HEAD
+=======
 
   roadmap:
     "DASH is delivered in MVP phases, each building on the last — from a single source of truth, to proactive action, to AI-driven foresight. It continues to evolve on team feedback, with efficiency and effectiveness (not solely reporting) as the goal.",
@@ -146,6 +221,7 @@ const dash: Project = {
       ],
     },
   ],
+>>>>>>> 4d0390fa1b7a4abd4689923ad53cd10a1127a083
 }
 
 export default dash
