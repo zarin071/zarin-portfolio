@@ -4,18 +4,34 @@ import { motion } from "framer-motion"
 import Link from "next/link"
 import { projects, type Project } from "@/data/projects"
 
+const base = process.env.NEXT_PUBLIC_BASE_PATH ?? ""
+
 function CoverArt({ project, large }: { project: Project; large?: boolean }) {
+  const coverSrc = project.coverImage
+    ? project.coverImage.startsWith("/") ? `${base}${project.coverImage}` : project.coverImage
+    : null
   return (
     <div
       className={`relative w-full overflow-hidden rounded-2xl ${large ? "aspect-[16/9]" : "aspect-[16/10]"}`}
       style={{ background: project.cover ?? "#E5E5E5" }}
     >
-      {/* soft depth blobs */}
-      <div className="absolute -top-8 -left-8 w-40 h-40 rounded-full bg-white/30 blur-2xl" />
-      <div className="absolute -bottom-10 right-0 w-52 h-52 rounded-full bg-black/10 blur-2xl" />
-
-      {/* subtle image-placeholder scale on hover */}
-      <div className="absolute inset-0 transition-transform duration-500 group-hover:scale-[1.04]" />
+      {coverSrc ? (
+        // eslint-disable-next-line @next/next/no-img-element
+        <img
+          src={coverSrc}
+          alt=""
+          loading="lazy"
+          className="absolute inset-0 h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.04]"
+        />
+      ) : (
+        <>
+          {/* soft depth blobs */}
+          <div className="absolute -top-8 -left-8 w-40 h-40 rounded-full bg-white/30 blur-2xl" />
+          <div className="absolute -bottom-10 right-0 w-52 h-52 rounded-full bg-black/10 blur-2xl" />
+          {/* subtle image-placeholder scale on hover */}
+          <div className="absolute inset-0 transition-transform duration-500 group-hover:scale-[1.04]" />
+        </>
+      )}
 
       {project.coverLabel && (
         <span className="absolute bottom-4 left-4 font-sans text-xs uppercase tracking-[0.12em] text-ink/70">

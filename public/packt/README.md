@@ -1,27 +1,27 @@
 # Packt Design System — case-study images
 
-Drop the Framer case-study assets here using the exact filenames below. Each
-maps to a slot in `src/data/projects/packt-design-system.ts`. Until a file
-exists, the case-study page renders a labelled placeholder box in its place —
-no code change is needed once you add the file (just match the name).
+Maps to slots in `src/data/projects/packt-design-system.ts`. Any slot whose
+file is missing renders a labelled placeholder box (the `<img>` falls back on
+error), so the page is always complete.
 
-Recommended: web-optimised PNG or JPG/WebP. Suggested ratios noted per image.
+## In place — 2018 style guide + cover
+| File | Slot |
+| --- | --- |
+| `cover.jpg` | Hero + Work-card cover (the original Packt collage, animated) |
+| `2018-colors.png` | Colour guide |
+| `2018-typography.png` | Outfit type scale (cropped from the top) |
+| `2018-buttons.png` | Button sizes (L / M / S) |
+| `2018-iconography.png` | Iconography (regular / custom / social) |
+| `2018-grid.png` | Responsive grid (1440 / 1024 / 768 / 390) |
 
-## 2018 — The style guide
-| File | What it shows | Suggested ratio |
+## Pending — 2026 design system
+Drop these in to replace the placeholders in the 2026 chapter:
+| File | What it should show | Suggested ratio |
 | --- | --- | --- |
-| `2018-style-guide.png` | The original 2018 style-guide board — palette, type scale, component sheet | 16 / 9 |
-| `2018-landing-page.png` | Packt landing page designed against the 2018 style guide | 4 / 3 |
-| `2018-type-colour.png` | Type & colour specimen from the guide | 4 / 3 |
-
-## 2026 — The design system
-| File | What it shows | Suggested ratio |
-| --- | --- | --- |
-| `2026-token-architecture.png` | Token architecture — primitives → semantic tokens → brand themes | 16 / 9 |
-| `2026-figma-code-connect.png` | Figma variables mapped to code via the Figma MCP / Code Connect | 4 / 3 |
-| `2026-component-library.png` | The component library (buttons, cards, page shells) | 4 / 3 |
+| `2026-token-architecture.png` | Primitives → semantic tokens → brand themes | 16 / 9 |
+| `2026-figma-code-connect.png` | Figma variables mapped to code via the Figma MCP | 4 / 3 |
+| `2026-component-library.png` | The component library | 4 / 3 |
 | `2026-packt-vs-hub.png` | One component set themed for Packt vs Packt Hub | 16 / 9 |
 
 ## Next — bp
-Reserved. The bp chapter is a placeholder in the storyline; add its images and
-copy when that case study is ready.
+Reserved chapter in the storyline; add images + copy when that study is ready.
