@@ -16,129 +16,165 @@ type Project = NonNullable<ReturnType<typeof projects.find>>
 
 const base = process.env.NEXT_PUBLIC_BASE_PATH ?? ""
 
-/* A single figure — real image when `src` is set, otherwise a labelled
-   placeholder box so the layout is complete before the artwork lands. */
-function FigureBlock({ figure }: { figure: Figure }) {
-  const ratio = figure.ratio ?? "16 / 9"
-  const withBase = (s?: string) => (s ? (s.startsWith("/") ? `${base}${s}` : s) : null)
-  const src = withBase(figure.src)
-  const srcDark = withBase(figure.srcDark)
-  const [errored, setErrored] = useState(false)
-  const [open, setOpen] = useState(false)
-  const showImg = src && !errored
+const withBase = (s?: string) => (s ? (s.startsWith("/") ? `${base}${s}` : s) : null)
 
-  // Lock body scroll + close on Escape while the lightbox is open.
+/* Gallery — a responsive grid of image cards with hover, plus an accessible
+   lightbox (prev/next, keyboard, focus trap) that shows each board full size,
+   fit to width and scrollable for the tall documentation boards. */
+function Gallery({ figures, tag }: { figures: Figure[]; tag?: string }) {
+  const imgs = figures.filter((f) => f.src)
+  const [open, setOpen] = useState(false)
+  const [idx, setIdx] = useState(0)
+  const [shown, setShown] = useState(false)
+  const lastFocus = useRef<HTMLElement | null>(null)
+  const closeRef = useRef<HTMLButtonElement>(null)
+  const scrollRef = useRef<HTMLDivElement>(null)
+
+  const openAt = (fig: Figure) => {
+    const i = imgs.indexOf(fig)
+    if (i < 0) return
+    lastFocus.current = document.activeElement as HTMLElement
+    setIdx(i)
+    setOpen(true)
+  }
+  const close = () => {
+    setShown(false)
+    window.setTimeout(() => {
+      setOpen(false)
+      if (lastFocus.current) lastFocus.current.focus()
+    }, 240)
+  }
+  const step = (d: number) => setIdx((i) => (i + d + imgs.length) % imgs.length)
+
   useEffect(() => {
     if (!open) return
-    const prev = document.body.style.overflow
+    const raf = requestAnimationFrame(() => setShown(true))
+    const prevOverflow = document.body.style.overflow
     document.body.style.overflow = "hidden"
-    const onKey = (e: KeyboardEvent) => { if (e.key === "Escape") setOpen(false) }
+    closeRef.current?.focus()
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") { e.preventDefault(); close() }
+      else if (e.key === "ArrowRight") { e.preventDefault(); step(1) }
+      else if (e.key === "ArrowLeft") { e.preventDefault(); step(-1) }
+      else if (e.key === "Tab") {
+        const f = [document.getElementById("lb-prev"), document.getElementById("lb-next"), document.getElementById("lb-close")].filter(Boolean) as HTMLElement[]
+        if (f.length < 2) return
+        const first = f[0], last = f[f.length - 1]
+        if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus() }
+        else if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus() }
+      }
+    }
     window.addEventListener("keydown", onKey)
     return () => {
-      document.body.style.overflow = prev
+      cancelAnimationFrame(raf)
+      document.body.style.overflow = prevOverflow
       window.removeEventListener("keydown", onKey)
     }
-  }, [open])
+  }, [open, imgs.length])
+
+  // reset scroll to the top of each newly-selected board
+  useEffect(() => { if (scrollRef.current) scrollRef.current.scrollTop = 0 }, [idx])
+
+  const cur = imgs[idx]
+  const curSrc = cur ? withBase(cur.src) : null
+  const curDark = cur ? withBase(cur.srcDark) : null
+  const curLabel = cur ? (cur.caption ?? cur.alt) : ""
 
   return (
-    <figure className="w-full">
-      {showImg ? (
-        <button
-          type="button"
-          onClick={() => setOpen(true)}
-          aria-label={`View ${figure.alt} full size`}
-          className="group/fig relative block w-full cursor-zoom-in overflow-hidden rounded-2xl border border-subtle/60 dark:border-darkSubtle/60 bg-subtle/30 dark:bg-darkSubtle/30"
-        >
-          {/* Fit to width — the whole image shows at its natural aspect ratio. */}
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img
-            src={src}
-            alt={figure.alt}
-            loading="lazy"
-            onError={() => setErrored(true)}
-            className={`block h-auto w-full ${srcDark ? "dark:hidden" : ""}`}
-          />
-          {srcDark && (
-            // eslint-disable-next-line @next/next/no-img-element
-            <img
-              src={srcDark}
-              alt={figure.alt}
-              loading="lazy"
-              className="hidden h-auto w-full dark:block"
-            />
-          )}
-          <span className="absolute bottom-3 right-3 flex items-center gap-1.5 rounded-full bg-ink/70 px-2.5 py-1 text-[10px] uppercase tracking-[0.12em] text-cream opacity-0 backdrop-blur-sm transition-opacity duration-300 group-hover/fig:opacity-100">
-            <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-              <path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7" />
-            </svg>
-            Expand
-          </span>
-        </button>
-      ) : (
-        <div
-          style={{ aspectRatio: ratio }}
-          className="relative w-full overflow-hidden rounded-2xl border border-subtle/60 dark:border-darkSubtle/60 bg-subtle/30 dark:bg-darkSubtle/30"
-        >
-          <div className="absolute inset-0 flex flex-col items-center justify-center gap-2 p-6 text-center">
-            <span className="font-sans text-[10px] uppercase tracking-[0.2em] text-warmGray/70 dark:text-darkWarmGray/70">
-              Image
-            </span>
-            <span className="font-serif text-base text-warmGray dark:text-darkWarmGray">
-              {figure.placeholder ?? figure.alt}
-            </span>
-          </div>
-        </div>
-      )}
-      {figure.caption && (
-        <figcaption className="mt-3 font-sans text-xs leading-relaxed text-warmGray dark:text-darkWarmGray">
-          {figure.caption}
-        </figcaption>
-      )}
+    <div className="mt-8">
+      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3" role="list">
+        {figures.map((fig) => {
+          const src = withBase(fig.src)
+          const srcDark = withBase(fig.srcDark)
+          const label = fig.caption ?? fig.alt
+          if (!src) {
+            return (
+              <div key={fig.alt} role="listitem" className="relative flex aspect-[4/3] items-center justify-center overflow-hidden rounded-2xl border border-dashed border-subtle dark:border-darkSubtle bg-subtle/30 p-6 text-center dark:bg-darkSubtle/30">
+                <span className="font-serif text-sm text-warmGray dark:text-darkWarmGray">{fig.placeholder ?? fig.alt}</span>
+              </div>
+            )
+          }
+          return (
+            <button
+              key={fig.alt}
+              type="button"
+              role="listitem"
+              onClick={() => openAt(fig)}
+              aria-label={`View ${label}`}
+              className="group/card relative block aspect-[4/3] w-full cursor-zoom-in overflow-hidden rounded-2xl border border-subtle/60 bg-subtle/30 shadow-sm transition-all duration-500 hover:-translate-y-1 hover:border-transparent hover:shadow-xl focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent dark:border-darkSubtle/60 dark:bg-darkSubtle/30 motion-reduce:transition-none motion-reduce:hover:translate-y-0"
+            >
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img src={src} alt={fig.alt} loading="lazy" className={`absolute inset-0 h-full w-full object-cover object-top transition-transform duration-500 group-hover/card:scale-105 motion-reduce:transition-none motion-reduce:group-hover/card:scale-100 ${srcDark ? "dark:hidden" : ""}`} />
+              {srcDark && (
+                // eslint-disable-next-line @next/next/no-img-element
+                <img src={srcDark} alt="" aria-hidden="true" className="absolute inset-0 hidden h-full w-full object-cover object-top transition-transform duration-500 group-hover/card:scale-105 dark:block" />
+              )}
+              <span className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent opacity-80 transition-opacity duration-500 group-hover/card:opacity-100" />
+              {tag && (
+                <span className="absolute left-3 top-3 rounded-full bg-black/40 px-2.5 py-1 text-[10px] font-bold uppercase tracking-[0.1em] text-white backdrop-blur-sm">{tag}</span>
+              )}
+              <span className="absolute right-3 top-3 flex h-8 w-8 translate-y-1 items-center justify-center rounded-full bg-black/40 text-white opacity-0 backdrop-blur-sm transition-all duration-300 group-hover/card:translate-y-0 group-hover/card:opacity-100">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7" /></svg>
+              </span>
+              <span className="absolute inset-x-0 bottom-0 translate-y-1 p-4 transition-transform duration-500 group-hover/card:translate-y-0">
+                <span className="line-clamp-2 text-sm font-medium text-white [text-shadow:0_1px_10px_rgba(0,0,0,0.45)]">{label}</span>
+              </span>
+            </button>
+          )
+        })}
+      </div>
 
-      {/* Lightbox — portaled to <body> so `fixed` covers the viewport
-          regardless of framer-motion transforms/opacity on ancestors.
-          Image fits to width; tall boards scroll vertically. */}
-      {open && showImg && typeof document !== "undefined" && createPortal(
+      {open && cur && typeof document !== "undefined" && createPortal(
         <div
-          className="fixed inset-0 z-[9999] flex flex-col bg-black/85 backdrop-blur-sm"
-          onClick={() => setOpen(false)}
+          className={`fixed inset-0 z-[9999] flex flex-col bg-black/70 backdrop-blur-xl transition-opacity duration-300 ${shown ? "opacity-100" : "opacity-0"}`}
           role="dialog"
           aria-modal="true"
-          aria-label={figure.alt}
+          aria-label={`${curLabel}, image ${idx + 1} of ${imgs.length}`}
+          onClick={(e) => { if (e.target === e.currentTarget) close() }}
         >
-          <div className="flex items-center justify-between gap-4 px-4 py-3 md:px-6">
-            <span className="font-sans text-xs text-cream/70 truncate">{figure.caption ?? figure.alt}</span>
-            <button
-              type="button"
-              onClick={() => setOpen(false)}
-              aria-label="Close"
-              className="shrink-0 flex h-9 w-9 items-center justify-center rounded-full bg-white/10 text-cream hover:bg-white/20 transition-colors"
-            >
-              ✕
+          <div className="relative z-10 flex items-center justify-between gap-4 px-4 py-3 text-cream md:px-6">
+            <div className="min-w-0">
+              <div className="truncate text-sm font-medium">{curLabel}</div>
+              <div className="mt-0.5 text-xs text-cream/60 tabular-nums">{idx + 1} / {imgs.length}{tag ? `  ·  ${tag}` : ""}</div>
+            </div>
+            <button ref={closeRef} id="lb-close" type="button" onClick={close} aria-label="Close viewer (Escape)" className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-white/12 text-cream transition-colors hover:bg-white/25 focus-visible:outline focus-visible:outline-2 focus-visible:outline-white">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" aria-hidden="true"><path d="M18 6 6 18M6 6l12 12" /></svg>
             </button>
           </div>
-          <div className="flex-1 overflow-y-auto overscroll-contain px-3 pb-8 md:px-6">
+
+          {imgs.length > 1 && (
+            <>
+              <button id="lb-prev" type="button" onClick={() => step(-1)} aria-label="Previous image (Left arrow)" className="absolute left-2 top-1/2 z-10 flex h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full bg-white/12 text-cream transition-colors hover:bg-white/25 focus-visible:outline focus-visible:outline-2 focus-visible:outline-white md:left-5">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M15 18 9 12l6-6" /></svg>
+              </button>
+              <button id="lb-next" type="button" onClick={() => step(1)} aria-label="Next image (Right arrow)" className="absolute right-2 top-1/2 z-10 flex h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full bg-white/12 text-cream transition-colors hover:bg-white/25 focus-visible:outline focus-visible:outline-2 focus-visible:outline-white md:right-5">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="m9 18 6-6-6-6" /></svg>
+              </button>
+            </>
+          )}
+
+          <div ref={scrollRef} className="relative flex-1 overflow-y-auto overscroll-contain px-3 pb-10 md:px-20" onClick={(e) => { if (e.target === e.currentTarget) close() }}>
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
-              src={src}
-              alt={figure.alt}
-              onClick={(e) => e.stopPropagation()}
-              className={`mx-auto block w-full rounded-lg shadow-2xl ${srcDark ? "dark:hidden" : ""}`}
+              key={idx}
+              src={curSrc ?? undefined}
+              alt={cur.alt}
+              className={`mx-auto block w-full max-w-5xl rounded-lg shadow-2xl transition-all duration-300 ${shown ? "scale-100 opacity-100" : "scale-95 opacity-0"} ${curDark ? "dark:hidden" : ""}`}
             />
-            {srcDark && (
+            {curDark && (
               // eslint-disable-next-line @next/next/no-img-element
               <img
-                src={srcDark}
-                alt={figure.alt}
-                onClick={(e) => e.stopPropagation()}
-                className="mx-auto hidden w-full rounded-lg shadow-2xl dark:block"
+                key={`d${idx}`}
+                src={curDark}
+                alt={cur.alt}
+                className={`mx-auto hidden w-full max-w-5xl rounded-lg shadow-2xl transition-all duration-300 dark:block ${shown ? "scale-100 opacity-100" : "scale-95 opacity-0"}`}
               />
             )}
           </div>
         </div>,
         document.body
       )}
-    </figure>
+    </div>
   )
 }
 
@@ -186,11 +222,7 @@ function ChapterBlock({ chapter, fadeUp }: { chapter: Chapter; fadeUp: Variants 
         )}
 
         {chapter.figures && chapter.figures.length > 0 && (
-          <div className="mt-8 flex flex-col gap-6">
-            {chapter.figures.map((figure) => (
-              <FigureBlock key={figure.alt} figure={figure} />
-            ))}
-          </div>
+          <Gallery figures={chapter.figures} tag={chapter.era} />
         )}
 
         {chapter.highlights && chapter.highlights.length > 0 && (
