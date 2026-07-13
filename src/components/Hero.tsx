@@ -33,7 +33,7 @@ export default function Hero({ onChatOpen }: { onChatOpen: () => void }) {
           <span className="text-ink dark:text-darkInk">Hi, I&apos;m </span>
           <span className="text-highlightSoft dark:text-highlight font-semibold">Zarin</span>
           <span className="text-ink dark:text-darkInk"> — a design-engineer hybrid.</span>{" "}
-          I take ideas from research through design to shipped React code, with a decade of doing it at{" "}
+          I take ideas from research through design to shipped code, with a decade of doing it at{" "}
           <span className="text-ink dark:text-darkInk">bp, Michelin, and beyond.</span>
         </motion.h1>
 
