@@ -6,6 +6,20 @@ Reference target: [andrerodrigues.in](https://andrerodrigues.in/).
 
 ---
 
+## [2026-07-14] — Packt Design System case study
+
+### Added
+- **Packt Design System case study** (`src/data/projects/packt-design-system.ts`) fully built out: overview split into two paragraphs, narrative sections, timeline entries, and survey data images (`public/packt/survey/`).
+- **8 survey chart images** added to `public/packt/survey/`: components-used, ease-of-use, improvements-wordcloud, issues-wordcloud, reasons-usage, support-channels, usefulness-alt, usefulness-rating.
+- `gallery` field added to `ProjectDetails` type (`src/data/projects/_types.ts`) to support image galleries in case studies.
+
+### Changed
+- **`ProjectPageClient.tsx`** updated to render gallery images and new content structure for the Packt case study.
+- Overview copy broken into two paragraphs with `\n\n` separators for better readability on the case study page.
+- `layout.tsx` minor metadata tweak.
+
+---
+
 ## [Unreleased]
 
 ### Changed — About Me page
