@@ -119,6 +119,15 @@ export interface ProcessStep {
   title: string
   detail: string
   tools?: string[]  // chips, e.g. ["get_variable_defs", "Code Connect"]
+  locked?: boolean  // renders as a locked bonus step
+  downloadUrl?: string  // downloadable resource shown on locked steps
+}
+
+export interface ChapterDoc {
+  title: string
+  body: string[]   // paragraphs or bullet-prefixed lines ("• ...")
+  fullWidth?: boolean
+  image?: Figure
 }
 
 export interface Chapter {
@@ -129,6 +138,7 @@ export interface Chapter {
   body: string[]                          // paragraphs
   figures?: Figure[]
   highlights?: string[]                   // bulleted takeaways
+  docs?: ChapterDoc[]                     // readable reference cards shown below body
   reserved?: boolean                      // renders a "coming soon" placeholder chapter
 }
 
