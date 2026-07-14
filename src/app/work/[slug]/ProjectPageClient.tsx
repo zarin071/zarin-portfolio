@@ -179,9 +179,9 @@ function Gallery({ figures, tag }: { figures: Figure[]; tag?: string }) {
 }
 
 const eraBadgeClass: Record<string, string> = {
-  past: "bg-subtle dark:bg-darkSubtle text-ink dark:text-darkInk border border-transparent dark:border-darkWarmGray/25",
-  current: "bg-accent/15 text-accent",
-  future: "bg-warmGray/10 dark:bg-darkInk/40 text-warmGray dark:text-darkInk border border-transparent dark:border-darkWarmGray/25",
+  past: "bg-subtle dark:bg-darkSubtle/85 text-ink dark:text-darkInk border border-subtle/70 dark:border-darkWarmGray/35",
+  current: "bg-accent/15 dark:bg-accent/30 text-accent dark:text-darkInk border border-accent/20 dark:border-accent/40",
+  future: "bg-warmGray/10 dark:bg-darkSubtle/80 text-warmGray dark:text-darkInk border border-subtle/60 dark:border-darkWarmGray/35",
 }
 
 /* One act of the storyline — era badge, prose, figure grid and takeaways. */
@@ -191,7 +191,7 @@ function ChapterBlock({ chapter, fadeUp }: { chapter: Chapter; fadeUp: Variants 
     <motion.div variants={fadeUp} className="relative grid md:grid-cols-[7rem_1fr] gap-6 md:gap-10">
       {/* Era rail */}
       <div className="flex md:flex-col items-center md:items-start gap-3">
-        <span className={`font-sans text-xs font-semibold tracking-[0.12em] px-3 py-1.5 rounded-full ${eraBadgeClass[status] ?? eraBadgeClass.current}`}>
+        <span className={`font-sans text-sm font-semibold tracking-[0.12em] px-3 py-1.5 rounded-full ${eraBadgeClass[status] ?? eraBadgeClass.current}`}>
           {chapter.era}
         </span>
         <span className="hidden md:block w-[1px] flex-1 bg-subtle dark:bg-darkSubtle" />
@@ -473,7 +473,7 @@ export default function ProjectPageClient() {
                         key={s.step}
                         className="grid grid-cols-[2.5rem_1fr] md:grid-cols-[3.5rem_1fr] gap-4 md:gap-6 p-5 md:p-6 rounded-2xl bg-subtle/20 dark:bg-darkSubtle/20 border border-subtle/50 dark:border-darkSubtle/50"
                       >
-                        <span className="font-serif text-3xl md:text-4xl font-bold leading-none text-accent/30 dark:text-accent/40">
+                        <span className="font-serif text-3xl md:text-4xl font-bold leading-none text-accent/30 dark:text-darkInk/55">
                           {s.step}
                         </span>
                         <div>
