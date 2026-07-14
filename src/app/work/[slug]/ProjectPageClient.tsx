@@ -361,7 +361,7 @@ function HeroSection({ project, stagger, fadeUp }: {
                 rel="noopener noreferrer"
                 className="font-sans text-sm uppercase tracking-[0.15em] px-6 py-2.5 border border-ink/20 dark:border-darkWarmGray/30 rounded-full hover:bg-ink/5 dark:hover:bg-darkInk/5 transition-all"
               >
-                Live project ↗
+                {project.projectLinkLabel ?? "Live project ↗"}
               </a>
             )}
           </motion.div>
@@ -847,7 +847,7 @@ export default function ProjectPageClient() {
                   rel="noopener noreferrer"
                   className="font-sans text-sm uppercase tracking-[0.15em] px-8 py-3 bg-accent text-cream rounded-full hover:opacity-80 hover:shadow-sm transition-all"
                 >
-                  Visit live project ↗
+                  {project.projectLinkLabel ?? "Visit live project ↗"}
                 </a>
               )}
             </motion.div>

@@ -104,7 +104,7 @@ function ExternalLinks({ project }: { project: Project }) {
           rel="noopener noreferrer"
           className="font-sans text-sm uppercase tracking-[0.1em] text-warmGray dark:text-darkWarmGray hover:text-ink dark:hover:text-darkInk transition-colors"
         >
-          Live project ↗
+          {project.projectLinkLabel ?? "Live project ↗"}
         </a>
       )}
       {project.caseStudy && (

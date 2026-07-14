@@ -6,6 +6,38 @@ Reference target: [andrerodrigues.in](https://andrerodrigues.in/).
 
 ---
 
+## [v1.0.0] — 2026-07-14 — Initial public release
+
+First stable version of the portfolio. Marks the baseline from which all future iterations are versioned.
+
+### Added
+- **Packt DS Storybook link** — "View Project" on the Packt Design System case study now links to the live Storybook at `zarin071.github.io/packt-ds/` with the label "Packt DS Storybook ↗" (replaces the generic packtpub.com link).
+- **`projectLinkLabel` field** added to the `Project` type so any project can override the default "Live project ↗" button label.
+- **Easter egg hunt** — 10 hidden emoji eggs across the site with score HUD, combo multiplier, confetti, Wall of Hunters submission, and session-persistent state.
+- **Easter egg notification** scoped to homepage only — the intro banner no longer fires on inner pages (`/work/`, `/about`, etc.).
+- **Packt Design System case study** fully built out with overview, narrative sections, timeline entries, and 8 survey chart images (`public/packt/survey/`).
+- **Real company logos** in `TrustedBy` strip: bp (SVG), Michelin, Packt, TCS — rendered monochrome, full opacity on hover.
+- **Ask Zarin assistant** — 22 resume-grounded Q&As covering all roles, projects, education, awards, and contact.
+- **About Me page** at `/about` with Testimonials section; removed from homepage to keep the home flow clean.
+- **Playground section** — accessible at `/playground` but unlinked from nav.
+- **`public/resume.pdf`** — selectable, ATS-clean single-column résumé.
+- `docs/DESIGN-SPEC.md`, `docs/AUDIT.md`, `docs/CHANGELOG.md`.
+
+### Design & layout
+- **Editorial hero** — large left-aligned Syne heading with Fraunces italic accents and floating radial-gradient blob background.
+- **Full-bleed layout** — all sections use consistent edge padding (`px-6 md:px-10 lg:px-16`); no centered `max-w-6xl` cap on the outer shell.
+- **Big cover-art project cards** — featured project full-width, two others in a 2-up grid with gradient covers, hover scale, and external links.
+- **Case-study detail pages** — left-aligned editorial layout with gradient banner, tag pills, and parallax scroll effect.
+- **Syne** applied to all headings; **Fraunces** italic for accent words and editorial body.
+- **3D entrance transition** on `/about` — page tilts up out of depth on navigation in.
+- Home page flow: Hero → Worked-with → Work → Contact.
+
+### Projects
+- Featured set: Conversational AI Dealer Booking, Fleet CO₂ Emissions Calculator, Packt Design System.
+- Five earlier case studies archived in `archivedProjects` (not deleted).
+
+---
+
 ## [2026-07-14] — Packt Design System case study
 
 ### Added

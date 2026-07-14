@@ -369,7 +369,8 @@ const packtDesignSystem: Project = {
     },
   ],
 
-  projectLink: "https://www.packtpub.com/en-in",
+  projectLink: "https://zarin071.github.io/packt-ds/",
+  projectLinkLabel: "Packt DS Storybook ↗",
   cover: "linear-gradient(135deg, #FF8A5B 0%, #F26B3A 50%, #C74B24 100%)",
   coverImage: "/packt/cover.jpg",
   coverImageFit: "contain",

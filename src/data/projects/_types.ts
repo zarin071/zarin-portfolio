@@ -144,6 +144,7 @@ export interface Project {
   impact: string
   caseStudy?: string
   projectLink?: string
+  projectLinkLabel?: string
   password?: string
   cover?: string
   coverImage?: string   // /packt/cover.jpg — real hero/card image (base path added at render)

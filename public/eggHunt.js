@@ -500,6 +500,8 @@
 
   function showNotif() {
     if (state.completed) return
+    var path = window.location.pathname.replace(/\/$/, "") || "/"
+    if (path !== "/" && path !== "") return
     try { if (sessionStorage.getItem(NOTIF_KEY)) return } catch (e) {}
     if (document.getElementById("egg-notif")) return
 
