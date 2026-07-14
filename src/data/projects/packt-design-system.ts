@@ -10,7 +10,7 @@ import type { Project } from "./_types"
 
 const packtDesignSystem: Project = {
   id: "packt-design-system",
-  title: "Packt Design System ",
+  title: "Design systems from Packt to bp",
   subtitle:
     "From a 2018 style guide to an AI-assisted design system for Packt & Packt Hub, the same problem, revisited with Figma MCP, Claude and Storybook. At bp, I led the evolution as Senior Product Designer and Design Engineering Lead through bpCore across dozens of teams and products.",
   role: "Senior Product Designer · Design Engineering Lead (bp) · Design Systems · UI/UX · Front-End",
@@ -176,11 +176,11 @@ const packtDesignSystem: Project = {
     },
     {
       era: "Now",
-      kicker: "bpCore — leadership at enterprise scale",
-      title: "Leading bpCore as Senior Product Designer and Design Engineering Lead at bp",
+      kicker: "bpCore team and OKRs",
+      title: "Setting up the bpCore team — structure, principles and objectives",
       status: "current",
       body: [
-        "What was wrong at bp: during a major organisational restructure, the brand team was still being re-formed while the 2025 brand revamp had already landed. The visual language shifted towards stronger bp greens and greys, but those changes were not yet reflected in bpCore tokens or components.",
+        "What was wrong at bp: during a major organisational restructure, the brand team was still being re-formed while the 2025 brand revamp had already landed. The visual language shifted towards stronger bp greens and greys, and the brand typeface moved from Roboto to the new digital-first bp Sans — but none of those changes were yet reflected in bpCore tokens or components.",
         "At the same time, multiple business units were running local aliases of the design system. There was no single source of truth, no common fallback model, and consistency broke across typography, colour usage, component behaviour, and documentation.",
         "My role at bpCore as Senior Product Designer and Design Engineering Lead: I owned the brand-to-system alignment, created updated colour ramps and neutral panes to support the revamp, and converted the new brand direction into token-ready foundations teams could ship without rework.",
         "Components were also scattered and unevenly adopted. So the first move was reconciliation: audit what existed, what teams were actually using, and what they needed next. We paired usage analytics with a structured survey and used that evidence to define the component structure and bpCore MVP scope.",
@@ -189,15 +189,6 @@ const packtDesignSystem: Project = {
         "It also closes the very loop I built at Packt. bpCore is designed for Figma and built for AI: every component ships with Code Connect through the Figma MCP, and the docs are written AI-first so coding agents consume the system directly. The tokens-to-code method I proved on one product is now how a global design system ships across bp.",
       ],
       figures: [
-        {
-          alt: "bpCore's four-tier federated model — brand tokens, central core components, domain kits and team packages",
-          src: "/packt/bp-core-tiers.png",
-          srcDark: "/packt/bp-core-tiers-dark.png",
-          span: "full",
-          ratio: "3 / 2",
-          focus: "top",
-          caption: "bpCore's federated tiers: Brand tokens → central core components → domain kits (Product / Marketing / Agentic / Mobile) → team packages. One core, many products.",
-        },
         {
           alt: "Before — bpCore adoption varied across teams, with components cloned and disconnected",
           src: "/packt/bp-before.jpg",
@@ -251,6 +242,24 @@ const packtDesignSystem: Project = {
         "Accessibility baked into the change process and evidenced — regulatory-ready across every market bp operates in.",
         "A whole brand refresh (2025 greens + bp Sans) shipped as tokens, not a redraw — the Packt swap trick at enterprise scale.",
         "Designed for Figma, built for AI — Code Connect via the Figma MCP and AI-first docs, the same loop proven at Packt.",
+      ],
+      docs: [
+        {
+          title: "bpCore team and its OKRs",
+          fullWidth: true,
+          image: {
+            alt: "bpCore federated tiers overview",
+            src: "/packt/bp-core-tiers-dark.png",
+            ratio: "4 / 3",
+            focus: "top",
+            caption: "bpCore federated tiers: brand tokens -> central core components -> domain kits",
+          },
+          body: [
+            "Vision: bpCore is bp's global design system that creates a unified visual language across digital interfaces. It is built on four core principles: simple shared base styles to reduce entropy and improve consistency, modular composition so components can be used together without custom rework, DRY atomic design from particles to organisms to improve reuse and extensibility, and accessibility-by-default with evidenced governance built into change management.",
+            "Value: Organizations using design systems report significant delivery gains and quality improvements. Benchmarks referenced in this case include faster front-end and design cycles, reduced engineering effort, improved accessibility/performance/maintainability, stronger design-to-dev collaboration, faster onboarding, and measurable ROI. The strategic value is a future-ready product foundation that scales consistency, trust, and team velocity.",
+            "OKRs: Objective 1 focuses on golden-path adoption through greenfield adoption rate, targeted migrations across business areas, and increasing share of bpCore components in shipped front-end code. Objective 2 focuses on first-loop velocity through WCAG AA compliance, brand alignment, and low component detachment rates. Objective 3 focuses on system-of-systems participation through active adoption in live sessions and measurable community contributions into federated tiers.",
+          ],
+        },
       ],
     },
     {
@@ -366,6 +375,15 @@ const packtDesignSystem: Project = {
       detail:
         "Run it in reverse: Claude sweeps the codebase for hard-coded values and off-system components, checks them against the Figma variables, and flags where the two disagree — then drafts the docs and changelog. A token change in Figma becomes a regenerated token package, not a Slack thread.",
       tools: ["drift audit", "docs", "changelog"],
+    },
+    {
+      step: "★",
+      title: "Bonus — Import your components back into Figma",
+      detail:
+        "If you've scaffolded components with Claude and want to bring them into Figma without doing it by hand, this doc walks you through building a custom Figma plugin that does it automatically — no third-party tools, no component limits. Applied to the Packt DS: 44 components and 400+ variants imported in one run.",
+      tools: ["Figma Plugin API", "Storybook", "React", "JavaScript"],
+      locked: true,
+      downloadUrl: "/figma-plugin-portfolio.docx",
     },
   ],
 

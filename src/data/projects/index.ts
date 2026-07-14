@@ -12,7 +12,7 @@
   ═══════════════════════════════════════════════════════════════════════════
 */
 
-export type { Project, Benefit, Persona, Phase, Discovery, Chapter, Figure, ProcessStep } from "./_types"
+export type { Project, Benefit, Persona, Phase, Discovery, Chapter, ChapterDoc, Figure, ProcessStep } from "./_types"
 
 import dash from "./dash"
 // import aiDealerBooking from "./ai-dealer-booking"   // hidden — case study in progress

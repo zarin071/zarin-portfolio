@@ -5,7 +5,7 @@ import Link from "next/link"
 import { motion, useScroll, useTransform, type Variants } from "framer-motion"
 import { useRef, useState, useEffect } from "react"
 import { createPortal } from "react-dom"
-import { projects, type Benefit, type Persona, type Phase, type Discovery, type Chapter, type Figure, type ProcessStep } from "@/data/projects"
+import { projects, type Benefit, type Persona, type Phase, type Discovery, type Chapter, type ChapterDoc, type Figure, type ProcessStep } from "@/data/projects"
 import ThemeProvider from "@/components/ThemeProvider"
 import Nav from "@/components/Nav"
 import Footer from "@/components/Footer"
@@ -236,6 +236,82 @@ function ChapterBlock({ chapter, fadeUp }: { chapter: Chapter; fadeUp: Variants 
               </li>
             ))}
           </ul>
+        )}
+
+        {chapter.docs && chapter.docs.length > 0 && (
+          <div className="mt-10 grid sm:grid-cols-2 gap-4">
+            {chapter.docs.map((doc: ChapterDoc) => (
+              (() => {
+                const docSrc = withBase(doc.image?.src)
+                const docSrcDark = withBase(doc.image?.srcDark)
+                const hasDocImage = Boolean(docSrc)
+                return (
+              <div
+                key={doc.title}
+                className={`rounded-2xl border border-subtle/60 dark:border-darkSubtle/60 bg-subtle/20 dark:bg-darkSubtle/20 p-5 md:p-6 ${doc.fullWidth ? "sm:col-span-2" : ""}`}
+              >
+                <p className="font-sans text-xs uppercase tracking-[0.15em] text-accent dark:text-darkInk mb-3">{doc.title}</p>
+                {hasDocImage && (
+                  <figure className="mb-5 overflow-hidden rounded-xl border border-white/10 bg-black/85">
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img
+                      src={docSrc!}
+                      alt={doc.image?.alt ?? doc.title}
+                      loading="lazy"
+                      className={`w-full h-auto object-contain ${doc.image?.focus === "top" ? "object-top" : "object-center"} ${docSrcDark ? "dark:hidden" : ""}`}
+                    />
+                    {docSrcDark && (
+                      // eslint-disable-next-line @next/next/no-img-element
+                      <img
+                        src={docSrcDark}
+                        alt=""
+                        aria-hidden="true"
+                        className={`hidden w-full h-auto object-contain dark:block ${doc.image?.focus === "top" ? "object-top" : "object-center"}`}
+                      />
+                    )}
+                    {doc.image?.caption && (
+                      <figcaption className="px-3 py-2 font-sans text-xs leading-relaxed text-white/90 bg-black/45 border-t border-white/10">
+                        {doc.image.caption}
+                      </figcaption>
+                    )}
+                  </figure>
+                )}
+                <div className="space-y-2">
+                  {doc.body.map((line, i) => {
+                    const sectionMatch = line.match(/^(Vision|Value|OKRs):\s+(.+)$/)
+                    const isBullet = line.startsWith("• ")
+                    if (sectionMatch) {
+                      const [, sectionTitle, sectionBody] = sectionMatch
+                      return (
+                        <div key={i} className="space-y-1.5">
+                          <p className="font-sans text-[11px] uppercase tracking-[0.14em] text-accent dark:text-darkInk/85">
+                            {sectionTitle}
+                          </p>
+                          <p className="font-sans text-sm leading-relaxed text-warmGray dark:text-darkWarmGray">
+                            {sectionBody}
+                          </p>
+                        </div>
+                      )
+                    }
+                    return isBullet ? (
+                      <div key={i} className="flex gap-2 items-start">
+                        <span className="mt-[0.45em] w-1 h-1 rounded-full bg-accent/60 shrink-0" />
+                        <span className="font-sans text-sm leading-relaxed text-warmGray dark:text-darkWarmGray">
+                          {line.slice(2)}
+                        </span>
+                      </div>
+                    ) : (
+                      <p key={i} className="font-sans text-sm leading-relaxed text-warmGray dark:text-darkWarmGray">
+                        {line}
+                      </p>
+                    )
+                  })}
+                </div>
+              </div>
+                )
+              })()
+            ))}
+          </div>
         )}
       </div>
     </motion.div>
@@ -471,15 +547,26 @@ export default function ProjectPageClient() {
                     {project.process.map((s: ProcessStep) => (
                       <div
                         key={s.step}
-                        className="grid grid-cols-[2.5rem_1fr] md:grid-cols-[3.5rem_1fr] gap-4 md:gap-6 p-5 md:p-6 rounded-2xl bg-subtle/20 dark:bg-darkSubtle/20 border border-subtle/50 dark:border-darkSubtle/50"
+                        className={`grid grid-cols-[2.5rem_1fr] md:grid-cols-[3.5rem_1fr] gap-4 md:gap-6 p-5 md:p-6 rounded-2xl border ${
+                          s.locked
+                            ? "bg-accent/5 dark:bg-accent/10 border-accent/20 dark:border-accent/25"
+                            : "bg-subtle/20 dark:bg-darkSubtle/20 border-subtle/50 dark:border-darkSubtle/50"
+                        }`}
                       >
-                        <span className="font-serif text-3xl md:text-4xl font-bold leading-none text-accent/30 dark:text-darkInk/55">
+                        <span className={`font-serif text-3xl md:text-4xl font-bold leading-none ${s.locked ? "text-accent/50 dark:text-darkInk/80" : "text-accent/30 dark:text-darkInk/55"}`}>
                           {s.step}
                         </span>
                         <div>
-                          <p className="font-serif text-lg md:text-xl text-ink dark:text-darkInk mb-2">
-                            {s.title}
-                          </p>
+                          <div className="flex flex-wrap items-center gap-2 mb-2">
+                            {s.locked && (
+                              <span className="inline-flex items-center gap-1 font-sans text-[10px] uppercase tracking-[0.15em] px-2 py-0.5 rounded-full bg-accent text-cream">
+                                Bonus
+                              </span>
+                            )}
+                            <p className="font-serif text-lg md:text-xl text-ink dark:text-darkInk">
+                              {s.title}
+                            </p>
+                          </div>
                           <p className="font-sans text-base leading-relaxed text-warmGray dark:text-darkWarmGray">
                             {s.detail}
                           </p>
@@ -494,6 +581,16 @@ export default function ProjectPageClient() {
                                 </span>
                               ))}
                             </div>
+                          )}
+                          {s.locked && s.downloadUrl && (
+                            <a
+                              href={`${base}${s.downloadUrl}`}
+                              download
+                              className="inline-flex items-center gap-2 mt-5 font-sans text-sm uppercase tracking-[0.12em] px-5 py-2.5 rounded-full bg-accent text-cream hover:opacity-80 transition-opacity"
+                            >
+                              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                              Download the guide
+                            </a>
                           )}
                         </div>
                       </div>
