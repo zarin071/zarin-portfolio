@@ -254,6 +254,8 @@ function HeroSection({ project, stagger, fadeUp }: {
   })
   const heroScale = useTransform(scrollYProgress, [0, 1], [1, 0.94])
   const heroOpacity = useTransform(scrollYProgress, [0, 0.6], [1, 0.15])
+  const coverImageFit = project.coverImageFit ?? "cover"
+  const useContain = coverImageFit === "contain"
 
   return (
     <section ref={sectionRef} className="pt-28 md:pt-32 pb-4">
@@ -282,13 +284,17 @@ function HeroSection({ project, stagger, fadeUp }: {
               <motion.img
                 src={project.coverImage.startsWith("/") ? `${base}${project.coverImage}` : project.coverImage}
                 alt={`${project.title} cover`}
-                className="absolute inset-0 h-full w-full object-cover"
-                initial={{ scale: 1.06, opacity: 0 }}
-                animate={{ scale: [1.06, 1.12, 1.06], x: [0, -10, 0], opacity: 1 }}
+                className={`absolute inset-0 h-full w-full ${useContain ? "object-contain object-center" : "object-cover"}`}
+                initial={useContain ? { opacity: 0 } : { scale: 1.06, opacity: 0 }}
+                animate={useContain ? { opacity: 1 } : { scale: [1.06, 1.12, 1.06], x: [0, -10, 0], opacity: 1 }}
                 transition={{
                   opacity: { duration: 0.8, ease: "easeOut" },
-                  scale: { duration: 22, repeat: Infinity, ease: "easeInOut" },
-                  x: { duration: 22, repeat: Infinity, ease: "easeInOut" },
+                  ...(useContain
+                    ? {}
+                    : {
+                        scale: { duration: 22, repeat: Infinity, ease: "easeInOut" },
+                        x: { duration: 22, repeat: Infinity, ease: "easeInOut" },
+                      }),
                 }}
               />
               {/* Legibility scrim for the label */}

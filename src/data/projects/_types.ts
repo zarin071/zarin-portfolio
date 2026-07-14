@@ -147,6 +147,7 @@ export interface Project {
   password?: string
   cover?: string
   coverImage?: string   // /packt/cover.jpg — real hero/card image (base path added at render)
+  coverImageFit?: "cover" | "contain"
   coverLabel?: string
   featured?: boolean
   // Rich detail-page sections (optional)
