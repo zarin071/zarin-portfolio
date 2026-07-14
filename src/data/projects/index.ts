@@ -15,14 +15,14 @@
 export type { Project, Benefit, Persona, Phase, Discovery, Chapter, Figure, ProcessStep } from "./_types"
 
 import dash from "./dash"
-import aiDealerBooking from "./ai-dealer-booking"
-import fleetCo2Calculator from "./fleet-co2-calculator"
+// import aiDealerBooking from "./ai-dealer-booking"   // hidden — case study in progress
+// import fleetCo2Calculator from "./fleet-co2-calculator"  // hidden — case study in progress
 import packtDesignSystem from "./packt-design-system"
 export { archivedProjects } from "./_archived"
 
 export const projects = [
-  aiDealerBooking,   // featured: true  — full-width hero card
+  // aiDealerBooking,   // restore when case study is ready
+  // fleetCo2Calculator,  // restore when case study is ready
   dash,
-  fleetCo2Calculator,
   packtDesignSystem,
 ]
