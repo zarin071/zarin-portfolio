@@ -161,6 +161,7 @@ export interface Project {
   coverImageFit?: "cover" | "contain"
   coverLabel?: string
   featured?: boolean
+  notice?: string        // optional banner shown at the top of the case study page
   // Rich detail-page sections (optional)
   overview?: string
   origin?: string[]
