@@ -17,47 +17,72 @@ Case studies live in `src/data/projects/` — one file per project. See
 
 Any project can be gated behind a password. When set, the `/work/<id>` page
 shows a lock screen instead of the case study, and the Work-grid card gets a
-🔒 **Locked** badge.
+🔒 **Locked** badge. Playground experiments (Analytics Agent, Audit Toolkit)
+use the same mechanism.
 
-### How to set a password
+### The shared password (recommended)
 
-1. **Open the project's data file** in `src/data/projects/` — e.g. `dash.ts`,
-   `packt-design-system.ts`, `fleet-co2-calculator.ts`.
+All locked content — DASH case study, Analytics Agent, Design System Audit
+Toolkit — reads from a single environment variable so one password unlocks
+everything:
 
-2. **Add a `password` field** to the project object:
+```
+NEXT_PUBLIC_WORK_PASSWORD=your-password-here
+```
 
-   ```ts
-   const dash: Project = {
-     id: "dash-digital-analytics-hub",
-     title: "DASH — Digital Analytics Strategy Hub",
-     // ...other fields...
-     password: "bp-dash-2025",   // ← set this to lock the case study
-   }
-   ```
+**Local dev** — add it to `.env.local` (already gitignored):
 
-3. **That's it.** With the field set, and no other changes:
-   - The Work-grid card shows a 🔒 **Locked** badge.
-   - `/work/<id>` renders a password screen; the case study is only shown
-     after the correct password is entered.
-   - The confidential content is **not** included in the page's initial
-     payload — it renders only after a successful unlock.
-   - A correct password is remembered for the **browser session**
-     (closing the tab resets it).
-   - A **Request access** link emails `zarinsolanki.work@gmail.com` for
-     visitors who don't have the password.
+```
+NEXT_PUBLIC_WORK_PASSWORD=portfolio@zarin-2026
+```
 
-4. **Preview** at `http://localhost:3000/work/<project-id>`, then commit and push.
+**Live site (GitHub Pages)** — the build runs in GitHub Actions, which needs
+the secret set in the repo:
 
-### How to unlock a project
+1. Go to **github.com/zarin071/zarin-portfolio → Settings → Secrets and
+   variables → Actions**
+2. Click **New repository secret**
+3. Name: `NEXT_PUBLIC_WORK_PASSWORD`
+4. Value: your password (e.g. `portfolio@zarin-2026`)
+5. Save, then re-run the latest workflow (or push any commit) to rebuild with
+   the secret baked in
+
+Without the secret set, the env var is empty at build time and all gates are
+disabled on the live site.
+
+### How it works for visitors
+
+- The work-grid card shows a 🔒 **Locked** badge.
+- `/work/<id>` renders a password screen with an input field.
+- Playground experiments show the password field inline where the content
+  would otherwise appear.
+- A correct password is remembered for the **browser session** (closing the
+  tab resets it).
+- A **"Don't have the password? Request access →"** link emails
+  `zarinsolanki.work@gmail.com` for visitors without the password.
+
+### Adding a password to a different project
+
+Open `src/data/projects/<project>.ts` and set the `password` field:
+
+```ts
+password: process.env.NEXT_PUBLIC_WORK_PASSWORD ?? "",
+```
+
+Or use a one-off string if you want a different password for that project:
+
+```ts
+password: "my-other-password",
+```
+
+### Removing a lock
 
 Delete (or comment out) the `password` line. The badge and gate disappear and
 the case study becomes public again.
 
 ### Notes
 
-- **One password per project.** There is no shared/global password — set the
-  same string on multiple projects if you want them to share one.
 - **This is a client-side deterrent, not real security.** The site is static
   (GitHub Pages), so the password ships inside the JavaScript bundle. It hides
   a study from casual visitors and search engines, but a determined person can
-  recover it from the bundle. **Never store a truly sensitive secret here.**
+  recover it from the bundle. Never store a truly sensitive secret here.
