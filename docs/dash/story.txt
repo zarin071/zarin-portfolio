@@ -14,6 +14,11 @@ And the accuracy of some of that as well is, let's say, maybe not always truly r
 So this is how kind of the idea that Sunjay had kind of wanted to put together this mechanism or this product in place to be able to capture all of that and hopefully more standardize the ways of working and integrate
 various tools to be able to bring that data into a more singular view to be able to best understand how things are doing within their respective areas. So I think that's kind of the story the
 
+after ingesting data sets:We'd ingested the data, we had multiple data sets that we felt are relevant for the reporting needs from the bottom personas of teams up to portfolio managers, portfolio managers to VPs and VPs to SVPs. And fundamentally, SVPs have been able to report specific metrics.
+to the EVP, so Emeka as well, who has also been using a tool. So it's a full end-to-end tool, essentially. That's where the value is, the transparency in the 360 view of how work gets done. So we've aggregated data.
+We've got...
+multiple data sets required for reporting in this tool now
+
 
 current state:And then when we're thinking about this, the product dash, at the minute, you could say we've gone through the life cycles of the product and we're still iterating and going through that now. But I'd say very much the concept stage was about data integration and making sure that we've got the right data sets.
 in tool and there was a technology stack decision was to use Palantir because it's a very effective third-party platform for aggregating disparse data sets into one house, you could say, or one area to then
