@@ -496,6 +496,22 @@ export default function ProjectPageClient() {
             viewport={{ once: true, margin: "-100px" }}
             className="w-full space-y-20 md:space-y-24"
           >
+            {/* Notice banner */}
+            {project.notice && (
+              <motion.div variants={fadeUp}>
+                <div className="flex gap-3 items-start rounded-lg border border-subtle dark:border-darkSubtle bg-paper dark:bg-darkPaper px-5 py-4">
+                  <svg className="mt-0.5 shrink-0 text-warmGray dark:text-darkWarmGray" width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden>
+                    <circle cx="8" cy="8" r="7.25" stroke="currentColor" strokeWidth="1.5"/>
+                    <path d="M8 7v4.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
+                    <circle cx="8" cy="4.75" r="0.75" fill="currentColor"/>
+                  </svg>
+                  <p className="font-sans text-sm leading-relaxed text-warmGray dark:text-darkWarmGray">
+                    {project.notice}
+                  </p>
+                </div>
+              </motion.div>
+            )}
+
             {/* Overview */}
             {project.overview && (
               <motion.div variants={fadeUp}>
@@ -606,7 +622,7 @@ export default function ProjectPageClient() {
                 <motion.div className="w-full h-[1px] bg-subtle dark:bg-darkSubtle" variants={fadeUp} />
                 <motion.div variants={fadeUp}>
                   <p className="font-sans text-xs uppercase tracking-[0.2em] text-warmGray dark:text-darkWarmGray mb-6">
-                    Origin
+                    Origin: The Story
                   </p>
                   <div className="space-y-5">
                     {project.origin.map((para, i) => (
