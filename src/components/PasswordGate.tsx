@@ -33,6 +33,7 @@ export default function PasswordGate({
   const storageKey = `zp-unlocked:${id}`
   const [ready, setReady] = useState(false)
   const [unlocked, setUnlocked] = useState(false)
+  const [showInput, setShowInput] = useState(false)
   const [value, setValue] = useState("")
   const [error, setError] = useState(false)
 
@@ -65,6 +66,8 @@ export default function PasswordGate({
     }
   }
 
+  const mailto = `mailto:${CONTACT_EMAIL}?subject=${encodeURIComponent(`Access request — ${title}`)}`
+
   return (
     <section className="section-container">
       <motion.div
@@ -96,48 +99,64 @@ export default function PasswordGate({
         </p>
         <h1 className="heading-lg mb-4 text-balance">{title}</h1>
         <p className="body-base mb-8 text-balance">
-          This case study covers confidential client work. Enter the password to
-          view it.
+          This case study covers confidential client work.
         </p>
 
-        <form onSubmit={handleSubmit} className="space-y-4">
-          <input
-            type="password"
-            value={value}
-            autoFocus
-            onChange={(e) => {
-              setValue(e.target.value)
-              setError(false)
-            }}
-            placeholder="Password"
-            aria-label="Case study password"
-            aria-invalid={error}
-            className="w-full px-5 py-3 rounded-full bg-subtle/40 dark:bg-darkSubtle/40 border border-subtle dark:border-darkSubtle focus:border-accent focus:outline-none text-center font-sans text-ink dark:text-darkInk placeholder:text-warmGray/60 dark:placeholder:text-darkWarmGray/60 transition-colors"
-          />
-          {error && (
-            <p className="font-sans text-sm text-red-500" role="alert">
-              Incorrect password — try again.
-            </p>
-          )}
-          <button
-            type="submit"
-            className="w-full font-sans text-sm uppercase tracking-[0.15em] px-6 py-3 bg-ink dark:bg-darkInk text-cream dark:text-darkBg rounded-full hover:opacity-80 hover:shadow-sm transition-all"
-          >
-            Unlock
-          </button>
-        </form>
-
-        <p className="mt-8 font-sans text-sm text-warmGray dark:text-darkWarmGray">
-          Don&rsquo;t have the password?{" "}
-          <a
-            href={`mailto:${CONTACT_EMAIL}?subject=${encodeURIComponent(
-              `Access request — ${title}`,
-            )}`}
-            className="text-accent hover:underline"
-          >
-            Request access
-          </a>
-        </p>
+        {showInput ? (
+          <form onSubmit={handleSubmit} className="space-y-4">
+            <input
+              type="password"
+              value={value}
+              autoFocus
+              onChange={(e) => {
+                setValue(e.target.value)
+                setError(false)
+              }}
+              placeholder="Password"
+              aria-label="Case study password"
+              aria-invalid={error}
+              className="w-full px-5 py-3 rounded-full bg-subtle/40 dark:bg-darkSubtle/40 border border-subtle dark:border-darkSubtle focus:border-accent focus:outline-none text-center font-sans text-ink dark:text-darkInk placeholder:text-warmGray/60 dark:placeholder:text-darkWarmGray/60 transition-colors"
+            />
+            {error && (
+              <p className="font-sans text-sm text-red-500" role="alert">
+                Incorrect password — try again.
+              </p>
+            )}
+            <button
+              type="submit"
+              className="w-full font-sans text-sm uppercase tracking-[0.15em] px-6 py-3 bg-ink dark:bg-darkInk text-cream dark:text-darkBg rounded-full hover:opacity-80 hover:shadow-sm transition-all"
+            >
+              Unlock
+            </button>
+            <button
+              type="button"
+              onClick={() => { setShowInput(false); setError(false); setValue("") }}
+              className="block w-full font-sans text-sm text-warmGray dark:text-darkWarmGray hover:text-ink dark:hover:text-darkInk transition-colors"
+            >
+              ← Back
+            </button>
+          </form>
+        ) : (
+          <div className="flex flex-col items-center gap-3">
+            <button
+              type="button"
+              onClick={() => setShowInput(true)}
+              className="inline-flex items-center gap-2 font-sans text-sm uppercase tracking-[0.15em] px-6 py-3 bg-ink dark:bg-darkInk text-cream dark:text-darkBg rounded-full hover:opacity-80 transition-all"
+            >
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                <rect x="3" y="11" width="18" height="11" rx="2" />
+                <path d="M7 11V7a5 5 0 0 1 10 0v4" />
+              </svg>
+              Have a password?
+            </button>
+            <a
+              href={mailto}
+              className="font-sans text-sm text-warmGray dark:text-darkWarmGray hover:text-ink dark:hover:text-darkInk transition-colors"
+            >
+              Request access →
+            </a>
+          </div>
+        )}
       </motion.div>
     </section>
   )
