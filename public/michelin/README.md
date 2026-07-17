@@ -12,7 +12,7 @@ That's it — the placeholder becomes the image, with the caption already writte
 
 | Filename (add here)   | Figure slot in the case study                                 | Confirmed detail |
 | --------------------- | ------------------------------------------------------------- | ---------------- |
-| `before-claim.*`      | Before — the unquantified "Why Choose Michelin" claim         | — |
+| `before-claim.*`      | Before — the unquantified "Why Choose Michelin" claim         | Why Choose MICHELIN? page (2023): "a unique means of achieving new fuel savings" — prose, no number |
 | `empty-state.*`       | The calculator before any interaction                         | — |
 | `tyre-dropdown.*`     | The 3-option tyre-type dropdown open                          | bias / tube-type radial / tubeless radial |
 | `result-panel.*`      | The animated savings reveal (the money shot)                  | 16,106 L · ₹16 lakhs · 43 t CO₂ · 1,968 trees |

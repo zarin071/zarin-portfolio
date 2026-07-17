@@ -121,12 +121,12 @@ const michelinFuelSavings: Project = {
       ],
       figures: [
         {
-          alt: "The unquantified fuel-savings claims on the Why Choose Michelin page",
+          alt: "The Why Choose MICHELIN? page — fuel savings stated only as prose, with no calculator or number",
           placeholder: "Before — the unquantified claim",
           // src: "/michelin/before-claim.png",  ← uncomment once the file is on the branch
           span: "full",
           ratio: "16 / 9",
-          caption: "The 'before' state — the claim as marketing copy, with no way to prove it to a fleet.",
+          caption: "The 'before' state — the Why Choose MICHELIN? page, where fuel savings lived only as prose (“a unique means of achieving new fuel savings”), with no number a fleet could act on.",
         },
       ],
     },
