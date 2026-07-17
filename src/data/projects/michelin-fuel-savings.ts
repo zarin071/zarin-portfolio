@@ -123,6 +123,7 @@ const michelinFuelSavings: Project = {
         {
           alt: "The unquantified fuel-savings claims on the Why Choose Michelin page",
           placeholder: "Before — the unquantified claim",
+          // src: "/michelin/before-claim.png",  ← uncomment once the file is on the branch
           span: "full",
           ratio: "16 / 9",
           caption: "The 'before' state — the claim as marketing copy, with no way to prove it to a fleet.",
@@ -143,6 +144,7 @@ const michelinFuelSavings: Project = {
         {
           alt: "The calculator's empty input state before any interaction",
           placeholder: "Empty input state",
+          // src: "/michelin/empty-state.png",  ← uncomment once the file is on the branch
           span: "half",
           ratio: "16 / 10",
           caption: "The empty state — tyre-type dropdown, the 'v/s Michelin Tyre' split, and sliders.",
@@ -150,6 +152,7 @@ const michelinFuelSavings: Project = {
         {
           alt: "The tyre-type dropdown open, showing bias, tube-type radial and tubeless radial",
           placeholder: "Tyre-type dropdown open",
+          // src: "/michelin/tyre-dropdown.png",  ← uncomment once the file is on the branch
           span: "half",
           ratio: "16 / 10",
           caption: "One simple choice auto-populates the technical dimensions — the strongest friction-reduction move.",
@@ -165,6 +168,7 @@ const michelinFuelSavings: Project = {
         {
           alt: "A close-up of one info tooltip exposing the R&D-backed methodology",
           placeholder: "Methodology tooltip",
+          // src: "/michelin/tooltip.png",  ← uncomment once the file is on the branch
           span: "half",
           ratio: "4 / 3",
           caption: "Radical transparency — every metric exposes its R&D-backed methodology.",
@@ -172,6 +176,7 @@ const michelinFuelSavings: Project = {
         {
           alt: "The calculator on a mobile device",
           placeholder: "Mobile view",
+          // src: "/michelin/mobile.png",  ← uncomment once the file is on the branch
           span: "half",
           ratio: "4 / 3",
           focus: "top",
@@ -191,6 +196,7 @@ const michelinFuelSavings: Project = {
         {
           alt: "The global Michelin Connected Fleet Carbon Calculator",
           placeholder: "Connected Fleet Carbon Calculator",
+          // src: "/michelin/connected-fleet.png",  ← uncomment once the file is on the branch
           span: "full",
           ratio: "16 / 9",
           caption: "The global tool the India concept seeded — the Connected Fleet Carbon Calculator.",
