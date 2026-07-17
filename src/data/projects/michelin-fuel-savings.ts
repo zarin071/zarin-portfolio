@@ -157,9 +157,10 @@ const michelinFuelSavings: Project = {
         {
           alt: "The animated savings result panel — fuel, cost, CO2 and trees",
           placeholder: "Result panel — the savings reveal",
+          // src: "/michelin/result-panel.png",  ← uncomment once the file is on the branch
           span: "full",
           ratio: "16 / 9",
-          caption: "The reveal — four outcomes side by side, translating CO₂ into trees and rupees into something a fleet can feel.",
+          caption: "The reveal — four outcomes side by side (16,106 litres · ₹16 lakhs · 43 tonnes CO₂ · 1,968 trees), translating carbon into trees and rupees into something a fleet can feel.",
         },
         {
           alt: "A close-up of one info tooltip exposing the R&D-backed methodology",
