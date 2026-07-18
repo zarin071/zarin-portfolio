@@ -24,6 +24,7 @@ jobs:
       - name: Build
         run: npm run build
         env:
+          GITHUB_PAGES: "true"
           NEXT_PUBLIC_WEB3FORMS_KEY: ${{ secrets.NEXT_PUBLIC_WEB3FORMS_KEY }}
           NEXT_PUBLIC_WORK_PASSWORD: ${{ secrets.NEXT_PUBLIC_WORK_PASSWORD }}
 
