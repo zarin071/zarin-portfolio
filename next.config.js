@@ -1,16 +1,19 @@
 /** @type {import('next').NextConfig} */
 const isGHPages = process.env.GITHUB_PAGES === "true"
+const isStaging = process.env.STAGING === "true"
+
+const basePath = isStaging ? "/zarin-portfolio/staging" : "/zarin-portfolio"
 
 const nextConfig = {
   ...(isGHPages && {
     output: "export",
-    basePath: "/zarin-portfolio",
+    basePath,
     trailingSlash: true,
   }),
   images: { unoptimized: true },
   reactStrictMode: true,
   env: {
-    NEXT_PUBLIC_BASE_PATH: isGHPages ? "/zarin-portfolio" : "",
+    NEXT_PUBLIC_BASE_PATH: isGHPages ? basePath : "",
   },
 }
 
