@@ -15,7 +15,22 @@ function CoverArt({ project, large }: { project: Project; large?: boolean }) {
       className={`relative w-full overflow-hidden rounded-2xl ${large ? "aspect-[16/9]" : "aspect-[16/10]"}`}
       style={{ background: project.cover ?? "#E5E5E5" }}
     >
-      {coverSrc ? (
+      {project.coverVideo ? (
+        // eslint-disable-next-line jsx-a11y/media-has-caption
+        <video
+          className="absolute inset-0 h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.04]"
+          autoPlay
+          muted
+          loop
+          playsInline
+          preload="metadata"
+          poster={project.coverVideoPoster ? (project.coverVideoPoster.startsWith("/") ? `${base}${project.coverVideoPoster}` : project.coverVideoPoster) : undefined}
+          aria-hidden="true"
+        >
+          {project.coverVideoWebm && <source src={project.coverVideoWebm.startsWith("/") ? `${base}${project.coverVideoWebm}` : project.coverVideoWebm} type="video/webm" />}
+          <source src={project.coverVideo.startsWith("/") ? `${base}${project.coverVideo}` : project.coverVideo} type="video/mp4" />
+        </video>
+      ) : coverSrc ? (
         // eslint-disable-next-line @next/next/no-img-element
         <img
           src={coverSrc}

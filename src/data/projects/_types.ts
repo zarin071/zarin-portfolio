@@ -159,6 +159,9 @@ export interface Project {
   cover?: string
   coverImage?: string   // /packt/cover.jpg — real hero/card image (base path added at render)
   coverImageFit?: "cover" | "contain"
+  coverVideo?: string        // /michelin/cover.mp4 — autoplaying, muted, looping cover video (takes priority over coverImage)
+  coverVideoWebm?: string    // /michelin/cover.webm — optional WebM source offered before the MP4
+  coverVideoPoster?: string  // /michelin/cover-poster.jpg — still shown while the video loads / if it can't play
   coverLabel?: string
   featured?: boolean
   notice?: string        // optional banner shown at the top of the case study page
