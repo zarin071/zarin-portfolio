@@ -18,13 +18,13 @@ const packtDesignSystem: Project = {
   tags: ["Design System", "Figma MCP", "AI-assisted", "Front-End"],
 
   problem:
-    "Packt ships emerging-tech content — AI, data science, cloud — across a marketing site and a learning product. The surface area grew far faster than the UI could stay consistent, and every team reinvented the same buttons, cards and page shells slightly differently.",
+    "Packt ships emerging-tech content within AI, data science, cloud , across a marketing site and a learning product. The surface area grew far faster than the UI could stay consistent, and every team reinvented the same buttons, cards and page shells slightly differently.",
 
   approach:
     "I revisited the problem twice, eight years apart. In 2018 I built a style guide: documented colour, type and components handed to engineering. In 2026 I redesigned it as a real system — tokens as the single source of truth, Figma variables wired to code through the Figma MCP and Code Connect, and Claude doing the scaffolding, documentation and drift audits.",
 
   impact:
-    "The result is one token core that themes cleanly across two brands — Packt and Packt Hub — with design and code that stay in lockstep instead of drifting apart the moment a team ships.This also helped at bp, where I scaled the same principles to a federated design system for dozens of teams and products, with a single source of truth flowing down and real usage flowing back up.",
+    "The result is one token core that themes cleanly across two brands Packt and Packt Hub, with design and code that stay in lockstep instead of drifting apart the moment a team ships. This also helped at bp, where I scaled the same principles to a federated design system for dozens of teams and products, with a single source of truth flowing down and real usage flowing back up.",
 
   overview:
     "This is a case study told across eight years. The same goal — a consistent, scalable UI for a content-rich tech platform — approached first as a style guide in 2018, then reimagined in 2026 as an AI-assisted design system. It's a story about what changed: the tooling, the definition of \"done\", and how much of the busywork now belongs to the machine.",
