@@ -26,8 +26,12 @@ const michelinFuelSavings: Project = {
   projectLink: "https://b2b.michelin.in/fuel-saving-calculator",
   projectLinkLabel: "Live tool ↗",
 
-  // Michelin brand — the house yellow warming into Michelin blue.
+  // Michelin brand — a Bibendum animation over the house yellow, with the
+  // yellow→blue gradient as the fallback while the video loads / if it can't play.
   cover: "linear-gradient(135deg, #FFF3C4 0%, #FDCB00 42%, #27509B 100%)",
+  coverVideo: "/michelin/cover.mp4",
+  coverVideoWebm: "/michelin/cover.webm",
+  coverVideoPoster: "/michelin/cover-poster.jpg",
   coverLabel: "Fuel Savings Calculator",
 
   overview:
