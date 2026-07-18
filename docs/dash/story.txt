@@ -1,0 +1,25 @@
+a concept of trying to have a better understanding of the digital delivery landscape. And what that consists of is performance is 1 piece, but not only
+financial performance, but also performance right down to the team level or to the atomic team level. And I think my understanding originally when Sunjay was talking to us about his vision and ideas for this,
+system or product was fundamentally a product that would allow people to understand the high level performance areas of projects and initiatives happening within the business, right down to the root cause of
+how performance is done at the atomic team level, be that a squad or a pod set up. So a very product-led kind of view on how things are tracked and measured.
+And trying to get there fundamentally was about reshaping how we do work and the processes that are in place or rethinking the processes fundamentally on how we report the performance of teams. And
+A lot of that work on reporting how teams get work done and how effective and efficiently and on budget they do that is reported via very manual handoffs that might be within PowerPoints, that'll be screenshots of multiple
+products or CSV files, spreadsheets, and then collated together to then report back from the product manager or tech lead level that's working on a specific product or initiative.
+to the portfolio manager. So within P&O's case, it could be the portfolio leads who then aggregate this content that the teams have given them to then present back to the VP of that portfolio.
+space, who would have an understanding of how the performance is done across his whole portfolio. So let's say Graham Mean, who then could then use that report to report to people like his leadership, which is Sunjay, and vice versa, also his customers
+within the business areas, so the P&O business side. And that kind of way of working or process, fundamentally, it happens across all the verticals, but it happens slightly differently depending on how those businesses operate, right? So there's no kind of clear
+operational view on reporting being done, which is standardized across the businesses, which is someone like Sunjay and Digital Delivery would find quite useful because the times it takes to get through all of these various reports.
+across those businesses and the time it takes to even put the reports together so that they're business ready, let's say, to report on is a lot of time.
+And the accuracy of some of that as well is, let's say, maybe not always truly reflective to the way the operations have been done within that specific area, be it team level, be it the portfolio person that's reporting back on how effective their teams have been.
+So this is how kind of the idea that Sunjay had kind of wanted to put together this mechanism or this product in place to be able to capture all of that and hopefully more standardize the ways of working and integrate
+various tools to be able to bring that data into a more singular view to be able to best understand how things are doing within their respective areas. So I think that's kind of the story the
+
+after ingesting data sets:We'd ingested the data, we had multiple data sets that we felt are relevant for the reporting needs from the bottom personas of teams up to portfolio managers, portfolio managers to VPs and VPs to SVPs. And fundamentally, SVPs have been able to report specific metrics.
+to the EVP, so Emeka as well, who has also been using a tool. So it's a full end-to-end tool, essentially. That's where the value is, the transparency in the 360 view of how work gets done. So we've aggregated data.
+We've got...
+multiple data sets required for reporting in this tool now
+
+
+current state:And then when we're thinking about this, the product dash, at the minute, you could say we've gone through the life cycles of the product and we're still iterating and going through that now. But I'd say very much the concept stage was about data integration and making sure that we've got the right data sets.
+in tool and there was a technology stack decision was to use Palantir because it's a very effective third-party platform for aggregating disparse data sets into one house, you could say, or one area to then
+give logic or give business logic via the ontology, which is probably the key selling point for Palantir, giving business logic to the data sets they have in there, which then can be surfaced in a front end, such as workshop

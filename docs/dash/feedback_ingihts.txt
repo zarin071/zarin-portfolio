@@ -1,0 +1,54 @@
+Survey Feedback Insights
+ 
+Executive Summary
+This document summarises key themes from the “Digital VP – Understanding Performance & Making Decisions” survey. Based on aggregated responses, the following insights are most relevant to our purpose:
+1.	Data Quality & Systems of Record: There is a strong need to improve data quality and reliability. Respondents consistently prefer using systems of record (e.g. Workday, SNOW, Power BI) over spreadsheets and manual artefacts, noting that inconsistent or unclear data sources hinder effective decision-making and reporting.
+2.	Process Complexity & Manual Burden: Many processes—particularly around resource management, vendor governance, and performance tracking—are perceived as overly complex, repetitive, or manual. Streamlining these workflows and reducing unnecessary approval points would free up time for more strategic work.
+3.	Strategic Alignment & Talent Focus: Respondents call for stronger alignment between strategy, investment, and execution, alongside a shift toward proactive talent management and cross-functional collaboration. Clear goals, accountability, and breaking down silos are seen as critical to driving better outcomes and supporting organisational change.
+ 
+Survey Engagement
+The survey achieved a response rate of over 60%, indicating strong engagement and that the topic is a high-priority focus area across the team.
+Questions 1 & 2: Value Ranking & Decision-Making
+Top 5 Ranked Activities:
+1.	Planning Cycle (Investment & Opex)
+2.	GFO
+3.	IGM
+4.	EPR
+5.	Strategic Priority Tracking
+The top four activities are recognised as foundational mechanisms for aligning technology and operational priorities with business strategy. These processes govern both financial and human resources, setting the strategic frame within which value cases are developed and tracked. Transparency, early visibility of issues, and collaborative decision-making are consistently emphasised as enablers of effective delivery and risk management.
+Questions 3 & 4: Complexity & Insight Challenges
+Top 5 Hardest Activities:
+1.	Value Delivery
+2.	Vendor Governance
+3.	IGM
+4.	EPR
+5.	Portfolio/Product Progress Review (WPR)
+Key challenges include fragmented systems, manual preparation, and unclear ownership—especially in resource and vendor management. Strategic priorities are often unstable and disconnected from day-to-day delivery. Investment governance is seen as burdensome, requiring extensive preparation and storytelling to convey value. Some governance activities are viewed as redundant or overly formalised, with limited practical impact. There is a clear need for streamlined, integrated systems, clearer accountability, and more agile, outcome-focused governance practices.
+Question 5: Additional Priorities & Improvements
+Respondents highlight the need to shift from traditional resource management to strategic talent development, especially following organisational changes. There is strong support for governing work through systems of record (e.g. SPM, Workday) and reducing reliance on spreadsheets. Concerns were raised about inconsistent investment governance and portfolio management, with “pet projects” proceeding without formal mechanisms or accountability. Suggestions include simplifying governance structures, empowering VPs, streamlining approvals, and introducing clearer templates and prioritisation frameworks to support meaningful engagement with senior leaders.
+Additional Questions & Insights
+Strategic Decisions & Alignment
+Top 3 Insights:
+1.	Value and Outcome-Driven Prioritisation – Decisions are guided by business value and minimal trade-offs.
+2.	Operational and People-Centric Focus – Prioritising continuity, team wellbeing, and compliance.
+3.	Governance Challenges – Inconsistent prioritisation and lack of integrated governance mechanisms.
+Day-to-Day Leadership & Visibility
+Top 3 Insights:
+1.	Trust and Delegation – Empowering teams to lead and escalate only when needed.
+2.	Structured Cadence – Regular check-ins and forums to surface blockers and align leadership.
+3.	Systems and Simplicity – Reducing unnecessary reporting to stay informed without overload.
+Tools, Information & Resistance
+Top 3 Insights:
+1.	Data Quality & Integration Barriers – Poor data and system misalignment hinder reliability.
+2.	Human Networks Over Systems – Trusted team members are often preferred over dashboards.
+3.	Fragmented Tool Use – Tool selection varies by context, with inconsistent adoption and understanding.
+People-First Leadership
+Top 3 Insights:
+1.	Process Burden & Bureaucracy – Administrative blockers and inefficient systems frustrate teams.
+2.	Disempowerment – Lack of autonomy and unclear authority slow execution.
+3.	Siloed Behaviours – Poor knowledge sharing and reluctance to adopt common tools hinder impact.
+Looking Forward
+Top 3 Insights:
+1.	Clarity, Consistency & Automation – Seamless MI and automated reporting.
+2.	Strategic Direction & Guardrails – Clear architecture and governance to prevent misaligned solutions.
+3.	Reduced Admin Burden – Less time spent reconciling data and managing change.

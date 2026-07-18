@@ -34,7 +34,7 @@ function AccessControl({
   password?: string
   onUnlock: () => void
 }) {
-  const [showPw, setShowPw] = useState(false)
+  const [showInput, setShowInput] = useState(false)
   const [value, setValue] = useState("")
   const [error, setError] = useState(false)
 
@@ -50,7 +50,7 @@ function AccessControl({
     }
   }
 
-  if (showPw) {
+  if (showInput) {
     return (
       <form onSubmit={submit} className="flex w-full max-w-xs flex-col items-center gap-2.5">
         <div className="flex w-full gap-2">
@@ -75,23 +75,27 @@ function AccessControl({
           <p className="font-sans text-xs text-red-500" role="alert">Incorrect password — try again.</p>
         )}
         <div className="flex items-center gap-3 font-sans text-xs">
-          <button type="button" onClick={() => { setShowPw(false); setError(false) }} className="text-warmGray transition-colors hover:text-ink dark:text-darkWarmGray dark:hover:text-darkInk">
+          <button
+            type="button"
+            onClick={() => { setShowInput(false); setError(false); setValue("") }}
+            className="text-warmGray transition-colors hover:text-ink dark:text-darkWarmGray dark:hover:text-darkInk"
+          >
             ← Back
           </button>
           <span className="text-warmGray/40">·</span>
-          <a href={mailto} className="text-accent hover:underline">Get access instead</a>
+          <a href={mailto} className="text-accent hover:underline">Request access →</a>
         </div>
       </form>
     )
   }
 
   return (
-    <div className="flex flex-wrap items-center justify-center gap-2.5">
+    <div className="flex flex-col items-center gap-2.5">
       {password && (
         <button
           type="button"
-          onClick={() => setShowPw(true)}
-          className="inline-flex items-center gap-2 rounded-full border border-ink/20 px-5 py-2.5 text-xs font-medium text-ink transition-all hover:bg-ink/5 dark:border-darkInk/25 dark:text-darkInk dark:hover:bg-darkInk/10"
+          onClick={() => setShowInput(true)}
+          className="inline-flex items-center gap-2 rounded-full bg-ink px-5 py-2.5 text-xs font-medium text-cream transition-opacity hover:opacity-80 dark:bg-darkInk dark:text-darkBg"
         >
           <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
             <rect x="3" y="11" width="18" height="11" rx="2" />
@@ -102,9 +106,9 @@ function AccessControl({
       )}
       <a
         href={mailto}
-        className="inline-flex items-center gap-2 rounded-full bg-ink px-5 py-2.5 text-xs font-medium text-cream transition-opacity hover:opacity-80 dark:bg-darkInk dark:text-darkBg"
+        className="font-sans text-xs text-warmGray dark:text-darkWarmGray hover:text-ink dark:hover:text-darkInk transition-colors"
       >
-        Get access →
+        Request access →
       </a>
     </div>
   )
