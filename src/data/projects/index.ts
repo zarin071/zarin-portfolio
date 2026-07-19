@@ -17,7 +17,7 @@ export type { Project, Benefit, Persona, Phase, Discovery, Chapter, ChapterDoc, 
 import dash from "./dash"
 // import aiDealerBooking from "./ai-dealer-booking"   // hidden — case study in progress
 // import fleetCo2Calculator from "./fleet-co2-calculator"  // hidden — case study in progress
-import michelinFuelSavings from "./michelin-fuel-savings"
+// import michelinFuelSavings from "./michelin-fuel-savings"  // staging only
 import packtDesignSystem from "./packt-design-system"
 export { archivedProjects } from "./_archived"
 
@@ -25,6 +25,5 @@ export const projects = [
   // aiDealerBooking,   // restore when case study is ready
   // fleetCo2Calculator,  // restore when case study is ready
   dash,
-  michelinFuelSavings,
   packtDesignSystem,
 ]
