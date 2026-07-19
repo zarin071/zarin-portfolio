@@ -199,7 +199,7 @@ function ChapterBlock({ chapter, fadeUp }: { chapter: Chapter; fadeUp: Variants 
 
       {/* Body */}
       <div className={`pb-4 ${chapter.reserved ? "opacity-90" : ""}`}>
-        <p className="font-sans text-xs uppercase tracking-[0.2em] text-accent mb-2">{chapter.kicker}</p>
+        <p className="font-sans text-xs uppercase tracking-[0.2em] text-accent dark:text-darkInk mb-2">{chapter.kicker}</p>
         <h3 className="font-serif text-2xl md:text-3xl leading-tight mb-5 text-balance">
           {chapter.titleHref ? (
             <a
@@ -621,7 +621,7 @@ export default function ProjectPageClient() {
                               {s.tools.map((t) => (
                                 <span
                                   key={t}
-                                  className="font-mono text-[11px] tracking-tight px-2.5 py-1 rounded-md bg-accent/10 text-accent border border-accent/15"
+                                  className="font-mono text-[11px] tracking-tight px-2.5 py-1 rounded-md bg-accent/10 dark:bg-darkInk/10 text-accent dark:text-darkInk border border-accent/15 dark:border-darkInk/20"
                                 >
                                   {t}
                                 </span>
@@ -703,7 +703,7 @@ export default function ProjectPageClient() {
                         key={persona.role}
                         className="p-6 bg-subtle/20 dark:bg-darkSubtle/20 rounded-2xl border border-subtle/50 dark:border-darkSubtle/50"
                       >
-                        <p className="font-sans text-xs uppercase tracking-[0.15em] text-accent mb-1">
+                        <p className="font-sans text-xs uppercase tracking-[0.15em] text-accent dark:text-darkInk mb-1">
                           {persona.role}
                         </p>
                         <p className="font-sans text-xs text-warmGray dark:text-darkWarmGray mb-3">
@@ -877,7 +877,7 @@ export default function ProjectPageClient() {
                         key={benefit.audience}
                         className="p-6 bg-subtle/20 dark:bg-darkSubtle/20 rounded-2xl border border-subtle/50 dark:border-darkSubtle/50"
                       >
-                        <p className="font-sans text-xs uppercase tracking-[0.15em] text-accent mb-2">
+                        <p className="font-sans text-xs uppercase tracking-[0.15em] text-accent dark:text-darkInk mb-2">
                           {benefit.audience}
                         </p>
                         <p className="font-serif text-base leading-relaxed text-ink dark:text-darkInk">
@@ -958,12 +958,12 @@ export default function ProjectPageClient() {
                         }`}
                       >
                         <div className="flex items-center gap-3 mb-3">
-                          <span className="font-sans text-xs uppercase tracking-[0.15em] text-accent">
+                          <span className="font-sans text-xs uppercase tracking-[0.15em] text-accent dark:text-darkInk">
                             {phase.name}
                           </span>
                           <span className={`font-sans text-[10px] uppercase tracking-[0.1em] px-2.5 py-0.5 rounded-full ${
                             phase.status === "current"
-                              ? "bg-accent/15 text-accent"
+                              ? "bg-accent/15 text-accent dark:bg-darkInk/15 dark:text-darkInk"
                               : phase.status === "next"
                               ? "bg-warmGray/15 dark:bg-darkWarmGray/15 text-warmGray dark:text-darkWarmGray"
                               : "bg-subtle dark:bg-darkSubtle text-warmGray/60 dark:text-darkWarmGray/60"
