@@ -1,11 +1,11 @@
 "use client"
 
-import { useParams } from "next/navigation"
+import { useParams, notFound } from "next/navigation"
 import Link from "next/link"
 import { motion, useScroll, useTransform, type Variants } from "framer-motion"
 import { useRef, useState, useEffect } from "react"
 import { createPortal } from "react-dom"
-import { projects, type Benefit, type Persona, type Phase, type Discovery, type Chapter, type ChapterDoc, type Figure, type ProcessStep } from "@/data/projects"
+import { projects, type Benefit, type Persona, type Phase, type Discovery, type Chapter, type ChapterDoc, type Figure, type ProcessStep, type Metric } from "@/data/projects"
 import ThemeProvider from "@/components/ThemeProvider"
 import Nav from "@/components/Nav"
 import Footer from "@/components/Footer"
@@ -471,17 +471,11 @@ export default function ProjectPageClient() {
   const [chatOpen, setChatOpen] = useState(false)
   const project = projects.find((p) => p.id === params.slug)
 
+  // Unknown slug reached via client-side navigation → show the site's fun 404
+  // (app/not-found.tsx). Direct hits to an unknown URL are already served the
+  // exported 404.html by the static host.
   if (!project) {
-    return (
-      <html>
-        <body className="min-h-screen bg-cream dark:bg-darkBg flex items-center justify-center">
-          <div className="text-center">
-            <h1 className="heading-xl mb-4">Project not found</h1>
-            <Link href="/work" className="text-accent hover:underline">← Back to work</Link>
-          </div>
-        </body>
-      </html>
-    )
+    notFound()
   }
 
   const stagger: Variants = {
@@ -789,6 +783,35 @@ export default function ProjectPageClient() {
               </div>
             </motion.div>
 
+            {/* Metrics — by the numbers */}
+            {project.metrics && project.metrics.length > 0 && (
+              <motion.div variants={fadeUp}>
+                <p className="font-sans text-xs uppercase tracking-[0.2em] text-warmGray dark:text-darkWarmGray mb-6">
+                  By the numbers
+                </p>
+                <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+                  {project.metrics.map((metric: Metric) => (
+                    <div
+                      key={metric.label}
+                      className="p-6 bg-subtle/20 dark:bg-darkSubtle/20 rounded-2xl border border-subtle/50 dark:border-darkSubtle/50"
+                    >
+                      <div className="font-syne text-4xl md:text-5xl font-bold leading-none text-ink dark:text-darkInk">
+                        {metric.value}
+                      </div>
+                      <p className="font-sans text-sm leading-relaxed text-warmGray dark:text-darkWarmGray mt-3">
+                        {metric.label}
+                      </p>
+                      {metric.note && (
+                        <p className="font-sans text-xs leading-relaxed text-warmGray/70 dark:text-darkWarmGray/70 mt-1.5">
+                          {metric.note}
+                        </p>
+                      )}
+                    </div>
+                  ))}
+                </div>
+              </motion.div>
+            )}
+
             {/* What it offers */}
             {project.offers && project.offers.length > 0 && (
               <>
@@ -948,6 +971,32 @@ export default function ProjectPageClient() {
                           ))}
                         </ul>
                       </div>
+                    ))}
+                  </div>
+                </motion.div>
+              </>
+            )}
+
+            {/* Reflection */}
+            {project.reflection && project.reflection.body.length > 0 && (
+              <>
+                <motion.div className="w-full h-[1px] bg-subtle dark:bg-darkSubtle" variants={fadeUp} />
+                <motion.div variants={fadeUp} className="grid md:grid-cols-3 gap-8">
+                  <div>
+                    <p className="font-sans text-xs uppercase tracking-[0.2em] text-warmGray dark:text-darkWarmGray mt-2">
+                      Reflection
+                    </p>
+                  </div>
+                  <div className="md:col-span-2 space-y-5">
+                    {project.reflection.title && (
+                      <h3 className="font-serif text-2xl md:text-3xl leading-tight text-ink dark:text-darkInk text-balance">
+                        {project.reflection.title}
+                      </h3>
+                    )}
+                    {project.reflection.body.map((para, i) => (
+                      <p key={i} className="font-serif text-xl md:text-2xl leading-relaxed text-ink dark:text-darkInk">
+                        {para}
+                      </p>
                     ))}
                   </div>
                 </motion.div>

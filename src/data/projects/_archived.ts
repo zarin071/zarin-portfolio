@@ -10,7 +10,7 @@ export const archivedProjects: Project[] = [
   {
     id: "bpcore-design-system",
     title: "bpcore Design System Rebrand",
-    subtitle: "bp's enterprise design system — end-to-end rebranding",
+    subtitle: "bp's enterprise design system, end-to-end rebranding",
     role: "Design Engineering Lead",
     timeline: "2025",
     tags: ["Design System", "Enterprise", "Rebranding"],
@@ -23,7 +23,7 @@ export const archivedProjects: Project[] = [
   },
   {
     id: "michelin-dashboard",
-    title: "Dashboard Design — Salesforce",
+    title: "Dashboard Design, Salesforce",
     subtitle: "Data-heavy UX for sales, marketing, and operations",
     role: "UI/UX Designer",
     timeline: "2022",
@@ -37,13 +37,13 @@ export const archivedProjects: Project[] = [
   },
   {
     id: "engage-portal",
-    title: "Mobile Design — Michelin ENGAGE Portal",
+    title: "Mobile Design, Michelin ENGAGE Portal",
     subtitle: "Unified mobile-first B2B community platform",
     role: "UI/UX Designer",
     timeline: "2022",
     tags: ["Mobile Design", "B2B", "Product Design"],
     problem:
-      "Michelin's staff, dealership network, and fleet customers needed a unified mobile-first platform to access customer data and services — previously scattered across multiple tools.",
+      "Michelin's staff, dealership network, and fleet customers needed a unified mobile-first platform to access customer data and services, previously scattered across multiple tools.",
     approach:
       "Designed a Salesforce-built community platform with a mobile-first approach. Created consistent UX patterns across 3+ user personas with different needs and permissions.",
     impact:
