@@ -672,7 +672,7 @@ export default function ProjectPageClient() {
                   initial={{ opacity: 0, x: -20 }}
                   whileInView={{ opacity: 1, x: 0 }}
                   viewport={{ once: true }}
-                  className="font-serif text-7xl md:text-8xl text-accent/20 dark:text-accent/30 font-bold leading-none"
+                  className="font-serif text-7xl md:text-8xl text-accent/20 dark:text-darkInk/25 font-bold leading-none"
                 >
                   01
                 </motion.span>
@@ -759,7 +759,7 @@ export default function ProjectPageClient() {
                   initial={{ opacity: 0, x: -20 }}
                   whileInView={{ opacity: 1, x: 0 }}
                   viewport={{ once: true }}
-                  className="font-serif text-7xl md:text-8xl text-accent/20 dark:text-accent/30 font-bold leading-none"
+                  className="font-serif text-7xl md:text-8xl text-accent/20 dark:text-darkInk/25 font-bold leading-none"
                 >
                   02
                 </motion.span>
@@ -783,7 +783,7 @@ export default function ProjectPageClient() {
                   initial={{ opacity: 0, x: -20 }}
                   whileInView={{ opacity: 1, x: 0 }}
                   viewport={{ once: true }}
-                  className="font-serif text-7xl md:text-8xl text-accent/20 dark:text-accent/30 font-bold leading-none"
+                  className="font-serif text-7xl md:text-8xl text-accent/20 dark:text-darkInk/25 font-bold leading-none"
                 >
                   03
                 </motion.span>
@@ -835,7 +835,7 @@ export default function ProjectPageClient() {
                 <motion.div className="w-full h-[1px] bg-subtle dark:bg-darkSubtle" variants={fadeUp} />
                 <motion.div variants={fadeUp} className="grid md:grid-cols-3 gap-8">
                   <div>
-                    <span className="font-serif text-7xl md:text-8xl text-accent/20 dark:text-accent/30 font-bold leading-none">
+                    <span className="font-serif text-7xl md:text-8xl text-accent/20 dark:text-darkInk/25 font-bold leading-none">
                       04
                     </span>
                     <p className="font-sans text-xs uppercase tracking-[0.2em] text-warmGray dark:text-darkWarmGray mt-2">
@@ -864,7 +864,7 @@ export default function ProjectPageClient() {
                 <motion.div className="w-full h-[1px] bg-subtle dark:bg-darkSubtle" variants={fadeUp} />
                 <motion.div variants={fadeUp} className="grid md:grid-cols-3 gap-8">
                   <div>
-                    <span className="font-serif text-7xl md:text-8xl text-accent/20 dark:text-accent/30 font-bold leading-none">
+                    <span className="font-serif text-7xl md:text-8xl text-accent/20 dark:text-darkInk/25 font-bold leading-none">
                       05
                     </span>
                     <p className="font-sans text-xs uppercase tracking-[0.2em] text-warmGray dark:text-darkWarmGray mt-2">
@@ -896,7 +896,7 @@ export default function ProjectPageClient() {
                 <motion.div className="w-full h-[1px] bg-subtle dark:bg-darkSubtle" variants={fadeUp} />
                 <motion.div variants={fadeUp} className="grid md:grid-cols-3 gap-8">
                   <div>
-                    <span className="font-serif text-7xl md:text-8xl text-accent/20 dark:text-accent/30 font-bold leading-none">
+                    <span className="font-serif text-7xl md:text-8xl text-accent/20 dark:text-darkInk/25 font-bold leading-none">
                       06
                     </span>
                     <p className="font-sans text-xs uppercase tracking-[0.2em] text-warmGray dark:text-darkWarmGray mt-2">
@@ -923,7 +923,7 @@ export default function ProjectPageClient() {
                 <motion.div className="w-full h-[1px] bg-subtle dark:bg-darkSubtle" variants={fadeUp} />
                 <motion.div variants={fadeUp} className="grid md:grid-cols-3 gap-8">
                   <div>
-                    <span className="font-serif text-7xl md:text-8xl text-accent/20 dark:text-accent/30 font-bold leading-none">
+                    <span className="font-serif text-7xl md:text-8xl text-accent/20 dark:text-darkInk/25 font-bold leading-none">
                       07
                     </span>
                     <p className="font-sans text-xs uppercase tracking-[0.2em] text-warmGray dark:text-darkWarmGray mt-2">
