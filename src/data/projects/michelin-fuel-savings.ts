@@ -80,7 +80,7 @@ const michelinFuelSavings: Project = {
     {
       audience: "Making the abstract tangible",
       detail:
-        "'43 tonnes of CO₂' is a number nobody can feel. Translating it into 1,968 trees turns the Planet pillar human — sitting right beside the ₹16 lakhs that speaks to Profit. People and Planet, made concrete, side by side.",
+        "'90 tonnes of CO₂' is a number nobody can feel. Translating it into 4,132 trees turns the Planet pillar human — sitting right beside the ₹38 lakhs that speaks to Profit. People and Planet, made concrete, side by side.",
     },
     {
       audience: "Building trust",
@@ -131,7 +131,7 @@ const michelinFuelSavings: Project = {
         {
           alt: "The Why Choose MICHELIN? page — fuel savings stated only as prose, with no calculator or number",
           placeholder: "Before — the unquantified claim",
-          src: "/michelin/before-claim.png",
+          src: "/michelin/before-claim.webp",
           span: "full",
           ratio: "16 / 9",
           caption: "The 'before' state — the Why Choose MICHELIN? page, where fuel savings lived only as prose (“a unique means of achieving new fuel savings”), with no number a fleet could act on.",
@@ -152,7 +152,7 @@ const michelinFuelSavings: Project = {
         {
           alt: "The calculator's empty input state before any interaction",
           placeholder: "Empty input state",
-          src: "/michelin/empty-state.png",
+          src: "/michelin/empty-state.webp",
           span: "half",
           ratio: "16 / 10",
           caption: "The empty state — tyre-type dropdown, the 'v/s Michelin Tyre' split, and sliders.",
@@ -160,7 +160,7 @@ const michelinFuelSavings: Project = {
         {
           alt: "The tyre-type dropdown open, showing bias, tube-type radial and tubeless radial",
           placeholder: "Tyre-type dropdown open",
-          src: "/michelin/tyre-dropdown.png",
+          src: "/michelin/tyre-dropdown.webp",
           span: "half",
           ratio: "16 / 10",
           caption: "One simple choice auto-populates the technical dimensions — the strongest friction-reduction move.",
@@ -168,15 +168,15 @@ const michelinFuelSavings: Project = {
         {
           alt: "The animated savings result panel — fuel, cost, CO2 and trees",
           placeholder: "Result panel — the savings reveal",
-          src: "/michelin/result-panel.png",
+          src: "/michelin/result-panel.webp",
           span: "full",
           ratio: "16 / 9",
-          caption: "The reveal — four outcomes side by side (16,106 litres · ₹16 lakhs · 43 tonnes CO₂ · 1,968 trees), translating carbon into trees and rupees into something a fleet can feel.",
+          caption: "The reveal — four outcomes side by side (33,823 litres · ₹38 lakhs · 90 tonnes CO₂ · 4,132 trees), translating carbon into trees and rupees into something a fleet can feel.",
         },
         {
           alt: "A close-up of one info tooltip exposing the R&D-backed methodology",
           placeholder: "Methodology tooltip",
-          src: "/michelin/tooltip.png",
+          src: "/michelin/tooltip.webp",
           span: "half",
           ratio: "4 / 3",
           caption: "Radical transparency — every metric exposes its R&D-backed methodology.",
@@ -184,7 +184,7 @@ const michelinFuelSavings: Project = {
         {
           alt: "The calculator on a mobile device",
           placeholder: "Mobile view",
-          src: "/michelin/mobile.png",
+          src: "/michelin/mobile.webp",
           span: "half",
           ratio: "4 / 3",
           focus: "top",
@@ -204,7 +204,7 @@ const michelinFuelSavings: Project = {
         {
           alt: "The global Michelin Connected Fleet Carbon Calculator",
           placeholder: "Connected Fleet Carbon Calculator",
-          src: "/michelin/connected-fleet.png",
+          src: "/michelin/connected-fleet.webp",
           span: "full",
           ratio: "16 / 9",
           caption: "The global tool the India concept seeded — the Connected Fleet Carbon Calculator.",
