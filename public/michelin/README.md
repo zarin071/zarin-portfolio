@@ -1,12 +1,10 @@
 # Michelin Fuel Savings Calculator — screenshots
 
-The case study (`src/data/projects/michelin-fuel-savings.ts`) has image slots
-that currently render as labelled placeholders. To make one real:
+The case study (`src/data/projects/michelin-fuel-savings.ts`) wires each image
+slot via the `src` on its figure. All seven are live as optimized WebP
+(converted from the uploaded PNGs, width ≤ 1600, q82 — 22.5 MB → 1.6 MB total).
 
-1. Add the image file to this folder (`public/michelin/`).
-2. In the data file, **uncomment / set the matching `src`** on that figure.
-
-That's it — the placeholder becomes the image, with the caption already written.
+To replace one: drop the new file in this folder and update the matching `src`.
 
 ## Slot → filename map
 
@@ -15,7 +13,7 @@ That's it — the placeholder becomes the image, with the caption already writte
 | `before-claim.*`      | Before — the unquantified "Why Choose Michelin" claim         | Why Choose MICHELIN? page (2023): "a unique means of achieving new fuel savings" — prose, no number |
 | `empty-state.*`       | The calculator before any interaction                         | — |
 | `tyre-dropdown.*`     | The 3-option tyre-type dropdown open                          | bias / tube-type radial / tubeless radial |
-| `result-panel.*`      | The animated savings reveal (the money shot)                  | 16,106 L · ₹16 lakhs · 43 t CO₂ · 1,968 trees |
+| `result-panel.*`      | The animated savings reveal (the money shot)                  | Bias Tire run: 33,823 L · ₹38 lakhs · 90 t CO₂ · 4,132 trees |
 | `tooltip.*`           | One R&D methodology tooltip open                              | — |
 | `mobile.*`            | The calculator on a phone                                     | — |
 | `connected-fleet.*`   | The global Connected Fleet Carbon Calculator it became        | — |

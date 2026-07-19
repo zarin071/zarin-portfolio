@@ -84,6 +84,17 @@ export interface Benefit {
   detail: string
 }
 
+export interface Metric {
+  value: string   // the headline figure, e.g. "1st", "2 months", "4", "Global"
+  label: string   // what it measures, one short line
+  note?: string   // optional sub-line for context
+}
+
+export interface Reflection {
+  title?: string   // optional heading for the reflection
+  body: string[]   // one or more paragraphs, first person
+}
+
 export interface Persona {
   role: string   // title / seniority label, e.g. "VP", "SVP", "CEO"
   scope: string  // one-line remit, e.g. "Owns an organisation's delivery"
@@ -134,6 +145,7 @@ export interface Chapter {
   era: string                             // short badge, e.g. "2018"
   kicker: string                          // eyebrow label, e.g. "The style guide"
   title: string
+  titleHref?: string                      // if set, the chapter title links out (opens in a new tab)
   status?: "past" | "current" | "future"  // styles the era badge / reserved state
   body: string[]                          // paragraphs
   figures?: Figure[]
@@ -168,6 +180,8 @@ export interface Project {
   // Rich detail-page sections (optional)
   overview?: string
   origin?: string[]
+  metrics?: Metric[]
+  reflection?: Reflection
   offers?: string[]
   benefits?: Benefit[]
   personas?: Persona[]

@@ -1,11 +1,11 @@
 "use client"
 
-import { useParams } from "next/navigation"
+import { useParams, notFound } from "next/navigation"
 import Link from "next/link"
 import { motion, useScroll, useTransform, type Variants } from "framer-motion"
 import { useRef, useState, useEffect } from "react"
 import { createPortal } from "react-dom"
-import { projects, type Benefit, type Persona, type Phase, type Discovery, type Chapter, type ChapterDoc, type Figure, type ProcessStep } from "@/data/projects"
+import { projects, type Benefit, type Persona, type Phase, type Discovery, type Chapter, type ChapterDoc, type Figure, type ProcessStep, type Metric } from "@/data/projects"
 import ThemeProvider from "@/components/ThemeProvider"
 import Nav from "@/components/Nav"
 import Footer from "@/components/Footer"
@@ -199,9 +199,26 @@ function ChapterBlock({ chapter, fadeUp }: { chapter: Chapter; fadeUp: Variants 
 
       {/* Body */}
       <div className={`pb-4 ${chapter.reserved ? "opacity-90" : ""}`}>
-        <p className="font-sans text-xs uppercase tracking-[0.2em] text-accent mb-2">{chapter.kicker}</p>
-        <h3 className="font-serif text-2xl md:text-3xl leading-tight text-ink dark:text-darkInk mb-5 text-balance">
-          {chapter.title}
+        <p className="font-sans text-xs uppercase tracking-[0.2em] text-accent dark:text-darkInk mb-2">{chapter.kicker}</p>
+        <h3 className="font-serif text-2xl md:text-3xl leading-tight mb-5 text-balance">
+          {chapter.titleHref ? (
+            <a
+              href={chapter.titleHref}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="group/cl inline text-ink dark:text-darkInk underline decoration-2 decoration-ink/40 dark:decoration-darkInk/45 underline-offset-[6px] transition-all hover:decoration-ink dark:hover:decoration-darkInk focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent dark:focus-visible:outline-darkInk"
+            >
+              {chapter.title}
+              <span
+                aria-hidden="true"
+                className="ml-1.5 inline-block text-ink/70 dark:text-darkInk/70 transition-transform duration-200 group-hover/cl:translate-x-0.5 group-hover/cl:-translate-y-0.5"
+              >
+                ↗
+              </span>
+            </a>
+          ) : (
+            <span className="text-ink dark:text-darkInk">{chapter.title}</span>
+          )}
         </h3>
 
         <div className="space-y-4 max-w-3xl">
@@ -214,7 +231,7 @@ function ChapterBlock({ chapter, fadeUp }: { chapter: Chapter; fadeUp: Variants 
 
         {chapter.reserved && (
           <div className="mt-6 inline-flex items-center gap-2 rounded-full border border-dashed border-warmGray/40 dark:border-darkWarmGray/40 px-4 py-1.5">
-            <span className="w-1.5 h-1.5 rounded-full bg-accent" />
+            <span className="w-1.5 h-1.5 rounded-full bg-accent dark:bg-darkInk" />
             <span className="font-sans text-xs uppercase tracking-[0.15em] text-warmGray dark:text-darkWarmGray">
               Coming soon
             </span>
@@ -229,7 +246,7 @@ function ChapterBlock({ chapter, fadeUp }: { chapter: Chapter; fadeUp: Variants 
           <ul className="mt-8 space-y-3">
             {chapter.highlights.map((item) => (
               <li key={item} className="flex gap-3 items-start">
-                <span className="mt-2 w-1.5 h-1.5 rounded-full bg-accent shrink-0" />
+                <span className="mt-2 w-1.5 h-1.5 rounded-full bg-accent dark:bg-darkInk shrink-0" />
                 <span className="font-sans text-base leading-relaxed text-warmGray dark:text-darkWarmGray">
                   {item}
                 </span>
@@ -295,7 +312,7 @@ function ChapterBlock({ chapter, fadeUp }: { chapter: Chapter; fadeUp: Variants 
                     }
                     return isBullet ? (
                       <div key={i} className="flex gap-2 items-start">
-                        <span className="mt-[0.45em] w-1 h-1 rounded-full bg-accent/60 shrink-0" />
+                        <span className="mt-[0.45em] w-1 h-1 rounded-full bg-accent/60 dark:bg-darkInk/60 shrink-0" />
                         <span className="font-sans text-sm leading-relaxed text-warmGray dark:text-darkWarmGray">
                           {line.slice(2)}
                         </span>
@@ -471,17 +488,11 @@ export default function ProjectPageClient() {
   const [chatOpen, setChatOpen] = useState(false)
   const project = projects.find((p) => p.id === params.slug)
 
+  // Unknown slug reached via client-side navigation → show the site's fun 404
+  // (app/not-found.tsx). Direct hits to an unknown URL are already served the
+  // exported 404.html by the static host.
   if (!project) {
-    return (
-      <html>
-        <body className="min-h-screen bg-cream dark:bg-darkBg flex items-center justify-center">
-          <div className="text-center">
-            <h1 className="heading-xl mb-4">Project not found</h1>
-            <Link href="/work" className="text-accent hover:underline">← Back to work</Link>
-          </div>
-        </body>
-      </html>
-    )
+    notFound()
   }
 
   const stagger: Variants = {
@@ -610,7 +621,7 @@ export default function ProjectPageClient() {
                               {s.tools.map((t) => (
                                 <span
                                   key={t}
-                                  className="font-mono text-[11px] tracking-tight px-2.5 py-1 rounded-md bg-accent/10 text-accent border border-accent/15"
+                                  className="font-mono text-[11px] tracking-tight px-2.5 py-1 rounded-md bg-accent/10 dark:bg-darkInk/10 text-accent dark:text-darkInk border border-accent/15 dark:border-darkInk/20"
                                 >
                                   {t}
                                 </span>
@@ -661,7 +672,7 @@ export default function ProjectPageClient() {
                   initial={{ opacity: 0, x: -20 }}
                   whileInView={{ opacity: 1, x: 0 }}
                   viewport={{ once: true }}
-                  className="font-serif text-7xl md:text-8xl text-accent/20 dark:text-accent/30 font-bold leading-none"
+                  className="font-serif text-7xl md:text-8xl text-accent/20 dark:text-darkInk/25 font-bold leading-none"
                 >
                   01
                 </motion.span>
@@ -675,6 +686,38 @@ export default function ProjectPageClient() {
                 </p>
               </div>
             </motion.div>
+
+            {/* Personas */}
+            {project.personas && project.personas.length > 0 && (
+              <>
+                <motion.div className="w-full h-[1px] bg-subtle dark:bg-darkSubtle" variants={fadeUp} />
+                <motion.div variants={fadeUp} className="grid md:grid-cols-3 gap-8">
+                  <div>
+                    <p className="font-sans text-xs uppercase tracking-[0.2em] text-warmGray dark:text-darkWarmGray mt-2">
+                      Who it&apos;s for
+                    </p>
+                  </div>
+                  <div className="md:col-span-2 grid sm:grid-cols-2 gap-4">
+                    {project.personas.map((persona: Persona) => (
+                      <div
+                        key={persona.role}
+                        className="p-6 bg-subtle/20 dark:bg-darkSubtle/20 rounded-2xl border border-subtle/50 dark:border-darkSubtle/50"
+                      >
+                        <p className="font-sans text-xs uppercase tracking-[0.15em] text-accent dark:text-darkInk mb-1">
+                          {persona.role}
+                        </p>
+                        <p className="font-sans text-xs text-warmGray dark:text-darkWarmGray mb-3">
+                          {persona.scope}
+                        </p>
+                        <p className="font-serif text-base leading-relaxed text-ink dark:text-darkInk">
+                          {persona.need}
+                        </p>
+                      </div>
+                    ))}
+                  </div>
+                </motion.div>
+              </>
+            )}
 
             {/* Discovery */}
             {project.discovery && (
@@ -694,7 +737,7 @@ export default function ProjectPageClient() {
                       <ul className="space-y-3">
                         {project.discovery.questions.map((q, i) => (
                           <li key={i} className="flex gap-4 items-start">
-                            <span className="mt-2 w-1.5 h-1.5 rounded-full bg-accent shrink-0" />
+                            <span className="mt-2 w-1.5 h-1.5 rounded-full bg-accent dark:bg-darkInk shrink-0" />
                             <span className="font-sans text-base leading-relaxed text-warmGray dark:text-darkWarmGray">
                               {q}
                             </span>
@@ -716,7 +759,7 @@ export default function ProjectPageClient() {
                   initial={{ opacity: 0, x: -20 }}
                   whileInView={{ opacity: 1, x: 0 }}
                   viewport={{ once: true }}
-                  className="font-serif text-7xl md:text-8xl text-accent/20 dark:text-accent/30 font-bold leading-none"
+                  className="font-serif text-7xl md:text-8xl text-accent/20 dark:text-darkInk/25 font-bold leading-none"
                 >
                   02
                 </motion.span>
@@ -731,38 +774,6 @@ export default function ProjectPageClient() {
               </div>
             </motion.div>
 
-            {/* Personas */}
-            {project.personas && project.personas.length > 0 && (
-              <>
-                <motion.div className="w-full h-[1px] bg-subtle dark:bg-darkSubtle" variants={fadeUp} />
-                <motion.div variants={fadeUp} className="grid md:grid-cols-3 gap-8">
-                  <div>
-                    <p className="font-sans text-xs uppercase tracking-[0.2em] text-warmGray dark:text-darkWarmGray mt-2">
-                      Who it&apos;s for
-                    </p>
-                  </div>
-                  <div className="md:col-span-2 grid sm:grid-cols-2 gap-4">
-                    {project.personas.map((persona: Persona) => (
-                      <div
-                        key={persona.role}
-                        className="p-6 bg-subtle/20 dark:bg-darkSubtle/20 rounded-2xl border border-subtle/50 dark:border-darkSubtle/50"
-                      >
-                        <p className="font-sans text-xs uppercase tracking-[0.15em] text-accent mb-1">
-                          {persona.role}
-                        </p>
-                        <p className="font-sans text-xs text-warmGray dark:text-darkWarmGray mb-3">
-                          {persona.scope}
-                        </p>
-                        <p className="font-serif text-base leading-relaxed text-ink dark:text-darkInk">
-                          {persona.need}
-                        </p>
-                      </div>
-                    ))}
-                  </div>
-                </motion.div>
-              </>
-            )}
-
             <motion.div className="w-full h-[1px] bg-subtle dark:bg-darkSubtle" variants={fadeUp} />
 
             {/* Impact */}
@@ -772,7 +783,7 @@ export default function ProjectPageClient() {
                   initial={{ opacity: 0, x: -20 }}
                   whileInView={{ opacity: 1, x: 0 }}
                   viewport={{ once: true }}
-                  className="font-serif text-7xl md:text-8xl text-accent/20 dark:text-accent/30 font-bold leading-none"
+                  className="font-serif text-7xl md:text-8xl text-accent/20 dark:text-darkInk/25 font-bold leading-none"
                 >
                   03
                 </motion.span>
@@ -789,13 +800,42 @@ export default function ProjectPageClient() {
               </div>
             </motion.div>
 
+            {/* Metrics — by the numbers */}
+            {project.metrics && project.metrics.length > 0 && (
+              <motion.div variants={fadeUp}>
+                <p className="font-sans text-xs uppercase tracking-[0.2em] text-warmGray dark:text-darkWarmGray mb-6">
+                  By the numbers
+                </p>
+                <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+                  {project.metrics.map((metric: Metric) => (
+                    <div
+                      key={metric.label}
+                      className="p-6 bg-subtle/20 dark:bg-darkSubtle/20 rounded-2xl border border-subtle/50 dark:border-darkSubtle/50"
+                    >
+                      <div className="font-syne text-4xl md:text-5xl font-bold leading-none text-ink dark:text-darkInk">
+                        {metric.value}
+                      </div>
+                      <p className="font-sans text-sm leading-relaxed text-warmGray dark:text-darkWarmGray mt-3">
+                        {metric.label}
+                      </p>
+                      {metric.note && (
+                        <p className="font-sans text-xs leading-relaxed text-warmGray/70 dark:text-darkWarmGray/70 mt-1.5">
+                          {metric.note}
+                        </p>
+                      )}
+                    </div>
+                  ))}
+                </div>
+              </motion.div>
+            )}
+
             {/* What it offers */}
             {project.offers && project.offers.length > 0 && (
               <>
                 <motion.div className="w-full h-[1px] bg-subtle dark:bg-darkSubtle" variants={fadeUp} />
                 <motion.div variants={fadeUp} className="grid md:grid-cols-3 gap-8">
                   <div>
-                    <span className="font-serif text-7xl md:text-8xl text-accent/20 dark:text-accent/30 font-bold leading-none">
+                    <span className="font-serif text-7xl md:text-8xl text-accent/20 dark:text-darkInk/25 font-bold leading-none">
                       04
                     </span>
                     <p className="font-sans text-xs uppercase tracking-[0.2em] text-warmGray dark:text-darkWarmGray mt-2">
@@ -806,7 +846,7 @@ export default function ProjectPageClient() {
                     <ul className="space-y-4">
                       {project.offers.map((item) => (
                         <li key={item} className="flex gap-4 items-start">
-                          <span className="mt-2.5 w-2 h-2 rounded-full bg-accent shrink-0" />
+                          <span className="mt-2.5 w-2 h-2 rounded-full bg-accent dark:bg-darkInk shrink-0" />
                           <span className="font-serif text-lg md:text-xl leading-relaxed text-ink dark:text-darkInk">
                             {item}
                           </span>
@@ -824,7 +864,7 @@ export default function ProjectPageClient() {
                 <motion.div className="w-full h-[1px] bg-subtle dark:bg-darkSubtle" variants={fadeUp} />
                 <motion.div variants={fadeUp} className="grid md:grid-cols-3 gap-8">
                   <div>
-                    <span className="font-serif text-7xl md:text-8xl text-accent/20 dark:text-accent/30 font-bold leading-none">
+                    <span className="font-serif text-7xl md:text-8xl text-accent/20 dark:text-darkInk/25 font-bold leading-none">
                       05
                     </span>
                     <p className="font-sans text-xs uppercase tracking-[0.2em] text-warmGray dark:text-darkWarmGray mt-2">
@@ -837,7 +877,7 @@ export default function ProjectPageClient() {
                         key={benefit.audience}
                         className="p-6 bg-subtle/20 dark:bg-darkSubtle/20 rounded-2xl border border-subtle/50 dark:border-darkSubtle/50"
                       >
-                        <p className="font-sans text-xs uppercase tracking-[0.15em] text-accent mb-2">
+                        <p className="font-sans text-xs uppercase tracking-[0.15em] text-accent dark:text-darkInk mb-2">
                           {benefit.audience}
                         </p>
                         <p className="font-serif text-base leading-relaxed text-ink dark:text-darkInk">
@@ -856,7 +896,7 @@ export default function ProjectPageClient() {
                 <motion.div className="w-full h-[1px] bg-subtle dark:bg-darkSubtle" variants={fadeUp} />
                 <motion.div variants={fadeUp} className="grid md:grid-cols-3 gap-8">
                   <div>
-                    <span className="font-serif text-7xl md:text-8xl text-accent/20 dark:text-accent/30 font-bold leading-none">
+                    <span className="font-serif text-7xl md:text-8xl text-accent/20 dark:text-darkInk/25 font-bold leading-none">
                       06
                     </span>
                     <p className="font-sans text-xs uppercase tracking-[0.2em] text-warmGray dark:text-darkWarmGray mt-2">
@@ -883,7 +923,7 @@ export default function ProjectPageClient() {
                 <motion.div className="w-full h-[1px] bg-subtle dark:bg-darkSubtle" variants={fadeUp} />
                 <motion.div variants={fadeUp} className="grid md:grid-cols-3 gap-8">
                   <div>
-                    <span className="font-serif text-7xl md:text-8xl text-accent/20 dark:text-accent/30 font-bold leading-none">
+                    <span className="font-serif text-7xl md:text-8xl text-accent/20 dark:text-darkInk/25 font-bold leading-none">
                       07
                     </span>
                     <p className="font-sans text-xs uppercase tracking-[0.2em] text-warmGray dark:text-darkWarmGray mt-2">
@@ -918,12 +958,12 @@ export default function ProjectPageClient() {
                         }`}
                       >
                         <div className="flex items-center gap-3 mb-3">
-                          <span className="font-sans text-xs uppercase tracking-[0.15em] text-accent">
+                          <span className="font-sans text-xs uppercase tracking-[0.15em] text-accent dark:text-darkInk">
                             {phase.name}
                           </span>
                           <span className={`font-sans text-[10px] uppercase tracking-[0.1em] px-2.5 py-0.5 rounded-full ${
                             phase.status === "current"
-                              ? "bg-accent/15 text-accent"
+                              ? "bg-accent/15 text-accent dark:bg-darkInk/15 dark:text-darkInk"
                               : phase.status === "next"
                               ? "bg-warmGray/15 dark:bg-darkWarmGray/15 text-warmGray dark:text-darkWarmGray"
                               : "bg-subtle dark:bg-darkSubtle text-warmGray/60 dark:text-darkWarmGray/60"
@@ -940,7 +980,7 @@ export default function ProjectPageClient() {
                         <ul className="space-y-2">
                           {(phase.items ?? []).map((item) => (
                             <li key={item} className="flex gap-3 items-start">
-                              <span className="mt-2 w-1.5 h-1.5 rounded-full bg-accent shrink-0" />
+                              <span className="mt-2 w-1.5 h-1.5 rounded-full bg-accent dark:bg-darkInk shrink-0" />
                               <span className="font-sans text-sm leading-relaxed text-warmGray dark:text-darkWarmGray">
                                 {item}
                               </span>
@@ -948,6 +988,32 @@ export default function ProjectPageClient() {
                           ))}
                         </ul>
                       </div>
+                    ))}
+                  </div>
+                </motion.div>
+              </>
+            )}
+
+            {/* Reflection */}
+            {project.reflection && project.reflection.body.length > 0 && (
+              <>
+                <motion.div className="w-full h-[1px] bg-subtle dark:bg-darkSubtle" variants={fadeUp} />
+                <motion.div variants={fadeUp} className="grid md:grid-cols-3 gap-8">
+                  <div>
+                    <p className="font-sans text-xs uppercase tracking-[0.2em] text-warmGray dark:text-darkWarmGray mt-2">
+                      Reflection
+                    </p>
+                  </div>
+                  <div className="md:col-span-2 space-y-5">
+                    {project.reflection.title && (
+                      <h3 className="font-serif text-2xl md:text-3xl leading-tight text-ink dark:text-darkInk text-balance">
+                        {project.reflection.title}
+                      </h3>
+                    )}
+                    {project.reflection.body.map((para, i) => (
+                      <p key={i} className="font-serif text-xl md:text-2xl leading-relaxed text-ink dark:text-darkInk">
+                        {para}
+                      </p>
                     ))}
                   </div>
                 </motion.div>
