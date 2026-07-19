@@ -25,7 +25,6 @@ const michelinFuelSavings: Project = {
 
   projectLink: "https://b2b.michelin.in/fuel-saving-calculator",
   projectLinkLabel: "Live tool ↗",
-  caseStudy: "https://connectedfleet.michelin.com/blog/calculate-co2-emissions/",
 
   // Michelin brand: a Bibendum animation over the house yellow, with the
   // yellow→blue gradient as the fallback while the video loads / if it can't play.
@@ -215,6 +214,7 @@ const michelinFuelSavings: Project = {
       era: "After",
       kicker: "Scaled globally",
       title: "From a regional experiment to a worldwide Michelin product",
+      titleHref: "https://connectedfleet.michelin.com/blog/calculate-co2-emissions/",
       status: "future",
       body: [
         "The validated India concept, a self-serve, R&D-backed fleet calculator that leads with value before capturing intent, went on to inform Michelin's global Connected Fleet Carbon Calculator, scaling the idea into a multi-vehicle-group emissions tool under the worldwide Connected Fleet brand.",

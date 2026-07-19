@@ -145,6 +145,7 @@ export interface Chapter {
   era: string                             // short badge, e.g. "2018"
   kicker: string                          // eyebrow label, e.g. "The style guide"
   title: string
+  titleHref?: string                      // if set, the chapter title links out (opens in a new tab)
   status?: "past" | "current" | "future"  // styles the era badge / reserved state
   body: string[]                          // paragraphs
   figures?: Figure[]

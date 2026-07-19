@@ -200,8 +200,25 @@ function ChapterBlock({ chapter, fadeUp }: { chapter: Chapter; fadeUp: Variants 
       {/* Body */}
       <div className={`pb-4 ${chapter.reserved ? "opacity-90" : ""}`}>
         <p className="font-sans text-xs uppercase tracking-[0.2em] text-accent mb-2">{chapter.kicker}</p>
-        <h3 className="font-serif text-2xl md:text-3xl leading-tight text-ink dark:text-darkInk mb-5 text-balance">
-          {chapter.title}
+        <h3 className="font-serif text-2xl md:text-3xl leading-tight mb-5 text-balance">
+          {chapter.titleHref ? (
+            <a
+              href={chapter.titleHref}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="group/cl inline text-ink dark:text-darkInk underline decoration-ink/25 dark:decoration-darkInk/30 underline-offset-[6px] transition-colors hover:decoration-ink dark:hover:decoration-darkInk focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent dark:focus-visible:outline-darkInk"
+            >
+              {chapter.title}
+              <span
+                aria-hidden="true"
+                className="ml-1.5 inline-block text-ink/70 dark:text-darkInk/70 transition-transform duration-200 group-hover/cl:translate-x-0.5 group-hover/cl:-translate-y-0.5"
+              >
+                ↗
+              </span>
+            </a>
+          ) : (
+            <span className="text-ink dark:text-darkInk">{chapter.title}</span>
+          )}
         </h3>
 
         <div className="space-y-4 max-w-3xl">
