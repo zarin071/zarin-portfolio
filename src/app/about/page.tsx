@@ -7,12 +7,14 @@ import About from "@/components/About"
 import Testimonials from "@/components/Testimonials"
 import Footer from "@/components/Footer"
 import ChatWidget from "@/components/ChatWidget"
+import AnalyticsProvider from "@/components/AnalyticsProvider"
 
 export default function AboutPage() {
   const [chatOpen, setChatOpen] = useState(false)
 
   return (
     <ThemeProvider>
+      <AnalyticsProvider page="about" />
       <Nav onChatOpen={() => setChatOpen(true)} />
       {/* CSS 3D entrance (see .about-3d-enter): tilts up out of depth on arrival,
           then resets to transform:none so it never leaves overflow behind.

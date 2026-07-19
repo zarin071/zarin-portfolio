@@ -8,6 +8,8 @@ import Footer from "@/components/Footer"
 import ChatWidget from "@/components/ChatWidget"
 import { auditSkills } from "@/data/audit-skills"
 import { experiments } from "@/data/playground/index"
+import { track } from "@/lib/analytics"
+import AnalyticsProvider from "@/components/AnalyticsProvider"
 
 // ─── Audit skills viewer ────────────────────────────────────────────────────
 
@@ -340,6 +342,7 @@ export default function Playground() {
 
   return (
     <ThemeProvider>
+      <AnalyticsProvider page="playground" />
       <Nav onChatOpen={() => setChatOpen(true)} />
 
       <main className="min-h-screen pt-32 section-container">
@@ -399,7 +402,11 @@ export default function Playground() {
                     </a>
                   )}
                   <button
-                    onClick={() => setActive(active === exp.id ? null : exp.id)}
+                    onClick={() => {
+                      const next = active === exp.id ? null : exp.id
+                      setActive(next)
+                      if (next) track("experiment_opened", { experiment: exp.id })
+                    }}
                     className="font-sans text-xs uppercase tracking-[0.12em] px-4 py-2 rounded-full border border-ink/20 dark:border-darkInk/20 hover:bg-ink hover:text-cream dark:hover:bg-darkInk dark:hover:text-darkBg transition-all duration-200"
                   >
                     {active === exp.id ? "Close" : "View →"}

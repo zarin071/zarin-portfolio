@@ -1,6 +1,7 @@
 "use client"
 
 import { motion } from "framer-motion"
+import { track } from "@/lib/analytics"
 
 const contactDetails: { label: string; value: string; href: string; download?: string }[] = [
   {
@@ -68,6 +69,7 @@ export default function Contact() {
             download={detail.download}
             target={detail.href.startsWith("http") ? "_blank" : undefined}
             rel={detail.href.startsWith("http") ? "noopener noreferrer" : undefined}
+            onClick={() => track("contact_clicked", { link: detail.label.toLowerCase() })}
             className="group p-6 rounded-2xl border border-subtle dark:border-darkSubtle hover:border-ink dark:hover:border-darkInk transition-all duration-300"
           >
             <p className="font-sans text-xs uppercase tracking-[0.1em] text-warmGray dark:text-darkWarmGray mb-2">
