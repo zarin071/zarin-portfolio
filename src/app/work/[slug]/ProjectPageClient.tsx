@@ -676,6 +676,38 @@ export default function ProjectPageClient() {
               </div>
             </motion.div>
 
+            {/* Personas */}
+            {project.personas && project.personas.length > 0 && (
+              <>
+                <motion.div className="w-full h-[1px] bg-subtle dark:bg-darkSubtle" variants={fadeUp} />
+                <motion.div variants={fadeUp} className="grid md:grid-cols-3 gap-8">
+                  <div>
+                    <p className="font-sans text-xs uppercase tracking-[0.2em] text-warmGray dark:text-darkWarmGray mt-2">
+                      Who it&apos;s for
+                    </p>
+                  </div>
+                  <div className="md:col-span-2 grid sm:grid-cols-2 gap-4">
+                    {project.personas.map((persona: Persona) => (
+                      <div
+                        key={persona.role}
+                        className="p-6 bg-subtle/20 dark:bg-darkSubtle/20 rounded-2xl border border-subtle/50 dark:border-darkSubtle/50"
+                      >
+                        <p className="font-sans text-xs uppercase tracking-[0.15em] text-accent mb-1">
+                          {persona.role}
+                        </p>
+                        <p className="font-sans text-xs text-warmGray dark:text-darkWarmGray mb-3">
+                          {persona.scope}
+                        </p>
+                        <p className="font-serif text-base leading-relaxed text-ink dark:text-darkInk">
+                          {persona.need}
+                        </p>
+                      </div>
+                    ))}
+                  </div>
+                </motion.div>
+              </>
+            )}
+
             {/* Discovery */}
             {project.discovery && (
               <>
@@ -730,38 +762,6 @@ export default function ProjectPageClient() {
                 </p>
               </div>
             </motion.div>
-
-            {/* Personas */}
-            {project.personas && project.personas.length > 0 && (
-              <>
-                <motion.div className="w-full h-[1px] bg-subtle dark:bg-darkSubtle" variants={fadeUp} />
-                <motion.div variants={fadeUp} className="grid md:grid-cols-3 gap-8">
-                  <div>
-                    <p className="font-sans text-xs uppercase tracking-[0.2em] text-warmGray dark:text-darkWarmGray mt-2">
-                      Who it&apos;s for
-                    </p>
-                  </div>
-                  <div className="md:col-span-2 grid sm:grid-cols-2 gap-4">
-                    {project.personas.map((persona: Persona) => (
-                      <div
-                        key={persona.role}
-                        className="p-6 bg-subtle/20 dark:bg-darkSubtle/20 rounded-2xl border border-subtle/50 dark:border-darkSubtle/50"
-                      >
-                        <p className="font-sans text-xs uppercase tracking-[0.15em] text-accent mb-1">
-                          {persona.role}
-                        </p>
-                        <p className="font-sans text-xs text-warmGray dark:text-darkWarmGray mb-3">
-                          {persona.scope}
-                        </p>
-                        <p className="font-serif text-base leading-relaxed text-ink dark:text-darkInk">
-                          {persona.need}
-                        </p>
-                      </div>
-                    ))}
-                  </div>
-                </motion.div>
-              </>
-            )}
 
             <motion.div className="w-full h-[1px] bg-subtle dark:bg-darkSubtle" variants={fadeUp} />
 
