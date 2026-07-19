@@ -29,6 +29,7 @@ export default function Footer() {
             </a>
             <a
               href="/resume.pdf"
+              download="ZarinSolanki_Resume_2026.pdf"
               className="font-sans text-sm text-warmGray dark:text-darkWarmGray hover:text-ink dark:hover:text-darkInk transition-colors"
             >
               Resume

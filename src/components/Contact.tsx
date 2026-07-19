@@ -2,7 +2,7 @@
 
 import { motion } from "framer-motion"
 
-const contactDetails = [
+const contactDetails: { label: string; value: string; href: string; download?: string }[] = [
   {
     label: "Email",
     value: "zarinsolanki.work@gmail.com",
@@ -15,8 +15,9 @@ const contactDetails = [
   },
   {
     label: "Resume",
-    value: "View Resume ↗",
+    value: "Download Resume ↓",
     href: "/resume.pdf",
+    download: "ZarinSolanki_Resume_2026.pdf",
   },
 ]
 
@@ -64,6 +65,7 @@ export default function Contact() {
           <a
             key={detail.label}
             href={detail.href}
+            download={detail.download}
             target={detail.href.startsWith("http") ? "_blank" : undefined}
             rel={detail.href.startsWith("http") ? "noopener noreferrer" : undefined}
             className="group p-6 rounded-2xl border border-subtle dark:border-darkSubtle hover:border-ink dark:hover:border-darkInk transition-all duration-300"
