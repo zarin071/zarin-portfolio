@@ -206,7 +206,7 @@ function ChapterBlock({ chapter, fadeUp }: { chapter: Chapter; fadeUp: Variants 
               href={chapter.titleHref}
               target="_blank"
               rel="noopener noreferrer"
-              className="group/cl inline text-ink dark:text-darkInk underline decoration-ink/25 dark:decoration-darkInk/30 underline-offset-[6px] transition-colors hover:decoration-ink dark:hover:decoration-darkInk focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent dark:focus-visible:outline-darkInk"
+              className="group/cl inline text-ink dark:text-darkInk underline decoration-2 decoration-ink/40 dark:decoration-darkInk/45 underline-offset-[6px] transition-all hover:decoration-ink dark:hover:decoration-darkInk focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent dark:focus-visible:outline-darkInk"
             >
               {chapter.title}
               <span
@@ -231,7 +231,7 @@ function ChapterBlock({ chapter, fadeUp }: { chapter: Chapter; fadeUp: Variants 
 
         {chapter.reserved && (
           <div className="mt-6 inline-flex items-center gap-2 rounded-full border border-dashed border-warmGray/40 dark:border-darkWarmGray/40 px-4 py-1.5">
-            <span className="w-1.5 h-1.5 rounded-full bg-accent" />
+            <span className="w-1.5 h-1.5 rounded-full bg-accent dark:bg-darkInk" />
             <span className="font-sans text-xs uppercase tracking-[0.15em] text-warmGray dark:text-darkWarmGray">
               Coming soon
             </span>
@@ -246,7 +246,7 @@ function ChapterBlock({ chapter, fadeUp }: { chapter: Chapter; fadeUp: Variants 
           <ul className="mt-8 space-y-3">
             {chapter.highlights.map((item) => (
               <li key={item} className="flex gap-3 items-start">
-                <span className="mt-2 w-1.5 h-1.5 rounded-full bg-accent shrink-0" />
+                <span className="mt-2 w-1.5 h-1.5 rounded-full bg-accent dark:bg-darkInk shrink-0" />
                 <span className="font-sans text-base leading-relaxed text-warmGray dark:text-darkWarmGray">
                   {item}
                 </span>
@@ -312,7 +312,7 @@ function ChapterBlock({ chapter, fadeUp }: { chapter: Chapter; fadeUp: Variants 
                     }
                     return isBullet ? (
                       <div key={i} className="flex gap-2 items-start">
-                        <span className="mt-[0.45em] w-1 h-1 rounded-full bg-accent/60 shrink-0" />
+                        <span className="mt-[0.45em] w-1 h-1 rounded-full bg-accent/60 dark:bg-darkInk/60 shrink-0" />
                         <span className="font-sans text-sm leading-relaxed text-warmGray dark:text-darkWarmGray">
                           {line.slice(2)}
                         </span>
@@ -737,7 +737,7 @@ export default function ProjectPageClient() {
                       <ul className="space-y-3">
                         {project.discovery.questions.map((q, i) => (
                           <li key={i} className="flex gap-4 items-start">
-                            <span className="mt-2 w-1.5 h-1.5 rounded-full bg-accent shrink-0" />
+                            <span className="mt-2 w-1.5 h-1.5 rounded-full bg-accent dark:bg-darkInk shrink-0" />
                             <span className="font-sans text-base leading-relaxed text-warmGray dark:text-darkWarmGray">
                               {q}
                             </span>
@@ -846,7 +846,7 @@ export default function ProjectPageClient() {
                     <ul className="space-y-4">
                       {project.offers.map((item) => (
                         <li key={item} className="flex gap-4 items-start">
-                          <span className="mt-2.5 w-2 h-2 rounded-full bg-accent shrink-0" />
+                          <span className="mt-2.5 w-2 h-2 rounded-full bg-accent dark:bg-darkInk shrink-0" />
                           <span className="font-serif text-lg md:text-xl leading-relaxed text-ink dark:text-darkInk">
                             {item}
                           </span>
@@ -980,7 +980,7 @@ export default function ProjectPageClient() {
                         <ul className="space-y-2">
                           {(phase.items ?? []).map((item) => (
                             <li key={item} className="flex gap-3 items-start">
-                              <span className="mt-2 w-1.5 h-1.5 rounded-full bg-accent shrink-0" />
+                              <span className="mt-2 w-1.5 h-1.5 rounded-full bg-accent dark:bg-darkInk shrink-0" />
                               <span className="font-sans text-sm leading-relaxed text-warmGray dark:text-darkWarmGray">
                                 {item}
                               </span>
