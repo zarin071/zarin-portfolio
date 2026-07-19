@@ -105,7 +105,7 @@ export default function NotFound() {
           transition={{ delay: 0.8 }}
           className="font-sans text-[11px] uppercase tracking-[0.18em] text-warmGray/40 dark:text-darkWarmGray/30"
         >
-          psst — there are 10 eggs hidden on the site 🥚
+          psst — there are 10 eggs hidden on the homepage 🥚
         </motion.p>
       </main>
 
