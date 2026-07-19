@@ -1,3 +1,3 @@
-:HL["/zarin-portfolio/staging/_next/static/chunks/2gyp1dhl8lmsw.css","style"]
+:HL["/zarin-portfolio/staging/_next/static/chunks/23w8snka6jy__.css","style"]
 :HL["/zarin-portfolio/staging/eggHunt.css","style"]
-0:{"tree":{"name":"","param":null,"prefetchHints":16,"slots":{"children":{"name":"work","param":null,"prefetchHints":0,"slots":{"children":{"name":"slug","param":{"type":"d","key":"michelin-fuel-savings-calculator","siblings":null},"prefetchHints":0,"slots":{"children":{"name":"__PAGE__","param":null,"prefetchHints":0,"slots":null}}}}}}},"staleTime":300,"buildId":"F9r9Ne8xIBx37qGY6bQaP"}
+0:{"tree":{"name":"","param":null,"prefetchHints":16,"slots":{"children":{"name":"work","param":null,"prefetchHints":0,"slots":{"children":{"name":"slug","param":{"type":"d","key":"michelin-fuel-savings-calculator","siblings":null},"prefetchHints":0,"slots":{"children":{"name":"__PAGE__","param":null,"prefetchHints":0,"slots":null}}}}}}},"staleTime":300,"buildId":"Qbh2WBjVoGylqIr6CWOAc"}
