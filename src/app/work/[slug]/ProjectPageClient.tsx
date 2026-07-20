@@ -221,7 +221,7 @@ function ChapterBlock({ chapter, fadeUp }: { chapter: Chapter; fadeUp: Variants 
           )}
         </h3>
 
-        <div className="space-y-4 max-w-3xl">
+        <div className="space-y-4 w-full">
           {chapter.body.map((para, i) => (
             <p key={i} className="font-serif text-lg md:text-xl leading-relaxed text-ink/90 dark:text-darkInk/90">
               {para}
@@ -447,7 +447,7 @@ function HeroSection({ project, stagger, fadeUp }: {
             {project.title}
           </motion.h1>
 
-          <motion.p variants={fadeUp} className="body-lg mb-3 max-w-2xl">
+          <motion.p variants={fadeUp} className="body-lg mb-3">
             {project.subtitle}
           </motion.p>
 
@@ -587,7 +587,7 @@ export default function ProjectPageClient() {
                     </h3>
                   )}
                   {project.processIntro && (
-                    <p className="font-serif text-lg md:text-xl leading-relaxed text-ink/90 dark:text-darkInk/90 max-w-3xl mb-10">
+                    <p className="font-serif text-lg md:text-xl leading-relaxed text-ink/90 dark:text-darkInk/90 w-full mb-10">
                       {project.processIntro}
                     </p>
                   )}
