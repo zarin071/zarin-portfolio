@@ -338,6 +338,24 @@ const packtDesignSystem: Project = {
         "The headline number — 221 projects — confirms bpCore is operating at the scale of a real platform product, not a reference library. Of those, 90 projects are fully adopting (>90% UI token coverage), 90 are partially adopting (20–90%), and 36 are in early influence (<20%). Coded component adoption is still early: only 2 projects consume bpCore components in code, which is expected at this stage — token adoption always precedes component adoption, and the coded layer needs to catch up.",
         "The priority product baseline tells the more important story. Design adoption is ahead of development in every category. Seven of the 20 priority products fully consume bpCore in design; only two match that in development. Products like Wells & Subsurface and Wells Real Time Operations are true end-to-end adopters. BioVerse, Fleet Foundations, Pivot, bpme Global App and MyAirbp are fully adopted on the design side but the development side hasn't followed yet. That gap — design fully consuming, dev not using — is the clearest signal in the data and the primary driver of the bpCore MVP's first iteration: make the coded components as easy to reach for as the Figma ones.",
       ],
+      figures: [
+        {
+          alt: "bpCore baseline — 20 priority products, design vs development adoption matrix",
+          src: "/packt/bpcore-baseline.png",
+          span: "full",
+          ratio: "1670 / 1234",
+          focus: "top",
+          caption: "Priority product baseline: 20 products assessed across design and development adoption states. Green = design, purple = development.",
+        },
+        {
+          alt: "bpCore deep dive — all 221 projects consuming bpCore, UI token and coded component adoption",
+          src: "/packt/bpcore-deepdive.png",
+          span: "full",
+          ratio: "1315 / 9858",
+          focus: "top",
+          caption: "Deep dive: all 221 projects consuming bpCore, mapped by UI token adoption (influenced / partial / complete) and coded component usage.",
+        },
+      ],
       highlights: [
         "221 projects consuming bpCore across bp's global portfolio.",
         "90 projects completely adopting (>90% token coverage) — 41% of the portfolio.",
