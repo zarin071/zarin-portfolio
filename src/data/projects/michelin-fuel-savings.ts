@@ -20,7 +20,7 @@ const michelinFuelSavings: Project = {
   subtitle:
     "Turning an unproven marketing claim into a personalized, self-serve ROI tool for fleet operators — a model that later surfaced in Michelin's global fleet product.",
   role: "UI/UX Designer & Front-End Developer",
-  timeline: "2022 · 2 months · Solo design, built with Michelin's back-end team",
+  timeline: "2022",
   tags: ["UX/UI", "Front-End (React)", "B2B", "Conversion"],
 
   projectLink: "https://b2b.michelin.in/fuel-saving-calculator",

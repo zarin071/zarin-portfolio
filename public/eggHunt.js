@@ -500,8 +500,9 @@
 
   function showNotif() {
     if (state.completed) return
+    var basePath = (window.EGG_HUNT_CONFIG || {}).basePath || ""
     var path = window.location.pathname.replace(/\/$/, "") || "/"
-    if (path !== "/" && path !== "") return
+    if (path !== "/" && path !== "" && path !== basePath) return
     try { if (sessionStorage.getItem(NOTIF_KEY)) return } catch (e) {}
     if (document.getElementById("egg-notif")) return
 
@@ -579,4 +580,14 @@
   } else {
     setTimeout(init, 350)
   }
+
+  /* Re-attach listeners after Next.js client-side navigation */
+  ;(function () {
+    function reInit() { setTimeout(init, 350) }
+    var origPush = history.pushState
+    history.pushState = function () { origPush.apply(this, arguments); reInit() }
+    var origReplace = history.replaceState
+    history.replaceState = function () { origReplace.apply(this, arguments); reInit() }
+    window.addEventListener("popstate", reInit)
+  })()
 })()
