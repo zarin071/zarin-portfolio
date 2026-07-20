@@ -14,6 +14,12 @@ import PasswordGate from "@/components/PasswordGate"
 
 type Project = NonNullable<ReturnType<typeof projects.find>>
 
+function renderInline(text: string) {
+  return text.split(/\*\*(.*?)\*\*/g).map((part, i) =>
+    i % 2 === 1 ? <strong key={i}>{part}</strong> : part
+  )
+}
+
 const base = process.env.NEXT_PUBLIC_BASE_PATH ?? ""
 
 const withBase = (s?: string) => (s ? (s.startsWith("/") ? `${base}${s}` : s) : null)
@@ -682,10 +688,12 @@ export default function ProjectPageClient() {
                   Problem
                 </p>
               </div>
-              <div className="md:col-span-2">
-                <p className="font-serif text-xl md:text-2xl leading-relaxed text-ink dark:text-darkInk">
-                  {project.problem}
-                </p>
+              <div className="md:col-span-2 space-y-6">
+                {(Array.isArray(project.problem) ? project.problem : [project.problem]).map((para, i) => (
+                  <p key={i} className="font-serif text-xl md:text-2xl leading-relaxed text-ink dark:text-darkInk">
+                    {para}
+                  </p>
+                ))}
               </div>
             </motion.div>
 
@@ -733,7 +741,7 @@ export default function ProjectPageClient() {
                   </div>
                   <div className="md:col-span-2 space-y-6">
                     <p className="font-serif text-xl md:text-2xl leading-relaxed text-ink dark:text-darkInk">
-                      {project.discovery.summary}
+                      {renderInline(project.discovery.summary)}
                     </p>
                     {project.discovery.questions.length > 0 && (
                       <ul className="space-y-3">

@@ -161,7 +161,7 @@ export interface Project {
   role: string
   timeline: string
   tags: string[]
-  problem: string
+  problem: string | string[]
   approach: string
   impact: string
   caseStudy?: string

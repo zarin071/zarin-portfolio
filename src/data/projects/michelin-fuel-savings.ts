@@ -41,14 +41,16 @@ const michelinFuelSavings: Project = {
     "The build wasn't unchecked: a dedicated QA function tested each release, with defects raised and tracked continuously in Jira.",
   ],
 
-  problem:
-    "Michelin India could claim fuel savings, but it couldn't prove them to an individual fleet. Before this project, the entire argument lived as unquantified marketing copy on the 'Why Choose Michelin' page, statements like 'our tyres save fuel,' with no way for a fleet owner to see what that meant for their operation. No calculator, no tool, no personalized number. Meanwhile the people the business needed to convince, fleet owners, fleet managers, and the Michelin sales reps pitching to them, were all circling the same doubt: how can a tyre actually lower my fuel bills and cut emissions, and is it worth the premium? The job was to turn a generic brand claim into a concrete, personal, believable figure, and to do it in a way that opened a sales conversation rather than ending one.",
+  problem:[
+    "Michelin India could claim fuel savings, but it couldn't prove them to an individual fleet. Before this project, the entire argument lived as unquantified marketing copy on the 'Why Choose Michelin' page, statements like 'our tyres save fuel,' with no way for a fleet owner to see what that meant for their operation.",
+    "No tool, no personalized number. Meanwhile the people the business needed to convince, fleet owners, fleet managers, and the Michelin sales reps pitching to them, were all circling the same doubt: how can a tyre actually lower my fuel bills and cut emissions, and is it worth the premium? The job was to turn a generic brand claim into a concrete, personal, believable figure, and to do it in a way that opened a sales conversation rather than ending one."
+  ],
 
   // The core tension + the research plan that would validate each axis, surfaced
   // under the "Discovery" section (framed as planned research, not a run study).
   discovery: {
     summary:
-      "The real difficulty wasn't visual, it was a three-way tension that pulled against itself: Trust vs. Friction vs. Conversion, all on an enterprise design system with no motion vocabulary. Every decision had to serve all three at once, lowering friction couldn't cost accuracy; capturing a lead couldn't cost trust. On a two-month build with solo design ownership, the design bets were made from that tension and Michelin's R&D data. Given more runway, here's the research I'd run to validate each axis: qualitative discovery with the people on both sides of the sale, evaluative testing of the riskiest design decisions, and in-market analytics:",
+      "The real difficulty wasn't visual, it was a three-way tension that pulled against itself: **Trust vs. Friction vs. Conversion**, all on an enterprise design system with no motion vocabulary. Every decision had to serve all three at once, lowering friction couldn't cost accuracy; capturing a lead couldn't cost trust. On a two-month build with solo design ownership, the design bets were made from that tension and Michelin's R&D data. Given more runway, here's the research I'd run to validate each axis: qualitative discovery with the people on both sides of the sale, evaluative testing of the riskiest design decisions, and in-market analytics:",
     questions: [
       "Fleet owner & fleet-manager interviews: how they actually weigh tyre cost against the upfront premium, what evidence they'd trust from a supplier, and which inputs they know off the top of their head versus have to look up. (De-risks Trust + Friction.)",
       "Sales-rep interviews and field ride-alongs: the reps pitching the premium day to day: the objections they hit, and what a tool would need to hand them a warm, qualified lead rather than a cold form-fill. (De-risks Conversion + Trust.)",
