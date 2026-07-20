@@ -3,6 +3,7 @@
 import { motion } from "framer-motion"
 import Link from "next/link"
 import { projects, type Project } from "@/data/projects"
+import { track } from "@/lib/analytics"
 
 const base = process.env.NEXT_PUBLIC_BASE_PATH ?? ""
 
@@ -180,7 +181,7 @@ export default function Work() {
           transition={{ duration: 0.5 }}
           className="mb-8 md:mb-12"
         >
-          <Link href={`/work/${featured.id}`} className="group block">
+          <Link href={`/work/${featured.id}`} className="group block" onClick={() => track("project_clicked", { project: featured.id })}>
             <CoverArt project={featured} large />
             <ProjectMeta project={featured} />
           </Link>
@@ -198,7 +199,7 @@ export default function Work() {
             viewport={{ once: true, margin: "-50px" }}
             transition={{ duration: 0.5, delay: i * 0.08 }}
           >
-            <Link href={`/work/${project.id}`} className="group block">
+            <Link href={`/work/${project.id}`} className="group block" onClick={() => track("project_clicked", { project: project.id })}>
               <CoverArt project={project} />
               <ProjectMeta project={project} />
             </Link>

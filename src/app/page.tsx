@@ -12,12 +12,14 @@ import Contact from "@/components/Contact"
 import Footer from "@/components/Footer"
 import ChatWidget from "@/components/ChatWidget"
 import PlaygroundTeaser from "@/components/PlaygroundTeaser"
+import AnalyticsProvider from "@/components/AnalyticsProvider"
 
 export default function Home() {
   const [chatOpen, setChatOpen] = useState(false)
 
   return (
     <ThemeProvider>
+      <AnalyticsProvider page="home" />
       <Nav onChatOpen={() => setChatOpen(true)} />
       <main>
         <Hero onChatOpen={() => setChatOpen(true)} />
