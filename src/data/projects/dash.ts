@@ -6,7 +6,7 @@ const dash: Project = {
   subtitle:
     "A single, trusted pane of glass for bp's Digital & Technology performance, from the atomic team to the VP",
   role: "Product Designer",
-  timeline: "2025, Present",
+  timeline: "2025",
   tags: ["Product Design", "Data Analytics", "Enterprise", "AI/ML"],
   password: process.env.NEXT_PUBLIC_WORK_PASSWORD ?? "",
 
