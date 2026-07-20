@@ -548,9 +548,11 @@ export default function ProjectPageClient() {
                 <p className="font-sans text-xs uppercase tracking-[0.2em] text-warmGray dark:text-darkWarmGray mb-4">
                   Overview
                 </p>
-                <p className="font-serif text-2xl md:text-3xl leading-relaxed text-ink dark:text-darkInk text-balance max-w-5xl">
-                  {project.overview}
-                </p>
+                {(Array.isArray(project.overview) ? project.overview : [project.overview]).map((para, i) => (
+                  <p key={i} className="font-serif text-2xl md:text-3xl leading-relaxed text-ink dark:text-darkInk text-balance w-full mb-6 last:mb-0">
+                    {para}
+                  </p>
+                ))}
               </motion.div>
             )}
 
