@@ -3,6 +3,8 @@
 import { motion } from "framer-motion"
 import { track } from "@/lib/analytics"
 
+const base = process.env.NEXT_PUBLIC_BASE_PATH ?? ""
+
 const contactDetails: { label: string; value: string; href: string; download?: string }[] = [
   {
     label: "Email",
@@ -17,7 +19,7 @@ const contactDetails: { label: string; value: string; href: string; download?: s
   {
     label: "Resume",
     value: "Download Resume ↓",
-    href: "/ZarinSolanki_Resume_2026.pdf",
+    href: `${base}/ZarinSolanki_Resume_2026.pdf`,
     download: "ZarinSolanki_Resume_2026.pdf",
   },
 ]

@@ -1,3 +1,5 @@
+const base = process.env.NEXT_PUBLIC_BASE_PATH ?? ""
+
 export default function Footer() {
   return (
     <footer className="border-t border-subtle dark:border-darkSubtle">
@@ -28,7 +30,7 @@ export default function Footer() {
               Email
             </a>
             <a
-              href="/ZarinSolanki_Resume_2026.pdf"
+              href={`${base}/ZarinSolanki_Resume_2026.pdf`}
               download="ZarinSolanki_Resume_2026.pdf"
               className="font-sans text-sm text-warmGray dark:text-darkWarmGray hover:text-ink dark:hover:text-darkInk transition-colors"
             >
