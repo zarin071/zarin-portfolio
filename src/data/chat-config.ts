@@ -131,7 +131,7 @@ export const chatConfig: ChatEntry[] = [
     question: "Tell me about the CO₂ calculator",
     category: "Projects",
     answer:
-      "The Fleet CO₂ Emissions Calculator (a.k.a. the fuel-saving calculator) is a tool I designed and built for Michelin Connected Fleet. Fleet managers enter their fleet composition and fuel consumption and get estimated CO₂ emissions and savings, broken down by fuel type — making complex sustainability reporting accessible to non-experts. It's live at b2b.michelin.in/fuel-saving-calculator.",
+      "Michelin's brand vision rests on three pillars: People, Profit, Planet. On the B2B side, that vision met a hard commercial reality: Michelin's fuel-efficient truck tyres cost more upfront, and fleet operators are ruthless about total cost. Telling them 'our tyres save fuel' wasn't enough — they needed to see the money.\n\nI owned the design end to end as the sole designer, embedded in the B2B marketing team, and built the production React front-end myself — collaborating with Michelin's back-end team, who served the savings logic and R&D-grounded data through the site's CMS integration.\n\nThe project ran with direct sponsorship: I worked with the Michelin India head on it, because it served two audiences at once. For fleet dealers and fleet managers — Michelin's biggest B2B customers — it turned an abstract premium into a number they could act on, and showed them what they were contributing environmentally. For leadership, it made the People/Profit/Planet vision measurable at the point of sale rather than stated on a page.\n\nThe build wasn't unchecked: a dedicated QA function tested each release, with defects raised and tracked continuously in Jira.",
   },
   {
     id: "project-packt-ds",
