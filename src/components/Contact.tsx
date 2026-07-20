@@ -17,7 +17,7 @@ const contactDetails: { label: string; value: string; href: string; download?: s
   {
     label: "Resume",
     value: "Download Resume ↓",
-    href: "/resume.pdf",
+    href: "/ZarinSolanki_Resume_2026.pdf",
     download: "ZarinSolanki_Resume_2026.pdf",
   },
 ]

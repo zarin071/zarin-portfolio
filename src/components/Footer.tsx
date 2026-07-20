@@ -28,7 +28,7 @@ export default function Footer() {
               Email
             </a>
             <a
-              href="/resume.pdf"
+              href="/ZarinSolanki_Resume_2026.pdf"
               download="ZarinSolanki_Resume_2026.pdf"
               className="font-sans text-sm text-warmGray dark:text-darkWarmGray hover:text-ink dark:hover:text-darkInk transition-colors"
             >
