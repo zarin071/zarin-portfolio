@@ -7,7 +7,7 @@ const base = process.env.NEXT_PUBLIC_BASE_PATH ?? ""
 export const metadata: Metadata = {
   title: "Zarin Solanki",
   description:
-    "Design-engineer hybrid with 10+ years of experience spanning UX design, front-end development, and AI product design. Currently at bp.",
+    "Senior Product Designer and Design Engineer with 10+ years spanning UX design, design systems, front-end development, and AI product design. Currently at bp.",
 }
 
 export default function RootLayout({

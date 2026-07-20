@@ -12,9 +12,9 @@ const packtDesignSystem: Project = {
   id: "packt-design-system",
   title: "Design systems from Packt to bp",
   subtitle:
-    "From a 2018 style guide to an AI-assisted design system for Packt & Packt Hub, the same problem, revisited with Figma MCP, Claude and Storybook. At bp, I led the evolution as Senior Product Designer and Design Engineering Lead through bpCore across dozens of teams and products.",
-  role: "Senior Product Designer · Design Engineering Lead (bp) · Design Systems · UI/UX · Front-End",
-  timeline: "2018 (revisited 2026)",
+    "From a 2018 style guide to a self-initiated, AI-assisted rebuild of the same system — then the enterprise version of the same problem at bp.",
+  role: "Packt 2018: UI/UX Designer (client work) · Packt 2026: self-initiated rebuild · bp: Senior Product Designer & Design Engineering Lead",
+  timeline: "2018 → 2026",
   tags: ["Design System", "Figma MCP", "AI-assisted", "Front-End"],
 
   problem:
@@ -24,10 +24,10 @@ const packtDesignSystem: Project = {
     "I revisited the problem twice, eight years apart. In 2018 I built a style guide: documented colour, type and components headed to development. Done and dusted. In 2026 I redesigned it as a real system: tokens as the single source of truth, Figma variables wired to code through the Figma MCP and Code Connect, and Claude doing the scaffolding, documentation and drift audits.",
 
   impact:
-    "The result is one token core that themes cleanly across two brands Packt and Packt Hub, with design and code that stay in lockstep instead of drifting apart the moment a team ships. This also helped at bp, where I scaled the same principles to a federated design system for dozens of teams and products, with a single source of truth flowing down and real usage flowing back up.",
+    "The result — a working system, not a proposal — is one token core that themes across two brands, Packt and Packt Hub, with design and code held in lockstep by Code Connect rather than by discipline. This also informed the bp work, where I scaled the same principles to a federated design system for dozens of teams and products.",
 
   overview:
-    "This is a case study told across eight years. \n\n The same goal: a consistent, scalable design system for  tech platforms: approached first as a style guide in 2018, then reimagined in 2026 as an AI-assisted design system. \n\n It's a story about what changed: the tooling, the definition of \"done\", and how much of the busywork now belongs to the machine.",
+    "This is a case study told across eight years. One important note up front: the 2018 style guide was real client work at Packt. The 2026 system is not — it's a self-set brief. Packt didn't commission it; I rebuilt it to answer a question I'd been carrying for eight years: what would I do differently designing this today, with tooling that didn't exist then? That's also why it can be shown in full — every token, component and decision is inspectable in the live Storybook, with nothing behind an NDA. \n\n The same goal: a consistent, scalable design system for tech platforms: approached first as a style guide in 2018, then reimagined in 2026 as an AI-assisted design system. \n\n It's a story about what changed: the tooling, the definition of \"done\", and how much of the busywork now belongs to the machine.",
 
   narrative: [
     {
@@ -184,8 +184,10 @@ const packtDesignSystem: Project = {
         "At the same time, multiple business units were running local aliases of the design system. There was no single source of truth, no common fallback model, and consistency broke across typography, colour usage, component behaviour, and documentation.",
         "My role at bpCore as Senior Product Designer and Design Engineering Lead: I owned the brand-to-system alignment, created updated colour ramps and neutral panes to support the revamp, and converted the new brand direction into token-ready foundations teams could ship without rework.",
         "Components were also scattered and unevenly adopted. So the first move was reconciliation: audit what existed, what teams were actually using, and what they needed next. We paired usage analytics with a structured survey and used that evidence to define the component structure and bpCore MVP scope.",
-        "The answer is a federated, tiered architecture. Brand tokens sit at Tier 1; a central bpCore team owns the universally-used components at Tier 2; each domain: Product, Marketing, Agentic, Mobile, gets a federated \"kit\" at Tier 3; and product teams (GIPP, bp.com, Eva, bpMe and more) consume and extend at Tier 4. The single source of truth flows down, while real usage and new patterns flow back up and get promoted into core. It's the governance answer to the exact drift I first hit at Packt, turned into an operating model for an organisation.",
-        "The discipline underneath is the same, just formalised: a small set of shared base styles, strictly modular components, and atomic design end-to-end, particles → atoms → molecules → organisms, so nothing is built twice, with accessibility (WCAG guidelines) baked into the change process and evidenced for every market. And when bp's brand refreshed in 2025, a leaning-in set of greens, a digital-first bp Sans typeface, a bento-grid system, it landed as token and component updates rather than a redraw. Dark-mode-by-swap at Packt became brand-refresh-by-token at bp.",
+        "The architecture wasn't decided up front — adoption taught us what could be centralised. bp's B2C products, bpme among them, diverged from core on two axes at once: their component structure was built for mobile while bpCore's adoption was weighted to desktop, and their colour and branding legitimately differed. There were only three responses available: force them to conform and break their product, let them keep running a local alias and accept the drift, or change the architecture so a different-looking mobile product is a first-class citizen rather than a deviation. What that divergence clarified is which layer a global system can actually own. When a consumer product is genuinely allowed to look different, the universal layer is brand and tokens — not components. That's what set bpCore up as the centre for visual and brand authority, with domains owning their own component reality beneath it.",
+        "The answer is a federated, tiered architecture. Brand tokens sit at Tier 1; a central bpCore team owns the universally-used components at Tier 2; each domain: Product, Marketing, Agentic, Mobile, gets a federated \"kit\" at Tier 3; and product teams (GIPP, bp.com, Eva, bpMe and more) consume and extend at Tier 4. The model is designed and in place; the first promotion cycle hasn't run yet. Adoption is still spreading, and the honest sequence is: let teams build in their domain kits for a year, watch what actually gets reused across domains, and let that evidence decide what earns a place in core. A promotion framework that promotes nothing in its first year isn't a failure — it's the framework refusing to guess. The first real test of it will be the first component two domains independently build the same way. Measuring that at bp's scale is its own design problem. Working with the UX agentic team, we're building agents that deploy directly against our products to track design system adoption — token coverage, component usage, and drift — rather than reconstructing it from manual audits and spreadsheets. It's the same instinct as the drift audit in the Packt system, scaled to a portfolio: the system should be able to tell you how it's doing without someone counting.",
+        "The discipline underneath is the same, just formalised: a small set of shared base styles, strictly modular components, and atomic design end-to-end, particles → atoms → molecules → organisms, so nothing is built twice, with accessibility baked into the change process rather than beside it. And when bp's brand refreshed in 2025, a leaning-in set of greens, a digital-first bp Sans typeface, a bento-grid system, it landed as token and component updates rather than a redraw. Dark-mode-by-swap at Packt became brand-refresh-by-token at bp.",
+        "Accessibility sits inside the change process rather than beside it. WCAG conformance was originally checked with tooling and a dedicated accessibility specialist on the team; when the restructure removed that role, we built our own audit process rather than letting the checks lapse — a mitigation I'd rather state plainly than paper over. The failures it catches are the ordinary ones that matter: contrast on input fields, where borders and placeholder text fail precisely because they're designed to look subtle. Fixing that at the token level fixes it everywhere at once, which is the whole argument for owning accessibility in the system rather than in each product.",
         "It also closes the very loop I built at Packt. bpCore is designed for Figma and built for AI: every component ships with Code Connect through the Figma MCP, and the docs are written AI-first so coding agents consume the system directly. The tokens-to-code method I proved on one product is now how a global design system ships across bp.",
       ],
       figures: [
@@ -239,7 +241,7 @@ const packtDesignSystem: Project = {
         "Ran component reconciliation using real usage plus survey input to define the bpCore MVP and roadmap.",
         "One core, many products, a federated tier model keeps dozens of teams on-system without a central bottleneck.",
         "Atomic design end-to-end: particles → atoms → molecules → organisms, so patterns are reused, never rebuilt.",
-        "Accessibility baked into the change process and evidenced, regulatory-ready across every market bp operates in.",
+        "Accessibility sits inside the change process: WCAG conformance checked with tooling and a self-built audit process after the specialist role was restructured out — a mitigation, not a gap.",
         "A whole brand refresh (2025 greens + bp Sans) shipped as tokens, not a redraw, the Packt swap trick at enterprise scale.",
         "Designed for Figma, built for AI: Code Connect via the Figma MCP and AI-first docs, the same loop proven at Packt.",
       ],
@@ -256,8 +258,8 @@ const packtDesignSystem: Project = {
           },
           body: [
             "Vision: bpCore is bp's global design system that creates a unified visual language across digital interfaces. It is built on four core principles: simple shared base styles to reduce entropy and improve consistency, modular composition so components can be used together without custom rework, DRY atomic design from particles to organisms to improve reuse and extensibility, and accessibility-by-default with evidenced governance built into change management.",
-            "Value: Organizations using design systems report significant delivery gains and quality improvements. Benchmarks referenced in this case include faster front-end and design cycles, reduced engineering effort, improved accessibility/performance/maintainability, stronger design-to-dev collaboration, faster onboarding, and measurable ROI. The strategic value is a future-ready product foundation that scales consistency, trust, and team velocity.",
-            "OKRs: Objective 1 focuses on golden-path adoption through greenfield adoption rate, targeted migrations across business areas, and increasing share of bpCore components in shipped front-end code. Objective 2 focuses on first-loop velocity through WCAG AA compliance, brand alignment, and low component detachment rates. Objective 3 focuses on system-of-systems participation through active adoption in live sessions and measurable community contributions into federated tiers.",
+            "Value: The case for bpCore isn't an industry benchmark — it's what the portfolio audit already shows. 221 projects consume the system; 90 of them at more than 90% token coverage. Yet only 2 consume it in code, and across the 20 priority products design adoption outruns development adoption in every single category. The value on the table is that gap: hundreds of products already designing on-system, waiting for the coded layer to become as easy to reach for as the Figma one. Closing it is the difference between a system that describes bp's interface and one that builds it.",
+            "OKRs: Objective 1 focuses on golden-path adoption through greenfield adoption rate, targeted migrations across business areas, and increasing share of bpCore components in shipped front-end code. Objective 2 focuses on first-loop velocity through WCAG AA compliance, brand alignment, and low component detachment rates — detachment rate is currently a target rather than a measured baseline, set from design system practice and bp's own read of what healthy component consumption looks like; instrumenting it properly is part of the adoption-tracking work with the agentic team. Objective 3 focuses on system-of-systems participation through active adoption in live sessions and measurable community contributions into federated tiers.",
           ],
         },
       ],
@@ -335,7 +337,7 @@ const packtDesignSystem: Project = {
       status: "current",
       body: [
         "Before defining the MVP roadmap we needed to know exactly where bpCore stood across bp's portfolio. Two datasets gave us the picture: a deep dive across 221 projects actively consuming bpCore, and a focused baseline on the 20 highest-priority products where design-to-development gaps were most critical to close.",
-        "The headline number — 221 projects — confirms bpCore is operating at the scale of a real platform product, not a reference library. Of those, 90 projects are fully adopting (>90% UI token coverage), 90 are partially adopting (20–90%), and 36 are in early influence (<20%). Coded component adoption is still early: only 2 projects consume bpCore components in code, which is expected at this stage — token adoption always precedes component adoption, and the coded layer needs to catch up.",
+        "The headline number — 221 projects — confirms bpCore is operating at the scale of a real platform product, not a reference library. Of those, 90 projects are fully adopting (>90% UI token coverage), 90 are partially adopting (20–90%), and 36 are in early influence (<20%). Coded component adoption sat at 2 — and the reason isn't that tokens must come first. bpCore was distributed as a Figma system with a handoff: designers could adopt it, and developers had nothing to install. Design adoption raced ahead because design had a front door and code didn't. Storybook was conceptualised later, precisely to give the coded layer one, and the Figma MCP + Code Connect work is the second half of the same fix: it makes components reachable without a human translation step in between. The trajectory since baseline is improving; adoption at this scale is honestly only measurable over about a year, so I'd rather show the diagnosis and the intervention than a number I can't yet stand behind. The metric I'll judge it by is coded-component adoption moving from 2 toward the 90 projects already at >90% token coverage — that's the population already primed.",
         "The priority product baseline tells the more important story. Design adoption is ahead of development in every category. Seven of the 20 priority products fully consume bpCore in design; only two match that in development. Products like Wells & Subsurface and Wells Real Time Operations are true end-to-end adopters. BioVerse, Fleet Foundations, Pivot, bpme Global App and MyAirbp are fully adopted on the design side but the development side hasn't followed yet. That gap — design fully consuming, dev not using — is the clearest signal in the data and the primary driver of the bpCore MVP's first iteration: make the coded components as easy to reach for as the Figma ones.",
       ],
       figures: [
@@ -409,7 +411,7 @@ const packtDesignSystem: Project = {
 
   processTitle: "Connecting Claude to Figma with the MCP",
   processIntro:
-    "The reason 2026 works is the loop between design and code. Figma's Dev Mode MCP server exposes the file: variables, styles, component structure: as tools Claude can call, so instead of me translating a design by hand, Claude reads it directly and writes the system. Here's the workflow I'd run for Packt.",
+    "The reason 2026 works is the loop between design and code. Figma's Dev Mode MCP server exposes the file: variables, styles, component structure: as tools Claude can call, so instead of me translating a design by hand, Claude reads it directly and writes the system. This is the workflow I ran for the Packt system end to end.",
   process: [
     {
       step: "01",
@@ -454,12 +456,11 @@ const packtDesignSystem: Project = {
       tools: ["drift audit", "docs", "changelog"],
     },
     {
-      step: "★",
-      title: "Bonus, Import your components back into Figma",
+      step: "07",
+      title: "Round-tripping the system: the Figma import plugin",
       detail:
-        "If you've scaffolded components with Claude and want to bring them into Figma without doing it by hand, this doc walks you through building a custom Figma plugin that does it automatically: no third-party tools, no component limits. Applied to the Packt DS: 44 components and 400+ variants imported in one run.",
+        "Scaffolding components with Claude gets you code. Getting that code back into Figma without rebuilding it by hand is the part nobody solves — third-party tools cap out on component counts and charge for the privilege. So I wrote a Figma plugin against the Plugin API: 44 components and 400+ variants imported in a single run. The hard problem wasn't translation, it was load time. Volume is where plugin performance falls over, and the honest limit is that no matter how much you automate, there's always one component you end up rebuilding by hand. Which is why the deliverable that lasts isn't the plugin — it's the system guidelines that let someone build that one component correctly, as a Tier 3 contribution that can earn its way into core if adoption justifies it. This doc walks through the full approach.",
       tools: ["Figma Plugin API", "Storybook", "React", "JavaScript"],
-      locked: true,
       downloadUrl: "/figma-plugin-portfolio.docx",
     },
   ],

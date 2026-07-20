@@ -21,7 +21,7 @@ export default function Hero({ onChatOpen }: { onChatOpen: () => void }) {
           transition={{ duration: 0.6, ease }}
           className="section-label mb-6"
         >
-          Zarin Solanki · Senior Product Designer
+          Zarin Solanki · Senior Product Designer &amp; Design Engineer
         </motion.p>
 
         <motion.h1
@@ -32,8 +32,8 @@ export default function Hero({ onChatOpen }: { onChatOpen: () => void }) {
         >
           <span className="text-ink dark:text-darkInk">Hi, I&apos;m </span>
           <span className="text-highlightSoft dark:text-highlight font-semibold">Zarin</span>
-          <span className="text-ink dark:text-darkInk"> — a design-engineer hybrid.</span>{" "}
-          I take ideas from research through design to shipped code, with a decade of doing it at{" "}
+          <span className="text-ink dark:text-darkInk"> — a product designer who ships the code.</span>{" "}
+          A decade taking ideas from research through design to production at{" "}
           <span className="text-ink dark:text-darkInk">bp, Michelin, and beyond.</span>
         </motion.h1>
 
