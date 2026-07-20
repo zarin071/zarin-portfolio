@@ -167,9 +167,9 @@ export default function Work() {
         initial={{ opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, margin: "-100px" }}
-        className="body-lg mb-14 max-w-2xl"
+        className="body-base mb-14 max-w-2xl"
       >
-        Conversational AI, sustainability tools, enterprise design systems — shipped with measurable outcomes across B2B and B2C platforms at bp, Michelin, and beyond.
+        Enterprise design systems, sustainability tools, analytics platforms — shipped with measurable outcomes across B2B and B2C at bp, Michelin, and beyond.
       </motion.p>
 
       {/* Featured project — full width */}

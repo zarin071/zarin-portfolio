@@ -85,7 +85,7 @@ export const chatConfig: ChatEntry[] = [
     question: "How do you use AI in your work?",
     category: "Skills",
     answer:
-      "I use Claude for production-grade code and rapid prototyping, opencode as a coding agent for complex tasks, and Framer AI for quick explorations. More importantly, I design AI *into* products — generative-AI experiences that feel intuitive because AI is part of the flow, not a bolt-on. (See my Conversational AI project.)",
+      "I use Claude for production-grade code and rapid prototyping, opencode as a coding agent for complex tasks, and Framer AI for quick explorations. More importantly, I design AI *into* products — generative-AI experiences that feel intuitive because AI is part of the flow, not a bolt-on.",
   },
 
   // ─── EXPERIENCE ─────────────────────────────────────────────
@@ -101,7 +101,7 @@ export const chatConfig: ChatEntry[] = [
     question: "How was your experience at Michelin?",
     category: "Experience",
     answer:
-      "Nearly 5 years (Oct 2020–Aug 2025) as Assistant Manager, UI & Front-End Development. Highlights:\n\n• Measurable B2C conversion growth via research-informed A/B testing\n• AI-enhanced B2B CO₂-reduction & fuel-savings tools\n• Conversational designer on a gen-AI chatbot for dealer booking\n• Design system that cut design-to-dev handoff time by 30%\n• Significant CRM dashboard engagement lift through user-centred redesign\n• Michelin Champions Award, 2022 and 2023",
+      "Nearly 5 years (Oct 2020–Aug 2025) as Assistant Manager, UI & Front-End Development. Highlights:\n\n• Measurable B2C conversion growth via research-informed A/B testing\n• AI-enhanced B2B CO₂-reduction & fuel-savings tools\n• Design system that cut design-to-dev handoff time by 30%\n• Significant CRM dashboard engagement lift through user-centred redesign\n• Michelin Champions Award, 2022 and 2023",
   },
   {
     id: "experience-packt",
@@ -124,14 +124,7 @@ export const chatConfig: ChatEntry[] = [
     question: "What projects can I look at?",
     category: "Projects",
     answer:
-      "Three featured case studies (scroll to the Work section):\n\n1. Conversational AI — Dealer Booking (Michelin, 2024)\n2. Fleet CO₂ Emissions Calculator (Michelin Connected Fleet, 2023)\n3. Packt Design System (2018)\n\nAsk me about any one of them!",
-  },
-  {
-    id: "project-ai-chatbot",
-    question: "Tell me about the Conversational AI project",
-    category: "Projects",
-    answer:
-      "Booking a tyre-change service used to mean navigating the whole Michelin site to find a dealer and step through a multi-screen flow. As conversational designer, I helped design a generative-AI chatbot that finds *and* books a dealer entirely through conversation — I defined the flows, the AI's persona and tone, and mapped the journey from “I need a tyre change” to a confirmed booking, no browsing required.",
+      "Three featured case studies (scroll to the Work section):\n\n1. DASH — Digital Analytics Strategy Hub (bp, 2025)\n2. Michelin Fuel Savings Calculator (2022)\n3. Packt Design System (2018 → 2026)\n\nAsk me about any one of them!",
   },
   {
     id: "project-co2",
