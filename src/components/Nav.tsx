@@ -92,7 +92,7 @@ export default function Nav({ onChatOpen }: { onChatOpen: () => void }) {
             </button>
 
             <a
-              href="/resume.pdf"
+              href="/ZarinSolanki_Resume_2026.pdf"
               target="_blank"
               rel="noopener noreferrer"
               download="ZarinSolanki_Resume_2026.pdf"
@@ -158,7 +158,7 @@ export default function Nav({ onChatOpen }: { onChatOpen: () => void }) {
               ))}
               <div className="flex gap-3 pt-4 border-t border-subtle dark:border-darkSubtle">
                 <a
-                  href="/resume.pdf"
+                  href="/ZarinSolanki_Resume_2026.pdf"
                   target="_blank"
                   rel="noopener noreferrer"
                   download="ZarinSolanki_Resume_2026.pdf"
