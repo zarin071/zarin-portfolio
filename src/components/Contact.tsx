@@ -3,6 +3,8 @@
 import { motion } from "framer-motion"
 import { track } from "@/lib/analytics"
 
+const base = process.env.NEXT_PUBLIC_BASE_PATH ?? ""
+
 const contactDetails: { label: string; value: string; href: string; download?: string }[] = [
   {
     label: "Email",
@@ -17,7 +19,7 @@ const contactDetails: { label: string; value: string; href: string; download?: s
   {
     label: "Resume",
     value: "Download Resume ↓",
-    href: "/ZarinSolanki_Resume_2026.pdf",
+    href: `${base}/ZarinSolanki_Resume_2026.pdf`,
     download: "ZarinSolanki_Resume_2026.pdf",
   },
 ]
@@ -60,7 +62,7 @@ export default function Contact() {
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, margin: "-100px" }}
         transition={{ delay: 0.1 }}
-        className="grid grid-cols-1 sm:grid-cols-3 gap-4 max-w-2xl"
+        className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 max-w-4xl"
       >
         {contactDetails.map((detail) => (
           <a
@@ -70,12 +72,12 @@ export default function Contact() {
             target={detail.href.startsWith("http") ? "_blank" : undefined}
             rel={detail.href.startsWith("http") ? "noopener noreferrer" : undefined}
             onClick={() => track("contact_clicked", { link: detail.label.toLowerCase() })}
-            className="group p-6 rounded-2xl border border-subtle dark:border-darkSubtle hover:border-ink dark:hover:border-darkInk transition-all duration-300"
+            className="group block min-w-0 p-6 rounded-2xl border border-subtle dark:border-darkSubtle hover:border-ink dark:hover:border-darkInk transition-all duration-300"
           >
             <p className="font-sans text-xs uppercase tracking-[0.1em] text-warmGray dark:text-darkWarmGray mb-2">
               {detail.label}
             </p>
-            <p className="font-serif text-lg text-ink dark:text-darkInk group-hover:opacity-70 transition-opacity">
+            <p className="font-serif text-base text-ink dark:text-darkInk group-hover:opacity-70 transition-opacity break-words [overflow-wrap:anywhere]">
               {detail.value}
             </p>
           </a>
