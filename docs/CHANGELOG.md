@@ -6,6 +6,61 @@ Reference target: [andrerodrigues.in](https://andrerodrigues.in/).
 
 ---
 
+## [v1.1.0] — 2026-07-20 — Interview review: credibility, honesty & positioning pass
+
+25-change audit driven by a mock interview session. Every fix is a variant of the same move: stating what happened instead of what was implied, naming what isn't known, and letting the actual scale of the work speak for itself. Full detail in `docs/portfolio-changes-2026-07-20.md`.
+
+### Changed — Homepage & global
+- **Hero headline** rewritten: "a design-engineer hybrid" → "a product designer who ships the code" — one clean idea instead of four competing identity signals.
+- **Hero eyebrow** updated: "Senior Product Designer" → "Senior Product Designer & Design Engineer" — carries both literal job titles for ATS/recruiter keyword match.
+- **Meta description** updated to match new positioning spine; drops "hybrid".
+- **About heading**: "The Designer-Engineer." → "Design through to production."
+- **About — bp paragraph** rewritten: "driving design maturity" removed; replaced with concrete description of the capability programme for 50+ designers, promotion/growth framework for non-design managers, and peer-to-peer community work.
+- **About — Michelin paragraph**: removed two unverifiable claims ("cut handoff time by 30%", "measurably moved conversion and engagement") — both were industry benchmarks, not Zarin's measurements. Replaced with scope and behaviour ("the fuel savings calculator I designed and built end to end", "a shared design system the engineering teams built from").
+- **About — Michelin award** made specific: "two years running" → "awarded by Michelin VPs for the fuel savings calculator and the wiper blades platform."
+- **About — TCS/Packt era** rewritten as an origin story: "I started the other way round — engineering at TCS, then UI/UX at Packt Publishing…" Removed the vague "full arc from code to design to strategy."
+- **About — positioning close** added: "That's the part of the job I'd keep in any role: building the system, the programme or the tool that scales other people — not the reporting line." Frames leadership work as leverage, not a management bid.
+- **Playground intro** added above the experiment cards: "Things nobody asked me to build…" connects the three experiments as evidence of the same instinct, not a hobby shelf.
+
+### Changed — Michelin Fuel Savings Calculator
+- **Role line**: removed "(solo)"; timeline extended to "Solo design, built with Michelin's back-end team".
+- **Subtitle / homepage card dek**: "seeding a global Michelin product" → "a model that later surfaced in Michelin's global fleet product."
+- **Overview** extended: credits Michelin's back-end team explicitly; adds direct sponsorship from the Michelin India head; explains the two-audience structure (fleet operators + leadership); adds QA disclosure (dedicated QA function, defects in Jira).
+- **Discovery summary**: "On a solo, two-month build" → "On a two-month build with solo design ownership."
+- **Approach** rewritten: "auto-populates the tyre dimensions" → "anchored to the Michelin tyre currently under promotion … resolves to that tyre's specification." Adds the constraint context (promotion vehicle, campaign sets the product) and the R&D sign-off.
+- **Impact** rewritten: states sequence not causation for the global product ("later appeared", "I can't claim a direct line from one to the other").
+- **Metrics**: "solo build" → "solo design + front-end build"; "concept scaled into" → "the same model later appeared in."
+- **Offers bullet 1**: "auto-populates the tyre dimensions" → "resolves to the promoted tyre's specification."
+- **Benefits — Removing friction**: updated to reflect the promotion-vehicle constraint.
+- **Benefits — Making the abstract tangible**: rewritten as two audiences / two messages on one screen (dealer → ₹, Michelin → trees as brand segue). Notes R&D provenance of trees metric. Flags that fleet-owner reaction was never collected.
+- **Benefits — Building trust**: added "Every figure in the model … is signed off by Michelin's R&D team before it ships."
+- **Narrative — After era title**: "From a regional experiment to a worldwide Michelin product" → "From a regional experiment to a model that travelled."
+- **Narrative — After era body**: "went on to inform" → "later appeared"; added Michelin India head involvement.
+- **Narrative — After era figure caption**: removed "seeded" → "the same value-first model, at worldwide scale."
+- **Narrative — After era highlight 3**: "no translation loss" → added "— and its limit … the boundary with the back-end team was where the real work happened."
+- **Narrative — Build era body**: tyre dropdown copy corrected to match reality.
+- **Reflection** extended with three new paragraphs: (1) integration friction beat — layout failures post-CMS integration, pressure-test worst-case content before not after; (2) outcome data — lead logs owned by sales team, no longer have access, tool remains live, now asks access question upfront; (3) accessibility — inherited coverage vs. custom controls, keyboard/screen-reader/reduced-motion gaps, links to bpCore practice.
+
+### Changed — Packt Design System / bpCore
+- **Subtitle / homepage card dek**: clarified as self-initiated rebuild.
+- **Role** split: "Packt 2018: UI/UX Designer (client work) · Packt 2026: self-initiated rebuild · bp: Senior Product Designer & Design Engineering Lead."
+- **Timeline**: "2018 (revisited 2026)" → "2018 → 2026."
+- **Overview** prefixed with self-initiated disclosure: 2018 was client work; 2026 is a self-set brief; fully inspectable in Storybook, nothing behind NDA.
+- **Impact** tense corrected: "The result — a working system, not a proposal —" makes the self-initiated status explicit in the outcome framing.
+- **processIntro**: "Here's the workflow I'd run for Packt" → "This is the workflow I ran for the Packt system end to end."
+- **Now era — federation origin**: new paragraph inserted before the tier answer explaining that the federated architecture was *learned* from adoption, not designed up front — bpme diverged on two axes, only three responses available, divergence clarified which layer can actually be centralised.
+- **Now era — promotion model**: labelled as designed-and-awaiting-first-cycle; honest sequencing; added agentic adoption-tracking paragraph (agents deployed against products to track token coverage, component usage, drift — without manual audits).
+- **Now era — accessibility**: dedicated paragraph added — specialist removed in restructure, self-built audit process as mitigation, contrast on input fields as caught failure class. Replaces the overclaim "regulatory-ready across every market bp operates in."
+- **Baseline era**: "expected at this stage — token adoption always precedes component adoption" excuse replaced with diagnosis: distributed as Figma + handoff, no front door for developers, Storybook + Figma MCP as the fix, honest trajectory, metric to judge it by.
+- **OKRs — Value block**: deleted generic industry benchmarks (Forrester-style); replaced with proprietary audit data (221 projects, 90 at >90% token coverage, 2 in code, the gap is the value proposition).
+- **OKRs — detachment rate**: labelled as a target not a measured baseline.
+- **Figma import plugin**: removed "Bonus" badge (`locked: true` → removed); renumbered to step 07; title and detail rewritten with load-time-as-hard-problem framing and honest limit. Download link retained.
+
+### Added
+- `docs/portfolio-changes-2026-07-20.md` — full per-change log with applied/pending status and open items.
+
+---
+
 ## [v1.0.0] — 2026-07-14 — Initial public release
 
 First stable version of the portfolio. Marks the baseline from which all future iterations are versioned.

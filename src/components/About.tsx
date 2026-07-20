@@ -3,9 +3,10 @@
 import { motion } from "framer-motion"
 
 const content = [
-  "Senior Product Designer & Capability Lead at bp, driving design maturity across India and global hubs. Lead the bpcore enterprise design system rebrand. Mentor designers, define best practices, and embed design strategy into organisational goals.",
-  "Before bp: nearly 5 years at Michelin designing across B2C and B2B — research-informed work that measurably moved conversion and engagement, design systems that cut handoff time by 30%, and a Michelin Champions Award two years running.",
-  "Earlier: UI/UX at Packt Publishing, engineering at TCS. Full arc from code to design to strategy.",
+  "Senior Product Designer and Capability Lead at bp — I design the system and I build it. I lead the bpcore enterprise design system, mentor designers, and embed design strategy into organisational goals across India and global hubs. As Capability Lead I was a key stakeholder in building a development programme for 50+ designers across India and global hubs — still running and still evolving today. It gave designers a legible growth and promotion path, and gave non-design managers the language to assess design contribution, growth and learning at appraisal time. I also pioneered the design community programmes that turned isolated designers into a peer-to-peer learning network.",
+  "Before bp: nearly five years at Michelin designing across B2C and B2B — from the fuel savings calculator I designed and built end to end, to a shared design system the engineering teams built from, so the same components stopped being redrawn per project. Michelin Champions Award, two years running — awarded by Michelin VPs for the fuel savings calculator and the wiper blades platform.",
+  "I started the other way round — engineering at TCS, then UI/UX at Packt Publishing, where I designed and built the front end of the site. Design came after code, which is why the two have never been separate for me.",
+  "That's the part of the job I'd keep in any role: building the system, the programme or the tool that scales other people — not the reporting line.",
 ]
 
 export default function About() {
@@ -27,7 +28,7 @@ export default function About() {
         viewport={{ once: true, margin: "-100px" }}
         className="heading-lg mb-10"
       >
-        The Designer-<span className="font-serif italic font-normal">Engineer</span>.
+        Design through to <span className="font-serif italic font-normal">production</span>.
       </motion.h2>
 
       <motion.div

@@ -1,7 +1,7 @@
 {
   "homepage": "https://zarin071.github.io/zarin-portfolio",
   "name": "zarin-portfolio",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "private": true,
   "scripts": {
     "predeploy": "next build",
