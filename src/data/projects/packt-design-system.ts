@@ -18,18 +18,17 @@ const packtDesignSystem: Project = {
   tags: ["Design System", "Figma MCP", "AI-assisted", "Front-End"],
 
   problem:
-    "Packt's product surface grew faster than any team could coordinate. Every squad reinvented the same buttons, cards and page shells — slightly differently, every time. Not because designers were careless, but because the system gave them nothing to reach for.",
+    "A brand refresh had landed at bp — stronger greens, a move from Roboto to bp Sans — and none of it was in the system. Multiple business units were running local aliases of bpCore. One product, bpme, had diverged on two axes at once: mobile-first architecture, legitimately different branding. Meanwhile 90 projects were at full token coverage in design and only 2 in code. Design had a front door. Code didn't. The structural gap wasn't new — it was the same failure I'd built at Packt in 2018, eight years earlier, at a different order of magnitude.",
 
   approach:
     "I came back to the same brief eight years later with one question: what would I build if I started today? In 2018 I had a spec tool and a handoff. In 2026 I had Figma variables, the MCP, Claude, and Code Connect. The answer looked completely different.",
 
   impact:
-    "A working system, not a proposal. One token core, two brands — Packt and Packt Hub — design and code in lockstep through Code Connect, not through discipline or Slack threads. When bp's 2025 brand refresh landed, it shipped as token and component updates, not a redraw. That's the Packt method at enterprise scale.",
+    "At bp, a full brand refresh shipped across 221 products as token and component updates — not a redraw. The bpme divergence question got resolved with a four-tier federated architecture: brand tokens at the centre, domains owning their component reality beneath it, no central bottleneck. The Packt 2026 rebuild is the proof of method — one token core, two brands, design and code in lockstep through Code Connect. At bp, that method runs at enterprise scale.",
 
   overview: [
     "I built Packt a design system in 2018 and thought I was done. Documented the colours, the type scale, the button sizes, the grid — handed it to the front-end team. Then two teams shipped in parallel and the system started to drift. The documentation was fine. The problem was structural: I'd built a set of pictures of the UI, not a system.",
     "One note up front: the 2018 style guide was real client work. The 2026 rebuild is self-initiated — Packt didn't commission it. I rebuilt it to answer a question I'd been carrying for eight years: what would I do differently now, with tooling that didn't exist then? That's also why it can be shown in full — every token, component and decision is inspectable in the live Storybook, nothing behind an NDA.",
-    "The bp chapter is the same problem at enterprise scale.",
   ],
 
   narrative: [
@@ -233,15 +232,9 @@ const packtDesignSystem: Project = {
         },
       ],
       highlights: [
-        "Started from a fragmented reality: post-restructure teams, brand refresh not reflected in-system, and multiple bpCore aliases across businesses.",
-        "As Senior Product Designer and Design Engineering Lead at bp, I led the brand-to-system reset and turned the revamp into a usable token and component foundation.",
-        "Aligned brand to system with new green/grey colour ramps and neutral panes, then translated that into token-ready foundations.",
-        "Ran component reconciliation using real usage plus survey input to define the bpCore MVP and roadmap.",
-        "One core, many products, a federated tier model keeps dozens of teams on-system without a central bottleneck.",
-        "Atomic design end-to-end: particles → atoms → molecules → organisms, so patterns are reused, never rebuilt.",
-        "Accessibility sits inside the change process: WCAG conformance checked with tooling and a self-built audit process after the specialist role was restructured out — a mitigation, not a gap.",
-        "A whole brand refresh (2025 greens + bp Sans) shipped as tokens, not a redraw, the Packt swap trick at enterprise scale.",
-        "Designed for Figma, built for AI: Code Connect via the Figma MCP and AI-first docs, the same loop proven at Packt.",
+        "Diagnosed the design-to-code gap — 90 projects at full token coverage in design, 2 in code — and built the architecture to close it: Storybook as the coded front door, Figma MCP + Code Connect as the translation layer.",
+        "bp's 2025 brand refresh (stronger greens, bp Sans) shipped as token and component updates across 221 products — not a redraw.",
+        "When the accessibility specialist role was restructured out, built a self-owned audit process rather than letting WCAG checks lapse — mitigation by design, not by gap.",
       ],
       docs: [
         {

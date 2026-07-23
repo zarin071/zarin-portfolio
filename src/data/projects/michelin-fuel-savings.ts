@@ -50,17 +50,14 @@ const michelinFuelSavings: Project = {
       "The real difficulty wasn't visual, it was a three-way tension that pulled against itself: **Trust vs. Friction vs. Conversion**, all on an enterprise design system with no motion vocabulary. Every decision had to serve all three at once, lowering friction couldn't cost accuracy; capturing a lead couldn't cost trust. On a two-month build with solo design ownership, the design bets were made from that tension and Michelin's R&D data. Given more runway, here's the research I'd run to validate each axis: qualitative discovery with the people on both sides of the sale, evaluative testing of the riskiest design decisions, and in-market analytics:",
     questions: [
       "Fleet owner & fleet-manager interviews: how they actually weigh tyre cost against the upfront premium, what evidence they'd trust from a supplier, and which inputs they know off the top of their head versus have to look up. (De-risks Trust + Friction.)",
-      "Sales-rep interviews and field ride-alongs: the reps pitching the premium day to day: the objections they hit, and what a tool would need to hand them a warm, qualified lead rather than a cold form-fill. (De-risks Conversion + Trust.)",
-      "Concept testing on the four-outcome framing: whether translating '43 tonnes of CO₂' into '1,968 trees' beside the ₹ figure genuinely makes the abstract tangible and believable, and which of the four outcomes fleets weight most.",
-      "Task-based usability testing of the tyre-type auto-populate: can a non-technical operator reach an accurate result from one familiar choice, without ever knowing a tyre dimension? (De-risks Friction vs. accuracy.)",
-      "Trust & credibility testing of the transparency layer: do the R&D-methodology tooltips, the stated 90,000 km/year assumption and visible disclaimers raise believability over a black-box number?",
-      "A value-first vs. gated-form A/B, does revealing the full savings before asking for the lead beat a form-first gate on both completion rate and lead quality? (De-risks Conversion.)",
-      "Post-launch funnel analytics: per-input drop-off, slider engagement, 'View Savings' rate, 'Yes, I am Interested' conversion and mobile-vs-desktop behaviour, with the underlying figures validated against Michelin R&D data.",
+      "Task-based usability testing of the tyre-type auto-populate: can a non-technical operator reach an accurate result from one familiar choice, without ever knowing a tyre dimension? (De-risks Friction vs. accuracy — the key interaction.)",
+      "A value-first vs. gated-form A/B: does revealing the full savings before asking for the lead beat a form-first gate on both completion rate and lead quality? We made the call without data; this is how I'd validate it. (De-risks Conversion.)",
+      "Post-launch funnel analytics: per-input drop-off, slider engagement, 'View Savings' rate, 'Yes, I am Interested' conversion and mobile-vs-desktop behaviour — the metric I couldn't own at the time, and the one I'd instrument before the build starts now.",
     ],
   },
 
   approach:
-    "The tyre types — bias, tube-type radial, tubeless radial — were already set by what Michelin sells, and the promoted tyre was fixed by the campaign. The design decision was seeing that this existing structure could be the user's opening question: one choice they already know the answer to, that resolves to the promoted tyre's specification without them ever typing a dimension. From there, personalisation comes from what they do know: their current tyre, their annual volume, their fuel price. The second decision was more contested: gated form or value-first. The business case for gating was real — lead capture was the point of the tool. The case against: asking for contact details before the number appears is asking someone to trust a claim they haven't seen yet. We went value-first — show all four outcomes before a single CTA appears — on the basis that a fleet owner who has already seen what the Michelin premium returns in rupees is a warmer lead than one who submitted a form to find out. Value delivered first; lead earned second.",
+    "The tyre types were already set by what Michelin sells — the design decision was making that existing structure the user's opening question, so they answer what they know and the system resolves the dimension they don't. The more contested call was what came after: gated form or value-first. The business case for gating was real — lead capture was the point of the tool. The case against: asking for contact details before the number appears is asking someone to trust a claim they haven't seen yet. We went value-first — show all four outcomes before a single CTA appears — on the basis that a fleet owner who has already seen what the premium returns in rupees is a warmer lead than one who submitted a form to find out. Value delivered first; lead earned second.",
 
   impact:
     "Michelin India's first market-facing fuel-savings calculator — a hypothesis the business had never tested. The concept was shared upward with the Michelin India head. The same core model later appeared in Michelin's global Connected Fleet Carbon Calculator. I can't claim a direct line from one to the other — but seeing a regional experiment show up at global scale is the outcome I'd measure a two-month solo build by.",
@@ -83,15 +80,6 @@ const michelinFuelSavings: Project = {
       "Accessibility is the other thing I'd do differently. The tool inherited contrast and base accessibility from Michelin's design system and passed a basic checklist audit — which covers what the system had already solved, and none of what I added on top of it. The sliders, the dropdown, the tooltips and the animated reveal were new custom interaction and new motion in a system that had no motion vocabulary, and those are exactly the parts a design system can't inherit for you: keyboard operability on a custom control, whether a live results panel announces itself to a screen reader, whether a reveal respects reduced-motion. Knowing where inheritance stops is a large part of why accessibility is now evidenced as part of the change process in the systems I lead, rather than assumed.",
     ],
   },
-
-  offers: [
-    "One non-technical opening choice, bias / tube-type radial / tubeless radial, that resolves to the promoted tyre's specification, so accuracy never costs friction.",
-    "Inputs in the fleet operator's own language: their current tyre v/s the Michelin tyre, annual tyres purchased (slider), and current fuel price (slider).",
-    "A live results panel that responds as inputs change, culminating in an animated savings reveal.",
-    "Four outcomes, not one number: fuel saved (litres), cost saved (₹), CO₂ reduced (tonnes), and the equivalent trees required to absorb that CO₂.",
-    "Radical transparency: an info tooltip on every metric exposing the R&D-backed methodology, a visibly stated running assumption (90,000 kms/year), and open disclaimers.",
-    "A value-first close: the full savings are shown before anything is asked, then a single 'Yes, I am Interested' CTA earns the lead instead of extracting it.",
-  ],
 
   personas: [
     {
@@ -196,7 +184,7 @@ const michelinFuelSavings: Project = {
       kicker: "Scaled globally",
       title: "From a regional experiment to a model that travelled",
       titleHref: "https://connectedfleet.michelin.com/blog/calculate-co2-emissions/",
-      status: "future",
+      status: "past",
       body: [
         "I worked directly with the Michelin India head on this, and the validated concept was shared upward. The same core model — a self-serve, R&D-backed fleet calculator that leads with value before capturing intent — later appeared in Michelin's global Connected Fleet Carbon Calculator, a multi-vehicle-group emissions tool under the worldwide Connected Fleet brand.",
       ],
