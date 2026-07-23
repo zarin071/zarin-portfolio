@@ -30,4 +30,10 @@ export const testimonials: Testimonial[] = [
     role: "Product Designer",
     linkedin: "https://www.linkedin.com/in/tanoushkaedvankar/",
   },
+  {
+    quote: "Zarin, you've been great to work with. You consistently take ownership, keep work moving, and proactively coordinate across teams. I particularly appreciate how you organise sessions, follow up on actions, unblock issues, and bring people together to align on design and delivery outcomes.",
+    name: "James Rivera Velez",
+    role: "bp",
+    linkedin: "https://www.linkedin.com/in/j-rivera-velez",
+  },
 ]
