@@ -36,4 +36,10 @@ export const testimonials: Testimonial[] = [
     role: "bp",
     linkedin: "https://www.linkedin.com/in/j-rivera-velez",
   },
+  {
+    quote: "You are a strong team player and you continue being responsive to feedback and open to iteration. You are good in maintaining consistency in output and coming back for feedbacks. Your key strengths include good Power BI skills, an analytical mindset, and reliability and ownership of assigned tasks. You have been a great help as a new joiner in limited time to help us understand the requirements for developing the skill assessment tool. It has been great collaborating with you. You possess the potential to increase your capability beyond Power BI and work with other tools as well.",
+    name: "Ankita Tupe",
+    role: "Data Analyst, bp",
+    linkedin: "https://in.linkedin.com/in/ankita-tupe",
+  },
 ]
