@@ -25,6 +25,9 @@ const GITHUB_LINKS: Record<string, string> = {
   "createbot-labs": "https://github.com/zarin071/createbots",
 }
 
+// Experiments whose "View →" button opens the external link directly (no inline expand).
+const OPEN_EXTERNALLY = new Set(["createbot-labs"])
+
 const FREE_SKILLS = new Set(["ux-copy-reviewer", "design-critique-partner"])
 
 const CONTACT_EMAIL = "zarinsolanki.work@gmail.com"
@@ -416,16 +419,28 @@ export default function Playground() {
                       Open ↗
                     </a>
                   )}
-                  <button
-                    onClick={() => {
-                      const next = active === exp.id ? null : exp.id
-                      setActive(next)
-                      if (next) track("experiment_opened", { experiment: exp.id })
-                    }}
-                    className="font-sans text-xs uppercase tracking-[0.12em] px-4 py-2 rounded-full border border-ink/20 dark:border-darkInk/20 hover:bg-ink hover:text-cream dark:hover:bg-darkInk dark:hover:text-darkBg transition-all duration-200"
-                  >
-                    {active === exp.id ? "Close" : "View →"}
-                  </button>
+                  {OPEN_EXTERNALLY.has(exp.id) ? (
+                    <a
+                      href={EXTERNAL_LINKS[exp.id]}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      onClick={() => track("experiment_opened", { experiment: exp.id })}
+                      className="font-sans text-xs uppercase tracking-[0.12em] px-4 py-2 rounded-full border border-ink/20 dark:border-darkInk/20 hover:bg-ink hover:text-cream dark:hover:bg-darkInk dark:hover:text-darkBg transition-all duration-200"
+                    >
+                      View →
+                    </a>
+                  ) : (
+                    <button
+                      onClick={() => {
+                        const next = active === exp.id ? null : exp.id
+                        setActive(next)
+                        if (next) track("experiment_opened", { experiment: exp.id })
+                      }}
+                      className="font-sans text-xs uppercase tracking-[0.12em] px-4 py-2 rounded-full border border-ink/20 dark:border-darkInk/20 hover:bg-ink hover:text-cream dark:hover:bg-darkInk dark:hover:text-darkBg transition-all duration-200"
+                    >
+                      {active === exp.id ? "Close" : "View →"}
+                    </button>
+                  )}
                 </div>
               </div>
 
@@ -437,22 +452,6 @@ export default function Playground() {
                     exit={{ opacity: 0, height: 0 }}
                     transition={{ type: "spring", stiffness: 200, damping: 28 }}
                   >
-                    {exp.id === "createbot-labs" && (
-                      <div
-                        className="mt-6 rounded-2xl overflow-hidden border border-subtle dark:border-darkSubtle"
-                        style={{ height: 720 }}
-                      >
-                        <iframe
-                          src="https://www.createbotlabs.com/"
-                          title="CreateBot Labs"
-                          className="w-full h-full"
-                          style={{ height: 720 }}
-                          loading="lazy"
-                          allow="fullscreen"
-                        />
-                      </div>
-                    )}
-
                     {exp.id === "birthdate" && (
                       <div
                         className="mt-6 rounded-2xl overflow-hidden border border-subtle dark:border-darkSubtle"
