@@ -18,7 +18,7 @@ const michelinFuelSavings: Project = {
   id: "michelin-fuel-savings-calculator",
   title: "MICHELIN Fuel Savings Calculator",
   subtitle:
-    "Turning an unproven marketing claim into a personalized, self-serve ROI tool for fleet operators — a model that later surfaced in Michelin's global fleet product.",
+    "Michelin India could tell fleet operators their tyres saved fuel. They couldn't prove it to a single one of them.",
   role: "UI/UX Designer & Front-End Developer",
   timeline: "2022",
   tags: ["UX/UI", "Front-End (React)", "B2B", "Conversion"],
@@ -35,10 +35,8 @@ const michelinFuelSavings: Project = {
   coverLabel: "Fuel Savings Calculator",
 
   overview: [
-    "Michelin's brand vision rests on three pillars: People, Profit, Planet. On the B2B side, that vision met a hard commercial reality: Michelin's fuel-efficient truck tyres cost more upfront, and fleet operators are ruthless about total cost. Telling them 'our tyres save fuel' wasn't enough — they needed to see the money.",
-    "I owned the design end to end as the sole designer, embedded in the B2B marketing team, and built the production React front-end myself — collaborating with Michelin's back-end team, who served the savings logic and R&D-grounded data through the site's CMS integration.",
-    "The project ran with direct sponsorship: I worked with the Michelin India head on it, because it served two audiences at once. For fleet dealers and fleet managers — Michelin's biggest B2B customers — it turned an abstract premium into a number they could act on, and showed them what they were contributing environmentally. For leadership, it made the People/Profit/Planet vision measurable at the point of sale rather than stated on a page.",
-    "The build wasn't unchecked: a dedicated QA function tested each release, with defects raised and tracked continuously in Jira.",
+    "I was sole designer and built the production React front-end myself, embedded in Michelin India's B2B marketing team and working directly with the Michelin India head. The project served two audiences at once: for fleet dealers and managers — Michelin's biggest B2B customers — it turned an abstract premium into a number they could act on and showed them what they were contributing environmentally. For leadership, it made the People/Profit/Planet brand vision measurable at the point of sale rather than stated on a page.",
+    "The build collaborated with Michelin's back-end team, who served the savings logic and R&D-grounded data through the site's CMS. A dedicated QA function tested each release, with defects raised and tracked continuously in Jira.",
   ],
 
   problem:[
@@ -63,10 +61,10 @@ const michelinFuelSavings: Project = {
   },
 
   approach:
-    "I designed a single-screen, side-by-side experience: inputs on the left, a live results panel on the right. As the user adjusts their fleet details, the savings respond, culminating in an animated reveal when they hit 'View Savings.' The comparison is anchored to the Michelin tyre currently under promotion — the campaign sets the product, and the tyre-type choice (bias, tube-type radial, tubeless radial) resolves to that tyre's specification. The user makes one choice they already know the answer to and never types a dimension. Personalisation comes from what they do know: their current tyre, their annual volume, their fuel price. That decision resolved the friction-vs-accuracy tension within a real constraint: this is a promotion vehicle, so the Michelin side of the comparison is fixed by the campaign, and every figure behind it is signed off by Michelin's R&D team. The design's job was to make a product-led comparison feel personal without pretending to know things it couldn't. From there the inputs stay in the fleet operator's own language — annual tyres purchased (slider) and current fuel price (slider) — over a stated, visible assumption: 90,000 kms/year.",
+    "The decision that made everything else work: one opening choice — bias, tube-type radial, or tubeless radial — that auto-populates the promoted tyre's specification. The user answers a question they already know and never types a dimension. From there, personalisation comes from what they do know: their current tyre, their annual volume, their fuel price. The results show four outcomes — fuel saved, cost in ₹, CO₂ in tonnes, trees — before a single CTA appears. Value delivered first; lead earned second.",
 
   impact:
-    "As Michelin India's first market-facing fuel-savings calculator, the tool validated a hypothesis the business had never tested: that fleet decision-makers would engage with a self-serve tool converting a vague brand claim into a personalized rupee-and-CO₂ figure, and that doing so was an effective way to open sales conversations. The concept was shared upward with the Michelin India head, and the same core model later appeared in Michelin's global Connected Fleet Carbon Calculator. I can't claim a direct line from one to the other — but seeing the model I'd validated regionally show up at global scale is the outcome I'm proudest of. For a two-month build inside a regional marketing team — solo on design and front-end, partnered with back-end — that's the reach I'd measure it by.",
+    "Michelin India's first market-facing fuel-savings calculator — a hypothesis the business had never tested. The concept was shared upward with the Michelin India head. The same core model later appeared in Michelin's global Connected Fleet Carbon Calculator. I can't claim a direct line from one to the other — but seeing a regional experiment show up at global scale is the outcome I'd measure a two-month solo build by.",
 
   // Factual, non-fabricated metrics drawn straight from the project. Swap or add
   // real engagement KPIs (completion rate, leads, conversion) once analytics allow.
@@ -80,10 +78,9 @@ const michelinFuelSavings: Project = {
   reflection: {
     title: "Learning to ask why, not just how",
     body: [
-      "I'll be honest about how I worked on this. I came in as a designer who did what was asked: I took the claim, the inputs and the assumptions the business handed me, and I built a clean, convincing tool around them.",
+      "I came in as a designer who did what was asked: took the claim, the inputs and the assumptions the business handed me, and built a clean, convincing tool around them.",
       "What I didn't do enough of was ask why. Why this input and not another, why this assumption, why a fleet owner would trust this exact number. I treated those as settled when some of them were mine to question.",
       "The biggest thing I carry forward is that asking why is part of the craft, not a threat to it. The strongest version of a product, and of me as a designer, comes from interrogating the brief, not only executing it well.",
-      "The front-end was built and validated against ideal-case content. When the back end's live savings engine and CMS-served data landed, the numbers and copy came through at real-world lengths and magnitudes — and layouts that held up in design started breaking, mobile first. Sorting the responsive behaviour after integration cost more effort than it would have to design for it up front. The lesson I carry into every build since: pressure-test the layout against worst-case content — longest string, largest number — before integration, not after.",
       "The same gap shows up in what I can't tell you here. I shipped a lead-generation tool without owning — or asking for — the metric that defined its success. The lead logs behind the 'Yes, I am Interested' CTA were owned and monitored by the sales team, not by design, and I no longer have access to them. I'd rather say that than publish numbers I can't stand behind. The tool remains live. Since then, 'how will we know if this worked, and who gives me access to that?' is a question I ask before the build starts, not after it ships.",
       "Accessibility is the other thing I'd do differently. The tool inherited contrast and base accessibility from Michelin's design system and passed a basic checklist audit — which covers what the system had already solved, and none of what I added on top of it. The sliders, the dropdown, the tooltips and the animated reveal were new custom interaction and new motion in a system that had no motion vocabulary, and those are exactly the parts a design system can't inherit for you: keyboard operability on a custom control, whether a live results panel announces itself to a screen reader, whether a reveal respects reduced-motion. Knowing where inheritance stops is a large part of why accessibility is now evidenced as part of the change process in the systems I lead, rather than assumed.",
     ],
@@ -152,7 +149,7 @@ const michelinFuelSavings: Project = {
       status: "past",
       body: [
         "The entire fuel-savings argument lived as unquantified copy on the 'Why Choose Michelin' page, 'our tyres save fuel,' with no way for a fleet owner to see what that meant for their operation. There was no calculator, no tool, no personalized number. Nothing.",
-        "That's the gap this project set out to close: turn a generic claim into a concrete, personal, believable figure, and do it in a way that opened a sales conversation rather than ending one.",
+        "That's the gap this project set out to close: turn a generic claim into a personal, believable number — and do it in a way that opened a sales conversation rather than ended one.",
       ],
       figures: [
         {
@@ -174,6 +171,7 @@ const michelinFuelSavings: Project = {
         "A single-screen, side-by-side experience: inputs on the left, a live results panel on the right. The comparison is anchored to the Michelin tyre currently under promotion — the campaign sets the product, and the tyre-type choice (bias, tube-type radial, tubeless radial) resolves to that tyre's specification. The user makes one choice they already know the answer to and never types a dimension. Personalisation comes from what they do know: their current tyre, their annual volume, their fuel price.",
         "The savings panel deliberately shows four outcomes, not one: fuel saved, cost saved in ₹, CO₂ reduced in tonnes, and the equivalent trees required to absorb it. Every metric carries a tooltip exposing the R&D methodology, the running assumption is stated openly, and the full result is shown before a single 'Yes, I am Interested' CTA earns the lead.",
         "Engineering the reveal meant introducing motion on top of an enterprise design system built for fixed, static imagery, bringing the most important moment to life without breaking the system's visual language.",
+        "What I hadn't designed for was real data at real magnitudes. When the back-end's live savings engine and CMS-served data landed, layouts that held up in design started breaking — mobile first. Numbers came in longer than the design assumed; copy at lengths I hadn't stress-tested. Sorting the responsive behaviour after integration cost more than designing for it up front would have. Every build since: pressure-test against worst-case content before integration, not after.",
       ],
       figures: [
         {
