@@ -13,11 +13,13 @@
 
 export type { PlaygroundExperiment } from "./_types"
 
+import createbotLabs from "./createbot-labs"
 import birthdate from "./birthdate"
 import analytics from "./analytics"
 import audit from "./audit"
 
 export const experiments = [
+  createbotLabs,
   birthdate,
   analytics,
   audit,

@@ -17,7 +17,12 @@ const base = process.env.NEXT_PUBLIC_BASE_PATH ?? ""
 
 // Experiments that also live as a standalone site — surfaced as an "Open ↗" link.
 const EXTERNAL_LINKS: Record<string, string> = {
+  "createbot-labs": "https://www.createbotlabs.com/",
   birthdate: "https://zarin071.github.io/Birthdate",
+}
+
+const GITHUB_LINKS: Record<string, string> = {
+  "createbot-labs": "https://github.com/zarin071/createbots",
 }
 
 const FREE_SKILLS = new Set(["ux-copy-reviewer", "design-critique-partner"])
@@ -391,6 +396,16 @@ export default function Playground() {
                   <p className="text-sm text-warmGray dark:text-darkWarmGray max-w-2xl">{exp.description}</p>
                 </div>
                 <div className="shrink-0 flex items-center gap-2">
+                  {GITHUB_LINKS[exp.id] && (
+                    <a
+                      href={GITHUB_LINKS[exp.id]}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="font-sans text-xs uppercase tracking-[0.12em] px-4 py-2 rounded-full border border-ink/20 dark:border-darkInk/20 hover:bg-ink hover:text-cream dark:hover:bg-darkInk dark:hover:text-darkBg transition-all duration-200"
+                    >
+                      GitHub ↗
+                    </a>
+                  )}
                   {EXTERNAL_LINKS[exp.id] && (
                     <a
                       href={EXTERNAL_LINKS[exp.id]}
@@ -422,6 +437,22 @@ export default function Playground() {
                     exit={{ opacity: 0, height: 0 }}
                     transition={{ type: "spring", stiffness: 200, damping: 28 }}
                   >
+                    {exp.id === "createbot-labs" && (
+                      <div
+                        className="mt-6 rounded-2xl overflow-hidden border border-subtle dark:border-darkSubtle"
+                        style={{ height: 720 }}
+                      >
+                        <iframe
+                          src="https://www.createbotlabs.com/"
+                          title="CreateBot Labs"
+                          className="w-full h-full"
+                          style={{ height: 720 }}
+                          loading="lazy"
+                          allow="fullscreen"
+                        />
+                      </div>
+                    )}
+
                     {exp.id === "birthdate" && (
                       <div
                         className="mt-6 rounded-2xl overflow-hidden border border-subtle dark:border-darkSubtle"
