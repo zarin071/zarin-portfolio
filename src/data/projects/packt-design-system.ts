@@ -12,24 +12,24 @@ const packtDesignSystem: Project = {
   id: "packt-design-system",
   title: "Design systems from Packt to bp",
   subtitle:
-    "Packt taught me what a design system isn't. bp is where I built what it should be — and proved it across 221 products.",
-  role: "Packt 2018: UI/UX Designer (client work) · Packt 2026: self-initiated rebuild · bp: Senior Product Designer & Design Engineering Lead",
+    "I built Packt a design system in 2018 and thought I'd solved it. In 2026, I rebuilt it, because the first version was a set of pictures, not a system.",
+  role: "Packt 2018: UI/UX Designer (re-work) · Packt 2026: self-initiated rebuild · bp: Senior Product Designer & Design Engineering Lead",
   timeline: "2018 → 2026",
   tags: ["Design System", "Figma MCP", "AI-assisted", "Front-End"],
 
   problem:
-    "Every design system practitioner learns the same lesson eventually: a style guide describes the surface; a system makes the correct thing the easiest thing to build. I learned it at Packt in 2018. I applied it at bp in 2025, across 221 products and dozens of teams.",
+    "Packt's product surface grew faster than any team could coordinate. Every squad reinvented the same buttons, cards and page shells — slightly differently, every time. Not because designers were careless, but because the system gave them nothing to reach for.",
 
   approach:
-    "The 2026 Packt rebuild was the proving ground: tokens, Figma MCP, Code Connect, Claude. I rebuilt it on a problem I could see end to end, then took the same method to bp, where it had to work across a portfolio I didn't control and teams I couldn't mandate.",
+    "I came back to the same brief eight years later with one question: what would I build if I started today? In 2018 I had a spec tool and a handoff. In 2026 I had Figma variables, the MCP, Claude, and Code Connect. The answer looked completely different.",
 
   impact:
-    "As Senior Product Designer and Design Engineering Lead at bp, I led bpCore across a 221-product portfolio. When bp's 2025 brand refresh landed, it shipped as token and component updates, not a redraw. The method was proved at Packt. The scale is bp.",
+    "A working system, not a proposal. One token core, two brands — Packt and Packt Hub — design and code in lockstep through Code Connect, not through discipline or Slack threads. When bp's 2025 brand refresh landed, it shipped as token and component updates, not a redraw. That's the Packt method at enterprise scale.",
 
   overview: [
     "I built Packt a design system in 2018 and thought I was done. Documented the colours, the type scale, the button sizes, the grid — handed it to the front-end team. Then two teams shipped in parallel and the system started to drift. The documentation was fine. The problem was structural: I'd built a set of pictures of the UI, not a system.",
     "One note up front: the 2018 style guide was real client work. The 2026 rebuild is self-initiated — Packt didn't commission it. I rebuilt it to answer a question I'd been carrying for eight years: what would I do differently now, with tooling that didn't exist then? That's also why it can be shown in full — every token, component and decision is inspectable in the live Storybook, nothing behind an NDA.",
-    "bp is where the method meets scale: 221 products, a brand refresh landing as tokens, and the same principles running a global design system.",
+    "The bp chapter is the same problem at enterprise scale.",
   ],
 
   narrative: [
@@ -40,7 +40,7 @@ const packtDesignSystem: Project = {
       status: "past",
       body: [
         "My first pass at Packt was a style guide dressed as a design system. I documented colour, type, button sizes, an icon set and a responsive grid — carefully specified, exported as boards, handed to the front-end team as the reference. New pages looked more like Packt. Engineers stopped guessing hex codes. That part worked.",
-        "But what I'd actually built was a set of pictures of the UI. Colours pinned to fixed hex values. Buttons in absolute pixels. Grids drawn per breakpoint. It described how things should look; it didn't enforce it. No tokens, no source of truth, no living components, so the moment two teams shipped in parallel, drift was structurally guaranteed.",
+        "But what I'd actually built was a set of pictures of the UI. Colours pinned to fixed hex values. Buttons in absolute pixels. Grids drawn per breakpoint. It described how things should look; it didn't enforce it. No tokens, no source of truth, no living components — so the moment two teams shipped in parallel, drift was structurally guaranteed.",
         "A style guide describes the surface. A design system makes the correct thing the easiest thing to build. In 2018, with the tools I had, I only got halfway.",
       ],
       figures: [
@@ -100,8 +100,8 @@ const packtDesignSystem: Project = {
       status: "current",
       body: [
         "Eight years later, the unit of truth is a token, not a screen. Everything starts with primitive colours — base hues plus a tint-and-shade scale — named on a strict convention (Brand/100, Blue/500, Base/White). On top sit semantic tokens named for how they're used, not what they look like: Content, Background, Border, Surface, Overlay. A semantic token points at a primitive; a component points at the semantic token. Dark mode is one primitive swap — Background/Brand: Brand/500 → Brand/400 — that cascades through the whole system rather than a second palette to maintain.",
-        "The system is built for two surfaces from the start: Packt (marketing, orange Brand tokens) and Packt Hub (the product, blue Hub-packt tokens) share one primitive core and diverge only at the semantic layer. Same components, two identities. The same discipline runs through type, spacing, radius, and a 12-column grid that collapses to 4 on mobile. Design and code stay in lockstep through Code Connect, not by Slack threads, not by discipline.",
-        "Tables are the exception every automated workflow eventually hits. The variability is the problem: you never fully know what you're looking at until a real dataset lands in it. Every product handles data payloads differently, and that means the component needs to handle custom sorting, column pinning, virtualization for large datasets, and inline editing, none of which a scaffold can decide for you. The Figma plugin imported 44 components in a single run. The table I rebuilt by hand.",
+        "The system is built for two surfaces from the start: Packt (marketing, orange Brand tokens) and Packt Hub (the product, blue Hub-packt tokens) share one primitive core and diverge only at the semantic layer. Same components, two identities. The same discipline runs through type, spacing, radius, and a 12-column grid that collapses to 4 on mobile. Design and code stay in lockstep through Code Connect — not by Slack threads, not by discipline.",
+        "Tables are the exception every automated workflow eventually hits. The variability is the problem — you never fully know what you're looking at until a real dataset lands in it. Every product handles data payloads differently, and that means the component needs to handle custom sorting, column pinning, virtualization for large datasets, and inline editing — none of which a scaffold can decide for you. The Figma plugin imported 44 components in a single run. The table I rebuilt by hand.",
       ],
       figures: [
         {
@@ -179,14 +179,14 @@ const packtDesignSystem: Project = {
     },
     {
       era: "Now",
-      kicker: "bp — bpCore",
-      title: "Leading a global design system: architecture, adoption, and brand-refresh-by-token",
+      kicker: "bp — the same problem, enterprise scale",
+      title: "221 products, one system, and a gap between design and code",
       status: "current",
       body: [
-        "At bp, the brief arrived in a worse state. The 2025 brand revamp (stronger greens, a move from Roboto to bp Sans) had already landed, but none of it was reflected in bpCore's tokens or components. Multiple business units were running local aliases of the design system. No single source of truth, consistency broken across typography, colour, and component behaviour. As Senior Product Designer and Design Engineering Lead, I led the brand-to-system alignment: new colour ramps, neutral panes, token-ready foundations teams could ship without rework.",
-        "The architecture question was harder. bp's B2C product, bpme, diverged from core on two axes at once: built for mobile, legitimately different branding. Three responses available: force conformance and break the product, accept drift, or change the architecture. When a consumer product is genuinely allowed to look different, the universal layer is brand and tokens, not components. That's what set bpCore up as the centre for visual authority, with domains owning their own component reality beneath it.",
-        "The result is a federated, four-tier model: brand tokens at Tier 1, bpCore-owned universal components at Tier 2, domain kits at Tier 3, product teams consuming and extending at Tier 4. 221 projects are now consuming bpCore. 90 are at >90% token coverage. Two are using coded components. That gap (90 in design, 2 in code) is the clearest signal in the data, and it drives the MVP's first iteration: make the coded layer as easy to reach for as the Figma one.",
-        "When bp's brand refreshed in 2025, it shipped as token and component updates, not a redraw. Accessibility sits inside the change process: WCAG conformance built into governance, and when the accessibility specialist role was restructured out, we built our own audit process rather than letting the checks lapse. The tokens-to-code method I proved at Packt is how a global design system now ships across bp.",
+        "At bp, the brief arrived in a worse state. The 2025 brand revamp — stronger greens, a move from Roboto to bp Sans — had already landed, but none of it was reflected in bpCore's tokens or components. Multiple business units were running local aliases of the design system. No single source of truth, consistency broken across typography, colour, and component behaviour. As Senior Product Designer and Design Engineering Lead, I led the brand-to-system alignment: new colour ramps, neutral panes, token-ready foundations teams could ship without rework.",
+        "The architecture question was harder. bp's B2C product, bpme, diverged from core on two axes at once: built for mobile, legitimately different branding. Three responses available: force conformance and break the product, accept drift, or change the architecture. When a consumer product is genuinely allowed to look different, the universal layer is brand and tokens — not components. That's what set bpCore up as the centre for visual authority, with domains owning their own component reality beneath it.",
+        "The result is a federated, four-tier model: brand tokens at Tier 1, bpCore-owned universal components at Tier 2, domain kits at Tier 3, product teams consuming and extending at Tier 4. 221 projects are now consuming bpCore. 90 are at >90% token coverage. Two are using coded components. That gap — 90 in design, 2 in code — is the clearest signal in the data, and it drives the MVP's first iteration: make the coded layer as easy to reach for as the Figma one.",
+        "When bp's brand refreshed in 2025, it shipped as token and component updates, not a redraw. Accessibility sits inside the change process — WCAG conformance built into governance, and when the accessibility specialist role was restructured out, we built our own audit process rather than letting the checks lapse. The tokens-to-code method I proved at Packt is how a global design system now ships across bp.",
       ],
       figures: [
         {
