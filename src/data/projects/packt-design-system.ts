@@ -101,6 +101,7 @@ const packtDesignSystem: Project = {
       body: [
         "Eight years later, the unit of truth is a token, not a screen. Everything starts with primitive colours — base hues plus a tint-and-shade scale — named on a strict convention (Brand/100, Blue/500, Base/White). On top sit semantic tokens named for how they're used, not what they look like: Content, Background, Border, Surface, Overlay. A semantic token points at a primitive; a component points at the semantic token. Dark mode is one primitive swap — Background/Brand: Brand/500 → Brand/400 — that cascades through the whole system rather than a second palette to maintain.",
         "The system is built for two surfaces from the start: Packt (marketing, orange Brand tokens) and Packt Hub (the product, blue Hub-packt tokens) share one primitive core and diverge only at the semantic layer. Same components, two identities. The same discipline runs through type, spacing, radius, and a 12-column grid that collapses to 4 on mobile. Design and code stay in lockstep through Code Connect — not by Slack threads, not by discipline.",
+        "Tables are the exception every automated workflow eventually hits. The variability is the problem — you never fully know what you're looking at until a real dataset lands in it: how many columns, how many rows, whether cells need to scroll, whether they contain actions or just text. The Figma plugin imported 44 components in a single run. The table I rebuilt by hand.",
       ],
       figures: [
         {
