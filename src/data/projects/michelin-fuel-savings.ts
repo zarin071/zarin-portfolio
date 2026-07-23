@@ -60,7 +60,7 @@ const michelinFuelSavings: Project = {
   },
 
   approach:
-    "The decision that made everything else work: one opening choice — bias, tube-type radial, or tubeless radial — that auto-populates the promoted tyre's specification. The user answers a question they already know and never types a dimension. From there, personalisation comes from what they do know: their current tyre, their annual volume, their fuel price. The results show four outcomes — fuel saved, cost in ₹, CO₂ in tonnes, trees — before a single CTA appears. Value delivered first; lead earned second.",
+    "The tyre types — bias, tube-type radial, tubeless radial — were already set by what Michelin sells, and the promoted tyre was fixed by the campaign. The design decision was seeing that this existing structure could be the user's opening question: one choice they already know the answer to, that resolves to the promoted tyre's specification without them ever typing a dimension. From there, personalisation comes from what they do know: their current tyre, their annual volume, their fuel price. The results show four outcomes — fuel saved, cost in ₹, CO₂ in tonnes, trees — before a single CTA appears. Value delivered first; lead earned second.",
 
   impact:
     "Michelin India's first market-facing fuel-savings calculator — a hypothesis the business had never tested. The concept was shared upward with the Michelin India head. The same core model later appeared in Michelin's global Connected Fleet Carbon Calculator. I can't claim a direct line from one to the other — but seeing a regional experiment show up at global scale is the outcome I'd measure a two-month solo build by.",
@@ -142,7 +142,7 @@ const michelinFuelSavings: Project = {
       title: "One screen, four outcomes, a value-first close",
       status: "current",
       body: [
-        "A single-screen, side-by-side experience: inputs on the left, a live results panel on the right. The comparison is anchored to the Michelin tyre currently under promotion — the campaign sets the product, and the tyre-type choice (bias, tube-type radial, tubeless radial) resolves to that tyre's specification. The user makes one choice they already know the answer to and never types a dimension. Personalisation comes from what they do know: their current tyre, their annual volume, their fuel price.",
+        "A single-screen, side-by-side experience: inputs on the left, a live results panel on the right. The tyre types — bias, tube-type radial, tubeless radial — were already set by what Michelin sells; the promoted tyre was fixed by the campaign. The design decision was using that existing structure as the user's first question: one choice they already know, that resolves to the promoted tyre's specification without them touching a dimension. Personalisation comes from what they do know: their current tyre, their annual volume, their fuel price.",
         "The savings panel deliberately shows four outcomes, not one: fuel saved, cost saved in ₹, CO₂ reduced in tonnes, and the equivalent trees required to absorb it. Every metric carries a tooltip exposing the R&D methodology, the running assumption is stated openly, and the full result is shown before a single 'Yes, I am Interested' CTA earns the lead.",
         "Engineering the reveal meant introducing motion on top of an enterprise design system built for fixed, static imagery, bringing the most important moment to life without breaking the system's visual language.",
         "What I hadn't designed for was real data at real magnitudes. When the back-end's live savings engine and CMS-served data landed, layouts that held up in design started breaking — mobile first. Numbers came in longer than the design assumed; copy at lengths I hadn't stress-tested. Sorting the responsive behaviour after integration cost more than designing for it up front would have. Every build since: pressure-test against worst-case content before integration, not after.",
@@ -162,7 +162,7 @@ const michelinFuelSavings: Project = {
           src: "/michelin/tyre-dropdown.webp",
           span: "half",
           ratio: "16 / 10",
-          caption: "One simple choice auto-populates the technical dimensions, the strongest friction-reduction move.",
+          caption: "The tyre types already existed — the decision was making them the user's first question, so the system resolves the spec they'd never know.",
         },
         {
           alt: "The animated savings result panel: fuel, cost, CO2 and trees",
