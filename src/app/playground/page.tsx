@@ -17,7 +17,6 @@ const base = process.env.NEXT_PUBLIC_BASE_PATH ?? ""
 
 // Experiments that also live as a standalone site — surfaced as an "Open ↗" link.
 const EXTERNAL_LINKS: Record<string, string> = {
-  "createbot-labs": "https://www.createbotlabs.com/",
   birthdate: "https://zarin071.github.io/Birthdate",
 }
 
