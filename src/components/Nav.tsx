@@ -9,8 +9,8 @@ const base = process.env.NEXT_PUBLIC_BASE_PATH ?? ""
 
 const navItems = [
   { label: "Work", href: "#work" },
-  { label: "About Me", href: "/about" },
   { label: "Playground", href: "/playground" },
+  { label: "About Me", href: "/about" },
   { label: "Contact", href: "#contact" },
 ]
 

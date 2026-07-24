@@ -24,9 +24,9 @@ export default function Home() {
       <main>
         <Hero onChatOpen={() => setChatOpen(true)} />
         <TrustedBy />
-        <About />
         <Work />
         <PlaygroundTeaser />
+        <About />
         <Testimonials />
         <Contact />
       </main>
