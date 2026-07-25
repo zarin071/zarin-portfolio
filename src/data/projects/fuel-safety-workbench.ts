@@ -4,13 +4,13 @@ import type { Project } from "./_types"
   ── Confidentiality ─────────────────────────────────────────────────────────
   This is live client work. Everything here is anonymised:
     • the client is described as "a major US fuel-retail operator" (never named)
+    • the employer is NOT named either — described only as enterprise/internal work
     • individuals appear as roles, never names
     • the specific site and incident name are omitted; the 5.25-day leak is
       described only by its shape, not its location
     • no internal screenshots, mailboxes, site IDs or SAP endpoints are shown
-  Two fields need your sign-off before this goes public — see the notes on
-  `role` and the index.ts registration. Kept out of the live projects[] array
-  until you confirm client anonymisation is sufficient to publish.
+  Owner-approved for public publication (role published as drafted; employer
+  anonymised). Live in the projects[] grid.
 
   ── Screenshots ─────────────────────────────────────────────────────────────
   Intentionally none. The UI shows real site data and can't be shown publicly.
@@ -24,11 +24,7 @@ const fuelSafetyWorkbench: Project = {
   subtitle:
     "A fuel-tank leak went undetected for five days — buried in 50,000 rows of noise a year. The job was to make the eleven that matter impossible to miss.",
 
-  // ⚠️ CONFIRM: your exact role + how to credit collaborators (a UX designer
-  // owned the variance-card visual; an SME analyst-lead supplied the
-  // heuristics; a support ecosystem handled infra). Drafted from what the
-  // build plan and the shipped app attribute to you: concept, classification
-  // UX, architecture, and the front-end + email-automation build.
+  // Role published as drafted, per owner sign-off.
   role: "Product Designer & Design Engineer — concept, classification UX & front-end build",
   timeline: "2025 → 2026",
   tags: ["Product Design", "Design Engineering", "Detection Tooling", "Enterprise B2B"],
