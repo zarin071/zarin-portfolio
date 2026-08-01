@@ -8,8 +8,11 @@ const michelinConversationalAssistant: Project = {
   timeline: "2 months",
   tags: ["Conversational AI", "Conversation Design", "Service Design", "AI Behaviour"],
 
-  // Distinct indigo/violet cover to set the AI piece apart from the yellow fuel calculator.
-  cover: "linear-gradient(135deg, #ECEBFF 0%, #A99CEF 45%, #3B2E9E 100%)",
+  // Bibendum "idea" animation on black; dark cover so the poster / fallback blends.
+  cover: "linear-gradient(160deg, #17132E 0%, #000000 72%)",
+  coverVideo: "/michelin/conversational-cover.mp4",
+  coverVideoWebm: "/michelin/conversational-cover.webm",
+  coverVideoPoster: "/michelin/conversational-cover-poster.jpg",
   coverLabel: "Conversational AI",
 
   notice:
