@@ -13,14 +13,12 @@ const michelinConversationalAssistant: Project = {
   projectLink: "https://www.figma.com/design/6yGnvgoASZWe2gZa2RKETw/Whatsapp-Prototype?node-id=0-1&t=9PLcExiejqAfC4FT-1",
   projectLinkLabel: "WhatsApp prototype in Figma ↗",
 
-  // Bibendum "looking out" line-art animation on white; light cover, so the
-  // label renders dark and the card carries a subtle border on the white page.
-  cover: "#FFFFFF",
-  coverVideo: "/michelin/conversational-cover-v2.mp4",
-  coverVideoWebm: "/michelin/conversational-cover-v2.webm",
-  coverVideoPoster: "/michelin/conversational-cover-v2-poster.jpg",
+  // Bibendum "knock" animation on Michelin blue; dark cover, white label.
+  cover: "linear-gradient(150deg, #1A0FD6 0%, #0600CB 55%, #04008C 100%)",
+  coverVideo: "/michelin/conv-cover-v3.mp4",
+  coverVideoWebm: "/michelin/conv-cover-v3.webm",
+  coverVideoPoster: "/michelin/conv-cover-v3-poster.jpg",
   coverLabel: "Conversational AI",
-  coverLabelDark: true,
 
   notice:
     "This case study documents a fully specified and prototyped concept, not a shipped product. It did not ship because no booking backend existed to ship it against, which turned out to be the finding. What it captures is the conversation design, AI behaviour definition, and service thinking behind it.",
