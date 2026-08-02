@@ -8,12 +8,14 @@ const michelinConversationalAssistant: Project = {
   timeline: "2 months",
   tags: ["Conversational AI", "Conversation Design", "Service Design", "AI Behaviour"],
 
-  // Bibendum "idea" animation on black; dark cover so the poster / fallback blends.
-  cover: "linear-gradient(160deg, #17132E 0%, #000000 72%)",
-  coverVideo: "/michelin/conversational-cover.mp4",
-  coverVideoWebm: "/michelin/conversational-cover.webm",
-  coverVideoPoster: "/michelin/conversational-cover-poster.jpg",
+  // Bibendum "looking out" line-art animation on white; light cover, so the
+  // label renders dark and the card carries a subtle border on the white page.
+  cover: "#FFFFFF",
+  coverVideo: "/michelin/conversational-cover-v2.mp4",
+  coverVideoWebm: "/michelin/conversational-cover-v2.webm",
+  coverVideoPoster: "/michelin/conversational-cover-v2-poster.jpg",
   coverLabel: "Conversational AI",
+  coverLabelDark: true,
 
   notice:
     "This case study documents a fully specified and prototyped concept, not a shipped product. It did not ship because no booking backend existed to ship it against, which turned out to be the finding. What it captures is the conversation design, AI behaviour definition, and service thinking behind it.",

@@ -375,7 +375,7 @@ function HeroSection({ project, stagger, fadeUp }: {
         {/* Cover art — mirrors the Work cards */}
         <motion.div
           style={{ scale: heroScale, opacity: heroOpacity, background: project.cover ?? "#E5E5E5" }}
-          className="relative mt-6 rounded-3xl overflow-hidden aspect-[16/9] md:aspect-[21/9]"
+          className={`relative mt-6 rounded-3xl overflow-hidden aspect-[16/9] md:aspect-[21/9] ${project.coverLabelDark ? "border border-subtle dark:border-darkSubtle" : ""}`}
         >
           {project.coverVideo ? (
             <>
@@ -393,8 +393,10 @@ function HeroSection({ project, stagger, fadeUp }: {
                 {project.coverVideoWebm && <source src={withBase(project.coverVideoWebm)!} type="video/webm" />}
                 <source src={withBase(project.coverVideo)!} type="video/mp4" />
               </video>
-              {/* Legibility scrim for the label */}
-              <div className="absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-black/35 to-transparent" />
+              {/* Legibility scrim for the label (dark covers only) */}
+              {!project.coverLabelDark && (
+                <div className="absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-black/35 to-transparent" />
+              )}
             </>
           ) : project.coverImage ? (
             <>
@@ -425,7 +427,7 @@ function HeroSection({ project, stagger, fadeUp }: {
             </>
           )}
           {project.coverLabel && (
-            <span className={`absolute bottom-5 left-5 font-sans text-xs uppercase tracking-[0.12em] ${project.coverImage || project.coverVideo ? "text-white/90" : "text-ink/70"}`}>
+            <span className={`absolute bottom-5 left-5 font-sans text-xs uppercase tracking-[0.12em] ${(project.coverImage || project.coverVideo) && !project.coverLabelDark ? "text-white/90" : "text-ink/70"}`}>
               {project.coverLabel}
             </span>
           )}
