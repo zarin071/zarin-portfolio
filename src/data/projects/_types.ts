@@ -191,6 +191,7 @@ export interface Project {
   discovery?: Discovery
   phases?: Phase[]
   narrative?: Chapter[]
+  narrativeLabel?: string     // eyebrow for the narrative section (default "The evolution")
   processTitle?: string
   processIntro?: string
   process?: ProcessStep[]
