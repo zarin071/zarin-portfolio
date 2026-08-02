@@ -13,7 +13,7 @@ function CoverArt({ project, large }: { project: Project; large?: boolean }) {
     : null
   return (
     <div
-      className={`relative w-full overflow-hidden rounded-2xl ${large ? "aspect-[16/9]" : "aspect-[16/10]"}`}
+      className={`relative w-full overflow-hidden rounded-2xl ${large ? "aspect-[16/9]" : "aspect-[16/10]"} ${project.coverLabelDark ? "border border-subtle dark:border-darkSubtle" : ""}`}
       style={{ background: project.cover ?? "#E5E5E5" }}
     >
       {project.coverVideo ? (
@@ -49,12 +49,12 @@ function CoverArt({ project, large }: { project: Project; large?: boolean }) {
         </>
       )}
 
-      {(project.coverVideo || coverSrc) && (
+      {(project.coverVideo || coverSrc) && !project.coverLabelDark && (
         <div className="pointer-events-none absolute inset-x-0 bottom-0 h-20 bg-gradient-to-t from-black/40 to-transparent" />
       )}
 
       {project.coverLabel && (
-        <span className={`absolute bottom-4 left-4 font-sans text-xs uppercase tracking-[0.12em] ${project.coverVideo || coverSrc ? "text-white/90" : "text-ink/70"}`}>
+        <span className={`absolute bottom-4 left-4 font-sans text-xs uppercase tracking-[0.12em] ${(project.coverVideo || coverSrc) && !project.coverLabelDark ? "text-white/90" : "text-ink/70"}`}>
           {project.coverLabel}
         </span>
       )}

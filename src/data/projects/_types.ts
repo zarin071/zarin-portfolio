@@ -175,6 +175,7 @@ export interface Project {
   coverVideoWebm?: string    // /michelin/cover.webm — optional WebM source offered before the MP4
   coverVideoPoster?: string  // /michelin/cover-poster.jpg — still shown while the video loads / if it can't play
   coverLabel?: string
+  coverLabelDark?: boolean    // set true for LIGHT covers: dark label, no dark scrim, subtle card border
   featured?: boolean
   notice?: string        // optional banner shown at the top of the case study page
   // Rich detail-page sections (optional)
