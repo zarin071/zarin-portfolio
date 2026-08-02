@@ -8,6 +8,11 @@ const michelinConversationalAssistant: Project = {
   timeline: "2 months",
   tags: ["Conversational AI", "Conversation Design", "Service Design", "AI Behaviour"],
 
+  // Working research file. WhatsApp is the reference delivery medium; the
+  // conversation logic sits above it.
+  projectLink: "https://www.figma.com/design/6yGnvgoASZWe2gZa2RKETw/Whatsapp-Prototype?node-id=0-1&t=9PLcExiejqAfC4FT-1",
+  projectLinkLabel: "WhatsApp prototype in Figma ↗",
+
   // Bibendum "looking out" line-art animation on white; light cover, so the
   // label renders dark and the card carries a subtle border on the white page.
   cover: "#FFFFFF",
@@ -22,6 +27,10 @@ const michelinConversationalAssistant: Project = {
 
   overview:
     "Twice a year, millions of European and North American drivers have to change their tyres, and in much of Europe they are legally required to. Michelin generates that demand, engineers the product, and funds the advertising, then hands the customer to a dealer directory with no way to book anything. I designed a conversational assistant that closes that gap: it carries a driver from an Instagram ad to a confirmed appointment in one conversation, with the dealer accepting the request the way a service marketplace works. Partway through, the project turned into something else. Once appointments exist, they stop being a convenience feature and become a forecasting instrument: every confirmed booking is a forward order for a specific tyre size, at a specific dealer, on a specific date. I set out to design a booking flow and finished having designed a demand signal, which mattered more to the dealer than the booking did to the customer.",
+
+  origin: [
+    "It started on [michelin.in](https://www.michelin.in/). The site generates the demand, engineers the product and funds the advertising, then ends at a dealer directory with a phone number and no way to book, at the exact moment the customer is ready to act. That gap is where this project began.",
+  ],
 
   problem:
     "For the driver: they saw a seasonal creative and know they must act, but they do not know their tyre size, which product applies, or which dealer near them has capacity and stock this week. A catalogue answers none of that. It asks them to become an expert, hands them a phone number, then makes them wait. For the dealer: targets, stock updates, payment schedules and annual statements live across email, a portal and an account manager's phone, each a small task with a separate destination, while the peak arrives twice a year, demand is unmanaged, and inventory is financed on instinct. The question the whole system answers: can one conversation carry someone from intent to completion, without asking them to know something they have no reason to know or go somewhere they have no reason to go, while producing information the other side of the business urgently needs?",
@@ -61,6 +70,82 @@ const michelinConversationalAssistant: Project = {
 
   impact:
     "The design reframed a booking feature as a demand signal. The moment a dealer accepts a request, the system knows a specific size, quantity, dealer and date, and a named customer committed to arriving: that is not a lead, it is a forward order with a delivery date. For the dealer it converts financed speculation into financed certainty: they can stock to the book rather than the guess, accept requests beyond current stock because the appointment date gives lead time to order in, staff to the shape of the day, and de-risk a credit position. Better forecasting here does not only improve margin, it reduces the volume of product manufactured, shipped and stored without ever being fitted, a sustainability argument arriving from operations rather than marketing. The project did not ship because no backend existed to receive a request, route it to a dealer and hold an appointment. That absence was the finding: the design surfaced an infrastructure gap, and closing it was a platform decision, not a design one. The most valuable output of a conversation design system turned out to be the data it produced, not the conversations themselves.",
+
+  // The 13 numbered diagrams (three tiers) plus the demand-rhythm and
+  // intent-fork figures, grouped into five visual chapters.
+  narrativeLabel: "The system, drawn",
+  narrative: [
+    {
+      era: "Context",
+      kicker: "The market and the gap",
+      title: "Demand on a schedule, a gap at the moment of action",
+      status: "current",
+      body: [
+        "Two things frame the whole system: demand that arrives twice a year on a legal schedule, and a brand that owns everything except the moment the customer is ready to act.",
+      ],
+      figures: [
+        { alt: "Demand curve with two seasonal changeover windows across the year", src: "/michelin/conv-diagram-demand-rhythm.webp", caption: "Demand arrives twice a year, on a schedule. Two changeover windows, one written into law." },
+        { alt: "Entry routing: browsing goes to the web, deciding goes to the assistant", src: "/michelin/conv-diagram-intent-fork.webp", caption: "Where conversation is not the answer: browsing wants surface area, deciding wants an answer." },
+        { alt: "The gap: Michelin owns demand, product and advertising but not the transaction", src: "/michelin/conv-diagram-01-gap.webp", caption: "The gap. Michelin owns everything except the moment the customer is ready to act; no booking mechanism exists." },
+      ],
+    },
+    {
+      era: "Flow",
+      kicker: "The consumer journey",
+      title: "Ten questions to one, and a booking that is a request",
+      status: "current",
+      body: [
+        "Fitment collapses ten questions into one photograph. The booking is a request the dealer accepts, never a promise the assistant makes, and it continues into the workshop with two one-time codes.",
+      ],
+      figures: [
+        { alt: "Two five-question fitment paths collapsing into a single sidewall photo", src: "/michelin/conv-diagram-02-ten-questions.webp", caption: "Ten questions, or one. By vehicle or by tyre, both resolved by photographing the sidewall." },
+        { alt: "Request sent, dealer reviewing (pending), appointment confirmed", src: "/michelin/conv-diagram-03-request-pending-confirmed.webp", caption: "Request, pending, confirmed. The customer is never told a booking exists before one does." },
+        { alt: "Timeline of two one-time codes bridging the digital and the workshop", src: "/michelin/conv-diagram-04-service-handshake.webp", caption: "The service handshake. Code 1 proves the right person arrived, code 2 proves the work happened." },
+      ],
+    },
+    {
+      era: "Value",
+      kicker: "The demand signal and the commercial case",
+      title: "A booking is a forward order",
+      status: "current",
+      body: [
+        "The moment a dealer accepts, the appointment becomes a forward order with a delivery date, which connects stock, targets and credit into one commercial loop, and makes booked demand beat walk-in demand.",
+      ],
+      figures: [
+        { alt: "What a confirmed appointment contains: size, quantity, dealer, date, committed customer", src: "/michelin/conv-diagram-05-appointment-contains.webp", caption: "What an appointment contains. Not a lead: a forward order with a delivery date." },
+        { alt: "The commercial loop connecting appointments, stock, targets and credit", src: "/michelin/conv-diagram-06-commercial-loop.webp", caption: "The commercial loop. Booked appointments tie stock, targets, incentives and credit into one thread." },
+        { alt: "Walk-in versus booked demand across a changeover season", src: "/michelin/conv-diagram-07-walkin-vs-booked.webp", caption: "Walk-in versus booked. Booking spreads the peak and lets a dealer accept beyond current stock." },
+      ],
+    },
+    {
+      era: "AI",
+      kicker: "Where the model goes",
+      title: "Cold start, confidence, and two modes on one channel",
+      status: "current",
+      body: [
+        "The conversation never starts cold, the model acts inside three confidence bands, and the same channel runs a reactive consumer assistant and a proactive dealer one.",
+      ],
+      figures: [
+        { alt: "The cold start: an ad-originated conversation opens with a hypothesis, not a menu", src: "/michelin/conv-diagram-08-cold-start.webp", caption: "The cold start. The assistant inherits the campaign and opens with a hypothesis, not a greeting." },
+        { alt: "The confidence model: act on high, confirm on medium, ask one question on low", src: "/michelin/conv-diagram-09-confidence-model.webp", caption: "The confidence model. Act on high, confirm on medium, ask one open question on low. Never dump a menu." },
+        { alt: "Reactive consumer assistant versus proactive dealer assistant on one channel", src: "/michelin/conv-diagram-10-reactive-proactive.webp", caption: "Reactive and proactive. One summoned by a tap, one that initiates most of its own messages." },
+      ],
+    },
+    {
+      era: "Rigour",
+      kicker: "How it is held to account",
+      title: "Errors, evals, and two registers",
+      status: "current",
+      body: [
+        "A designed error taxonomy with four recoveries, an eval set that says what correct looks like before build, and one brand in two registers.",
+      ],
+      figures: [
+        { alt: "The error taxonomy: four failure types with four different recoveries", src: "/michelin/conv-diagram-11-error-taxonomy.webp", caption: "The error taxonomy. Four failure types, four different recoveries." },
+        { alt: "What the eval set tests: happy path, failure and recovery, refusal and escalation", src: "/michelin/conv-diagram-12-eval-set.webp", caption: "What the eval set tests. Written before build: how would you know if this was working?" },
+        { alt: "Two registers on one voice: warm for the driver, precise for the dealer", src: "/michelin/conv-diagram-13-two-registers.webp", caption: "Two registers, one voice. Warm and plain for the driver, efficient and precise for the dealer." },
+      ],
+    },
+  ],
 
   offers: [
     "Context-first entry: an ad-originated conversation inherits the campaign and opens with a hypothesis, not a greeting or a menu.",

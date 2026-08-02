@@ -3,7 +3,7 @@
 import { useParams, notFound } from "next/navigation"
 import Link from "next/link"
 import { motion, useScroll, useTransform, type Variants } from "framer-motion"
-import { useRef, useState, useEffect } from "react"
+import { useRef, useState, useEffect, type ReactNode } from "react"
 import { createPortal } from "react-dom"
 import { projects, type Benefit, type Persona, type Phase, type Discovery, type Chapter, type ChapterDoc, type Figure, type ProcessStep, type Metric } from "@/data/projects"
 import ThemeProvider from "@/components/ThemeProvider"
@@ -15,9 +15,33 @@ import PasswordGate from "@/components/PasswordGate"
 type Project = NonNullable<ReturnType<typeof projects.find>>
 
 function renderInline(text: string) {
-  return text.split(/\*\*(.*?)\*\*/g).map((part, i) =>
-    i % 2 === 1 ? <strong key={i}>{part}</strong> : part
-  )
+  // Supports **bold** and [label](url) inline links.
+  const parts: ReactNode[] = []
+  const regex = /\*\*(.*?)\*\*|\[([^\]]+)\]\(([^)]+)\)/g
+  let last = 0
+  let key = 0
+  let m: RegExpExecArray | null
+  while ((m = regex.exec(text)) !== null) {
+    if (m.index > last) parts.push(text.slice(last, m.index))
+    if (m[1] !== undefined) {
+      parts.push(<strong key={key++}>{m[1]}</strong>)
+    } else {
+      parts.push(
+        <a
+          key={key++}
+          href={m[3]}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="underline decoration-ink/30 dark:decoration-darkInk/40 underline-offset-2 transition-colors hover:decoration-ink dark:hover:decoration-darkInk"
+        >
+          {m[2]}
+        </a>
+      )
+    }
+    last = regex.lastIndex
+  }
+  if (last < text.length) parts.push(text.slice(last))
+  return parts
 }
 
 const base = process.env.NEXT_PUBLIC_BASE_PATH ?? ""
@@ -570,7 +594,7 @@ export default function ProjectPageClient() {
                 <motion.div className="w-full h-[1px] bg-subtle dark:bg-darkSubtle" variants={fadeUp} />
                 <motion.div variants={fadeUp}>
                   <p className="font-sans text-xs uppercase tracking-[0.2em] text-warmGray dark:text-darkWarmGray mb-10">
-                    The evolution
+                    {project.narrativeLabel ?? "The evolution"}
                   </p>
                   <div className="space-y-16 md:space-y-20">
                     {project.narrative.map((chapter) => (
@@ -667,7 +691,7 @@ export default function ProjectPageClient() {
                   <div className="space-y-5">
                     {project.origin.map((para, i) => (
                       <p key={i} className="font-serif text-xl md:text-2xl leading-relaxed text-ink dark:text-darkInk">
-                        {para}
+                        {renderInline(para)}
                       </p>
                     ))}
                   </div>
