@@ -5,7 +5,7 @@ import { motion } from "framer-motion"
 const ease = [0.22, 1, 0.36, 1] as const
 const base = process.env.NEXT_PUBLIC_BASE_PATH ?? ""
 
-export default function Hero({ onChatOpen }: { onChatOpen: () => void }) {
+export default function Hero() {
   return (
     <section className="relative min-h-screen flex items-center overflow-hidden">
       {/* Lightweight animated visual — floating gradient blobs */}
@@ -60,12 +60,6 @@ export default function Hero({ onChatOpen }: { onChatOpen: () => void }) {
           >
             See my work
           </a>
-          <button
-            onClick={onChatOpen}
-            className="font-sans text-sm uppercase tracking-[0.15em] px-8 py-3.5 border border-ink/20 dark:border-darkWarmGray/30 rounded-full hover:bg-ink/5 dark:hover:bg-darkInk/5 transition-all duration-300"
-          >
-            Ask me anything
-          </button>
           <a
             href={`${base}/ZarinSolanki_Resume_2026.pdf`}
             download="ZarinSolanki_Resume_2026.pdf"

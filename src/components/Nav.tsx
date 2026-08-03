@@ -93,15 +93,6 @@ export default function Nav({ onChatOpen }: { onChatOpen: () => void }) {
               )}
             </button>
 
-            <a
-              href={`${base}/ZarinSolanki_Resume_2026.pdf`}
-              target="_blank"
-              rel="noopener noreferrer"
-              download="ZarinSolanki_Resume_2026.pdf"
-              className="font-sans text-sm uppercase tracking-[0.15em] px-4 py-2 border border-ink/20 dark:border-darkWarmGray/30 rounded-full hover:bg-ink hover:text-cream dark:hover:bg-darkInk dark:hover:text-darkBg transition-all duration-300"
-            >
-              Resume
-            </a>
             <button
               onClick={onChatOpen}
               className="font-sans text-sm uppercase tracking-[0.15em] px-4 py-2 bg-accent text-cream rounded-full hover:opacity-80 hover:shadow-sm transition-all duration-300"
@@ -159,15 +150,6 @@ export default function Nav({ onChatOpen }: { onChatOpen: () => void }) {
                 </button>
               ))}
               <div className="flex gap-3 pt-4 border-t border-subtle dark:border-darkSubtle">
-                <a
-                  href={`${base}/ZarinSolanki_Resume_2026.pdf`}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  download="ZarinSolanki_Resume_2026.pdf"
-                  className="font-sans text-sm uppercase tracking-[0.15em] px-4 py-2 border border-ink/20 dark:border-darkWarmGray/30 rounded-full hover:bg-ink hover:text-cream dark:hover:bg-darkInk dark:hover:text-darkBg transition-all"
-                >
-                  Resume
-                </a>
                 <button
                   onClick={() => { onChatOpen(); setMobileOpen(false) }}
                   className="font-sans text-sm uppercase tracking-[0.15em] px-4 py-2 bg-accent text-cream rounded-full"

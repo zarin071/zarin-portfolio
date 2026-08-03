@@ -22,7 +22,7 @@ export default function Home() {
       <AnalyticsProvider page="home" />
       <Nav onChatOpen={() => setChatOpen(true)} />
       <main>
-        <Hero onChatOpen={() => setChatOpen(true)} />
+        <Hero />
         <TrustedBy />
         <Work />
         <PlaygroundTeaser />
