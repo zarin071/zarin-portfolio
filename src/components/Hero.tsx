@@ -3,6 +3,7 @@
 import { motion } from "framer-motion"
 
 const ease = [0.22, 1, 0.36, 1] as const
+const base = process.env.NEXT_PUBLIC_BASE_PATH ?? ""
 
 export default function Hero({ onChatOpen }: { onChatOpen: () => void }) {
   return (
@@ -65,6 +66,13 @@ export default function Hero({ onChatOpen }: { onChatOpen: () => void }) {
           >
             Ask me anything
           </button>
+          <a
+            href={`${base}/ZarinSolanki_Resume_2026.pdf`}
+            download="ZarinSolanki_Resume_2026.pdf"
+            className="font-sans text-sm uppercase tracking-[0.15em] px-8 py-3.5 border border-ink/20 dark:border-darkWarmGray/30 rounded-full hover:bg-ink/5 dark:hover:bg-darkInk/5 transition-all duration-300"
+          >
+            Résumé ↓
+          </a>
           <span className="easter-egg self-center" data-egg="egg-2" aria-hidden="true">👾</span>
         </motion.div>
       </div>
