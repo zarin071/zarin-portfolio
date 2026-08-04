@@ -1,2 +1,0 @@
-:HL["/zarin-portfolio/staging/_next/static/chunks/13qimrz5z-dks.css","style"]
-0:{"tree":{"name":"","param":null,"prefetchHints":16,"slots":{"children":{"name":"playground","param":null,"prefetchHints":0,"slots":{"children":{"name":"__PAGE__","param":null,"prefetchHints":0,"slots":null}}}}},"staleTime":300,"buildId":"o53alKQsm1-oyuiP0W2OY"}
