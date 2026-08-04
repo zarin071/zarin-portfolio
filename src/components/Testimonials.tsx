@@ -35,7 +35,7 @@ export default function Testimonials() {
         viewport={{ once: true, margin: "-100px" }}
         className="section-label"
       >
-        What People Say{" "}<span className="easter-egg" data-egg="egg-9" aria-hidden="true">🦄</span>
+        What People Say{" "}{/* easter egg hidden — <span className="easter-egg" data-egg="egg-9" aria-hidden="true">🦄</span> */}
       </motion.p>
 
       <motion.h2

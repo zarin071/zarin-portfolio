@@ -34,7 +34,7 @@ export default function Contact() {
         className="section-label"
       >
         Get in Touch{" "}
-        <span className="easter-egg" data-egg="egg-7" aria-hidden="true">💌</span>
+        {/* easter egg hidden — <span className="easter-egg" data-egg="egg-7" aria-hidden="true">💌</span> */}
       </motion.p>
 
       <motion.h2
@@ -53,8 +53,8 @@ export default function Contact() {
         className="body-lg mb-12 max-w-2xl"
       >
         Whether you have a project in mind, an open role, or a collaboration idea — I&apos;d love to hear from you.{" "}
-        <span className="easter-egg" data-egg="egg-8" aria-hidden="true">🌀</span>{" "}
-        <span className="easter-egg" data-egg="egg-10" aria-hidden="true">🌟</span>
+        {/* easter egg hidden — <span className="easter-egg" data-egg="egg-8" aria-hidden="true">🌀</span> */}{" "}
+        {/* easter egg hidden — <span className="easter-egg" data-egg="egg-10" aria-hidden="true">🌟</span> */}
       </motion.p>
 
       <motion.div
