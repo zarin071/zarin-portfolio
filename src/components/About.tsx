@@ -19,7 +19,8 @@ const stats: { to: number; suffix?: string; prefix?: string; label: string }[] =
 
 function CountUp({ to, prefix = "", suffix = "" }: { to: number; prefix?: string; suffix?: string }) {
   const ref = useRef<HTMLSpanElement>(null)
-  const inView = useInView(ref, { once: true, margin: "-80px" })
+  // amount-based trigger fires reliably on small mobile viewports too
+  const inView = useInView(ref, { once: true, amount: 0.4 })
   const reduce = useReducedMotion()
   const [value, setValue] = useState(0)
 
@@ -30,7 +31,7 @@ function CountUp({ to, prefix = "", suffix = "" }: { to: number; prefix?: string
       return
     }
     const controls = animate(0, to, {
-      duration: 1.6,
+      duration: 0.8,
       ease: [0.22, 1, 0.36, 1],
       onUpdate: (v) => setValue(Math.round(v)),
     })
