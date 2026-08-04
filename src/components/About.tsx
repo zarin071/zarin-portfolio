@@ -1,6 +1,7 @@
 "use client"
 
-import { motion } from "framer-motion"
+import { useEffect, useRef, useState } from "react"
+import { motion, useInView, useReducedMotion, animate } from "framer-motion"
 
 const content = [
   "Senior Product Designer and Capability Lead at bp — I design the system and I build it. I lead the bpcore enterprise design system, mentor designers, and embed design strategy into organisational goals across India and global hubs. As Capability Lead I was a key stakeholder in building a development programme for 50+ designers across India and global hubs — still running and still evolving today. It gave designers a legible growth and promotion path, and gave non-design managers the language to assess design contribution, growth and learning at appraisal time. I also pioneered the design community programmes that turned isolated designers into a peer-to-peer learning network.",
@@ -8,6 +9,42 @@ const content = [
   "I started the other way round — engineering at TCS, then UI/UX at Packt Publishing, where I designed and built the front end of the site. Design came after code, which is why the two have never been separate for me.",
   "That's the part of the job I'd keep in any role: building the system, the programme or the tool that scales other people — not the reporting line.",
 ]
+
+// A few numbers that count up when they scroll into view. One real, two for fun.
+const stats: { to: number; suffix?: string; prefix?: string; label: string }[] = [
+  { to: 10, suffix: "+", label: "Years bridging design & code" },
+  { to: 20, label: "Browser tabs open right now" },
+  { to: 99, label: "Times “just one more tweak”" },
+]
+
+function CountUp({ to, prefix = "", suffix = "" }: { to: number; prefix?: string; suffix?: string }) {
+  const ref = useRef<HTMLSpanElement>(null)
+  const inView = useInView(ref, { once: true, margin: "-80px" })
+  const reduce = useReducedMotion()
+  const [value, setValue] = useState(0)
+
+  useEffect(() => {
+    if (!inView) return
+    if (reduce) {
+      setValue(to)
+      return
+    }
+    const controls = animate(0, to, {
+      duration: 1.6,
+      ease: [0.22, 1, 0.36, 1],
+      onUpdate: (v) => setValue(Math.round(v)),
+    })
+    return () => controls.stop()
+  }, [inView, to, reduce])
+
+  return (
+    <span ref={ref} className="tabular-nums">
+      {prefix}
+      {value}
+      {suffix}
+    </span>
+  )
+}
 
 export default function About() {
   return (
@@ -46,14 +83,20 @@ export default function About() {
           ))}
         </div>
 
-        <div className="flex flex-col items-start justify-center p-6 bg-subtle/30 dark:bg-darkSubtle/30 rounded-2xl border border-subtle dark:border-darkSubtle">
-          <span className="font-serif text-5xl md:text-6xl mb-2">
-            10+{" "}
-            {/* easter egg hidden — <span className="easter-egg" data-egg="egg-4" aria-hidden="true" style={{ fontSize: "0.45em" }}>🎯</span> */}
-          </span>
-          <p className="font-sans text-sm uppercase tracking-[0.15em] text-warmGray dark:text-darkWarmGray text-left">
-            Years bridging design &amp; code
-          </p>
+        <div className="flex flex-col gap-4">
+          {stats.map((stat) => (
+            <div
+              key={stat.label}
+              className="flex flex-col items-start justify-center p-6 bg-subtle/30 dark:bg-darkSubtle/30 rounded-2xl border border-subtle dark:border-darkSubtle"
+            >
+              <span className="font-serif text-5xl md:text-6xl mb-2">
+                <CountUp to={stat.to} prefix={stat.prefix} suffix={stat.suffix} />
+              </span>
+              <p className="font-sans text-sm uppercase tracking-[0.15em] text-warmGray dark:text-darkWarmGray text-left">
+                {stat.label}
+              </p>
+            </div>
+          ))}
         </div>
       </motion.div>
     </section>
