@@ -33,7 +33,7 @@ export default function Hero() {
         >
           <span className="text-ink dark:text-darkInk">Hi, I&apos;m </span>
           <span className="text-highlightSoft dark:text-highlight font-semibold">Zarin</span>
-          <span className="text-ink dark:text-darkInk"> — a product designer who ships the code.</span>{" "}
+          <span className="text-ink dark:text-darkInk"> — a product designer who can create designs and bring them to code.</span>{" "}
           A decade taking ideas from research through design to production at{" "}
           <span className="text-ink dark:text-darkInk">bp, Michelin, and beyond.</span>
         </motion.h1>
