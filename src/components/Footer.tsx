@@ -40,10 +40,12 @@ export default function Footer() {
         </div>
 
         <div id="privacy-note" className="mt-8 pt-6 border-t border-subtle/50 dark:border-darkSubtle/50 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
+          {/* Easter-egg hunt disclaimer hidden along with the hunt.
           <p className="font-sans text-xs text-warmGray/60 dark:text-darkWarmGray/60 max-w-md leading-relaxed">
             🔍 There are 10 secrets hidden on the homepage — find them all for a surprise.
             Any email shared via the Easter Egg Hunt is used only to add you to the Wall of Hunters and is never sold or shared.
           </p>
+          */}
           <p className="font-sans text-xs text-warmGray/40 dark:text-darkWarmGray/40 shrink-0">
             Built with Next.js &amp; Framer Motion
           </p>
