@@ -65,7 +65,7 @@ export default function About() {
         viewport={{ once: true, margin: "-100px" }}
         className="heading-lg mb-10"
       >
-        Design through to <span className="font-serif italic font-normal">production</span>.
+        Research, design, prompt, <span className="font-serif italic font-normal">repeat</span>.
       </motion.h2>
 
       <motion.div
