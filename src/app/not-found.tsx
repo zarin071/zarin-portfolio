@@ -98,7 +98,7 @@ export default function NotFound() {
           ))}
         </motion.div>
 
-        {/* Little easter egg hint */}
+        {/* Easter-egg hint temporarily hidden along with the egg hunt.
         <motion.p
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
@@ -107,6 +107,7 @@ export default function NotFound() {
         >
           psst — there are 10 eggs hidden on the homepage 🥚
         </motion.p>
+        */}
       </main>
 
       <Footer />

@@ -1,5 +1,5 @@
 import type { Metadata } from "next"
-import Script from "next/script"
+// import Script from "next/script"  // used only by the (temporarily hidden) easter-egg hunt
 import "./globals.css"
 
 const base = process.env.NEXT_PUBLIC_BASE_PATH ?? ""
@@ -30,14 +30,18 @@ export default function RootLayout({
             `,
           }}
         />
+        {/* Easter-egg hunt temporarily hidden across the whole portfolio.
         <link rel="stylesheet" href={`${base}/eggHunt.css`} />
+        */}
       </head>
       <body className="min-h-screen bg-cream dark:bg-darkBg text-ink dark:text-darkInk font-sans antialiased transition-colors duration-300">
         {children}
+        {/* Easter-egg hunt temporarily hidden across the whole portfolio.
         <Script id="egg-hunt-config" strategy="beforeInteractive">
           {`window.EGG_HUNT_CONFIG={web3formsKey:"${process.env.NEXT_PUBLIC_WEB3FORMS_KEY ?? ""}",basePath:"${process.env.NEXT_PUBLIC_BASE_PATH ?? ""}"};`}
         </Script>
         <Script src={`${base}/eggHunt.js`} strategy="afterInteractive" />
+        */}
       </body>
     </html>
   )
