@@ -57,7 +57,7 @@ export default function About() {
         className="section-label mb-3"
       >
         About Me{" "}
-        {/* easter egg hidden — <span className="easter-egg" data-egg="egg-3" aria-hidden="true">✨</span> */}
+        {/* easter egg hidden, <span className="easter-egg" data-egg="egg-3" aria-hidden="true">✨</span> */}
       </motion.p>
 
       <motion.h2

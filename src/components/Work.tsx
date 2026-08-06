@@ -154,7 +154,7 @@ export default function Work() {
         className="section-label"
       >
         Selected Work{" "}
-        {/* easter egg hidden — <span className="easter-egg" data-egg="egg-5" aria-hidden="true">🔥</span> */}
+        {/* easter egg hidden, <span className="easter-egg" data-egg="egg-5" aria-hidden="true">🔥</span> */}
       </motion.p>
 
       <motion.h2
@@ -164,7 +164,7 @@ export default function Work() {
         className="heading-lg text-balance mb-4"
       >
         Projects that <span className="font-serif italic font-normal">shipped</span>.{" "}
-        {/* easter egg hidden — <span className="easter-egg" data-egg="egg-6" aria-hidden="true">🚀</span> */}
+        {/* easter egg hidden, <span className="easter-egg" data-egg="egg-6" aria-hidden="true">🚀</span> */}
       </motion.h2>
 
       <motion.p
