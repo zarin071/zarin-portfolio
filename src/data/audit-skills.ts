@@ -17,7 +17,7 @@ export const auditSkills: AuditSkill[] = [
   {
     id: "component-api-designer",
     name: "Component API Designer",
-    description: "Props, variants, slots, states — designed before build. Audit mode for existing components.",
+    description: "Props, variants, slots, states, designed before build. Audit mode for existing components.",
     type: "daily",
     file: "component-api-designer.md",
   },
@@ -38,7 +38,7 @@ export const auditSkills: AuditSkill[] = [
   {
     id: "accessibility-auditor",
     name: "Accessibility Auditor",
-    description: "WCAG 2.2 AA audit — contrast math, the new 2.2 criteria, color token coverage, cited criteria per failure.",
+    description: "WCAG 2.2 AA audit, contrast math, the new 2.2 criteria, color token coverage, cited criteria per failure.",
     type: "daily",
     file: "accessibility-auditor.md",
   },
@@ -52,7 +52,7 @@ export const auditSkills: AuditSkill[] = [
   {
     id: "ux-copy-reviewer",
     name: "UX Copy Reviewer",
-    description: "Buttons, errors, empty states — 3 options per string with a recommendation. Run per copy task.",
+    description: "Buttons, errors, empty states, 3 options per string with a recommendation. Run per copy task.",
     type: "daily",
     file: "ux-copy-reviewer.md",
   },
@@ -73,14 +73,14 @@ export const auditSkills: AuditSkill[] = [
   {
     id: "governance-health",
     name: "Governance Health Audit",
-    description: "Adoption metrics, debt ratios, versioning, contribution process — scored /100. Run quarterly.",
+    description: "Adoption metrics, debt ratios, versioning, contribution process, scored /100. Run quarterly.",
     type: "quarterly",
     file: "governance-health.md",
   },
   {
     id: "pattern-consistency",
     name: "Pattern Consistency Audit",
-    description: "Cross-component interaction conflicts, anti-patterns, duplicate components — scored /100. Run quarterly.",
+    description: "Cross-component interaction conflicts, anti-patterns, duplicate components, scored /100. Run quarterly.",
     type: "quarterly",
     file: "pattern-consistency.md",
   },

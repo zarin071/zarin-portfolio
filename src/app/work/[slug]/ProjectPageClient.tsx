@@ -48,7 +48,7 @@ const base = process.env.NEXT_PUBLIC_BASE_PATH ?? ""
 
 const withBase = (s?: string) => (s ? (s.startsWith("/") ? `${base}${s}` : s) : null)
 
-/* Gallery — a responsive grid of image cards with hover, plus an accessible
+/* Gallery, a responsive grid of image cards with hover, plus an accessible
    lightbox (prev/next, keyboard, focus trap) that shows each board full size,
    fit to width and scrollable for the tall documentation boards. */
 function Gallery({ figures, tag }: { figures: Figure[]; tag?: string }) {
@@ -214,7 +214,7 @@ const eraBadgeClass: Record<string, string> = {
   future: "bg-warmGray/10 dark:bg-darkSubtle/80 text-warmGray dark:text-darkInk border border-subtle/60 dark:border-darkWarmGray/35",
 }
 
-/* One act of the storyline — era badge, prose, figure grid and takeaways. */
+/* One act of the storyline, era badge, prose, figure grid and takeaways. */
 function ChapterBlock({ chapter, fadeUp }: { chapter: Chapter; fadeUp: Variants }) {
   const status = chapter.status ?? "current"
   return (
@@ -396,7 +396,7 @@ function HeroSection({ project, stagger, fadeUp }: {
           </Link>
         </motion.div>
 
-        {/* Cover art — mirrors the Work cards */}
+        {/* Cover art, mirrors the Work cards */}
         <motion.div
           style={{ scale: heroScale, opacity: heroOpacity, background: project.cover ?? "#E5E5E5" }}
           className={`relative mt-6 rounded-3xl overflow-hidden aspect-[16/9] md:aspect-[21/9] ${project.coverLabelDark ? "border border-subtle dark:border-darkSubtle" : ""}`}
@@ -588,7 +588,7 @@ export default function ProjectPageClient() {
               </motion.div>
             )}
 
-            {/* Narrative — illustrated storyline timeline */}
+            {/* Narrative, illustrated storyline timeline */}
             {project.narrative && project.narrative.length > 0 && (
               <>
                 <motion.div className="w-full h-[1px] bg-subtle dark:bg-darkSubtle" variants={fadeUp} />
@@ -605,7 +605,7 @@ export default function ProjectPageClient() {
               </>
             )}
 
-            {/* Process — how it's built (e.g. Claude × Figma MCP) */}
+            {/* Process, how it's built (e.g. Claude × Figma MCP) */}
             {project.process && project.process.length > 0 && (
               <>
                 <motion.div className="w-full h-[1px] bg-subtle dark:bg-darkSubtle" variants={fadeUp} />
@@ -836,7 +836,7 @@ export default function ProjectPageClient() {
               </div>
             </motion.div>
 
-            {/* Metrics — by the numbers */}
+            {/* Metrics, by the numbers */}
             {project.metrics && project.metrics.length > 0 && (
               <motion.div variants={fadeUp}>
                 <p className="font-sans text-xs uppercase tracking-[0.2em] text-warmGray dark:text-darkWarmGray mb-6">

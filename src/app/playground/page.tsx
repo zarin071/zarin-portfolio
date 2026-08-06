@@ -15,7 +15,7 @@ import AnalyticsProvider from "@/components/AnalyticsProvider"
 
 const base = process.env.NEXT_PUBLIC_BASE_PATH ?? ""
 
-// Experiments that also live as a standalone site — surfaced as an "Open ↗" link.
+// Experiments that also live as a standalone site, surfaced as an "Open ↗" link.
 const EXTERNAL_LINKS: Record<string, string> = {
   birthdate: "https://zarin071.github.io/Birthdate",
 }
@@ -32,7 +32,7 @@ const FREE_SKILLS = new Set(["ux-copy-reviewer", "design-critique-partner"])
 const CONTACT_EMAIL = "zarinsolanki.work@gmail.com"
 
 // ─── Access control: "Have password?" + "Get access" ────────────────────────
-// Two options — enter a password to unlock now, or request access by email.
+// Two options, enter a password to unlock now, or request access by email.
 
 function AccessControl({
   subject,
@@ -81,7 +81,7 @@ function AccessControl({
           </button>
         </div>
         {error && (
-          <p className="font-sans text-xs text-red-500" role="alert">Incorrect password — try again.</p>
+          <p className="font-sans text-xs text-red-500" role="alert">Incorrect password, try again.</p>
         )}
         <div className="flex items-center gap-3 font-sans text-xs">
           <button
@@ -249,7 +249,7 @@ function AuditToolkit({ password }: { password?: string }) {
                     Locked. Enter the password to unlock all 11 skills, or request access.
                   </p>
                 </div>
-                <AccessControl subject={`Access request — Design System Audit Toolkit`} password={password} onUnlock={unlock} />
+                <AccessControl subject={`Access request, Design System Audit Toolkit`} password={password} onUnlock={unlock} />
               </div>
             ) : loading ? (
               <div className="flex items-center justify-center h-full">
@@ -295,7 +295,7 @@ function AnalyticsAgent({ password }: { password?: string }) {
             </code>
           </div>
           <div className="shrink-0">
-            <AccessControl subject="Access request — AI Analytics Agent Platform" password={password} onUnlock={unlock} />
+            <AccessControl subject="Access request, AI Analytics Agent Platform" password={password} onUnlock={unlock} />
           </div>
         </div>
 
