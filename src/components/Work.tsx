@@ -154,7 +154,7 @@ export default function Work() {
         className="section-label"
       >
         Selected Work{" "}
-        {/* easter egg hidden — <span className="easter-egg" data-egg="egg-5" aria-hidden="true">🔥</span> */}
+        {/* easter egg hidden, <span className="easter-egg" data-egg="egg-5" aria-hidden="true">🔥</span> */}
       </motion.p>
 
       <motion.h2
@@ -163,8 +163,8 @@ export default function Work() {
         viewport={{ once: true, margin: "-100px" }}
         className="heading-lg text-balance mb-4"
       >
-        Projects that <span className="font-serif italic font-normal">shipped</span>.{" "}
-        {/* easter egg hidden — <span className="easter-egg" data-egg="egg-6" aria-hidden="true">🚀</span> */}
+        Projects <span className="font-serif italic font-normal">worked on</span>.{" "}
+        {/* easter egg hidden, <span className="easter-egg" data-egg="egg-6" aria-hidden="true">🚀</span> */}
       </motion.h2>
 
       <motion.p
@@ -173,10 +173,10 @@ export default function Work() {
         viewport={{ once: true, margin: "-100px" }}
         className="body-base mb-14 max-w-2xl"
       >
-        Enterprise design systems, sustainability tools, analytics platforms — shipped with measurable outcomes across B2B and B2C at bp, Michelin, and beyond.
+        Enterprise design systems, sustainability tools, analytics platforms, shipped with measurable outcomes across B2B and B2C at bp, Michelin, and beyond.
       </motion.p>
 
-      {/* Featured project — full width */}
+      {/* Featured project, full width */}
       {featured && (
         <motion.article
           initial={{ opacity: 0, y: 30 }}
@@ -193,7 +193,7 @@ export default function Work() {
         </motion.article>
       )}
 
-      {/* Remaining projects — 2-up grid */}
+      {/* Remaining projects, 2-up grid */}
       <div className="grid md:grid-cols-2 gap-8 md:gap-10">
         {rest.map((project, i) => (
           <motion.article
