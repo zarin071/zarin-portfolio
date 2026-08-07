@@ -1,21 +1,14 @@
 import type { Project } from "./_types"
 
 /*
-  ── Confidentiality ─────────────────────────────────────────────────────────
-  This is live client work. Everything here is anonymised:
-    • the client is described as "a major US fuel-retail operator" (never named)
-    • the employer is NOT named either — described only as enterprise/internal work
-    • individuals appear as roles, never names
-    • the specific site and incident name are omitted; the 5.25-day leak is
-      described only by its shape, not its location
-    • no internal screenshots, mailboxes, site IDs or SAP endpoints are shown
-  Owner-approved for public publication (role published as drafted; employer
-  anonymised). Live in the projects[] grid.
+  ── Disclosure ───────────────────────────────────────────────────────────────
+  This is bp enterprise work. The employer (bp) is named. Specific site IDs,
+  analyst names and the exact incident location are still generalised or
+  omitted throughout. Screens use synthetic demo data.
 
   ── Screenshots ─────────────────────────────────────────────────────────────
-  Intentionally none. The UI shows real site data and can't be shown publicly.
-  If a redacted/synthetic capture is ever cleared, drop it into
-  public/fuel-workbench/ and add figures to the narrative chapters below.
+  Synthetic demo data — all site names, analyst names and figures are
+  representative, not real. Screens are in public/fuel-workbench/screens/.
 */
 
 const fuelSafetyWorkbench: Project = {
@@ -24,17 +17,19 @@ const fuelSafetyWorkbench: Project = {
   subtitle:
     "A fuel-tank leak went undetected for five days — buried in 50,000 rows of noise a year. The job was to make the eleven that matter impossible to miss.",
 
-  // Role published as drafted, per owner sign-off.
-  role: "Product Designer & Design Engineer — concept, classification UX & front-end build",
+  role: "Product Designer & Design Engineer at bp — concept, classification UX & front-end build",
   timeline: "2025 → 2026",
   tags: ["Product Design", "Design Engineering", "Detection Tooling", "Enterprise B2B"],
 
   notice:
-    "Live client work, anonymised. The client, its sites, the individuals involved and the specific incident are generalised or omitted throughout.",
+    "bp enterprise work. Specific site identifiers, analyst names and the exact incident location are anonymised; all screens use synthetic demo data.",
+
+  projectLink: "https://www.figma.com/board/xQ6oAGTv8sLZxtUkkOzbeE/ZFIR-Exploration?node-id=160-287&t=rZ6ydm2w6MXC15Dq-1",
+  projectLinkLabel: "Research & meeting notes ↗",
 
   // Alert-red rising out of industrial slate — signal emerging from noise.
   cover: "linear-gradient(135deg, #1E293B 0%, #B45309 55%, #DC2626 100%)",
-  coverLabel: "Fuel-Safety Detection Workbench",
+  coverLabel: "bp · Fuel-Safety Detection Workbench",
 
   overview: [
     "A team of seven analysts reconciled fuel inventory every morning for ~260 highway fuel sites across the US. Each day they pulled a variance report out of SAP, pasted it into a master Excel workbook, split it into seven analyst sheets, and sent a broadcast email — 'data is ready' — then worked ~1,300 rows apiece by hand, cross-referencing tank readings, an external sensor portal and unstructured email threads.",
@@ -62,7 +57,7 @@ const fuelSafetyWorkbench: Project = {
 
   // The central fork, stated with its rejected branch — the spine of the study.
   approach:
-    "The first decision was what NOT to build. The client already had a Power BI dashboard; a second reporting layer would have been the safe, expected deliverable. I argued the opposite: a detection-and-action tool where every screen ends in a decision, not a chart. The rejected branch — one more dashboard — is exactly the paradigm that let a five-day leak hide, because a dashboard shows you everything and asks nothing of you. The second, riskier decision followed from it: in a safety system, suppress ~85% of rows before an analyst ever sees them. Hiding data in a safety tool is a frightening thing to design, and the only honest justification is that showing everything is the failure mode we already had. The engine doesn't delete the noise — it classifies it, scores its confidence, and keeps a human's one-click override on every call. Value the machine is sure about, suppressed; judgement the machine isn't, surfaced.",
+    "The first decision was what NOT to build. bp already ran a Power BI dashboard; a second reporting layer would have been the safe, expected deliverable. I argued the opposite: a detection-and-action tool where every screen ends in a decision, not a chart. The rejected branch — one more dashboard — is exactly the paradigm that let a five-day leak hide, because a dashboard shows you everything and asks nothing of you. The second, riskier decision followed from it: in a safety system, suppress ~85% of rows before an analyst ever sees them. Hiding data in a safety tool is a frightening thing to design, and the only honest justification is that showing everything is the failure mode we already had. The engine doesn't delete the noise — it classifies it, scores its confidence, and keeps a human's one-click override on every call. Value the machine is sure about, suppressed; judgement the machine isn't, surfaced.",
 
   impact:
     "The workbench was built and demonstrated: SSO-gated, role-scoped queues (analysts see their own sites, site managers see only theirs), live-alert polling, and a rule engine that classifies every variance row into one of eight categories with a confidence score. The piece that shipped end-to-end is the one that proves the thesis — the alert email. What used to be a manual 'data is ready' broadcast, and manual missing-load emails typed by hand, is now generated and sent by the system through a shared mailbox and Microsoft Graph, tested and confirmed received. 'Every screen leads to an action' stopped being a slogan at the point the tool started sending the action itself. Production rollout — and the cross-cloud database link it depends on — is the work still in progress; I'd rather show the working pipeline and the honest deployment state than claim a rollout that isn't live yet.",
@@ -101,6 +96,39 @@ const fuelSafetyWorkbench: Project = {
     },
   ],
 
+  painPoints: [
+    {
+      title: "Structural 2-day blind spot",
+      detail: "Data is always T−2. A Saturday leak won't surface until Tuesday at earliest.",
+    },
+    {
+      title: "~1,300 rows of daily noise",
+      detail: "Benign variances desensitise analysts to real signals. Genuine leakages can hide in the noise for days.",
+    },
+    {
+      title: "Fully manual aggregation pipeline",
+      detail: "Every morning: download CSV from SAP, open Excel, copy-paste, rename tab, filter. No automation.",
+    },
+    {
+      title: "No historical trend detection",
+      detail: "Month-over-month data only reviewed after month closes by pasting into a prior-month sheet.",
+    },
+    {
+      title: "12+ hour communication lag",
+      detail: "All issue resolution via email to US sites. Analysts raise flags in the morning IST and may not get a response until the following morning.",
+    },
+    {
+      title: "Unreliable sensor data",
+      detail: "In the Meridian incident (Sep 2025), a probe error masked a real leak. 240,000 gallons lost over three weeks.",
+    },
+    {
+      title: "Competing priorities: today vs. backlog",
+      detail: "Analysts must process current-day variances AND revisit prior-day open items simultaneously.",
+    },
+  ],
+
+  journeyUrl: "/fuel-workbench/user-journey.html",
+
   soundbites: [
     "A variance of about 7,000 gallons immediately rings a bell — that could be a missing load.",
     "Large loss then a large gain is a probe. Continuous loss for two or three days? Ninety to ninety-five percent sure it's a real issue.",
@@ -124,7 +152,7 @@ const fuelSafetyWorkbench: Project = {
       title: "Not another dashboard",
       status: "current",
       body: [
-        "The expected build was a better report — the client already ran a Power BI dashboard, and one more view of the same data would have been the uncontroversial deliverable. I pushed against it. A dashboard is a surface you have to interrogate; it shows everything and asks nothing. That paradigm is precisely what let a real loss hide inside the daily wall of variances.",
+        "The expected build was a better report — bp already ran a Power BI dashboard, and one more view of the same data would have been the uncontroversial deliverable. I pushed against it. A dashboard is a surface you have to interrogate; it shows everything and asks nothing. That paradigm is precisely what let a real loss hide inside the daily wall of variances.",
         "The reframe was a detection-and-action tool: every screen ends in a decision. A per-analyst queue holds only the rows that need a human. Each row arrives pre-classified, with the specific signal that flagged it and a recommended next step — confirm, override, or escalate — one click away. The measure of the design isn't how much it shows. It's how little.",
         "Which forced the frightening decision: suppress ~85% of rows before anyone sees them. Designing a safety tool that deliberately hides data is uncomfortable, and it should be. The justification is only that the alternative — showing everything — is the failure we started with. The engine never deletes a row; it classifies it, attaches a confidence score, and leaves a human override on every call. Trust is earned by being overridable, not by being certain.",
       ],
@@ -155,6 +183,43 @@ const fuelSafetyWorkbench: Project = {
         "Designing a safety system that's allowed to suppress noise, and making that defensible with a 100%-recall back-test as its precondition to ship.",
         "Choosing explainable analyst heuristics over a black-box model, and pre-fill-not-auto-post as the trust boundary throughout.",
         "Shipping the alerting loop end-to-end: the notification the tool detects, it also sends.",
+      ],
+      figures: [
+        {
+          alt: "Team Today — supervisor dashboard",
+          src: "/fuel-workbench/screens/01-team-today.png",
+          caption: "Today — supervisor view: team workload, auto-resolved summary, sites needing attention, month-end status",
+        },
+        {
+          alt: "Analyst personal queue",
+          src: "/fuel-workbench/screens/05-analyst-queue.png",
+          caption: "My Queue — analyst's assigned sites, attention items, and today's escalations",
+        },
+        {
+          alt: "Site detail — Needs Attention (full queue)",
+          src: "/fuel-workbench/screens/02-site-detail-full.png",
+          caption: "Site detail: AI-recommended action, SAP / Warren Rogers / CBRD evidence panel, agent activity log",
+        },
+        {
+          alt: "Site detail — critical queue filtered",
+          src: "/fuel-workbench/screens/06-site-detail-filtered.png",
+          caption: "Filtered to critical + high — same detail view with a scoped sidebar",
+        },
+        {
+          alt: "Auto-Resolved log",
+          src: "/fuel-workbench/screens/03-auto-resolved-log.png",
+          caption: "Auto-Resolved — auditable log of every machine-classified row with action taken",
+        },
+        {
+          alt: "Performance dashboard",
+          src: "/fuel-workbench/screens/04-performance-dashboard.png",
+          caption: "Performance — auto-resolution rate, classification accuracy, chronic sites, month-end readiness",
+        },
+        {
+          alt: "ZIFR Assistant — AI chat panel",
+          src: "/fuel-workbench/screens/07-zifr-assistant.png",
+          caption: "ZIFR Assistant — conversational AI panel for site-level queries and morning briefing",
+        },
       ],
     },
   ],

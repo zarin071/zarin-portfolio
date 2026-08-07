@@ -5,7 +5,7 @@ import Link from "next/link"
 import { motion, useScroll, useTransform, type Variants } from "framer-motion"
 import { useRef, useState, useEffect, type ReactNode } from "react"
 import { createPortal } from "react-dom"
-import { projects, type Benefit, type Persona, type Phase, type Discovery, type Chapter, type ChapterDoc, type Figure, type ProcessStep, type Metric } from "@/data/projects"
+import { projects, type Benefit, type Persona, type Phase, type Discovery, type Chapter, type ChapterDoc, type Figure, type ProcessStep, type Metric, type PainPoint } from "@/data/projects"
 import ThemeProvider from "@/components/ThemeProvider"
 import Nav from "@/components/Nav"
 import Footer from "@/components/Footer"
@@ -723,6 +723,35 @@ export default function ProjectPageClient() {
               </div>
             </motion.div>
 
+            {/* Pain points */}
+            {project.painPoints && project.painPoints.length > 0 && (
+              <>
+                <motion.div className="w-full h-[1px] bg-subtle dark:bg-darkSubtle" variants={fadeUp} />
+                <motion.div variants={fadeUp} className="grid md:grid-cols-3 gap-8">
+                  <div>
+                    <p className="font-sans text-xs uppercase tracking-[0.2em] text-warmGray dark:text-darkWarmGray mt-2">
+                      Pain points
+                    </p>
+                  </div>
+                  <div className="md:col-span-2 grid sm:grid-cols-2 gap-4">
+                    {project.painPoints.map((point: PainPoint) => (
+                      <div
+                        key={point.title}
+                        className="p-5 rounded-2xl border border-subtle/50 dark:border-darkSubtle/50 border-l-[3px] border-l-accent/70 bg-subtle/15 dark:bg-darkSubtle/15"
+                      >
+                        <p className="font-sans text-sm font-semibold text-ink dark:text-darkInk mb-1.5">
+                          {point.title}
+                        </p>
+                        <p className="font-sans text-sm leading-relaxed text-warmGray dark:text-darkWarmGray">
+                          {point.detail}
+                        </p>
+                      </div>
+                    ))}
+                  </div>
+                </motion.div>
+              </>
+            )}
+
             {/* Personas */}
             {project.personas && project.personas.length > 0 && (
               <>
@@ -781,6 +810,27 @@ export default function ProjectPageClient() {
                         ))}
                       </ul>
                     )}
+                  </div>
+                </motion.div>
+              </>
+            )}
+
+            {/* Audit & User Journey */}
+            {project.journeyUrl && (
+              <>
+                <motion.div className="w-full h-[1px] bg-subtle dark:bg-darkSubtle" variants={fadeUp} />
+                <motion.div variants={fadeUp}>
+                  <p className="font-sans text-xs uppercase tracking-[0.2em] text-warmGray dark:text-darkWarmGray mb-4">
+                    Audit &amp; User Journey
+                  </p>
+                  <div className="overflow-hidden rounded-2xl border border-subtle dark:border-darkSubtle">
+                    <iframe
+                      src={`${base}${project.journeyUrl}`}
+                      className="w-full"
+                      style={{ height: "640px", border: "none" }}
+                      title="Fuel Reconciliation Audit & User Journey"
+                      loading="lazy"
+                    />
                   </div>
                 </motion.div>
               </>
