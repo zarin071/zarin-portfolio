@@ -48,7 +48,7 @@ function findBestMatch(message: string): (typeof chatConfig)[number] | null {
   return bestScore >= 2 ? best : null
 }
 
-// Staggered chip list — each chip fades+slides in 150ms after the previous
+// Staggered chip list, each chip fades+slides in 150ms after the previous
 function ChipList({
   items,
   onSelect,
@@ -153,7 +153,7 @@ export default function ChatWidget({ isOpen, onToggle }: { isOpen: boolean; onTo
 
       const response = matched
         ? matched.answer
-        : `Good question — I don't have a scripted answer for that. Try asking about experience, projects, skills, or contact. Or reach Zarin directly at zarinsolanki.work@gmail.com.`
+        : `Good question, I don't have a scripted answer for that. Try asking about experience, projects, skills, or contact. Or reach Zarin directly at zarinsolanki.work@gmail.com.`
 
       setMessages((prev) => [
         ...prev,
@@ -294,7 +294,7 @@ export default function ChatWidget({ isOpen, onToggle }: { isOpen: boolean; onTo
                   </div>
                 ))}
 
-                {/* Starter questions — shown only before any answer */}
+                {/* Starter questions, shown only before any answer */}
                 {showStarters && (
                   <ChipList
                     items={starters}
@@ -303,7 +303,7 @@ export default function ChatWidget({ isOpen, onToggle }: { isOpen: boolean; onTo
                   />
                 )}
 
-                {/* Follow-up questions — iterative, appear after each answer */}
+                {/* Follow-up questions, iterative, appear after each answer */}
                 {hasAnswers && followUps.length > 0 && (
                   <div className="pt-1">
                     <p className="font-sans text-[10px] uppercase tracking-[0.12em] text-warmGray/60 dark:text-darkWarmGray/60 mb-2.5">

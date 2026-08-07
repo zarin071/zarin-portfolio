@@ -25,7 +25,7 @@ export const testimonials: Testimonial[] = [
     linkedin: "https://www.linkedin.com/in/hugomrvt/",
   },
   {
-    quote: "Zarin is one of those rare humans who's not just insanely skilled, but also makes work feel lighter and more fun. She's a developer-turned-designer with 10 years of experience, and honestly, her ability to switch between tech brain and design eye is magic. Bold, clear, and confident — she doesn't just speak up, she speaks sense. She's also the kind of teammate who'll push you to grow and send you memes when you're spiraling. I've learned so much working with her, and I wouldn't trade that for anything.",
+    quote: "Zarin is one of those rare humans who's not just insanely skilled, but also makes work feel lighter and more fun. She's a developer-turned-designer with 10 years of experience, and honestly, her ability to switch between tech brain and design eye is magic. Bold, clear, and confident, she doesn't just speak up, she speaks sense. She's also the kind of teammate who'll push you to grow and send you memes when you're spiraling. I've learned so much working with her, and I wouldn't trade that for anything.",
     name: "Tanoushka Edvankar",
     role: "Product Designer",
     linkedin: "https://www.linkedin.com/in/tanoushkaedvankar/",

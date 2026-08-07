@@ -8,7 +8,7 @@ const base = process.env.NEXT_PUBLIC_BASE_PATH ?? ""
 export default function Hero() {
   return (
     <section className="relative min-h-screen flex items-center overflow-hidden">
-      {/* Lightweight animated visual — floating gradient blobs */}
+      {/* Lightweight animated visual, floating gradient blobs */}
       <div aria-hidden className="pointer-events-none absolute inset-0 overflow-hidden">
         <div className="hero-blob hero-blob--1" />
         <div className="hero-blob hero-blob--2" />
@@ -33,7 +33,7 @@ export default function Hero() {
         >
           <span className="text-ink dark:text-darkInk">Hi, I&apos;m </span>
           <span className="text-highlightSoft dark:text-highlight font-semibold">Zarin</span>
-          <span className="text-ink dark:text-darkInk"> — a product designer who can create designs and bring them to code.</span>{" "}
+          <span className="text-ink dark:text-darkInk">, a product designer who can create designs and bring them to code.</span>{" "}
           A decade taking ideas from research through design to production at{" "}
           <span className="text-ink dark:text-darkInk">bp, Michelin, and beyond.</span>
         </motion.h1>
@@ -45,7 +45,7 @@ export default function Hero() {
           className="body-lg mt-6 max-w-2xl"
         >
           Design meets engineering. Curiosity meets craft.{" "}
-          {/* easter egg hidden — <span className="easter-egg" data-egg="egg-1" aria-hidden="true">🥚</span> */}
+          {/* easter egg hidden, <span className="easter-egg" data-egg="egg-1" aria-hidden="true">🥚</span> */}
         </motion.p>
 
         <motion.div
@@ -67,7 +67,7 @@ export default function Hero() {
           >
             Résumé ↓
           </a>
-          {/* easter egg hidden — <span className="easter-egg self-center" data-egg="egg-2" aria-hidden="true">👾</span> */}
+          {/* easter egg hidden, <span className="easter-egg self-center" data-egg="egg-2" aria-hidden="true">👾</span> */}
         </motion.div>
       </div>
     </section>

@@ -7,10 +7,10 @@
   Wraps a locked case study. When the project has a `password`, this renders a
   lock screen until the visitor types the matching value; on success the study
   is revealed and the unlock is remembered for the browser session
-  (sessionStorage — clears when the tab closes).
+  (sessionStorage, clears when the tab closes).
 
   ⚠️  Client-side deterrent only. The password ships in the site bundle, so this
-      keeps a study out of casual view / search — it is NOT real security.
+      keeps a study out of casual view / search, it is NOT real security.
   ═══════════════════════════════════════════════════════════════════════════
 */
 
@@ -41,12 +41,12 @@ export default function PasswordGate({
     try {
       if (sessionStorage.getItem(storageKey) === "1") setUnlocked(true)
     } catch {
-      /* sessionStorage unavailable — visitor just re-enters the password */
+      /* sessionStorage unavailable, visitor just re-enters the password */
     }
     setReady(true)
   }, [storageKey])
 
-  // Public project — nothing to gate.
+  // Public project, nothing to gate.
   if (!password) return <>{children}</>
   // Avoid flashing protected content before we've checked sessionStorage.
   if (!ready) return null
@@ -58,7 +58,7 @@ export default function PasswordGate({
       try {
         sessionStorage.setItem(storageKey, "1")
       } catch {
-        /* ignore — unlock still applies for this render */
+        /* ignore, unlock still applies for this render */
       }
       setUnlocked(true)
     } else {
@@ -66,7 +66,7 @@ export default function PasswordGate({
     }
   }
 
-  const mailto = `mailto:${CONTACT_EMAIL}?subject=${encodeURIComponent(`Access request — ${title}`)}`
+  const mailto = `mailto:${CONTACT_EMAIL}?subject=${encodeURIComponent(`Access request, ${title}`)}`
 
   return (
     <section className="section-container">
@@ -119,7 +119,7 @@ export default function PasswordGate({
             />
             {error && (
               <p className="font-sans text-sm text-red-500" role="alert">
-                Incorrect password — try again.
+                Incorrect password, try again.
               </p>
             )}
             <button

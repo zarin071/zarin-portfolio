@@ -14,9 +14,9 @@
 
 export type { Project, PainPoint, Benefit, Persona, Phase, Discovery, Chapter, ChapterDoc, Figure, ProcessStep, Metric, Reflection } from "./_types"
 
-// import dash from "./dash"  // hidden — restore when ready
-// import aiDealerBooking from "./ai-dealer-booking"   // hidden — case study in progress
-// import fleetCo2Calculator from "./fleet-co2-calculator"  // hidden — case study in progress
+// import dash from "./dash"  // hidden, restore when ready
+// import aiDealerBooking from "./ai-dealer-booking"   // hidden, case study in progress
+// import fleetCo2Calculator from "./fleet-co2-calculator"  // hidden, case study in progress
 import michelinFuelSavings from "./michelin-fuel-savings"
 import michelinConversationalAssistant from "./michelin-conversational-assistant"
 import packtDesignSystem from "./packt-design-system"

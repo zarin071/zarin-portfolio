@@ -131,11 +131,11 @@
   }
   to {
     opacity: 1;
-    transform: none; /* fully clears the perspective context — no leftover overflow */
+    transform: none; /* fully clears the perspective context, no leftover overflow */
   }
 }
 
-/* Respect users who prefer reduced motion — freeze decorative animation. */
+/* Respect users who prefer reduced motion, freeze decorative animation. */
 @media (prefers-reduced-motion: reduce) {
   .hero-blob,
   .animate-pulse-gentle {

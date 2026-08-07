@@ -23,7 +23,7 @@ export default function PlaygroundTeaser() {
         transition={{ delay: 0.05 }}
         className="body-base max-w-2xl mb-10"
       >
-        Things nobody asked me to build. The rebuilt Packt design system, the Figma import plugin, an AI skills toolkit for design system ops — the same instinct that makes me useful inside a system is the one that keeps building tools beside it.
+        Things nobody asked me to build. The rebuilt Packt design system, the Figma import plugin, an AI skills toolkit for design system ops, the same instinct that makes me useful inside a system is the one that keeps building tools beside it.
       </motion.p>
 
       <div className="flex items-end justify-between gap-6 mb-10">
