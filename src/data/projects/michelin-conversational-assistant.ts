@@ -10,7 +10,9 @@ const michelinConversationalAssistant: Project = {
 
   // Working research file. WhatsApp is the reference delivery medium; the
   // conversation logic sits above it.
-  projectLink: "https://www.figma.com/design/6yGnvgoASZWe2gZa2RKETw/Whatsapp-Prototype?node-id=0-1&t=9PLcExiejqAfC4FT-1",
+  caseStudy: "https://www.figma.com/design/6yGnvgoASZWe2gZa2RKETw/Whatsapp-Prototype?node-id=198-2934&t=9PLcExiejqAfC4FT-1",
+  caseStudyLabel: "Figma file ↗",
+  projectLink: "https://www.figma.com/proto/6yGnvgoASZWe2gZa2RKETw/Whatsapp-Prototype?node-id=198-2934&viewport=1231%2C275%2C0.14&t=NvnbnOsyAtIpKvvt-1&scaling=scale-down&content-scaling=fixed&starting-point-node-id=198%3A2934&show-proto-sidebar=1&page-id=0%3A1",
   projectLinkLabel: "Figma prototype ↗",
 
   // Bibendum "knock" animation on Michelin blue; dark cover, white label.

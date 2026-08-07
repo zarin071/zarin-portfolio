@@ -165,6 +165,7 @@ export interface Project {
   approach: string
   impact: string
   caseStudy?: string
+  caseStudyLabel?: string
   projectLink?: string
   projectLinkLabel?: string
   password?: string

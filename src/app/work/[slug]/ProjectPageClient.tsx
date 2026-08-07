@@ -495,7 +495,7 @@ function HeroSection({ project, stagger, fadeUp }: {
                 rel="noopener noreferrer"
                 className="font-sans text-sm uppercase tracking-[0.15em] px-6 py-2.5 bg-ink dark:bg-darkInk text-cream dark:text-darkBg rounded-full hover:opacity-80 hover:shadow-sm transition-all"
               >
-                View case study ↗
+                {project.caseStudyLabel ?? "View case study ↗"}
               </a>
             )}
             {project.projectLink && (
@@ -1071,7 +1071,7 @@ export default function ProjectPageClient() {
                   rel="noopener noreferrer"
                   className="font-sans text-sm uppercase tracking-[0.15em] px-8 py-3 bg-ink dark:bg-darkInk text-cream dark:text-darkBg rounded-full hover:opacity-80 hover:shadow-sm transition-all"
                 >
-                  View full case study ↗
+                  {project.caseStudyLabel ?? "View full case study ↗"}
                 </a>
               )}
               {project.projectLink && (
