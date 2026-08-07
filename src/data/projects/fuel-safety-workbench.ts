@@ -95,37 +95,6 @@ const fuelSafetyWorkbench: Project = {
     },
   ],
 
-  painPoints: [
-    {
-      title: "Structural 2-day blind spot",
-      detail: "Data is always T−2. A Saturday leak won't surface until Tuesday at earliest.",
-    },
-    {
-      title: "~1,300 rows of daily noise",
-      detail: "Benign variances desensitise analysts to real signals. Genuine leakages can hide in the noise for days.",
-    },
-    {
-      title: "Fully manual aggregation pipeline",
-      detail: "Every morning: download CSV from SAP, open Excel, copy-paste, rename tab, filter. No automation.",
-    },
-    {
-      title: "No historical trend detection",
-      detail: "Month-over-month data only reviewed after month closes by pasting into a prior-month sheet.",
-    },
-    {
-      title: "12+ hour communication lag",
-      detail: "All issue resolution via email to US sites. Analysts raise flags in the morning IST and may not get a response until the following morning.",
-    },
-    {
-      title: "Unreliable sensor data",
-      detail: "In the Meridian incident (Sep 2025), a probe error masked a real leak. 240,000 gallons lost over three weeks.",
-    },
-    {
-      title: "Competing priorities: today vs. backlog",
-      detail: "Analysts must process current-day variances AND revisit prior-day open items simultaneously.",
-    },
-  ],
-
   journeyUrl: "/fuel-workbench/user-journey.html",
 
   soundbites: [
@@ -143,6 +112,16 @@ const fuelSafetyWorkbench: Project = {
         "Every morning one analyst logged into SAP, ran the fuel-inventory variance report, exported it to Excel, pasted it into a master workbook of VLOOKUPs for analyst assignment and tolerance thresholds, split it into seven sheets, and emailed the team: data is ready. Then seven people read ~1,300 rows each, cross-referencing tank readings, an external sensor portal and email threads with site managers.",
         "The reconciliation itself is simple accounting: opening stock plus receipts minus sales is your book inventory; book inventory minus the physical midnight tank reading is the day's variance. A variance past a fuel-specific tolerance means investigate. The trouble is that on any given day dozens of rows breach tolerance for reasons that evaporate by tomorrow — a load that posts a day late, a probe that hiccups, a day-boundary sales roll.",
         "So when one site began losing fuel for real, the loss looked, row by row, like all the noise around it. It stayed unread in plain sight for 5.25 days. Nothing was hidden. Nothing was loud.",
+      ],
+      figures: [
+        {
+          alt: "Pain points identified in discovery",
+          src: "/fuel-workbench/pain-points.png",
+          caption: "Pain points surfaced during research — seven structural problems with the existing process",
+          span: "full",
+          ratio: "16 / 9",
+          focus: "top",
+        },
       ],
     },
     {
