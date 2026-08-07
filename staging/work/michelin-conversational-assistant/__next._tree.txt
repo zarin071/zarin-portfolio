@@ -1,2 +1,2 @@
-:HL["/zarin-portfolio/staging/_next/static/chunks/1kjhhsp59w25p.css","style"]
-0:{"tree":{"name":"","param":null,"prefetchHints":16,"slots":{"children":{"name":"work","param":null,"prefetchHints":0,"slots":{"children":{"name":"slug","param":{"type":"d","key":"michelin-conversational-assistant","siblings":null},"prefetchHints":0,"slots":{"children":{"name":"__PAGE__","param":null,"prefetchHints":0,"slots":null}}}}}}},"staleTime":300,"buildId":"yrzxS9Xhsue_3RLZGUmif"}
+:HL["/zarin-portfolio/staging/_next/static/chunks/31zqvdc3ei7nf.css","style"]
+0:{"tree":{"name":"","param":null,"prefetchHints":16,"slots":{"children":{"name":"work","param":null,"prefetchHints":0,"slots":{"children":{"name":"slug","param":{"type":"d","key":"michelin-conversational-assistant","siblings":null},"prefetchHints":0,"slots":{"children":{"name":"__PAGE__","param":null,"prefetchHints":0,"slots":null}}}}}}},"staleTime":300,"buildId":"ug0QjefVkNVVmRXtxIfs1"}
