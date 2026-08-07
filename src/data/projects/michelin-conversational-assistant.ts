@@ -11,7 +11,7 @@ const michelinConversationalAssistant: Project = {
   // Working research file. WhatsApp is the reference delivery medium; the
   // conversation logic sits above it.
   projectLink: "https://www.figma.com/design/6yGnvgoASZWe2gZa2RKETw/Whatsapp-Prototype?node-id=0-1&t=9PLcExiejqAfC4FT-1",
-  projectLinkLabel: "WhatsApp prototype in Figma ↗",
+  projectLinkLabel: "Figma prototype ↗",
 
   // Bibendum "knock" animation on Michelin blue; dark cover, white label.
   cover: "linear-gradient(150deg, #1A0FD6 0%, #0600CB 55%, #04008C 100%)",
