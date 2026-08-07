@@ -27,8 +27,7 @@ const fuelSafetyWorkbench: Project = {
   projectLink: "https://www.figma.com/board/xQ6oAGTv8sLZxtUkkOzbeE/ZFIR-Exploration?node-id=160-287&t=rZ6ydm2w6MXC15Dq-1",
   projectLinkLabel: "Research & meeting notes ↗",
 
-  // Alert-red rising out of industrial slate — signal emerging from noise.
-  cover: "linear-gradient(135deg, #1E293B 0%, #B45309 55%, #DC2626 100%)",
+  coverImage: "/fuel-workbench/cover.jpg",
   coverLabel: "bp · Fuel-Safety Detection Workbench",
 
   overview: [
