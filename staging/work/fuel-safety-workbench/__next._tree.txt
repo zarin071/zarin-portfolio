@@ -1,2 +1,0 @@
-:HL["/zarin-portfolio/staging/_next/static/chunks/31zqvdc3ei7nf.css","style"]
-0:{"tree":{"name":"","param":null,"prefetchHints":16,"slots":{"children":{"name":"work","param":null,"prefetchHints":0,"slots":{"children":{"name":"slug","param":{"type":"d","key":"fuel-safety-workbench","siblings":null},"prefetchHints":0,"slots":{"children":{"name":"__PAGE__","param":null,"prefetchHints":0,"slots":null}}}}}}},"staleTime":300,"buildId":"Z0QQwjXaM0CWdAG3b8ePW"}
