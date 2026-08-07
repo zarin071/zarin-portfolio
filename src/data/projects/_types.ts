@@ -79,6 +79,11 @@
   ──────────────────────────────────────────────────────────────────────────
 */
 
+export interface PainPoint {
+  title: string
+  detail: string
+}
+
 export interface Benefit {
   audience: string
   detail: string
@@ -187,6 +192,8 @@ export interface Project {
   offers?: string[]
   benefits?: Benefit[]
   personas?: Persona[]
+  painPoints?: PainPoint[]
+  journeyUrl?: string
   soundbites?: string[]
   roadmap?: string
   discovery?: Discovery
