@@ -20,12 +20,14 @@ export type { Project, Benefit, Persona, Phase, Discovery, Chapter, ChapterDoc, 
 import michelinFuelSavings from "./michelin-fuel-savings"
 import michelinConversationalAssistant from "./michelin-conversational-assistant"
 import packtDesignSystem from "./packt-design-system"
+import fuelSafetyWorkbench from "./fuel-safety-workbench"
 export { archivedProjects } from "./_archived"
 
 export const projects = [
   // dash,  // restore when ready
   // aiDealerBooking,   // restore when case study is ready
   // fleetCo2Calculator,  // restore when case study is ready
+  fuelSafetyWorkbench,
   michelinConversationalAssistant,
   michelinFuelSavings,
   packtDesignSystem,
