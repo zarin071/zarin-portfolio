@@ -24,11 +24,11 @@ const GITHUB_LINKS: Record<string, string> = {
   "createbot-labs": "https://github.com/zarin071/createbots",
 }
 const LIVE_LINKS: Record<string, string> = {
-  "createbot-labs-live": "www.createbotlabs.com",
+  "createbot-labs": "https://www.createbotlabs.com/",
 }
 
 // Experiments whose "View →" button opens the external link directly (no inline expand).
-const OPEN_EXTERNALLY = new Set(["createbot-labs","createbot-labs-live"])
+const OPEN_EXTERNALLY = new Set(["createbot-labs"])
 
 const FREE_SKILLS = new Set(["ux-copy-reviewer", "design-critique-partner"])
 
@@ -421,19 +421,10 @@ export default function Playground() {
                       Open ↗
                     </a>
                   )}
-                   {LIVE_LINKS[exp.id] && (
-                    <a
-                      href={LIVE_LINKS[exp.id]}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="font-sans text-xs uppercase tracking-[0.12em] px-4 py-2 rounded-full border border-ink/20 dark:border-darkInk/20 hover:bg-ink hover:text-cream dark:hover:bg-darkInk dark:hover:text-darkBg transition-all duration-200"
-                    >
-                      VIEW 2 ↗
-                    </a>
-                  )}
+              
                   {OPEN_EXTERNALLY.has(exp.id) ? (
                     <a
-                      href={EXTERNAL_LINKS[exp.id]}
+                      href={LIVE_LINKS[exp.id] || EXTERNAL_LINKS[exp.id]}
                       target="_blank"
                       rel="noopener noreferrer"
                       onClick={() => track("experiment_opened", { experiment: exp.id })}
