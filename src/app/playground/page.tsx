@@ -22,7 +22,9 @@ const EXTERNAL_LINKS: Record<string, string> = {
 
 const GITHUB_LINKS: Record<string, string> = {
   "createbot-labs": "https://github.com/zarin071/createbots",
-  "createbot-labs-live": "https://www.createbotlabs.com/",
+}
+const LIVE_LINKS: Record<string, string> = {
+  "createbot-labs-live": "www.createbotlabs.com",
 }
 
 // Experiments whose "View →" button opens the external link directly (no inline expand).
@@ -417,6 +419,16 @@ export default function Playground() {
                       className="font-sans text-xs uppercase tracking-[0.12em] px-4 py-2 rounded-full border border-ink/20 dark:border-darkInk/20 hover:bg-ink hover:text-cream dark:hover:bg-darkInk dark:hover:text-darkBg transition-all duration-200"
                     >
                       Open ↗
+                    </a>
+                  )}
+                   {LIVE_LINKS[exp.id] && (
+                    <a
+                      href={LIVE_LINKS[exp.id]}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="font-sans text-xs uppercase tracking-[0.12em] px-4 py-2 rounded-full border border-ink/20 dark:border-darkInk/20 hover:bg-ink hover:text-cream dark:hover:bg-darkInk dark:hover:text-darkBg transition-all duration-200"
+                    >
+                      VIEW 2 ↗
                     </a>
                   )}
                   {OPEN_EXTERNALLY.has(exp.id) ? (
