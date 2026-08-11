@@ -29,7 +29,7 @@ const LIVE_WEBSITE: Record<string, string> = {
 }
 
 // Experiments whose "View →" button opens the external link directly (no inline expand).
-const OPEN_EXTERNALLY = new Set(["createbot-labs"])
+const OPEN_EXTERNALLY = new Set(["createbot-labs","createbot-labs-live"])
 
 const FREE_SKILLS = new Set(["ux-copy-reviewer", "design-critique-partner"])
 
