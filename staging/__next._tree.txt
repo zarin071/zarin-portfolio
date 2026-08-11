@@ -1,2 +1,2 @@
 :HL["/zarin-portfolio/staging/_next/static/chunks/31zqvdc3ei7nf.css","style"]
-0:{"tree":{"name":"","param":null,"prefetchHints":16,"slots":{"children":{"name":"__PAGE__","param":null,"prefetchHints":0,"slots":null}}},"staleTime":300,"buildId":"seV5h8cLmC5dXleoI6g8b"}
+0:{"tree":{"name":"","param":null,"prefetchHints":16,"slots":{"children":{"name":"__PAGE__","param":null,"prefetchHints":0,"slots":null}}},"staleTime":300,"buildId":"3oG1N0GF3S1Au8z1dkDGn"}
