@@ -24,6 +24,10 @@ const GITHUB_LINKS: Record<string, string> = {
   "createbot-labs": "https://github.com/zarin071/createbots",
 }
 
+const EXTERNAL_LINKING: Record<string, string> = {
+  "createbot-labs-external": "https://www.createbotlabs.com/",
+}
+
 // Experiments whose "View →" button opens the external link directly (no inline expand).
 const OPEN_EXTERNALLY = new Set(["createbot-labs"])
 
@@ -420,8 +424,8 @@ export default function Playground() {
                   )}
                   {OPEN_EXTERNALLY.has(exp.id) ? (
                     <a
-                      href={EXTERNAL_LINKS[exp.id]}
-                      target="https://www.createbotlabs.com/"
+                      href={EXTERNAL_LINKING[exp.id]}
+                      target="_blank"
                       rel="noopener noreferrer"
                       onClick={() => track("experiment_opened", { experiment: exp.id })}
                       className="font-sans text-xs uppercase tracking-[0.12em] px-4 py-2 rounded-full border border-ink/20 dark:border-darkInk/20 hover:bg-ink hover:text-cream dark:hover:bg-darkInk dark:hover:text-darkBg transition-all duration-200"
