@@ -31,8 +31,6 @@ const LIVE_WEBSITE: Record<string, string> = {
 // Experiments whose "View →" button opens the external link directly (no inline expand).
 const OPEN_EXTERNALLY = new Set(["createbot-labs"])
 
-const OPEN_LIVE = new Set(["createbot-labs"])
-
 const FREE_SKILLS = new Set(["ux-copy-reviewer", "design-critique-partner"])
 
 const CONTACT_EMAIL = "zarinsolanki.work@gmail.com"
@@ -424,17 +422,7 @@ export default function Playground() {
                       Open ↗
                     </a>
                   )}
-                   {GITHUB_LINKS[exp.id] && (
-                    <a
-                      href={GITHUB_LINKS[exp.id]}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="font-sans text-xs uppercase tracking-[0.12em] px-4 py-2 rounded-full border border-ink/20 dark:border-darkInk/20 hover:bg-ink hover:text-cream dark:hover:bg-darkInk dark:hover:text-darkBg transition-all duration-200"
-                    >
-                      GitHub ↗
-                    </a>
-                  )}
-                  {OPEN_LIVE.has(exp.id) ? (
+                  {OPEN_EXTERNALLY.has(exp.id) ? (
                     <a
                       href={LIVE_WEBSITE[exp.id]}
                       target="_blank"
