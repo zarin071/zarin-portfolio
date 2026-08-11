@@ -17,12 +17,12 @@ const base = process.env.NEXT_PUBLIC_BASE_PATH ?? ""
 
 // Experiments that also live as a standalone site, surfaced as an "Open ↗" link.
 const EXTERNAL_LINKS: Record<string, string> = {
-  birthdate: "https://zarin071.github.io/Birthdate",
-  "createbot-labs-live": "https://www.createbotlabs.com/",
+  birthdate: "https://zarin071.github.io/Birthdate"
 }
 
 const GITHUB_LINKS: Record<string, string> = {
   "createbot-labs": "https://github.com/zarin071/createbots",
+  "createbot-labs-live": "https://www.createbotlabs.com/",
 }
 
 // Experiments whose "View →" button opens the external link directly (no inline expand).
