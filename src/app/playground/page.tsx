@@ -421,7 +421,7 @@ export default function Playground() {
                   {OPEN_EXTERNALLY.has(exp.id) ? (
                     <a
                       href={EXTERNAL_LINKS[exp.id]}
-                      target="_blank"
+                      target="https://www.createbotlabs.com/"
                       rel="noopener noreferrer"
                       onClick={() => track("experiment_opened", { experiment: exp.id })}
                       className="font-sans text-xs uppercase tracking-[0.12em] px-4 py-2 rounded-full border border-ink/20 dark:border-darkInk/20 hover:bg-ink hover:text-cream dark:hover:bg-darkInk dark:hover:text-darkBg transition-all duration-200"
