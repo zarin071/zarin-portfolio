@@ -214,6 +214,7 @@
   .swatch { display: inline-flex; align-items: center; gap: 6px; font-size: 11.5px; }
   .swatch i { width: 20px; height: 8px; border-radius: 2px; display: inline-block; }
   .swatch.task i    { background: var(--ink-2); }
+  .swatch.free i    { background: transparent; border: 1.5px dashed var(--ink-3); height: 6px; }
   .swatch.ot i      { background: transparent; border: 1.5px dashed var(--ot); height: 6px; }
   .swatch.standby i { background: transparent; border: 1px dashed var(--standby); height: 6px; }
   .swatch.off i     { background: var(--off); opacity: 0.7; }
@@ -369,27 +370,31 @@
   }
   .block .tm { font-family: ui-monospace, monospace; font-size: 10px; opacity: 0.78; margin-left: auto; flex-shrink: 0; }
   .block { position: absolute; }
-  .brk-notch {
-    position: absolute; top: 0; bottom: 0; right: 0;
-    width: 25%; /* 30 min of 2h = 25% */
-    background-image: repeating-linear-gradient(45deg, rgba(255,255,255,0.28) 0 3px, transparent 3px 7px);
-    border-left: 1px dashed rgba(255,255,255,0.55);
-    border-top-right-radius: 3px; border-bottom-right-radius: 3px;
-    pointer-events: none;
-  }
-  .block[data-t="DRC"] .brk-notch,
-  .block[data-t="DRD"] .brk-notch,
-  .block[data-t="BMA"] .brk-notch,
-  .block[data-t="CLC"] .brk-notch {
-    background-image: repeating-linear-gradient(45deg, rgba(14,22,32,0.22) 0 3px, transparent 3px 7px);
-    border-left-color: rgba(14,22,32,0.4);
-  }
-  .block .brk-lbl {
-    position: absolute; bottom: 2px; right: 4px;
+  .block.brk-slot {
+    background: color-mix(in srgb, var(--ink) 5%, transparent);
+    background-image: repeating-linear-gradient(45deg, color-mix(in srgb, var(--ink) 8%, transparent) 0 3px, transparent 3px 7px);
+    border: 1px dashed var(--border-strong);
+    color: var(--ink-3);
+    height: calc(var(--row-h) - 18px);
+    top: 9px;
+    box-shadow: none; padding: 0 4px;
     font-family: ui-monospace, monospace;
-    font-size: 8.5px; font-weight: 700; letter-spacing: 0.08em;
-    opacity: 0.7;
+    font-size: 9px; font-weight: 700;
+    letter-spacing: 0.14em; text-transform: uppercase;
+    display: flex; align-items: center; justify-content: center;
+    overflow: hidden;
   }
+  .block.free-slot {
+    background: transparent;
+    border: 1.5px dashed var(--ink-3);
+    color: var(--ink-2);
+    box-shadow: none;
+    display: flex; align-items: center; justify-content: center; gap: 8px;
+    font-family: ui-monospace, monospace;
+    font-size: 10.5px; font-weight: 700;
+    letter-spacing: 0.14em; text-transform: uppercase;
+  }
+  .block.free-slot .tm { color: var(--ink-3); opacity: 0.9; text-transform: none; letter-spacing: 0.02em; margin: 0; }
   .block.briefing {
     background: color-mix(in srgb, var(--ink) 10%, transparent);
     border: 1px solid var(--border-strong);
@@ -757,10 +762,11 @@
     <div class="divider"></div>
     <div class="sup">Window: <strong class="mono" id="win-label">—</strong> <span style="color:var(--ink-3)">(now −3h / +2h)</span></div>
     <div class="divider"></div>
-    <div class="sup"><strong>15 min BRF</strong> + <strong>3–4 tasks</strong> × 2h (1.5h work + 30 min brk) + <strong>2h OT</strong> · ends by <strong>01:00</strong></div>
+    <div class="sup"><strong>15 min BRF</strong> + <strong>8h shift</strong> (2–4 tasks × 1.5h + 30 min brk, rest FREE) + <strong>2h OT</strong> · ends by <strong>01:00</strong></div>
     <div class="legend">
-      <span class="swatch task"><i></i>Flight · assigned</span>
-      <span class="swatch ot"><i></i>OT slot · available</span>
+      <span class="swatch task"><i></i>Flight</span>
+      <span class="swatch free"><i></i>Free (in-shift)</span>
+      <span class="swatch ot"><i></i>OT slot</span>
       <span class="swatch standby"><i></i>Standby</span>
       <span class="swatch off"><i></i>Leave</span>
     </div>
@@ -822,6 +828,7 @@
   <footer class="statusbar">
     <span><strong>60</strong> crew rostered</span>
     <span><strong id="stat-onshift">—</strong> on-task now</span>
+    <span><strong id="stat-free">—</strong> free in-shift now</span>
     <span><strong id="stat-ot">—</strong> OT slots still available</span>
     <span><strong id="stat-standby">—</strong> standby</span>
     <span><strong id="stat-off">—</strong> on leave</span>
@@ -928,13 +935,22 @@
       return [{ kind:'standby', s, e: s + 480, label: 'STANDBY · ON-CALL' }];
     }
 
-    const numTasks = r() < 0.55 ? 4 : 3;
-    // total = briefing + tasks + OT slot
-    const totalLen = BRIEF_MIN + (numTasks + 1) * TASK_MIN;
+    // 8h shift = 4 back-to-back 2h segments; 2-4 tasks, rest are FREE
+    const SEGS = 4;
+    const numTasks = 2 + Math.floor(r() * 3); // 2, 3, or 4
+    const segments = [];
+    for (let k = 0; k < SEGS; k++) segments.push(k < numTasks ? 'T' : 'F');
+    // Fisher-Yates
+    for (let k = segments.length - 1; k > 0; k--) {
+      const j = Math.floor(r() * (k + 1));
+      [segments[k], segments[j]] = [segments[j], segments[k]];
+    }
+
+    // total = brief + 8h shift + 2h OT
+    const totalLen = BRIEF_MIN + SEGS * TASK_MIN + TASK_MIN;
     const latestBrief = TOTAL_MIN - totalLen;
 
     const bias = Math.pow(r(), 1.15);
-    // Briefing aligned to 15 min (so task starts land on :00/:15/:30/:45)
     const briefStart = Math.floor(bias * latestBrief / 15) * 15;
     const taskStart = briefStart + BRIEF_MIN;
 
@@ -948,26 +964,40 @@
       s: briefStart, e: taskStart,
     });
 
-    for (let k = 0; k < numTasks; k++) {
-      const idx = Math.min(allowed.length - 1, Math.floor(r() * allowed.length));
-      const type = allowed[idx];
-      const s = taskStart + k * TASK_MIN;
-      tasks.push({
-        id: 't' + (++TASK_UID),
-        kind: 'task',
-        type,
-        flight: flightPool[k % flightPool.length],
-        s, e: s + TASK_MIN,
-        workE: s + WORK_MIN,
-        brkS:  s + WORK_MIN,
-        brkE:  s + TASK_MIN,
-      });
+    let cursor = taskStart;
+    let taskIdx = 0;
+    for (const seg of segments) {
+      if (seg === 'T') {
+        const idx = Math.min(allowed.length - 1, Math.floor(r() * allowed.length));
+        const type = allowed[idx];
+        tasks.push({
+          id: 't' + (++TASK_UID),
+          kind: 'task',
+          type,
+          flight: flightPool[taskIdx % flightPool.length],
+          s: cursor, e: cursor + WORK_MIN,   // 90 min of actual work
+        });
+        cursor += WORK_MIN;
+        tasks.push({
+          id: 't' + (++TASK_UID),
+          kind: 'brk-slot',
+          s: cursor, e: cursor + BRK_MIN,    // 30 min break
+        });
+        cursor += BRK_MIN;
+        taskIdx++;
+      } else {
+        tasks.push({
+          id: 't' + (++TASK_UID),
+          kind: 'free-slot',
+          s: cursor, e: cursor + TASK_MIN,   // 2h free
+        });
+        cursor += TASK_MIN;
+      }
     }
     tasks.push({
       id: 't' + (++TASK_UID),
       kind: 'ot-slot',
-      s: taskStart + numTasks * TASK_MIN,
-      e: taskStart + (numTasks + 1) * TASK_MIN,
+      s: cursor, e: cursor + TASK_MIN,
     });
     return tasks;
   }
@@ -1069,6 +1099,10 @@
   gridOverlay.style.width = LANE_W + 'px';
 
   function renderBlock(sh, emp, y, isSick) {
+    // For sick employees: skip briefing/breaks/free/ot — they're not present.
+    // Only show tasks (as unassigned red blocks or covered notice).
+    if (isSick && sh.kind !== 'task') return null;
+
     const b = document.createElement('div');
     const left = xFor(sh.s);
     const width = xFor(sh.e) - left;
@@ -1080,6 +1114,28 @@
       b.className = 'block briefing';
       b.title = `Pre-shift briefing · ${fmt24(sh.s)}–${fmt24(sh.e)}`;
       b.innerHTML = `BRF`;
+    } else if (sh.kind === 'brk-slot') {
+      b.className = 'block brk-slot';
+      b.title = `Break · ${fmt24(sh.s)}–${fmt24(sh.e)}`;
+      b.innerHTML = `BRK`;
+    } else if (sh.kind === 'free-slot') {
+      // If used as coverage, render as solid coverage block
+      const cov = [...coverage.values()].find(c => c.coverEid === emp.eid && c.slotId === sh.id);
+      if (cov) {
+        b.className = 'block covered';
+        b.dataset.t = cov.type;
+        b.title = `Covering ${cov.flight} (was ${cov.sickName}) · in-shift  •  ${fmt24(sh.s)}–${fmt24(sh.e)}`;
+        b.innerHTML = `
+          <span class="task-chip">${cov.type}</span>
+          <span class="flt">${cov.flight}</span>
+          <span class="cov-badge">COV</span>
+          <span class="tm mono">${fmt24(sh.s)}–${fmt24(sh.e)}</span>
+        `;
+      } else {
+        b.className = 'block free-slot';
+        b.title = `Free · unassigned in-shift capacity  •  ${fmt24(sh.s)}–${fmt24(sh.e)}`;
+        b.innerHTML = `<span>FREE · 2h</span><span class="tm mono">${fmt24(sh.s)}–${fmt24(sh.e)}</span>`;
+      }
     } else if (sh.kind === 'off') {
       b.className = 'block off';
       b.innerHTML = `<span>${sh.label}</span>`;
@@ -1087,12 +1143,11 @@
       b.className = 'block standby';
       b.innerHTML = `<span>${sh.label}</span><span class="tm mono">${fmt24(sh.s)}–${fmt24(sh.e)}</span>`;
     } else if (sh.kind === 'ot-slot') {
-      // If used as coverage, render as solid task with COV badge
       const cov = [...coverage.values()].find(c => c.coverEid === emp.eid && c.slotId === sh.id);
       if (cov) {
         b.className = 'block covered';
         b.dataset.t = cov.type;
-        b.title = `Covering ${cov.flight} (was ${cov.sickName})  •  ${fmt24(sh.s)}–${fmt24(sh.e)}  •  Overtime`;
+        b.title = `Covering ${cov.flight} (was ${cov.sickName}) · overtime  •  ${fmt24(sh.s)}–${fmt24(sh.e)}`;
         b.innerHTML = `
           <span class="task-chip">${cov.type}</span>
           <span class="flt">${cov.flight}</span>
@@ -1109,7 +1164,6 @@
       if (isSick) {
         const cov = coverage.get(sh.id);
         if (cov) {
-          // Task is covered — show muted state on sick row
           b.className = 'block off';
           b.style.opacity = '0.5';
           b.innerHTML = `<span>Covered by ${cov.coverName.split(' ')[0]}</span>`;
@@ -1117,7 +1171,7 @@
           b.className = 'block unassigned' + (selectedTaskId === sh.id ? ' selected' : '');
           b.dataset.taskId = sh.id;
           b.dataset.eid = emp.eid;
-          b.title = `UNASSIGNED · Click to reassign  •  ${sh.flight}  •  ${fmt24(sh.s)}–${fmt24(sh.workE)} + break to ${fmt24(sh.brkE)}`;
+          b.title = `UNASSIGNED · Click to reassign  •  ${sh.flight}  •  ${fmt24(sh.s)}–${fmt24(sh.e)}`;
           b.innerHTML = `
             <span class="task-chip">${sh.type}</span>
             <span class="flt">${sh.flight}</span>
@@ -1127,12 +1181,11 @@
       } else {
         b.className = 'block';
         b.dataset.t = sh.type;
-        b.title = `${sh.type} · Flight ${sh.flight}  •  Work ${fmt24(sh.s)}–${fmt24(sh.workE)}  •  Break ${fmt24(sh.brkS)}–${fmt24(sh.brkE)}`;
+        b.title = `${sh.type} · Flight ${sh.flight}  •  ${fmt24(sh.s)}–${fmt24(sh.e)}`;
         b.innerHTML = `
           <span class="task-chip">${sh.type}</span>
           <span class="flt">${sh.flight}</span>
           <span class="tm mono">${fmt24(sh.s)}–${fmt24(sh.e)}</span>
-          <span class="brk-notch"></span>
         `;
       }
     }
@@ -1208,17 +1261,19 @@
   function updateStats(team) {
     const groups = team === 'all' ? ['dr','rmp','cln'] : [team];
     const nowM = nowMinutes();
-    let on=0, otAvail=0, sb=0, off=0;
+    let on=0, freeNow=0, otAvail=0, sb=0, off=0;
     groups.forEach(t => rosters[t].forEach(emp => {
-      // count OT slots that haven't started yet (still available for allocation)
+      if (sick.has(emp.eid)) return;
       if (emp.shifts.some(x => x.kind === 'ot-slot' && x.s >= nowM)) otAvail++;
       const s = emp.shifts.find(x => x.s <= nowM && nowM < x.e);
       if (!s) return;
       if (s.kind === 'off') off++;
       else if (s.kind === 'standby') sb++;
       else if (s.kind === 'task') on++;
+      else if (s.kind === 'free-slot') freeNow++;
     }));
     document.getElementById('stat-onshift').textContent = on;
+    document.getElementById('stat-free').textContent = freeNow;
     document.getElementById('stat-ot').textContent = otAvail;
     document.getElementById('stat-standby').textContent = sb;
     document.getElementById('stat-off').textContent = off;
@@ -1367,31 +1422,31 @@
       return { kind: 'busy' };
     }
     let brkHit = false;
+    let freeSlotId = null;
     let otSlotId = null;
+    let hadAnyOverlap = false;
     for (const sh of emp.shifts) {
       if (sh.e <= s || sh.s >= e) continue;
-      // overlap
-      if (sh.kind === 'briefing') {
-        return { kind: 'busy' };
-      }
-      if (sh.kind === 'task') {
-        // Check if only overlap is with the break tail
-        const workStart = sh.s, workEnd = sh.workE;
-        const overlapWork = !(workEnd <= s || workStart >= e);
-        if (overlapWork) return { kind: 'busy' };
-        // else overlaps only the break window
-        brkHit = true;
-      } else if (sh.kind === 'ot-slot') {
-        // If already covering another sick task in this slot, it's used
+      hadAnyOverlap = true;
+      if (sh.kind === 'briefing' || sh.kind === 'task') return { kind: 'busy' };
+      if (sh.kind === 'brk-slot') { brkHit = true; }
+      else if (sh.kind === 'free-slot') {
         const used = [...coverage.values()].some(c => c.coverEid === emp.eid && c.slotId === sh.id);
         if (used) return { kind: 'busy' };
-        // OT slot matches (must fully contain the sick task)
+        if (sh.s <= s && sh.e >= e) freeSlotId = sh.id;
+      }
+      else if (sh.kind === 'ot-slot') {
+        const used = [...coverage.values()].some(c => c.coverEid === emp.eid && c.slotId === sh.id);
+        if (used) return { kind: 'busy' };
         if (sh.s <= s && sh.e >= e) otSlotId = sh.id;
       }
     }
-    if (otSlotId) return { kind: 'ot', otSlotId };
-    if (brkHit) return { kind: 'brk' };
-    return { kind: 'free' };
+    // Prefer FREE (in-shift) → OT (overtime) → BRK (override break) in that order
+    if (freeSlotId) return { kind: 'free', freeSlotId };
+    if (otSlotId)   return { kind: 'ot', otSlotId };
+    if (brkHit)     return { kind: 'brk' };
+    // No overlap at all means the candidate is completely off-shift — can't be pulled in
+    return { kind: 'busy' };
   }
 
   function findCandidates(sickEmp, task) {
@@ -1535,11 +1590,11 @@
           </div>
           <div class="flt-big">${task.flight}</div>
           <div class="flt-meta">
-            <span class="mono">${fmt24(task.s)}–${fmt24(task.workE)}</span>
-            <span>work</span>
+            <span class="mono">${fmt24(task.s)}–${fmt24(task.e)}</span>
+            <span>work (1.5h)</span>
             <span class="sep">|</span>
-            <span class="mono">${fmt24(task.brkS)}–${fmt24(task.brkE)}</span>
-            <span>break</span>
+            <span class="mono">${fmt24(task.e)}–${fmt24(task.e + BRK_MIN)}</span>
+            <span>break follows</span>
           </div>
         </div>
         <div class="req-line">
@@ -1589,7 +1644,7 @@
     const av = availabilityAt(cand, task.s, task.e);
     coverage.set(task.id, {
       taskId: task.id,
-      slotId: av.otSlotId || null,
+      slotId: av.freeSlotId || av.otSlotId || null,
       coverEid: cand.eid,
       coverName: cand.name,
       type: task.type,
@@ -1598,7 +1653,7 @@
       sickName: sickEmp.name,
       viaBreak: av.kind === 'brk',
     });
-    const via = av.kind === 'ot' ? 'OT slot' : av.kind === 'brk' ? 'break override' : 'free slot';
+    const via = av.kind === 'ot' ? 'OT slot' : av.kind === 'brk' ? 'break override' : 'free in-shift slot';
     showToast(`Assigned <span class="flt">${task.flight}</span> · ${task.type} → ${cand.name} <span style="opacity:0.6">(${via})</span>`);
     selectedTaskId = null;
     render(currentTeam);
