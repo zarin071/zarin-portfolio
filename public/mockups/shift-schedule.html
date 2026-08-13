@@ -1,0 +1,950 @@
+<title>T2 Shift Board</title>
+<style>
+  :root {
+    --ground: #F6F7F9;
+    --surface: #FFFFFF;
+    --surface-2: #F0F2F5;
+    --border: #E3E7EC;
+    --border-strong: #C9D0D8;
+    --ink: #0E1620;
+    --ink-2: #40505F;
+    --ink-3: #7A8695;
+    --now: #C46A00;
+    --now-glow: rgba(245, 165, 36, 0.18);
+    --dr: #1F9E8E;
+    --rmp: #5B6ED8;
+    --cln: #B88749;
+    --off: #C93A3F;
+    --standby: #7A8695;
+    --dr-tint: rgba(31, 158, 142, 0.10);
+    --rmp-tint: rgba(91, 110, 216, 0.10);
+    --cln-tint: rgba(184, 135, 73, 0.10);
+    --row-alt: rgba(14, 22, 32, 0.02);
+    --grid-line: rgba(14, 22, 32, 0.06);
+    --grid-line-strong: rgba(14, 22, 32, 0.12);
+    --shadow: 0 1px 0 rgba(14,22,32,0.04), 0 12px 32px -18px rgba(14,22,32,0.20);
+
+    --hour-w: 132px;
+    --row-h: 44px;
+    --rail-w: 260px;
+    --header-h: 52px;
+  }
+
+  :root:not([data-theme="light"]) {
+    @media (prefers-color-scheme: dark) {
+      --ground: #0E1620;
+      --surface: #182231;
+      --surface-2: #202C3D;
+      --border: #2A3849;
+      --border-strong: #3A4A5E;
+      --ink: #E8ECF2;
+      --ink-2: #A6B2C0;
+      --ink-3: #6E7E90;
+      --now: #F5A524;
+      --now-glow: rgba(245, 165, 36, 0.22);
+      --dr: #2FB8A6;
+      --rmp: #7C8CF0;
+      --cln: #D4A867;
+      --off: #E5484D;
+      --standby: #6E7E90;
+      --dr-tint: rgba(47, 184, 166, 0.14);
+      --rmp-tint: rgba(124, 140, 240, 0.14);
+      --cln-tint: rgba(212, 168, 103, 0.14);
+      --row-alt: rgba(255, 255, 255, 0.02);
+      --grid-line: rgba(255, 255, 255, 0.06);
+      --grid-line-strong: rgba(255, 255, 255, 0.12);
+      --shadow: 0 1px 0 rgba(0,0,0,0.4), 0 20px 48px -20px rgba(0,0,0,0.6);
+    }
+  }
+
+  :root[data-theme="dark"] {
+    --ground: #0E1620;
+    --surface: #182231;
+    --surface-2: #202C3D;
+    --border: #2A3849;
+    --border-strong: #3A4A5E;
+    --ink: #E8ECF2;
+    --ink-2: #A6B2C0;
+    --ink-3: #6E7E90;
+    --now: #F5A524;
+    --now-glow: rgba(245, 165, 36, 0.22);
+    --dr: #2FB8A6;
+    --rmp: #7C8CF0;
+    --cln: #D4A867;
+    --off: #E5484D;
+    --standby: #6E7E90;
+    --dr-tint: rgba(47, 184, 166, 0.14);
+    --rmp-tint: rgba(124, 140, 240, 0.14);
+    --cln-tint: rgba(212, 168, 103, 0.14);
+    --row-alt: rgba(255, 255, 255, 0.02);
+    --grid-line: rgba(255, 255, 255, 0.06);
+    --grid-line-strong: rgba(255, 255, 255, 0.12);
+    --shadow: 0 1px 0 rgba(0,0,0,0.4), 0 20px 48px -20px rgba(0,0,0,0.6);
+  }
+
+  html, body { height: 100%; }
+  body {
+    margin: 0;
+    font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+    color: var(--ink);
+    background: var(--ground);
+    font-size: 14px;
+    letter-spacing: -0.005em;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .mono { font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace; font-variant-numeric: tabular-nums; }
+
+  .app {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    max-height: 100vh;
+  }
+
+  /* ── Top command bar ─────────────────────────────── */
+  .topbar {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    padding: 14px 22px;
+    background: var(--surface);
+    border-bottom: 1px solid var(--border);
+  }
+  .brand { display: flex; align-items: baseline; gap: 10px; }
+  .brand .code {
+    font-family: ui-monospace, monospace;
+    font-weight: 600;
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    padding: 3px 7px;
+    border: 1px solid var(--border-strong);
+    color: var(--ink-2);
+    border-radius: 3px;
+  }
+  .brand h1 {
+    margin: 0;
+    font-size: 15px;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+  }
+  .brand .sub { color: var(--ink-3); font-size: 12px; }
+
+  .clock {
+    margin-left: auto;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+  .clock .dot {
+    width: 7px; height: 7px; border-radius: 50%;
+    background: var(--now);
+    box-shadow: 0 0 0 3px var(--now-glow);
+    animation: pulse 2s ease-in-out infinite;
+  }
+  @keyframes pulse { 0%,100% { opacity: 1; } 50% { opacity: 0.55; } }
+  @media (prefers-reduced-motion: reduce) { .clock .dot { animation: none; } }
+
+  .clock .live {
+    font-size: 10.5px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--ink-2);
+  }
+  .clock .time { font-size: 18px; font-weight: 600; }
+  .clock .date { color: var(--ink-3); font-size: 12px; }
+
+  /* ── Tab strip ───────────────────────────────────── */
+  .tabs {
+    display: flex;
+    align-items: stretch;
+    gap: 0;
+    padding: 0 22px;
+    background: var(--surface);
+    border-bottom: 1px solid var(--border);
+  }
+  .tab {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    padding: 12px 20px 14px;
+    background: transparent;
+    border: 0;
+    border-bottom: 2px solid transparent;
+    color: var(--ink-3);
+    cursor: pointer;
+    font: inherit;
+    text-align: left;
+    transition: color 120ms;
+  }
+  .tab:hover { color: var(--ink-2); }
+  .tab:focus-visible { outline: 2px solid var(--now); outline-offset: -2px; }
+  .tab .label {
+    font-size: 10.5px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    font-weight: 600;
+  }
+  .tab .name { font-size: 14px; font-weight: 500; }
+  .tab .count { color: var(--ink-3); font-size: 12px; font-family: ui-monospace, monospace; }
+  .tab.active { color: var(--ink); }
+  .tab.active[data-team="dr"]  { border-bottom-color: var(--dr); }
+  .tab.active[data-team="rmp"] { border-bottom-color: var(--rmp); }
+  .tab.active[data-team="cln"] { border-bottom-color: var(--cln); }
+  .tab.active[data-team="all"] { border-bottom-color: var(--ink); }
+
+  /* ── Toolbar ─────────────────────────────────────── */
+  .toolbar {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 10px 22px;
+    background: var(--surface-2);
+    border-bottom: 1px solid var(--border);
+    font-size: 12.5px;
+  }
+  .toolbar .sup { display: flex; align-items: center; gap: 8px; color: var(--ink-2); }
+  .toolbar .sup strong { color: var(--ink); font-weight: 600; }
+  .toolbar .divider { width: 1px; height: 18px; background: var(--border-strong); }
+  .toolbar .legend { display: flex; align-items: center; gap: 14px; margin-left: auto; color: var(--ink-2); }
+  .legend .swatch {
+    display: inline-flex; align-items: center; gap: 6px;
+  }
+  .swatch i {
+    width: 22px; height: 8px; border-radius: 2px; display: inline-block;
+  }
+  .swatch.on-shift i { background: var(--dr); }
+  .swatch.break i    { background: repeating-linear-gradient(45deg, var(--ink-3) 0 3px, transparent 3px 6px); border: 1px solid var(--ink-3); height: 6px; }
+  .swatch.standby i  { background: transparent; border: 1px dashed var(--standby); height: 6px; }
+  .swatch.off i      { background: var(--off); opacity: 0.75; }
+
+  /* ── Board ───────────────────────────────────────── */
+  .board {
+    flex: 1;
+    display: grid;
+    grid-template-columns: var(--rail-w) 1fr;
+    background: var(--ground);
+    overflow: hidden;
+    border-top: 1px solid var(--border);
+  }
+
+  .rail {
+    display: flex;
+    flex-direction: column;
+    background: var(--surface);
+    border-right: 1px solid var(--border-strong);
+    z-index: 2;
+    box-shadow: 8px 0 24px -18px rgba(0,0,0,0.35);
+  }
+  .rail-head {
+    height: var(--header-h);
+    display: grid;
+    grid-template-columns: 64px 1fr 44px;
+    align-items: center;
+    padding: 0 12px 0 14px;
+    gap: 10px;
+    border-bottom: 1px solid var(--border);
+    font-size: 10px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--ink-3);
+    font-weight: 600;
+    background: var(--surface);
+  }
+  .rail-body { overflow: hidden; }
+  .rail-scroll {
+    display: flex;
+    flex-direction: column;
+  }
+  .rail-row {
+    display: grid;
+    grid-template-columns: 64px 1fr 44px;
+    align-items: center;
+    padding: 0 12px 0 14px;
+    gap: 10px;
+    height: var(--row-h);
+    border-bottom: 1px solid var(--border);
+    background: var(--surface);
+  }
+  .rail-row:nth-child(even) { background: linear-gradient(var(--row-alt), var(--row-alt)), var(--surface); }
+  .rail-row .eid { font-family: ui-monospace, monospace; font-size: 12px; color: var(--ink-2); letter-spacing: 0.02em; }
+  .rail-row .nm  { font-size: 13px; font-weight: 500; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .rail-row .role {
+    justify-self: end;
+    font-family: ui-monospace, monospace;
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    padding: 2px 6px;
+    border-radius: 3px;
+    font-weight: 600;
+  }
+  .role[data-t="DR"]  { color: var(--dr); background: var(--dr-tint); }
+  .role[data-t="RMP"] { color: var(--rmp); background: var(--rmp-tint); }
+  .role[data-t="CLN"] { color: var(--cln); background: var(--cln-tint); }
+
+  .lane {
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+  }
+  .lane-head {
+    height: var(--header-h);
+    overflow: hidden;
+    position: relative;
+    border-bottom: 1px solid var(--border);
+    background: var(--surface);
+  }
+  .lane-head-inner {
+    position: relative;
+    height: 100%;
+    will-change: transform;
+  }
+  .tick {
+    position: absolute;
+    top: 0; bottom: 0;
+    width: 1px;
+    background: var(--grid-line);
+  }
+  .tick.hour { background: var(--grid-line-strong); }
+  .tick .lbl {
+    position: absolute;
+    top: 10px;
+    left: 6px;
+    font-family: ui-monospace, monospace;
+    font-size: 11px;
+    color: var(--ink-2);
+    letter-spacing: 0.02em;
+    white-space: nowrap;
+  }
+  .tick .meridian {
+    position: absolute;
+    top: 26px;
+    left: 6px;
+    font-size: 9px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--ink-3);
+    font-weight: 600;
+  }
+
+  .lane-body {
+    flex: 1;
+    overflow-x: auto;
+    overflow-y: hidden;
+    position: relative;
+  }
+  .lane-inner {
+    position: relative;
+    height: 100%;
+  }
+  .rows {
+    position: relative;
+    height: 100%;
+  }
+  .row {
+    position: absolute;
+    left: 0; right: 0;
+    height: var(--row-h);
+    border-bottom: 1px solid var(--border);
+  }
+  .row.alt { background: var(--row-alt); }
+
+  /* vertical grid overlay */
+  .grid-overlay {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+  }
+
+  /* Shift blocks */
+  .block {
+    position: absolute;
+    top: 8px;
+    height: calc(var(--row-h) - 16px);
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 0 8px;
+    font-size: 11px;
+    font-weight: 500;
+    color: white;
+    letter-spacing: 0.01em;
+    overflow: hidden;
+    box-shadow: inset 0 -1px 0 rgba(0,0,0,0.15), inset 0 1px 0 rgba(255,255,255,0.12);
+    cursor: default;
+  }
+  .block .who { font-family: ui-monospace, monospace; font-size: 10.5px; opacity: 0.85; }
+  .block[data-t="DR"]  { background: var(--dr); }
+  .block[data-t="RMP"] { background: var(--rmp); }
+  .block[data-t="CLN"] { background: var(--cln); }
+  .block.break {
+    background: repeating-linear-gradient(45deg, var(--ink-3) 0 4px, transparent 4px 8px);
+    border: 1px solid var(--ink-3);
+    color: var(--ink-2);
+    height: calc(var(--row-h) - 22px);
+    top: 11px;
+    box-shadow: none;
+  }
+  .block.standby {
+    background: transparent;
+    border: 1px dashed var(--standby);
+    color: var(--ink-2);
+    height: calc(var(--row-h) - 22px);
+    top: 11px;
+    box-shadow: none;
+  }
+  .block.off {
+    background: color-mix(in srgb, var(--off) 20%, transparent);
+    border: 1px solid color-mix(in srgb, var(--off) 55%, transparent);
+    color: var(--off);
+    box-shadow: none;
+  }
+
+  /* Now line */
+  .now-line {
+    position: absolute;
+    top: 0; bottom: 0;
+    width: 1.5px;
+    background: var(--now);
+    box-shadow: 0 0 0 2px var(--now-glow), 0 0 24px var(--now-glow);
+    pointer-events: none;
+    z-index: 5;
+  }
+  .now-line::before {
+    content: "";
+    position: absolute;
+    top: -3px;
+    left: -4px;
+    width: 9px; height: 9px;
+    background: var(--now);
+    border-radius: 50%;
+    box-shadow: 0 0 0 3px var(--now-glow);
+  }
+  .now-flag {
+    position: absolute;
+    top: 6px;
+    transform: translateX(-50%);
+    background: var(--now);
+    color: #1a0f00;
+    font-family: ui-monospace, monospace;
+    font-weight: 700;
+    font-size: 10.5px;
+    padding: 2px 6px;
+    border-radius: 3px;
+    letter-spacing: 0.04em;
+    z-index: 6;
+    white-space: nowrap;
+  }
+
+  /* Team divider (in all-teams view) */
+  .team-divider {
+    position: absolute;
+    left: 0; right: 0;
+    height: 22px;
+    background: var(--surface-2);
+    border-top: 1px solid var(--border-strong);
+    border-bottom: 1px solid var(--border);
+    display: flex; align-items: center;
+    padding: 0 14px;
+    font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase;
+    color: var(--ink-2); font-weight: 700;
+    z-index: 3;
+  }
+  .rail-divider {
+    height: 22px;
+    background: var(--surface-2);
+    border-top: 1px solid var(--border-strong);
+    border-bottom: 1px solid var(--border);
+    display: flex; align-items: center;
+    padding: 0 14px;
+    font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase;
+    color: var(--ink-2); font-weight: 700;
+  }
+
+  /* Scrollbar */
+  .lane-body::-webkit-scrollbar { height: 10px; }
+  .lane-body::-webkit-scrollbar-track { background: var(--surface); }
+  .lane-body::-webkit-scrollbar-thumb {
+    background: var(--border-strong);
+    border-radius: 5px;
+    border: 2px solid var(--surface);
+  }
+
+  /* Statusbar */
+  .statusbar {
+    display: flex;
+    gap: 24px;
+    padding: 8px 22px;
+    background: var(--surface);
+    border-top: 1px solid var(--border);
+    font-size: 11.5px;
+    color: var(--ink-3);
+    align-items: center;
+  }
+  .statusbar strong { color: var(--ink-2); font-weight: 600; }
+  .statusbar .theme-toggle {
+    margin-left: auto;
+    background: transparent;
+    border: 1px solid var(--border-strong);
+    color: var(--ink-2);
+    font: inherit;
+    padding: 4px 10px;
+    border-radius: 3px;
+    cursor: pointer;
+    font-family: ui-monospace, monospace;
+    font-size: 10.5px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+  .statusbar .theme-toggle:hover { color: var(--ink); border-color: var(--ink-2); }
+</style>
+
+<div class="app">
+  <header class="topbar">
+    <div class="brand">
+      <span class="code">CSMIA · T2</span>
+      <h1>Shift Command</h1>
+      <span class="sub">— Ground Operations, Terminal 2</span>
+    </div>
+    <div class="clock">
+      <span class="dot" aria-hidden="true"></span>
+      <span class="live">Live · IST</span>
+      <span class="time mono" id="clock-time">—</span>
+      <span class="date mono" id="clock-date">—</span>
+    </div>
+  </header>
+
+  <nav class="tabs" role="tablist" id="tabs">
+    <button class="tab active" role="tab" data-team="dr">
+      <span class="label" style="color:var(--dr)">DR · Doctors / Medical</span>
+      <span class="name">Dr. Meera Iyer <span class="count">· 20 crew</span></span>
+    </button>
+    <button class="tab" role="tab" data-team="rmp">
+      <span class="label" style="color:var(--rmp)">RMP · Ramp Handling</span>
+      <span class="name">Rakesh Pawar <span class="count">· 20 crew</span></span>
+    </button>
+    <button class="tab" role="tab" data-team="cln">
+      <span class="label" style="color:var(--cln)">CLN · Cleaning Ops</span>
+      <span class="name">Sunita D'Souza <span class="count">· 20 crew</span></span>
+    </button>
+    <button class="tab" role="tab" data-team="all">
+      <span class="label">ADMIN · Combined View</span>
+      <span class="name">All teams <span class="count">· 60 crew</span></span>
+    </button>
+  </nav>
+
+  <div class="toolbar">
+    <div class="sup">Supervisor: <strong id="sup-name">Dr. Meera Iyer</strong></div>
+    <div class="divider"></div>
+    <div class="sup">Date: <strong class="mono">Thu, 13 Aug 2026</strong></div>
+    <div class="divider"></div>
+    <div class="sup">Window: <strong class="mono" id="win-label">—</strong> <span style="color:var(--ink-3)">(now −3h / +2h)</span></div>
+    <div class="legend">
+      <span class="swatch on-shift"><i></i>On-shift</span>
+      <span class="swatch break"><i></i>Break</span>
+      <span class="swatch standby"><i></i>Standby</span>
+      <span class="swatch off"><i></i>Off / Leave</span>
+    </div>
+  </div>
+
+  <div class="board">
+    <aside class="rail">
+      <div class="rail-head">
+        <span>Emp ID</span>
+        <span>Name</span>
+        <span style="justify-self:end">Role</span>
+      </div>
+      <div class="rail-body">
+        <div class="rail-scroll" id="rail-scroll"></div>
+      </div>
+    </aside>
+
+    <section class="lane">
+      <div class="lane-head">
+        <div class="lane-head-inner" id="lane-head-inner"></div>
+      </div>
+      <div class="lane-body" id="lane-body">
+        <div class="lane-inner" id="lane-inner">
+          <div class="grid-overlay" id="grid-overlay"></div>
+          <div class="rows" id="rows"></div>
+          <div class="now-line" id="now-line"><span class="now-flag mono" id="now-flag">NOW</span></div>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <footer class="statusbar">
+    <span><strong>60</strong> crew rostered</span>
+    <span><strong id="stat-onshift">—</strong> on-shift now</span>
+    <span><strong id="stat-break">—</strong> on break</span>
+    <span><strong id="stat-off">—</strong> off / leave</span>
+    <span>Shift day <strong>06:00 → 01:00</strong> (19h)</span>
+    <button class="theme-toggle" id="theme-toggle" type="button">Toggle theme</button>
+  </footer>
+</div>
+
+<script>
+(() => {
+  const HOUR_W = 132;
+  const ROW_H  = 44;
+  const START_HR = 6;         // 06:00
+  const END_HR   = 25;        // 01:00 next day
+  const TOTAL_MIN = (END_HR - START_HR) * 60;
+  const LANE_W = (END_HR - START_HR) * HOUR_W;
+
+  // ── Data ────────────────────────────────────────────
+  const teamMeta = {
+    dr:  { code: 'DR',  label: 'Doctors / Medical', sup: "Dr. Meera Iyer",  color: 'var(--dr)'  },
+    rmp: { code: 'RMP', label: 'Ramp Handling',      sup: "Rakesh Pawar",   color: 'var(--rmp)' },
+    cln: { code: 'CLN', label: 'Cleaning Ops',       sup: "Sunita D'Souza", color: 'var(--cln)' },
+  };
+
+  const namesDR = [
+    "Aarav Deshpande","Priya Nair","Farhan Qureshi","Neha Kulkarni","Rohan Bhatt",
+    "Ishita Menon","Sameer Wagle","Aditi Rao","Vikram Joshi","Kavya Reddy",
+    "Zain Khan","Pooja Sinha","Nikhil Salvi","Ananya Ghosh","Arjun Pillai",
+    "Shreya Bose","Devansh Pandit","Riya Fernandes","Karan Mehta","Tanvi Shroff"
+  ];
+  const namesRMP = [
+    "Suresh Yadav","Bhavesh More","Irfan Shaikh","Ganesh Chavan","Ramesh Waghela",
+    "Sachin Jadhav","Naveen Kamble","Deepak Solanki","Prakash Bhoir","Manoj Gaikwad",
+    "Ajay Powar","Vinod Sawant","Ravi Tandel","Yogesh Patil","Salman Ansari",
+    "Kiran Bhosle","Amol Dabholkar","Jitendra Rane","Hemant Naik","Uday Shirke"
+  ];
+  const namesCLN = [
+    "Lata Kadam","Rekha Palkar","Mumtaz Sayed","Geeta Bhandari","Savita Rathod",
+    "Kamla Jha","Farida Momin","Meena Ghadge","Kalyani Surve","Aisha Pathan",
+    "Vaishali Bagul","Sarika Todkar","Nirmala Mistry","Sushma Talwar","Pushpa Vaze",
+    "Ruksana Baig","Chhaya Landge","Anjali Bapat","Rohini Karve","Shabnam Ali"
+  ];
+
+  // Deterministic shift pattern generator (pseudo-random by seed for stability)
+  function seedRand(seed) {
+    let x = seed;
+    return () => { x = (x * 9301 + 49297) % 233280; return x / 233280; };
+  }
+
+  // Build shifts for one employee across the 19h day.
+  // Each employee has 1-2 on-shift blocks of ~4-6h with a 30-45min break inside;
+  // occasional standby or full off-day.
+  function buildShifts(team, i) {
+    const r = seedRand((team.charCodeAt(0)*31 + team.charCodeAt(1)*17 + i*7 + 3));
+    const shifts = [];
+    // 8% chance of full off
+    if (r() < 0.08) {
+      shifts.push({ kind:'off', s: 0, e: TOTAL_MIN, label: 'LEAVE' });
+      return shifts;
+    }
+    // 12% standby all day (medical/cleaning tail)
+    if (r() < 0.12) {
+      const s = Math.floor(r() * (TOTAL_MIN - 240));
+      shifts.push({ kind:'standby', s, e: s + 240, label: 'STANDBY' });
+      return shifts;
+    }
+    // 1 or 2 shifts
+    const twoShifts = r() < 0.35;
+    if (twoShifts) {
+      const s1 = Math.floor(r() * 90); // start within first 1.5h
+      const d1 = 200 + Math.floor(r() * 100); // 200-300 min
+      shifts.push(makeShift(team, s1, d1, r));
+      const gap = 60 + Math.floor(r() * 90);
+      const s2 = s1 + d1 + gap;
+      const d2 = 180 + Math.floor(r() * 120);
+      if (s2 + d2 < TOTAL_MIN) shifts.push(makeShift(team, s2, d2, r));
+    } else {
+      const s = Math.floor(r() * (TOTAL_MIN - 480));
+      const d = 300 + Math.floor(r() * 180); // 5-8h
+      shifts.push(makeShift(team, s, d, r));
+    }
+    return shifts;
+  }
+
+  function makeShift(team, s, d, r) {
+    const label = shiftLabel(team, s);
+    // insert a 30-45 min break roughly mid-shift
+    const breakStart = s + Math.floor(d * (0.4 + r()*0.2));
+    const breakDur = 30 + Math.floor(r()*15);
+    return { kind:'on', s, e: s+d, label, break: { s: breakStart, e: breakStart+breakDur } };
+  }
+
+  function shiftLabel(team, sMin) {
+    const startAbs = START_HR*60 + sMin;
+    const h = Math.floor(startAbs/60);
+    if (team === 'dr')  return h < 12 ? 'CLINIC-A' : h < 18 ? 'CLINIC-B' : 'MED-EVAC';
+    if (team === 'rmp') return h < 12 ? 'BAY-14' : h < 18 ? 'BAY-27' : 'BAY-09';
+    if (team === 'cln') return h < 12 ? 'PIER-C' : h < 18 ? 'ARR-HALL' : 'AIRSIDE';
+    return '';
+  }
+
+  // Assemble roster
+  function makeRoster(team, names) {
+    const prefix = { dr:'DR', rmp:'RM', cln:'CL' }[team];
+    return names.map((nm, i) => ({
+      team,
+      eid: `${prefix}-${String(2401 + i).padStart(4,'0')}`,
+      name: nm,
+      role: teamMeta[team].code,
+      shifts: buildShifts(team, i),
+    }));
+  }
+
+  const rosters = {
+    dr:  makeRoster('dr',  namesDR),
+    rmp: makeRoster('rmp', namesRMP),
+    cln: makeRoster('cln', namesCLN),
+  };
+
+  // ── Time helpers ────────────────────────────────────
+  function nowMinutes() {
+    // For the mockup: use current IST time, clamped inside the 6am–1am window.
+    // Since this is a static demo the user may open it any time; if outside window,
+    // synthesize a plausible mid-shift time so the board looks live.
+    const d = new Date();
+    // IST offset = UTC+5:30
+    const utcMin = d.getUTCHours()*60 + d.getUTCMinutes();
+    let ist = (utcMin + 330) % (24*60);
+    // Map into 6:00 → 25:00 minute-of-day range starting at 0
+    let m;
+    if (ist >= START_HR*60) m = ist - START_HR*60;
+    else if (ist < 60) m = (24*60 - START_HR*60) + ist; // 0:00-1:00 counts as end-of-shift
+    else { // between 1am and 6am → outside window, fake to 10:30 AM
+      m = (10 - START_HR)*60 + 30;
+    }
+    return Math.min(Math.max(m, 15), TOTAL_MIN - 15);
+  }
+
+  function fmtClock(mFromStart) {
+    const abs = (START_HR*60 + mFromStart) % (24*60);
+    const h = Math.floor(abs/60), mm = abs%60;
+    const h12 = ((h + 11) % 12) + 1;
+    const ap = h < 12 || h === 24 ? 'AM' : 'PM';
+    return `${String(h12).padStart(2,'0')}:${String(mm).padStart(2,'0')} ${ap}`;
+  }
+  function fmt24(mFromStart) {
+    const abs = (START_HR*60 + mFromStart) % (24*60);
+    const h = Math.floor(abs/60), mm = abs%60;
+    return `${String(h).padStart(2,'0')}:${String(mm).padStart(2,'0')}`;
+  }
+  function xFor(mFromStart) { return (mFromStart / 60) * HOUR_W; }
+
+  // ── Render header ticks ─────────────────────────────
+  const headInner = document.getElementById('lane-head-inner');
+  const gridOverlay = document.getElementById('grid-overlay');
+  headInner.style.width = LANE_W + 'px';
+
+  for (let h = 0; h <= (END_HR - START_HR); h++) {
+    const abs = (START_HR + h) % 24;
+    const tick = document.createElement('div');
+    tick.className = 'tick hour';
+    tick.style.left = (h * HOUR_W) + 'px';
+    const label12 = ((abs + 11) % 12) + 1;
+    const ap = abs < 12 || abs === 24 ? 'AM' : 'PM';
+    tick.innerHTML = `<span class="lbl">${String(label12).padStart(2,'0')}:00</span><span class="meridian">${ap}</span>`;
+    headInner.appendChild(tick);
+    // grid line
+    const g = document.createElement('div');
+    g.className = 'tick hour';
+    g.style.left = (h * HOUR_W) + 'px';
+    gridOverlay.appendChild(g);
+    // half hour
+    if (h < (END_HR - START_HR)) {
+      const half = document.createElement('div');
+      half.className = 'tick';
+      half.style.left = (h * HOUR_W + HOUR_W/2) + 'px';
+      headInner.appendChild(half);
+      const g2 = document.createElement('div');
+      g2.className = 'tick';
+      g2.style.left = (h * HOUR_W + HOUR_W/2) + 'px';
+      gridOverlay.appendChild(g2);
+    }
+  }
+
+  // ── Rendering rows ──────────────────────────────────
+  const railScroll = document.getElementById('rail-scroll');
+  const rowsEl = document.getElementById('rows');
+  const laneInner = document.getElementById('lane-inner');
+  laneInner.style.width = LANE_W + 'px';
+  gridOverlay.style.width = LANE_W + 'px';
+
+  function render(team) {
+    railScroll.innerHTML = '';
+    rowsEl.innerHTML = '';
+
+    let y = 0;
+    const groups = team === 'all' ? ['dr','rmp','cln'] : [team];
+
+    groups.forEach((t, gi) => {
+      if (team === 'all') {
+        // divider on rail
+        const rd = document.createElement('div');
+        rd.className = 'rail-divider';
+        rd.textContent = `${teamMeta[t].code} · ${teamMeta[t].label} — ${teamMeta[t].sup}`;
+        railScroll.appendChild(rd);
+        // divider on lane
+        const ld = document.createElement('div');
+        ld.className = 'team-divider';
+        ld.style.top = y + 'px';
+        ld.textContent = `${teamMeta[t].code} allocation`;
+        rowsEl.appendChild(ld);
+        y += 22;
+      }
+      rosters[t].forEach((emp, i) => {
+        // rail
+        const rr = document.createElement('div');
+        rr.className = 'rail-row';
+        rr.innerHTML = `
+          <span class="eid mono">${emp.eid}</span>
+          <span class="nm">${emp.name}</span>
+          <span class="role" data-t="${emp.role}">${emp.role}</span>
+        `;
+        railScroll.appendChild(rr);
+
+        // lane row background
+        const rowBg = document.createElement('div');
+        rowBg.className = 'row' + (i % 2 ? ' alt' : '');
+        rowBg.style.top = y + 'px';
+        rowsEl.appendChild(rowBg);
+
+        // shift blocks
+        emp.shifts.forEach(sh => {
+          const b = document.createElement('div');
+          const left = xFor(sh.s);
+          const width = xFor(sh.e) - left;
+          b.style.left = left + 'px';
+          b.style.width = width + 'px';
+          b.style.top  = (y + 8) + 'px';
+          if (sh.kind === 'off') {
+            b.className = 'block off';
+            b.innerHTML = `<span>${sh.label}</span>`;
+          } else if (sh.kind === 'standby') {
+            b.className = 'block standby';
+            b.innerHTML = `<span>${sh.label}</span> <span class="who">${fmt24(sh.s)}–${fmt24(sh.e)}</span>`;
+          } else {
+            b.className = 'block';
+            b.dataset.t = emp.role;
+            b.innerHTML = `<span>${sh.label}</span> <span class="who">${fmt24(sh.s)}–${fmt24(sh.e)}</span>`;
+          }
+          rowsEl.appendChild(b);
+
+          if (sh.break) {
+            const br = document.createElement('div');
+            br.className = 'block break';
+            const bl = xFor(sh.break.s);
+            const bw = xFor(sh.break.e) - bl;
+            br.style.left = bl + 'px';
+            br.style.width = bw + 'px';
+            br.style.top  = (y + 11) + 'px';
+            br.innerHTML = `<span>BRK</span>`;
+            rowsEl.appendChild(br);
+          }
+        });
+        y += ROW_H;
+      });
+    });
+
+    laneInner.style.height = y + 'px';
+    rowsEl.style.height = y + 'px';
+    gridOverlay.style.height = y + 'px';
+    document.getElementById('now-line').style.height = y + 'px';
+
+    updateStats(team);
+  }
+
+  function updateStats(team) {
+    const groups = team === 'all' ? ['dr','rmp','cln'] : [team];
+    const nowM = nowMinutes();
+    let on=0, br=0, off=0;
+    groups.forEach(t => rosters[t].forEach(emp => {
+      const inShift = emp.shifts.find(s => s.kind==='on' && s.s <= nowM && nowM < s.e);
+      const isOff   = emp.shifts.find(s => s.kind==='off');
+      if (isOff) { off++; return; }
+      if (inShift) {
+        if (inShift.break && inShift.break.s <= nowM && nowM < inShift.break.e) br++;
+        else on++;
+      }
+    }));
+    document.getElementById('stat-onshift').textContent = on;
+    document.getElementById('stat-break').textContent = br;
+    document.getElementById('stat-off').textContent = off;
+  }
+
+  // ── Now line + window ───────────────────────────────
+  const nowLine = document.getElementById('now-line');
+  const nowFlag = document.getElementById('now-flag');
+  const laneBody = document.getElementById('lane-body');
+  const winLabel = document.getElementById('win-label');
+
+  function placeNow() {
+    const m = nowMinutes();
+    const x = xFor(m);
+    nowLine.style.left = x + 'px';
+    nowFlag.textContent = `NOW · ${fmt24(m)}`;
+    // Auto-scroll so window is now-3h → now+2h (i.e. now sits 3/5 from left)
+    const winStart = Math.max(0, m - 180);
+    laneBody.scrollLeft = xFor(winStart);
+    // Window label
+    const winEnd = Math.min(TOTAL_MIN, m + 120);
+    winLabel.textContent = `${fmt24(winStart)} – ${fmt24(winEnd)}`;
+  }
+
+  // Sync rail vertical scroll with lane (both are same container height,
+  // but we mirror wheel events for a cleaner feel)
+  laneBody.addEventListener('scroll', () => {
+    headInner.style.transform = `translateX(${-laneBody.scrollLeft}px)`;
+  });
+
+  // Vertical wheel: forward to rail body (which handles overflow)
+  const railBody = document.querySelector('.rail-body');
+  railBody.style.overflowY = 'auto';
+  laneBody.addEventListener('wheel', (e) => {
+    if (Math.abs(e.deltaY) > Math.abs(e.deltaX)) {
+      railBody.scrollTop += e.deltaY;
+      // laneBody also scrolls y, but there's no y overflow so it's a no-op
+    }
+  }, { passive: true });
+  railBody.addEventListener('scroll', () => {
+    // Since lane-inner has fixed height matching rail-scroll height,
+    // we translate rows to match rail scrollTop.
+    rowsEl.style.transform = `translateY(${-railBody.scrollTop}px)`;
+    gridOverlay.style.transform = `translateY(${-railBody.scrollTop}px)`;
+    nowLine.style.transform = `translateY(${-railBody.scrollTop}px)`;
+  });
+
+  // ── Tabs ────────────────────────────────────────────
+  const tabs = document.querySelectorAll('#tabs .tab');
+  tabs.forEach(t => t.addEventListener('click', () => {
+    tabs.forEach(x => x.classList.remove('active'));
+    t.classList.add('active');
+    const team = t.dataset.team;
+    document.getElementById('sup-name').textContent =
+      team === 'all' ? 'Admin — all supervisors' : teamMeta[team].sup;
+    render(team);
+    requestAnimationFrame(placeNow);
+  }));
+
+  // ── Live clock ──────────────────────────────────────
+  function tickClock() {
+    const d = new Date();
+    const opts = { timeZone: 'Asia/Kolkata', hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false };
+    document.getElementById('clock-time').textContent = new Intl.DateTimeFormat('en-GB', opts).format(d);
+    document.getElementById('clock-date').textContent = new Intl.DateTimeFormat('en-GB',
+      { timeZone:'Asia/Kolkata', weekday:'short', day:'2-digit', month:'short', year:'numeric' }).format(d);
+  }
+  tickClock();
+  setInterval(tickClock, 1000);
+
+  // ── Theme toggle ────────────────────────────────────
+  document.getElementById('theme-toggle').addEventListener('click', () => {
+    const root = document.documentElement;
+    const cur = root.getAttribute('data-theme');
+    const next = cur === 'dark' ? 'light' : cur === 'light' ? null : (matchMedia('(prefers-color-scheme: dark)').matches ? 'light' : 'dark');
+    if (next) root.setAttribute('data-theme', next); else root.removeAttribute('data-theme');
+  });
+
+  // ── Boot ────────────────────────────────────────────
+  render('dr');
+  requestAnimationFrame(placeNow);
+})();
+</script>
