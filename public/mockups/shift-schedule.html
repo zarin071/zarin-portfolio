@@ -186,6 +186,14 @@
   }
   .tab .name { font-size: 14px; font-weight: 500; }
   .tab .count { color: var(--ink-3); font-size: 12px; font-family: ui-monospace, monospace; }
+  .tab .alert-badge {
+    display: inline-block; margin-left: 6px;
+    font-family: ui-monospace, monospace; font-size: 10px; font-weight: 700;
+    background: var(--off); color: white;
+    padding: 1px 5px; border-radius: 8px;
+    vertical-align: 1px;
+  }
+  .tab .alert-badge.zero { display: none; }
   .tab.active { color: var(--ink); }
   .tab.active[data-team="dr"]  { border-bottom-color: var(--dr); }
   .tab.active[data-team="rmp"] { border-bottom-color: var(--rmp); }
@@ -235,11 +243,14 @@
 
   /* ── Board ───────────────────────────────────────── */
   .board {
-    flex: 1;
-    display: grid; grid-template-columns: var(--rail-w) 1fr;
+    flex: 1; min-height: 0;
+    display: grid; grid-template-columns: var(--rail-w) 1fr 340px;
     background: var(--ground); overflow: hidden;
     border-top: 1px solid var(--border);
+    transition: grid-template-columns 220ms cubic-bezier(.4,0,.2,1);
   }
+  .board.side-closed { grid-template-columns: var(--rail-w) 1fr 0px; }
+  .board.side-closed .side { transform: translateX(340px); opacity: 0; pointer-events: none; }
 
   .rail {
     display: flex; flex-direction: column;
@@ -282,6 +293,21 @@
   }
   .rail-row .status.leave   { color: var(--off); background: color-mix(in srgb, var(--off) 15%, transparent); border: 1px solid color-mix(in srgb, var(--off) 40%, transparent); }
   .rail-row .status.standby { color: var(--ot); background: color-mix(in srgb, var(--ot) 18%, transparent); border: 1px solid color-mix(in srgb, var(--ot) 45%, transparent); }
+  .rail-row .status.sick    { color: var(--off); background: color-mix(in srgb, var(--off) 20%, transparent); border: 1px solid var(--off); }
+  .rail-row.sick { background: color-mix(in srgb, var(--off) 8%, var(--surface)); }
+  .rail-row .sick-btn {
+    position: absolute; right: 8px; top: 50%; transform: translateY(-50%);
+    background: var(--surface); border: 1px solid var(--border-strong);
+    color: var(--ink-3); font-family: ui-monospace, monospace;
+    font-size: 9.5px; letter-spacing: 0.1em; text-transform: uppercase;
+    padding: 3px 6px; border-radius: 3px; cursor: pointer;
+    opacity: 0; transition: opacity 120ms;
+  }
+  .rail-row { position: relative; }
+  .rail-row:hover .sick-btn { opacity: 1; }
+  .rail-row .sick-btn:hover { color: var(--off); border-color: var(--off); }
+  .rail-row.sick .sick-btn { opacity: 1; color: var(--dr); border-color: var(--border-strong); }
+  .rail-row.sick .sick-btn:hover { color: var(--dr); border-color: var(--dr); }
 
   .lane { position: relative; overflow: hidden; display: flex; flex-direction: column; }
   .lane-head {
@@ -342,6 +368,28 @@
     overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
   }
   .block .tm { font-family: ui-monospace, monospace; font-size: 10px; opacity: 0.78; margin-left: auto; flex-shrink: 0; }
+  .block { position: absolute; }
+  .brk-notch {
+    position: absolute; top: 0; bottom: 0; right: 0;
+    width: 25%; /* 30 min of 2h = 25% */
+    background-image: repeating-linear-gradient(45deg, rgba(255,255,255,0.28) 0 3px, transparent 3px 7px);
+    border-left: 1px dashed rgba(255,255,255,0.55);
+    border-top-right-radius: 3px; border-bottom-right-radius: 3px;
+    pointer-events: none;
+  }
+  .block[data-t="DRC"] .brk-notch,
+  .block[data-t="DRD"] .brk-notch,
+  .block[data-t="BMA"] .brk-notch,
+  .block[data-t="CLC"] .brk-notch {
+    background-image: repeating-linear-gradient(45deg, rgba(14,22,32,0.22) 0 3px, transparent 3px 7px);
+    border-left-color: rgba(14,22,32,0.4);
+  }
+  .block .brk-lbl {
+    position: absolute; bottom: 2px; right: 4px;
+    font-family: ui-monospace, monospace;
+    font-size: 8.5px; font-weight: 700; letter-spacing: 0.08em;
+    opacity: 0.7;
+  }
 
   .block[data-t="DRA"] { background: var(--dra); }
   .block[data-t="DRB"] { background: var(--drb); }
@@ -389,6 +437,198 @@
     font-family: ui-monospace, monospace;
     font-size: 11px; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase;
   }
+  .block.unassigned {
+    background: color-mix(in srgb, var(--off) 14%, transparent);
+    background-image: repeating-linear-gradient(45deg, color-mix(in srgb, var(--off) 25%, transparent) 0 5px, transparent 5px 10px);
+    border: 1.5px dashed var(--off);
+    color: var(--off);
+    box-shadow: none;
+    cursor: pointer;
+  }
+  .block.unassigned:hover { background-color: color-mix(in srgb, var(--off) 22%, transparent); }
+  .block.unassigned.selected {
+    border-style: solid;
+    box-shadow: 0 0 0 2px color-mix(in srgb, var(--off) 35%, transparent);
+  }
+  .block.unassigned .task-chip { background: color-mix(in srgb, var(--off) 22%, transparent); color: var(--off); }
+  .block.unassigned .flt { color: var(--off); }
+  .block.covered {
+    outline: 1.5px solid rgba(255,255,255,0.6);
+    outline-offset: -3px;
+  }
+  .block .cov-badge {
+    font-family: ui-monospace, monospace; font-size: 8.5px; font-weight: 800;
+    letter-spacing: 0.08em;
+    padding: 1px 4px; border-radius: 2px;
+    background: rgba(255,255,255,0.92); color: #0E1620;
+    flex-shrink: 0;
+  }
+
+  /* ── Side panel (insights / detail) ─────────────── */
+  .side {
+    display: flex; flex-direction: column;
+    background: var(--surface);
+    border-left: 1px solid var(--border-strong);
+    box-shadow: -8px 0 24px -18px rgba(0,0,0,0.35);
+    overflow: hidden; min-height: 0;
+    transition: transform 220ms cubic-bezier(.4,0,.2,1), opacity 180ms;
+  }
+  .side-head {
+    display: flex; align-items: center; gap: 10px;
+    padding: 14px 16px; border-bottom: 1px solid var(--border);
+    background: var(--surface);
+  }
+  .side-head .warn-dot {
+    width: 8px; height: 8px; border-radius: 50%;
+    background: var(--off);
+    box-shadow: 0 0 0 3px color-mix(in srgb, var(--off) 25%, transparent);
+  }
+  .side-head h2 {
+    margin: 0; font-size: 13px; font-weight: 600; letter-spacing: -0.005em;
+  }
+  .side-head .sub { color: var(--ink-3); font-size: 11.5px; margin-left: auto; }
+  .side-head .close, .side-head .back {
+    background: transparent; border: 1px solid var(--border-strong);
+    color: var(--ink-3); font: inherit; padding: 3px 8px;
+    border-radius: 3px; cursor: pointer;
+    font-family: ui-monospace, monospace; font-size: 10.5px; letter-spacing: 0.1em; text-transform: uppercase;
+  }
+  .side-head .close:hover, .side-head .back:hover { color: var(--ink); border-color: var(--ink-2); }
+
+  .side-body { flex: 1; min-height: 0; overflow-y: auto; padding: 14px 16px; }
+
+  .area-card {
+    background: var(--surface-2);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 12px 14px;
+    margin-bottom: 12px;
+  }
+  .area-card.warn { border-color: color-mix(in srgb, var(--off) 45%, var(--border)); }
+  .area-card.calm { opacity: 0.75; }
+  .area-card .area-head {
+    display: flex; align-items: center; gap: 8px; margin-bottom: 8px;
+  }
+  .area-card .area-code {
+    font-family: ui-monospace, monospace; font-size: 10.5px; font-weight: 800;
+    letter-spacing: 0.14em; padding: 3px 7px; border-radius: 3px;
+    color: white;
+  }
+  .area-card[data-team="dr"]  .area-code { background: var(--dr); }
+  .area-card[data-team="rmp"] .area-code { background: var(--rmp); }
+  .area-card[data-team="cln"] .area-code { background: var(--cln); }
+  .area-card .area-title { font-size: 12.5px; font-weight: 600; }
+  .area-card .area-count { margin-left: auto; font-family: ui-monospace, monospace; font-size: 12px; }
+  .area-card.warn .area-count { color: var(--off); font-weight: 700; }
+  .area-card.calm .area-count { color: var(--ink-3); }
+  .area-card .empty {
+    font-size: 12px; color: var(--ink-3); font-style: italic;
+  }
+  .gap-list { display: flex; flex-direction: column; gap: 6px; }
+  .gap-item {
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    align-items: center; gap: 8px;
+    padding: 8px 10px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    cursor: pointer;
+    transition: border-color 120ms, background 120ms;
+  }
+  .gap-item:hover { border-color: var(--off); background: color-mix(in srgb, var(--off) 5%, var(--surface)); }
+  .gap-item.selected { border-color: var(--off); background: color-mix(in srgb, var(--off) 8%, var(--surface)); }
+  .gap-item .flt-lbl { font-family: ui-monospace, monospace; font-size: 12px; font-weight: 700; }
+  .gap-item .meta { font-size: 11px; color: var(--ink-3); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .gap-item .go { font-family: ui-monospace, monospace; font-size: 10px; color: var(--off); letter-spacing: 0.1em; }
+
+  /* Detail view */
+  .detail-hdr { padding-bottom: 10px; border-bottom: 1px solid var(--border); margin-bottom: 12px; }
+  .detail-hdr .flt-big {
+    font-family: ui-monospace, monospace; font-size: 22px; font-weight: 700; letter-spacing: -0.01em;
+    margin: 4px 0;
+  }
+  .detail-hdr .flt-meta { color: var(--ink-3); font-size: 12px; display: flex; gap: 10px; align-items: center; flex-wrap: wrap; }
+  .detail-hdr .flt-meta .sep { color: var(--border-strong); }
+  .req-line {
+    display: flex; align-items: center; gap: 8px;
+    padding: 10px 12px; border-radius: 4px;
+    background: color-mix(in srgb, var(--off) 8%, var(--surface-2));
+    border: 1px solid color-mix(in srgb, var(--off) 25%, var(--border));
+    margin-bottom: 14px;
+    font-size: 12px;
+  }
+  .req-line .who { font-weight: 600; }
+  .req-line .rule { color: var(--ink-2); }
+
+  .cand-head {
+    font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase;
+    color: var(--ink-3); font-weight: 700; margin-bottom: 6px;
+    display: flex; align-items: baseline; gap: 8px;
+  }
+  .cand-head .n { font-family: ui-monospace, monospace; color: var(--ink); font-size: 11px; }
+  .cand-list { display: flex; flex-direction: column; gap: 4px; }
+  .cand {
+    display: grid;
+    grid-template-columns: 44px 1fr auto auto;
+    align-items: center; gap: 8px;
+    padding: 8px 10px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    font-size: 12.5px;
+  }
+  .cand .nm { font-weight: 500; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .cand .avail {
+    font-family: ui-monospace, monospace;
+    font-size: 9.5px; letter-spacing: 0.1em; font-weight: 700;
+    padding: 2px 6px; border-radius: 3px;
+  }
+  .cand .avail.free { color: #1F8E80; background: color-mix(in srgb, var(--dr) 12%, transparent); }
+  .cand .avail.ot   { color: var(--ot);  background: color-mix(in srgb, var(--ot) 15%, transparent); }
+  .cand button.assign {
+    background: var(--ink); color: var(--surface);
+    border: 0; font: inherit; padding: 5px 10px; border-radius: 3px;
+    cursor: pointer;
+    font-family: ui-monospace, monospace; font-size: 10.5px; letter-spacing: 0.08em; text-transform: uppercase;
+    font-weight: 700;
+  }
+  .cand button.assign:hover { background: var(--now); color: #1a0f00; }
+  .cand.busy {
+    opacity: 0.45;
+  }
+  .cand.busy button.assign { display: none; }
+  .cand.busy .avail { color: var(--ink-3); background: transparent; border: 1px dashed var(--border-strong); }
+
+  /* Insights button in topbar */
+  .insights-btn {
+    display: flex; align-items: center; gap: 8px;
+    background: transparent; border: 1px solid var(--border-strong);
+    color: var(--ink-2); font: inherit; padding: 6px 10px;
+    border-radius: 4px; cursor: pointer;
+    font-family: ui-sans-serif, system-ui, sans-serif; font-size: 12px;
+  }
+  .insights-btn:hover { color: var(--ink); border-color: var(--ink-2); }
+  .insights-btn .badge {
+    font-family: ui-monospace, monospace; font-size: 10.5px; font-weight: 700;
+    padding: 1px 6px; border-radius: 8px;
+    background: var(--off); color: white;
+  }
+  .insights-btn .badge.zero { background: var(--border-strong); color: var(--ink-3); }
+
+  /* Toast */
+  .toast {
+    position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%) translateY(10px);
+    background: var(--ink); color: var(--surface);
+    padding: 10px 16px; border-radius: 6px;
+    font-size: 12.5px;
+    box-shadow: 0 12px 32px -8px rgba(0,0,0,0.4);
+    opacity: 0; pointer-events: none;
+    transition: opacity 180ms, transform 180ms;
+    z-index: 100;
+  }
+  .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+  .toast .flt { font-family: ui-monospace, monospace; font-weight: 700; color: var(--now); }
 
   /* Now line */
   .now-line {
@@ -471,24 +711,28 @@
       <span class="time mono" id="clock-time">—</span>
       <span class="date mono" id="clock-date">—</span>
     </div>
+    <button class="insights-btn" id="insights-btn" type="button" title="Toggle insights panel">
+      <span>Insights</span>
+      <span class="badge" id="insights-badge">0</span>
+    </button>
   </header>
 
   <nav class="tabs" role="tablist" id="tabs">
     <button class="tab active" role="tab" data-team="dr">
       <span class="label" style="color:var(--dr)">DR · Drivers</span>
-      <span class="name">Rakesh Pawar <span class="count">· 20 crew</span></span>
+      <span class="name">Rakesh Pawar <span class="count">· 20 crew</span> <span class="alert-badge zero" data-alert="dr">0</span></span>
     </button>
     <button class="tab" role="tab" data-team="rmp">
       <span class="label" style="color:var(--rmp)">RMP · Ramp Pickers</span>
-      <span class="name">Vinod Sawant <span class="count">· 20 crew</span></span>
+      <span class="name">Vinod Sawant <span class="count">· 20 crew</span> <span class="alert-badge zero" data-alert="rmp">0</span></span>
     </button>
     <button class="tab" role="tab" data-team="cln">
       <span class="label" style="color:var(--cln)">CLN · Cleaning Crew</span>
-      <span class="name">Sunita D'Souza <span class="count">· 20 crew</span></span>
+      <span class="name">Sunita D'Souza <span class="count">· 20 crew</span> <span class="alert-badge zero" data-alert="cln">0</span></span>
     </button>
     <button class="tab" role="tab" data-team="all">
       <span class="label">ADMIN · Combined View</span>
-      <span class="name">All teams <span class="count">· 60 crew</span></span>
+      <span class="name">All teams <span class="count">· 60 crew</span> <span class="alert-badge zero" data-alert="all">0</span></span>
     </button>
   </nav>
 
@@ -553,7 +797,13 @@
         </div>
       </div>
     </section>
+
+    <aside class="side" id="side">
+      <!-- content injected by JS -->
+    </aside>
   </div>
+
+  <div class="toast" id="toast"></div>
 
   <footer class="statusbar">
     <span><strong>60</strong> crew rostered</span>
@@ -647,46 +897,50 @@
     return () => { x = (x * 9301 + 49297) % 233280; return x / 233280; };
   }
 
+  const WORK_MIN = 90;   // 1.5h work
+  const BRK_MIN  = 30;   // 30 min break at end of each task
+  let TASK_UID = 0;
+
   // ── Build one employee's day ────────────────────────
-  // Rules: 3 or 4 tasks × 2h + a 2h OT slot appended. Everything must end ≤ 01:00.
+  // Rules: 3 or 4 tasks × 2h (1.5h work + 30 min break) + 2h OT slot. Ends ≤ 01:00.
   function buildShifts(team, homeRole, i) {
     const r = seedRand(team.charCodeAt(0)*31 + team.charCodeAt(1)*17 + homeRole.charCodeAt(2) + i*13 + 7);
 
-    // 5% full leave
     if (r() < 0.05) return [{ kind:'off', s: 0, e: TOTAL_MIN, label: 'ON LEAVE' }];
-    // 7% standby (on-call, 8h block)
     if (r() < 0.075) {
       const maxSt = TOTAL_MIN - 480;
       const s = Math.floor(r() * maxSt / 30) * 30;
       return [{ kind:'standby', s, e: s + 480, label: 'STANDBY · ON-CALL' }];
     }
 
-    const numTasks = r() < 0.55 ? 4 : 3; // ~55% do 4 tasks, ~45% do 3
-    const totalLen = (numTasks + 1) * TASK_MIN; // tasks + OT slot
-    const latestStart = TOTAL_MIN - totalLen; // must end by 01:00
+    const numTasks = r() < 0.55 ? 4 : 3;
+    const totalLen = (numTasks + 1) * TASK_MIN;
+    const latestStart = TOTAL_MIN - totalLen;
 
-    // 30-min aligned, bias earlier starts for daytime density
     const bias = Math.pow(r(), 1.15);
     const startMin = Math.floor(bias * latestStart / 30) * 30;
 
     const allowed = ALLOWED[homeRole];
-    // Pick distinct flights for this shift
     const flightPool = FLIGHTS.slice().sort(() => r() - 0.5);
     const tasks = [];
 
     for (let k = 0; k < numTasks; k++) {
       const idx = Math.min(allowed.length - 1, Math.floor(r() * allowed.length));
       const type = allowed[idx];
+      const s = startMin + k * TASK_MIN;
       tasks.push({
+        id: 't' + (++TASK_UID),
         kind: 'task',
         type,
         flight: flightPool[k % flightPool.length],
-        s: startMin + k * TASK_MIN,
-        e: startMin + (k + 1) * TASK_MIN,
+        s, e: s + TASK_MIN,
+        workE: s + WORK_MIN,       // work portion ends
+        brkS:  s + WORK_MIN,       // 30-min break starts
+        brkE:  s + TASK_MIN,
       });
     }
-    // Always append the 2h OT slot (available capacity)
     tasks.push({
+      id: 't' + (++TASK_UID),
       kind: 'ot-slot',
       s: startMin + numTasks * TASK_MIN,
       e: startMin + (numTasks + 1) * TASK_MIN,
@@ -711,6 +965,28 @@
     rmp: makeRoster('rmp', namesRMP),
     cln: makeRoster('cln', namesCLN),
   };
+
+  // ── App state ───────────────────────────────────────
+  // Employees marked sick after roster was published.
+  const sick = new Set();
+  // Coverage assignments: taskId → { coverEid, coverBrkOverride }
+  const coverage = new Map();
+  let currentTeam = 'dr';
+  let selectedTaskId = null;   // when viewing a task detail
+
+  // Pre-seed 3 sick cases for the demo, one per team
+  function preSeedSick() {
+    // Find one DRB, one BBA, one CLN to mark sick
+    const drb = rosters.dr.find(e => e.home === 'DRB' && e.shifts[0].kind === 'task');
+    const bba = rosters.rmp.find(e => e.home === 'BBA' && e.shifts[0].kind === 'task');
+    const cln = rosters.cln.find(e => e.home === 'CLN' && e.shifts[0].kind === 'task');
+    [drb, bba, cln].forEach(e => e && sick.add(e.eid));
+  }
+  preSeedSick();
+
+  // Flatten helper: find employee by eid
+  const empByEid = new Map();
+  ['dr','rmp','cln'].forEach(t => rosters[t].forEach(e => empByEid.set(e.eid, e)));
 
   // ── Time helpers ────────────────────────────────────
   function nowMinutes() {
@@ -767,6 +1043,74 @@
   laneInner.style.width = LANE_W + 'px';
   gridOverlay.style.width = LANE_W + 'px';
 
+  function renderBlock(sh, emp, y, isSick) {
+    const b = document.createElement('div');
+    const left = xFor(sh.s);
+    const width = xFor(sh.e) - left;
+    b.style.left = left + 'px';
+    b.style.width = width + 'px';
+    b.style.top  = (y + 7) + 'px';
+
+    if (sh.kind === 'off') {
+      b.className = 'block off';
+      b.innerHTML = `<span>${sh.label}</span>`;
+    } else if (sh.kind === 'standby') {
+      b.className = 'block standby';
+      b.innerHTML = `<span>${sh.label}</span><span class="tm mono">${fmt24(sh.s)}–${fmt24(sh.e)}</span>`;
+    } else if (sh.kind === 'ot-slot') {
+      // If used as coverage, render as solid task with COV badge
+      const cov = [...coverage.values()].find(c => c.coverEid === emp.eid && c.slotId === sh.id);
+      if (cov) {
+        b.className = 'block covered';
+        b.dataset.t = cov.type;
+        b.title = `Covering ${cov.flight} (was ${cov.sickName})  •  ${fmt24(sh.s)}–${fmt24(sh.e)}  •  Overtime`;
+        b.innerHTML = `
+          <span class="task-chip">${cov.type}</span>
+          <span class="flt">${cov.flight}</span>
+          <span class="cov-badge">OT COV</span>
+          <span class="tm mono">${fmt24(sh.s)}–${fmt24(sh.e)}</span>
+        `;
+      } else {
+        b.className = 'block ot-slot';
+        b.title = `Overtime slot available · ${fmt24(sh.s)}–${fmt24(sh.e)}`;
+        b.innerHTML = `<span class="plus">+</span><span>2h OT slot</span><span class="tm mono">${fmt24(sh.s)}–${fmt24(sh.e)}</span>`;
+      }
+    } else {
+      // task
+      if (isSick) {
+        const cov = coverage.get(sh.id);
+        if (cov) {
+          // Task is covered — show muted state on sick row
+          b.className = 'block off';
+          b.style.opacity = '0.5';
+          b.innerHTML = `<span>Covered by ${cov.coverName.split(' ')[0]}</span>`;
+        } else {
+          b.className = 'block unassigned' + (selectedTaskId === sh.id ? ' selected' : '');
+          b.dataset.taskId = sh.id;
+          b.dataset.eid = emp.eid;
+          b.title = `UNASSIGNED · Click to reassign  •  ${sh.flight}  •  ${fmt24(sh.s)}–${fmt24(sh.workE)} + break to ${fmt24(sh.brkE)}`;
+          b.innerHTML = `
+            <span class="task-chip">${sh.type}</span>
+            <span class="flt">${sh.flight}</span>
+            <span class="tm mono">${fmt24(sh.s)}–${fmt24(sh.e)}</span>
+          `;
+        }
+      } else {
+        b.className = 'block';
+        b.dataset.t = sh.type;
+        b.title = `${sh.type} · Flight ${sh.flight}  •  Work ${fmt24(sh.s)}–${fmt24(sh.workE)}  •  Break ${fmt24(sh.brkS)}–${fmt24(sh.brkE)}`;
+        b.innerHTML = `
+          <span class="task-chip">${sh.type}</span>
+          <span class="flt">${sh.flight}</span>
+          <span class="tm mono">${fmt24(sh.s)}–${fmt24(sh.e)}</span>
+          <span class="brk-notch"></span>
+        `;
+      }
+    }
+    rowsEl.appendChild(b);
+    return b;
+  }
+
   function render(team) {
     railScroll.innerHTML = '';
     rowsEl.innerHTML = '';
@@ -788,19 +1132,27 @@
         y += 22;
       }
       rosters[t].forEach((emp, i) => {
-        const state = emp.shifts[0] && (emp.shifts[0].kind === 'off' ? 'leave'
+        const isSick = sick.has(emp.eid);
+        const baseState = emp.shifts[0] && (emp.shifts[0].kind === 'off' ? 'leave'
                     : emp.shifts[0].kind === 'standby' ? 'standby' : '');
+        const state = isSick ? 'sick' : baseState;
+
         const rr = document.createElement('div');
         rr.className = 'rail-row' + (state ? ' ' + state : '');
-        const badge = state === 'leave'
+        const badge = state === 'sick'
+          ? `<span class="status sick">SICK</span>`
+          : state === 'leave'
           ? `<span class="status leave">LEAVE</span>`
           : state === 'standby'
           ? `<span class="status standby">STBY</span>`
           : '';
+        const sickBtn = (baseState ? '' :
+          `<button class="sick-btn" data-eid="${emp.eid}" type="button">${isSick ? 'Restore' : 'Mark sick'}</button>`);
         rr.innerHTML = `
           <span class="eid mono">${emp.eid}</span>
           <span class="nm" title="${emp.name}">${emp.name}${badge}</span>
           <span class="role"><span class="chip ${emp.home}">${emp.home}</span></span>
+          ${sickBtn}
         `;
         railScroll.appendChild(rr);
 
@@ -810,34 +1162,7 @@
         rowsEl.appendChild(rowBg);
 
         emp.shifts.forEach(sh => {
-          const b = document.createElement('div');
-          const left = xFor(sh.s);
-          const width = xFor(sh.e) - left;
-          b.style.left = left + 'px';
-          b.style.width = width + 'px';
-          b.style.top  = (y + 7) + 'px';
-
-          if (sh.kind === 'off') {
-            b.className = 'block off';
-            b.innerHTML = `<span>${sh.label}</span>`;
-          } else if (sh.kind === 'standby') {
-            b.className = 'block standby';
-            b.innerHTML = `<span>${sh.label}</span><span class="tm mono">${fmt24(sh.s)}–${fmt24(sh.e)}</span>`;
-          } else if (sh.kind === 'ot-slot') {
-            b.className = 'block ot-slot';
-            b.title = `Overtime slot available · ${fmt24(sh.s)}–${fmt24(sh.e)}`;
-            b.innerHTML = `<span class="plus">+</span><span>2h OT slot</span><span class="tm mono">${fmt24(sh.s)}–${fmt24(sh.e)}</span>`;
-          } else {
-            b.className = 'block';
-            b.dataset.t = sh.type;
-            b.title = `${sh.type} · Flight ${sh.flight}  •  ${fmt24(sh.s)}–${fmt24(sh.e)}`;
-            b.innerHTML = `
-              <span class="task-chip">${sh.type}</span>
-              <span class="flt">${sh.flight}</span>
-              <span class="tm mono">${fmt24(sh.s)}–${fmt24(sh.e)}</span>
-            `;
-          }
-          rowsEl.appendChild(b);
+          renderBlock(sh, emp, y, isSick);
         });
         y += ROW_H;
       });
@@ -909,13 +1234,353 @@
   tabs.forEach(t => t.addEventListener('click', () => {
     tabs.forEach(x => x.classList.remove('active'));
     t.classList.add('active');
-    const team = t.dataset.team;
+    currentTeam = t.dataset.team;
     document.getElementById('sup-name').textContent =
-      team === 'all' ? 'Admin — all supervisors' : teamMeta[team].sup;
+      currentTeam === 'all' ? 'Admin — all supervisors' : teamMeta[currentTeam].sup;
     railBody.scrollTop = 0;
-    render(team);
+    render(currentTeam);
     requestAnimationFrame(placeNow);
+    renderSidePanel();
   }));
+
+  // ── Sick toggle (event delegation on rail) ──────────
+  railScroll.addEventListener('click', (e) => {
+    const btn = e.target.closest('.sick-btn');
+    if (!btn) return;
+    const eid = btn.dataset.eid;
+    if (sick.has(eid)) {
+      sick.delete(eid);
+      // Clear any coverages tied to their tasks
+      const emp = empByEid.get(eid);
+      emp.shifts.forEach(sh => { if (coverage.has(sh.id)) coverage.delete(sh.id); });
+    } else {
+      sick.add(eid);
+    }
+    selectedTaskId = null;
+    render(currentTeam);
+    renderSidePanel();
+    updateTabBadges();
+  });
+
+  // ── Click unassigned block in the schedule ─────────
+  rowsEl.addEventListener('click', (e) => {
+    const el = e.target.closest('.block.unassigned');
+    if (!el) return;
+    const taskId = el.dataset.taskId;
+    const eid = el.dataset.eid;
+    openTaskDetail(taskId, eid);
+  });
+
+  // ── Insights toggle button ──────────────────────────
+  const board = document.querySelector('.board');
+  document.getElementById('insights-btn').addEventListener('click', () => {
+    board.classList.toggle('side-closed');
+  });
+
+  // ── Insights + detail panel ─────────────────────────
+  const sideEl = document.getElementById('side');
+
+  function unassignedTasksFor(team) {
+    // Returns [{ emp, task }] for tasks belonging to sick employees, not yet covered
+    const out = [];
+    const teams = team === 'all' ? ['dr','rmp','cln'] : [team];
+    teams.forEach(t => rosters[t].forEach(emp => {
+      if (!sick.has(emp.eid)) return;
+      emp.shifts.forEach(sh => {
+        if (sh.kind !== 'task') return;
+        if (coverage.has(sh.id)) return;
+        out.push({ emp, task: sh });
+      });
+    }));
+    return out;
+  }
+
+  function countUnassigned(team) { return unassignedTasksFor(team).length; }
+
+  function updateTabBadges() {
+    ['dr','rmp','cln','all'].forEach(team => {
+      const el = document.querySelector(`[data-alert="${team}"]`);
+      const n = countUnassigned(team);
+      el.textContent = n;
+      el.classList.toggle('zero', n === 0);
+    });
+    const total = countUnassigned('all');
+    const badge = document.getElementById('insights-badge');
+    badge.textContent = total;
+    badge.classList.toggle('zero', total === 0);
+  }
+
+  // Rank order for driver seniority (index 0 = most senior)
+  const DR_RANK_ORDER = ['DRA','DRB','DRC','DRD'];
+  // Coverage rule: peers and juniors of the sick person's rank (drivers).
+  // Ramp and cleaning are interchangeable — same category, any rank.
+  function coverageEligible(sickHome, candHome) {
+    if (sickHome.startsWith('DR')) {
+      const sickIdx = DR_RANK_ORDER.indexOf(sickHome);
+      const candIdx = DR_RANK_ORDER.indexOf(candHome);
+      if (candIdx < 0) return false;
+      return candIdx >= sickIdx;   // peer or junior
+    }
+    // Ramp: RMP/BBA/BMA interchangeable
+    if (['RMP','BBA','BMA'].includes(sickHome)) return ['RMP','BBA','BMA'].includes(candHome);
+    // Cleaning: CLN/CLC interchangeable
+    if (['CLN','CLC'].includes(sickHome)) return ['CLN','CLC'].includes(candHome);
+    return false;
+  }
+
+  // Return availability of an employee at [s,e]:
+  // 'busy' | 'free' | 'ot' | 'brk'
+  // Also returns the ot-slot id if the assignment would consume an OT slot.
+  function availabilityAt(emp, s, e) {
+    if (sick.has(emp.eid)) return { kind: 'busy' };
+    // Check hard blocks (off, standby)
+    if (emp.shifts[0] && (emp.shifts[0].kind === 'off' || emp.shifts[0].kind === 'standby')) {
+      return { kind: 'busy' };
+    }
+    let brkHit = false;
+    let otSlotId = null;
+    for (const sh of emp.shifts) {
+      if (sh.e <= s || sh.s >= e) continue;
+      // overlap
+      if (sh.kind === 'task') {
+        // Check if only overlap is with the break tail
+        const workStart = sh.s, workEnd = sh.workE;
+        const overlapWork = !(workEnd <= s || workStart >= e);
+        if (overlapWork) return { kind: 'busy' };
+        // else overlaps only the break window
+        brkHit = true;
+      } else if (sh.kind === 'ot-slot') {
+        // If already covering another sick task in this slot, it's used
+        const used = [...coverage.values()].some(c => c.coverEid === emp.eid && c.slotId === sh.id);
+        if (used) return { kind: 'busy' };
+        // OT slot matches (must fully contain the sick task)
+        if (sh.s <= s && sh.e >= e) otSlotId = sh.id;
+      }
+    }
+    if (otSlotId) return { kind: 'ot', otSlotId };
+    if (brkHit) return { kind: 'brk' };
+    return { kind: 'free' };
+  }
+
+  function findCandidates(sickEmp, task) {
+    const teamMembers = rosters[sickEmp.team];
+    const results = [];
+    teamMembers.forEach(cand => {
+      if (cand.eid === sickEmp.eid) return;
+      if (!coverageEligible(sickEmp.home, cand.home)) return;
+      const av = availabilityAt(cand, task.s, task.e);
+      if (av.kind === 'busy') return;
+      results.push({ cand, availability: av });
+    });
+    // Sort: free > ot > brk; then by rank (senior first? or junior first?)
+    // Business preference: send juniors before pulling anyone off a break.
+    // Order: FREE (junior→senior), OT (junior→senior), BRK (junior→senior)
+    const rankIdx = h => DR_RANK_ORDER.includes(h) ? DR_RANK_ORDER.indexOf(h) : 0;
+    const kindOrder = { free: 0, ot: 1, brk: 2 };
+    results.sort((a, b) => {
+      const k = kindOrder[a.availability.kind] - kindOrder[b.availability.kind];
+      if (k) return k;
+      return rankIdx(b.cand.home) - rankIdx(a.cand.home); // junior first
+    });
+    return results;
+  }
+
+  function openTaskDetail(taskId, sickEid) {
+    selectedTaskId = taskId;
+    board.classList.remove('side-closed');
+    render(currentTeam);
+    renderSidePanel();
+  }
+  function backToInsights() {
+    selectedTaskId = null;
+    render(currentTeam);
+    renderSidePanel();
+  }
+
+  function renderSidePanel() {
+    if (selectedTaskId) return renderDetail();
+    return renderInsights();
+  }
+
+  function renderInsights() {
+    const teamsShown = currentTeam === 'all' ? ['dr','rmp','cln'] : [currentTeam];
+    const total = countUnassigned(currentTeam);
+    let html = `
+      <div class="side-head">
+        ${total > 0 ? '<span class="warn-dot"></span>' : ''}
+        <h2>Insights</h2>
+        <span class="sub">${total} unassigned</span>
+        <button class="close" id="side-close" type="button">Hide</button>
+      </div>
+      <div class="side-body">
+    `;
+    teamsShown.forEach(t => {
+      const gaps = unassignedTasksFor(t);
+      const warn = gaps.length > 0;
+      html += `
+        <div class="area-card ${warn ? 'warn' : 'calm'}" data-team="${t}">
+          <div class="area-head">
+            <span class="area-code">${teamMeta[t].code}</span>
+            <span class="area-title">${teamMeta[t].label}</span>
+            <span class="area-count">${gaps.length} unassigned</span>
+          </div>
+      `;
+      if (gaps.length === 0) {
+        html += `<div class="empty">All tasks covered.</div>`;
+      } else {
+        // Group by sick person
+        const byEmp = new Map();
+        gaps.forEach(g => {
+          if (!byEmp.has(g.emp.eid)) byEmp.set(g.emp.eid, { emp: g.emp, tasks: [] });
+          byEmp.get(g.emp.eid).tasks.push(g.task);
+        });
+        byEmp.forEach(group => {
+          html += `<div style="font-size:11px;color:var(--ink-3);margin:8px 0 4px;">
+            <span class="chip ${group.emp.home}" style="margin-right:6px">${group.emp.home}</span>
+            ${group.emp.name} — sick · <span class="mono">${group.emp.eid}</span>
+          </div><div class="gap-list">`;
+          group.tasks.forEach(task => {
+            html += `
+              <div class="gap-item" data-task-id="${task.id}" data-eid="${group.emp.eid}">
+                <span class="chip ${task.type}">${task.type}</span>
+                <span>
+                  <div class="flt-lbl">${task.flight}</div>
+                  <div class="meta mono">${fmt24(task.s)}–${fmt24(task.e)}</div>
+                </span>
+                <span class="go">REASSIGN →</span>
+              </div>
+            `;
+          });
+          html += `</div>`;
+        });
+      }
+      html += `</div>`;
+    });
+    html += `</div>`;
+    sideEl.innerHTML = html;
+
+    document.getElementById('side-close').addEventListener('click', () => {
+      board.classList.add('side-closed');
+    });
+    sideEl.querySelectorAll('.gap-item').forEach(el => {
+      el.addEventListener('click', () => openTaskDetail(el.dataset.taskId, el.dataset.eid));
+    });
+    updateTabBadges();
+  }
+
+  function renderDetail() {
+    // Find task
+    let sickEmp = null, task = null;
+    for (const eid of sick) {
+      const emp = empByEid.get(eid);
+      const t = emp.shifts.find(x => x.id === selectedTaskId);
+      if (t) { sickEmp = emp; task = t; break; }
+    }
+    if (!task) { selectedTaskId = null; return renderInsights(); }
+
+    const cands = findCandidates(sickEmp, task);
+    const nFree = cands.filter(c => c.availability.kind === 'free').length;
+    const nOt   = cands.filter(c => c.availability.kind === 'ot').length;
+    const nBrk  = cands.filter(c => c.availability.kind === 'brk').length;
+
+    const ruleText = sickEmp.home.startsWith('DR')
+      ? `Only ${sickEmp.home}, ${DR_RANK_ORDER.slice(DR_RANK_ORDER.indexOf(sickEmp.home)+1).join(', ') || '—'} shown (peers & juniors — no seniors pulled down)`
+      : sickEmp.home.startsWith('DR') ? '' :
+        (['RMP','BBA','BMA'].includes(sickEmp.home) ? 'All ramp ranks (RMP, BBA, BMA) interchangeable'
+        : 'All cleaning ranks (CLN, CLC) interchangeable');
+
+    let html = `
+      <div class="side-head">
+        <button class="back" id="side-back" type="button">← Insights</button>
+        <h2>Reassign task</h2>
+        <button class="close" id="side-close" type="button">Hide</button>
+      </div>
+      <div class="side-body">
+        <div class="detail-hdr">
+          <div style="display:flex;align-items:center;gap:8px;">
+            <span class="chip ${task.type}">${task.type}</span>
+            <span style="font-size:11px;color:var(--ink-3);letter-spacing:0.14em;text-transform:uppercase;font-weight:700;">Flight</span>
+          </div>
+          <div class="flt-big">${task.flight}</div>
+          <div class="flt-meta">
+            <span class="mono">${fmt24(task.s)}–${fmt24(task.workE)}</span>
+            <span>work</span>
+            <span class="sep">|</span>
+            <span class="mono">${fmt24(task.brkS)}–${fmt24(task.brkE)}</span>
+            <span>break</span>
+          </div>
+        </div>
+        <div class="req-line">
+          <span class="who">${sickEmp.name}</span>
+          <span class="chip ${sickEmp.home}">${sickEmp.home}</span>
+          <span class="rule">is out — ${ruleText}</span>
+        </div>
+
+        <div class="cand-head">Free at this slot <span class="n mono">${nFree}</span></div>
+        <div class="cand-list">${renderCandList(cands.filter(c => c.availability.kind === 'free'), task)}</div>
+
+        <div class="cand-head" style="margin-top:14px">OT capacity available <span class="n mono">${nOt}</span></div>
+        <div class="cand-list">${renderCandList(cands.filter(c => c.availability.kind === 'ot'), task)}</div>
+
+        <div class="cand-head" style="margin-top:14px">Break override <span class="n mono">${nBrk}</span></div>
+        <div class="cand-list">${renderCandList(cands.filter(c => c.availability.kind === 'brk'), task)}</div>
+      </div>
+    `;
+    sideEl.innerHTML = html;
+
+    document.getElementById('side-close').addEventListener('click', () => board.classList.add('side-closed'));
+    document.getElementById('side-back').addEventListener('click', backToInsights);
+    sideEl.querySelectorAll('button.assign').forEach(btn => {
+      btn.addEventListener('click', () => assignCoverage(task, sickEmp, btn.dataset.candEid));
+    });
+    updateTabBadges();
+  }
+
+  function renderCandList(list, task) {
+    if (!list.length) return `<div class="empty" style="font-size:11.5px;padding:6px 2px;">— none —</div>`;
+    return list.map(({cand, availability}) => {
+      const av = availability.kind;
+      const label = av === 'free' ? 'FREE' : av === 'ot' ? 'OT AVAIL' : 'BRK OVERRIDE';
+      return `
+        <div class="cand">
+          <span class="chip ${cand.home}">${cand.home}</span>
+          <span class="nm" title="${cand.name}">${cand.name}</span>
+          <span class="avail ${av}">${label}</span>
+          <button class="assign" data-cand-eid="${cand.eid}" type="button">Assign</button>
+        </div>
+      `;
+    }).join('');
+  }
+
+  function assignCoverage(task, sickEmp, candEid) {
+    const cand = empByEid.get(candEid);
+    const av = availabilityAt(cand, task.s, task.e);
+    coverage.set(task.id, {
+      taskId: task.id,
+      slotId: av.otSlotId || null,
+      coverEid: cand.eid,
+      coverName: cand.name,
+      type: task.type,
+      flight: task.flight,
+      sickEid: sickEmp.eid,
+      sickName: sickEmp.name,
+      viaBreak: av.kind === 'brk',
+    });
+    const via = av.kind === 'ot' ? 'OT slot' : av.kind === 'brk' ? 'break override' : 'free slot';
+    showToast(`Assigned <span class="flt">${task.flight}</span> · ${task.type} → ${cand.name} <span style="opacity:0.6">(${via})</span>`);
+    selectedTaskId = null;
+    render(currentTeam);
+    renderSidePanel();
+  }
+
+  const toastEl = document.getElementById('toast');
+  let toastT;
+  function showToast(html) {
+    toastEl.innerHTML = html;
+    toastEl.classList.add('show');
+    clearTimeout(toastT);
+    toastT = setTimeout(() => toastEl.classList.remove('show'), 3200);
+  }
 
   // ── Live clock ──────────────────────────────────────
   function tickClock() {
@@ -937,6 +1602,8 @@
   });
 
   render('dr');
+  renderSidePanel();
+  updateTabBadges();
   requestAnimationFrame(placeNow);
 })();
 </script>
