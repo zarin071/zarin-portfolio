@@ -40,9 +40,9 @@
     --shadow: 0 1px 0 rgba(14,22,32,0.04), 0 12px 32px -18px rgba(14,22,32,0.20);
 
     --hour-w: 132px;
-    --row-h: 46px;
+    --row-h: 38px;
     --rail-w: 300px;
-    --header-h: 52px;
+    --header-h: 40px;
   }
 
   :root:not([data-theme="light"]) {
@@ -119,7 +119,7 @@
     --shadow: 0 1px 0 rgba(0,0,0,0.4), 0 20px 48px -20px rgba(0,0,0,0.6);
   }
 
-  html, body { height: 100%; }
+  html, body { height: 100%; overflow: hidden; }
   body {
     margin: 0;
     font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
@@ -132,12 +132,16 @@
 
   .mono { font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace; font-variant-numeric: tabular-nums; }
 
-  .app { display: flex; flex-direction: column; height: 100vh; max-height: 100vh; }
+  .app { display: flex; flex-direction: column; height: 100vh; max-height: 100vh; overflow: hidden; }
+
+  /* Header + footer stay pinned; only the board scrolls internally */
+  .topbar, .tabs, .toolbar, .ranks, .index-bar, .index-info { flex-shrink: 0; }
+  .statusbar { flex-shrink: 0; }
 
   /* ── Top command bar ─────────────────────────────── */
   .topbar {
-    display: flex; align-items: center; gap: 24px;
-    padding: 14px 22px;
+    display: flex; align-items: center; gap: 20px;
+    padding: 8px 20px;
     background: var(--surface); border-bottom: 1px solid var(--border);
   }
   .brand { display: flex; align-items: baseline; gap: 10px; }
@@ -171,8 +175,8 @@
     background: var(--surface); border-bottom: 1px solid var(--border);
   }
   .tab {
-    display: flex; flex-direction: column; gap: 4px;
-    padding: 12px 20px 14px;
+    display: flex; flex-direction: column; gap: 2px;
+    padding: 8px 18px 10px;
     background: transparent; border: 0;
     border-bottom: 2px solid transparent;
     color: var(--ink-3); cursor: pointer; font: inherit; text-align: left;
@@ -202,8 +206,8 @@
 
   /* ── Index bar (clickable legend of block types) ─── */
   .index-bar {
-    display: flex; align-items: center; gap: 8px;
-    padding: 8px 22px;
+    display: flex; align-items: center; gap: 6px;
+    padding: 5px 20px;
     background: var(--surface);
     border-bottom: 1px solid var(--border);
     overflow-x: auto;
@@ -279,7 +283,7 @@
   /* ── Toolbar ─────────────────────────────────────── */
   .toolbar {
     display: flex; align-items: center; gap: 14px; flex-wrap: wrap;
-    padding: 10px 22px;
+    padding: 6px 20px;
     background: var(--surface-2); border-bottom: 1px solid var(--border);
     font-size: 12.5px;
   }
@@ -297,7 +301,7 @@
 
   /* ── Rank legend row ─────────────────────────────── */
   .ranks {
-    display: flex; gap: 18px; padding: 8px 22px;
+    display: flex; gap: 18px; padding: 5px 20px;
     background: var(--surface); border-bottom: 1px solid var(--border);
     font-size: 11px; color: var(--ink-3); overflow-x: auto;
   }
@@ -418,9 +422,9 @@
   /* ── Task blocks ─────────────────────────────────── */
   .block {
     position: absolute;
-    top: 7px;
-    height: calc(var(--row-h) - 14px);
-    border-radius: 4px;
+    top: 3px;
+    height: calc(var(--row-h) - 6px);
+    border-radius: 3px;
     display: flex; align-items: center; gap: 6px;
     padding: 0 8px;
     font-size: 11px; font-weight: 500;
@@ -472,8 +476,6 @@
     background: color-mix(in srgb, var(--ink) 10%, transparent);
     border: 1px solid var(--border-strong);
     color: var(--ink-2);
-    height: calc(var(--row-h) - 18px);
-    top: 9px;
     box-shadow: none;
     padding: 0 4px;
     font-family: ui-monospace, monospace;
@@ -791,7 +793,7 @@
   }
 
   .statusbar {
-    display: flex; gap: 22px; padding: 8px 22px;
+    display: flex; gap: 20px; padding: 5px 20px;
     background: var(--surface); border-top: 1px solid var(--border);
     font-size: 11.5px; color: var(--ink-3); align-items: center; flex-wrap: wrap;
   }
@@ -859,17 +861,11 @@
     <button class="index-item" type="button" data-idx="task">
       <span class="marker mk-task"></span>Flight
     </button>
-    <button class="index-item" type="button" data-idx="brk">
-      <span class="marker mk-brk"></span>Break
-    </button>
     <button class="index-item" type="button" data-idx="free">
       <span class="marker mk-free"></span>Free
     </button>
     <button class="index-item" type="button" data-idx="ot">
       <span class="marker mk-ot"></span>OT slot
-    </button>
-    <button class="index-item" type="button" data-idx="standby">
-      <span class="marker mk-stby"></span>Standby
     </button>
     <button class="index-item" type="button" data-idx="leave">
       <span class="marker mk-off"></span>Leave
@@ -945,7 +941,6 @@
     <span><strong id="stat-onshift">—</strong> on-task now</span>
     <span><strong id="stat-free">—</strong> free in-shift now</span>
     <span><strong id="stat-ot">—</strong> OT slots still available</span>
-    <span><strong id="stat-standby">—</strong> standby</span>
     <span><strong id="stat-off">—</strong> on leave</span>
     <span>Ops day <strong>06:00 → 01:00</strong> (19h)</span>
     <button class="theme-toggle" id="theme-toggle" type="button">Toggle theme</button>
@@ -1043,12 +1038,7 @@
   function buildShifts(team, homeRole, i) {
     const r = seedRand(team.charCodeAt(0)*31 + team.charCodeAt(1)*17 + homeRole.charCodeAt(2) + i*13 + 7);
 
-    if (r() < 0.05) return [{ kind:'off', s: 0, e: TOTAL_MIN, label: 'ON LEAVE' }];
-    if (r() < 0.075) {
-      const maxSt = TOTAL_MIN - 480;
-      const s = Math.floor(r() * maxSt / 30) * 30;
-      return [{ kind:'standby', s, e: s + 480, label: 'STANDBY · ON-CALL' }];
-    }
+    if (r() < 0.06) return [{ kind:'off', s: 0, e: TOTAL_MIN, label: 'ON LEAVE' }];
 
     // 8h shift = 4 back-to-back 2h segments; 2-4 tasks, rest are FREE
     const SEGS = 4;
@@ -1090,21 +1080,15 @@
           kind: 'task',
           type,
           flight: flightPool[taskIdx % flightPool.length],
-          s: cursor, e: cursor + WORK_MIN,   // 90 min of actual work
+          s: cursor, e: cursor + TASK_MIN,   // 2h task (1.5h work + 30 min break — break not rendered)
         });
-        cursor += WORK_MIN;
-        tasks.push({
-          id: 't' + (++TASK_UID),
-          kind: 'brk-slot',
-          s: cursor, e: cursor + BRK_MIN,    // 30 min break
-        });
-        cursor += BRK_MIN;
+        cursor += TASK_MIN;
         taskIdx++;
       } else {
         tasks.push({
           id: 't' + (++TASK_UID),
           kind: 'free-slot',
-          s: cursor, e: cursor + TASK_MIN,   // 2h free
+          s: cursor, e: cursor + TASK_MIN,
         });
         cursor += TASK_MIN;
       }
@@ -1219,12 +1203,12 @@
     const width = xFor(cov.taskE) - left;
     b.style.left = left + 'px';
     b.style.width = width + 'px';
-    b.style.top  = (y + 7) + 'px';
+    b.style.top  = (y + 3) + 'px';
     b.style.zIndex = 4;
     b.className = 'block covered';
     b.dataset.t = cov.type;
-    const badge = cov.kind === 'early' ? 'EARLY COV' : 'STBY COV';
-    const kindTxt = cov.kind === 'early' ? 'early start' : 'standby → task';
+    const badge = 'EARLY COV';
+    const kindTxt = 'early start';
     b.title = `Covering ${cov.flight} (was ${cov.sickName}) · ${kindTxt}  •  ${fmt24(cov.taskS)}–${fmt24(cov.taskE)}`;
     b.innerHTML = `
       <span class="task-chip">${cov.type}</span>
@@ -1245,16 +1229,12 @@
     const width = xFor(sh.e) - left;
     b.style.left = left + 'px';
     b.style.width = width + 'px';
-    b.style.top  = (y + 7) + 'px';
+    b.style.top  = (y + 3) + 'px';
 
     if (sh.kind === 'briefing') {
       b.className = 'block briefing';
       b.title = `Pre-shift briefing · ${fmt24(sh.s)}–${fmt24(sh.e)}`;
       b.innerHTML = `BRF`;
-    } else if (sh.kind === 'brk-slot') {
-      b.className = 'block brk-slot';
-      b.title = `Break · ${fmt24(sh.s)}–${fmt24(sh.e)}`;
-      b.innerHTML = `BRK`;
     } else if (sh.kind === 'free-slot') {
       // If used as coverage, render as solid coverage block
       const cov = [...coverage.values()].find(c => c.coverEid === emp.eid && c.slotId === sh.id);
@@ -1352,8 +1332,7 @@
       }
       rosters[t].forEach((emp, i) => {
         const isSick = sick.has(emp.eid);
-        const baseState = emp.shifts.some(s => s.kind === 'off') ? 'leave'
-                        : emp.shifts.some(s => s.kind === 'standby') ? 'standby' : '';
+        const baseState = emp.shifts.some(s => s.kind === 'off') ? 'leave' : '';
         const state = isSick ? 'sick' : baseState;
 
         const rr = document.createElement('div');
@@ -1362,8 +1341,6 @@
           ? `<span class="status sick">SICK</span>`
           : state === 'leave'
           ? `<span class="status leave">LEAVE</span>`
-          : state === 'standby'
-          ? `<span class="status standby">STBY</span>`
           : '';
         const sickBtn = (baseState ? '' :
           `<button class="sick-btn" data-eid="${emp.eid}" type="button">${isSick ? 'Restore' : 'Mark sick'}</button>`);
@@ -1385,7 +1362,7 @@
         });
         // Extra coverage blocks not tied to a slot (early start, standby)
         [...coverage.values()]
-          .filter(c => c.coverEid === emp.eid && (c.kind === 'early' || c.kind === 'standby'))
+          .filter(c => c.coverEid === emp.eid && c.kind === 'early')
           .forEach(cov => renderExtraCov(cov, y));
         y += ROW_H;
       });
@@ -1402,21 +1379,19 @@
   function updateStats(team) {
     const groups = team === 'all' ? ['dr','rmp','cln'] : [team];
     const nowM = nowMinutes();
-    let on=0, freeNow=0, otAvail=0, sb=0, off=0;
+    let on=0, freeNow=0, otAvail=0, off=0;
     groups.forEach(t => rosters[t].forEach(emp => {
       if (sick.has(emp.eid)) return;
       if (emp.shifts.some(x => x.kind === 'ot-slot' && x.s >= nowM)) otAvail++;
       const s = emp.shifts.find(x => x.s <= nowM && nowM < x.e);
       if (!s) return;
       if (s.kind === 'off') off++;
-      else if (s.kind === 'standby') sb++;
       else if (s.kind === 'task') on++;
       else if (s.kind === 'free-slot') freeNow++;
     }));
     document.getElementById('stat-onshift').textContent = on;
     document.getElementById('stat-free').textContent = freeNow;
     document.getElementById('stat-ot').textContent = otAvail;
-    document.getElementById('stat-standby').textContent = sb;
     document.getElementById('stat-off').textContent = off;
   }
 
@@ -1568,20 +1543,10 @@
     if (sick.has(emp.eid)) return { kind: 'busy' };
     if (emp.shifts.some(x => x.kind === 'off')) return { kind: 'busy' };
 
-    // STANDBY: highest priority — they're literally on-call for this
-    const sb = emp.shifts.find(x => x.kind === 'standby');
-    if (sb) {
-      // If already used for another coverage
-      const used = [...coverage.values()].some(c => c.coverEid === emp.eid && c.slotId === sb.id && !(c.taskE <= s || c.taskS >= e));
-      if (used) return { kind: 'busy' };
-      if (sb.s <= s && sb.e >= e) return { kind: 'standby', slotId: sb.id };
-      return { kind: 'busy' };
-    }
-
     // Detect the person's own shift window (brief start → last non-OT block end)
     const briefing = emp.shifts.find(x => x.kind === 'briefing');
     const lastShiftBlock = [...emp.shifts].reverse().find(x =>
-      x.kind === 'task' || x.kind === 'brk-slot' || x.kind === 'free-slot');
+      x.kind === 'task' || x.kind === 'free-slot');
     const shiftStart = briefing ? briefing.s : null;
     const shiftEnd = lastShiftBlock ? lastShiftBlock.e : null;
 
@@ -1589,7 +1554,7 @@
     let otSlotId = null;
     for (const sh of emp.shifts) {
       if (sh.e <= s || sh.s >= e) continue;
-      if (sh.kind === 'briefing' || sh.kind === 'task' || sh.kind === 'brk-slot') return { kind: 'busy' };
+      if (sh.kind === 'briefing' || sh.kind === 'task') return { kind: 'busy' };
       if (sh.kind === 'free-slot') {
         const used = [...coverage.values()].some(c => c.coverEid === emp.eid && c.slotId === sh.id);
         if (used) return { kind: 'busy' };
@@ -1618,10 +1583,9 @@
       if (av.kind === 'busy') return;
       results.push({ cand, availability: av });
     });
-    // Priority: STANDBY (no reshuffle) → FREE (in-shift capacity) →
-    //           OT AVAIL (overtime) → EARLY START (pull in early)
+    // Priority: FREE (in-shift capacity) → OT AVAIL (overtime) → EARLY START (pull in early)
     const rankIdx = h => DR_RANK_ORDER.includes(h) ? DR_RANK_ORDER.indexOf(h) : 0;
-    const kindOrder = { standby: 0, free: 1, ot: 2, early: 3 };
+    const kindOrder = { free: 0, ot: 1, early: 2 };
     results.sort((a, b) => {
       const k = kindOrder[a.availability.kind] - kindOrder[b.availability.kind];
       if (k) return k;
@@ -1722,7 +1686,6 @@
     if (!task) { selectedTaskId = null; return renderInsights(); }
 
     const cands = findCandidates(sickEmp, task);
-    const nStby  = cands.filter(c => c.availability.kind === 'standby').length;
     const nFree  = cands.filter(c => c.availability.kind === 'free').length;
     const nOt    = cands.filter(c => c.availability.kind === 'ot').length;
     const nEarly = cands.filter(c => c.availability.kind === 'early').length;
@@ -1760,10 +1723,7 @@
           <span class="rule">is out — ${ruleText}</span>
         </div>
 
-        <div class="cand-head">Standby (on-call, first pick) <span class="n mono">${nStby}</span></div>
-        <div class="cand-list">${renderCandList(cands.filter(c => c.availability.kind === 'standby'), task)}</div>
-
-        <div class="cand-head" style="margin-top:14px">Free at this slot <span class="n mono">${nFree}</span></div>
+        <div class="cand-head">Free at this slot <span class="n mono">${nFree}</span></div>
         <div class="cand-list">${renderCandList(cands.filter(c => c.availability.kind === 'free'), task)}</div>
 
         <div class="cand-head" style="margin-top:14px">Overtime capacity <span class="n mono">${nOt}</span></div>
@@ -1788,7 +1748,6 @@
     return list.map(({cand, availability}) => {
       const av = availability.kind;
       const label =
-        av === 'standby' ? 'STANDBY' :
         av === 'free'    ? 'FREE'    :
         av === 'ot'      ? 'OT AVAIL':
         av === 'early'   ? 'EARLY START' : '';
@@ -1820,7 +1779,6 @@
       taskE: task.e,
     });
     const via =
-      av.kind === 'standby' ? 'standby → task' :
       av.kind === 'free'    ? 'free in-shift slot' :
       av.kind === 'ot'      ? 'OT slot' :
       av.kind === 'early'   ? 'early start' : '';
@@ -1860,12 +1818,10 @@
 
   // ── Index bar (clickable block-type explanations) ──
   const INDEX_INFO = {
-    brf:   { name: 'BRF · Briefing', desc: '15-minute pre-shift briefing. Every non-leave, non-standby employee begins here — the earliest task anywhere on the board is 06:15. Briefing time counts as busy for coverage: a candidate whose briefing overlaps the sick slot is not offered.' },
-    task:  { name: 'Flight · Assigned task', desc: 'A 1.5-hour work assignment tied to a specific flight number. Each task is a distinct block; a 30-min break always follows. Colour encodes the task rank (DRA/DRB/DRC/DRD, RMP/BBA/BMA, CLN/CLC).' },
-    brk:   { name: 'Break', desc: '30-minute rest between tasks. Rendered as a separate hatched block so nothing overlaps. Coverage cannot fit a 1.5-hour flight into a 30-min break; a candidate mid-break is not offered.' },
+    brf:   { name: 'BRF · Briefing', desc: '15-minute pre-shift briefing. Every non-leave employee begins here — the earliest task anywhere on the board is 06:15. Briefing time counts as busy for coverage: a candidate whose briefing overlaps the sick slot is not offered.' },
+    task:  { name: 'Flight · Assigned task', desc: 'A 2-hour work block tied to a specific flight number (1.5h of active work + 30-min break, both inside the block). Colour encodes the task rank (DRA/DRB/DRC/DRD, RMP/BBA/BMA, CLN/CLC).' },
     free:  { name: 'FREE · In-shift capacity', desc: 'A 2-hour segment inside the 8-hour shift with no task assigned. This is the first-choice coverage source — the person is already at work, no reshuffling, no overtime pay. Free segments appear as candidates labelled FREE.' },
     ot:    { name: 'OT slot · 2h available', desc: 'A trailing 2-hour capacity block after the 8-hour shift ends. Every employee has one. Consumed only when the person is assigned coverage as overtime. Appears in the picker as OT AVAIL.' },
-    standby: { name: 'STANDBY · On-call', desc: 'A physically-present employee with no pre-assigned tasks — they were rostered to be at the airport for exactly this situation. First-pick coverage: they take on a task inside their standby window with zero disruption, no overtime, no schedule reshuffle. Roughly 7% of the roster is on standby.' },
     leave: { name: 'LEAVE · Off-roster', desc: 'Rostered day off or approved leave. Never appears as a candidate. Row is tinted red with a LEAVE pill so supervisors can see who is unavailable at a glance.' },
     unassigned: { name: 'UNASSIGNED · Needs coverage', desc: 'A task belonging to a person who called in sick after the roster was published. Rendered as a red dashed block on the sick row. Click one to open the picker with eligible substitutes ranked by disruption cost.' },
     cov:   { name: 'COVERAGE · Reassigned task', desc: 'A task now being worked by a substitute. Solid coloured block with a light inner outline plus a COV / OT COV / EARLY COV / STBY COV badge indicating how the coverage was obtained. The task chip stays the rank of the flight, not the covering person\'s home rank.' },
