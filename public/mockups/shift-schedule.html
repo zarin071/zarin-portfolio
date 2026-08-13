@@ -256,7 +256,8 @@
     font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase;
     color: var(--ink-3); font-weight: 600; background: var(--surface);
   }
-  .rail-body { overflow-y: auto; overflow-x: hidden; }
+  .rail { min-height: 0; }
+  .rail-body { flex: 1; min-height: 0; overflow-y: auto; overflow-x: hidden; }
   .rail-scroll { display: flex; flex-direction: column; }
   .rail-row {
     display: grid; grid-template-columns: 72px 1fr 52px;
@@ -269,6 +270,18 @@
   .rail-row .eid { font-family: ui-monospace, monospace; font-size: 12px; color: var(--ink-2); letter-spacing: 0.02em; }
   .rail-row .nm  { font-size: 13px; font-weight: 500; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
   .rail-row .role { justify-self: end; }
+  .rail-row.leave   { background: color-mix(in srgb, var(--off) 8%, var(--surface)); }
+  .rail-row.standby { background: color-mix(in srgb, var(--now) 10%, var(--surface)); }
+  .rail-row .status {
+    grid-column: 2 / span 1;
+    justify-self: end;
+    margin-right: 2px;
+    font-family: ui-monospace, monospace;
+    font-size: 9.5px; font-weight: 700; letter-spacing: 0.1em;
+    padding: 1px 5px; border-radius: 2px;
+  }
+  .rail-row .status.leave   { color: var(--off); background: color-mix(in srgb, var(--off) 15%, transparent); border: 1px solid color-mix(in srgb, var(--off) 40%, transparent); }
+  .rail-row .status.standby { color: var(--ot); background: color-mix(in srgb, var(--ot) 18%, transparent); border: 1px solid color-mix(in srgb, var(--ot) 45%, transparent); }
 
   .lane { position: relative; overflow: hidden; display: flex; flex-direction: column; }
   .lane-head {
@@ -322,7 +335,12 @@
     background: rgba(0,0,0,0.22); color: rgba(255,255,255,0.95);
     flex-shrink: 0;
   }
-  .block .loc { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .block .flt {
+    font-family: ui-monospace, monospace;
+    font-size: 12.5px; font-weight: 700;
+    letter-spacing: 0.02em;
+    overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+  }
   .block .tm { font-family: ui-monospace, monospace; font-size: 10px; opacity: 0.78; margin-left: auto; flex-shrink: 0; }
 
   .block[data-t="DRA"] { background: var(--dra); }
@@ -339,29 +357,37 @@
   .block[data-t="CLC"] { background: var(--clc); color: #0E1620; }
   .block[data-t="CLC"] .task-chip { background: rgba(14,22,32,0.18); color: #0E1620; }
 
-  .block.ot {
-    box-shadow: inset 0 0 0 1.5px var(--ot), 0 0 0 1px var(--ot-glow), 0 0 12px var(--ot-glow);
-    background-image: repeating-linear-gradient(135deg, rgba(255,255,255,0.14) 0 6px, transparent 6px 12px);
-  }
-  .block.ot::after {
-    content: "OT";
-    position: absolute; top: 2px; right: 4px;
-    font-family: ui-monospace, monospace; font-size: 8.5px; font-weight: 800;
-    letter-spacing: 0.08em;
+  .block.ot-slot {
+    background: transparent;
+    border: 1.5px dashed var(--ot);
     color: var(--ot);
-    background: rgba(255,255,255,0.92);
-    padding: 0 3px; border-radius: 2px;
+    box-shadow: none;
+    display: flex; align-items: center; justify-content: center;
+    gap: 8px;
+    font-family: ui-monospace, monospace;
+    font-size: 10.5px; font-weight: 700;
+    letter-spacing: 0.14em; text-transform: uppercase;
   }
+  .block.ot-slot .plus { font-size: 12px; }
+  .block.ot-slot .tm { color: var(--ot); opacity: 0.75; text-transform: none; letter-spacing: 0.02em; margin: 0; }
 
   .block.standby {
-    background: transparent; border: 1px dashed var(--standby);
-    color: var(--ink-2); height: calc(var(--row-h) - 20px); top: 10px;
+    background: color-mix(in srgb, var(--ot) 15%, transparent);
+    border: 1.5px dashed var(--ot);
+    color: var(--ot);
     box-shadow: none;
+    display: flex; align-items: center; justify-content: center; gap: 8px;
+    font-family: ui-monospace, monospace;
+    font-size: 11px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase;
   }
   .block.off {
-    background: color-mix(in srgb, var(--off) 20%, transparent);
-    border: 1px solid color-mix(in srgb, var(--off) 55%, transparent);
+    background: color-mix(in srgb, var(--off) 18%, transparent);
+    border: 1.5px solid color-mix(in srgb, var(--off) 60%, transparent);
+    background-image: repeating-linear-gradient(135deg, color-mix(in srgb, var(--off) 20%, transparent) 0 6px, transparent 6px 14px);
     color: var(--off); box-shadow: none;
+    display: flex; align-items: center; justify-content: center;
+    font-family: ui-monospace, monospace;
+    font-size: 11px; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase;
   }
 
   /* Now line */
@@ -473,10 +499,10 @@
     <div class="divider"></div>
     <div class="sup">Window: <strong class="mono" id="win-label">—</strong> <span style="color:var(--ink-3)">(now −3h / +2h)</span></div>
     <div class="divider"></div>
-    <div class="sup">Shift <strong>8h</strong> + up to <strong>2h OT</strong> · task <strong>2h</strong></div>
+    <div class="sup">Shift <strong>3–4 tasks</strong> × 2h + <strong>2h OT slot</strong> · ends by <strong>01:00</strong></div>
     <div class="legend">
-      <span class="swatch task"><i></i>Assigned task</span>
-      <span class="swatch ot"><i></i>Overtime</span>
+      <span class="swatch task"><i></i>Flight · assigned</span>
+      <span class="swatch ot"><i></i>OT slot · available</span>
       <span class="swatch standby"><i></i>Standby</span>
       <span class="swatch off"><i></i>Leave</span>
     </div>
@@ -532,9 +558,9 @@
   <footer class="statusbar">
     <span><strong>60</strong> crew rostered</span>
     <span><strong id="stat-onshift">—</strong> on-task now</span>
-    <span><strong id="stat-ot">—</strong> on overtime</span>
+    <span><strong id="stat-ot">—</strong> OT slots still available</span>
     <span><strong id="stat-standby">—</strong> standby</span>
-    <span><strong id="stat-off">—</strong> leave</span>
+    <span><strong id="stat-off">—</strong> on leave</span>
     <span>Ops day <strong>06:00 → 01:00</strong> (19h)</span>
     <button class="theme-toggle" id="theme-toggle" type="button">Toggle theme</button>
   </footer>
@@ -579,17 +605,22 @@
     CLC: ['CLN','CLC'],
   };
 
-  const LOC = {
-    DRA: ['Airside coach','VIP transfer','Crew shuttle A','Marshalling — Bay 9'],
-    DRB: ['Crew bus 2','Crew bus 5','Apron shuttle','Push-back — Bay 14'],
-    DRC: ['Baggage tug 12','Baggage tug 7','Cargo tug 3','Belt loader 4'],
-    DRD: ['Utility van','Water bowser','GSE runner','Lav-service cart'],
-    RMP: ['Ramp lead · Bay 14','Ramp lead · Bay 27','Ramp lead · Bay 9','Ramp lead · Bay 22'],
-    BBA: ['Belt 4 load','Belt 6 load','Belt 2 load','Belt 9 sort'],
-    BMA: ['Bulk hold · A320','Mail cage','ULD build · A350','Loose load · B787'],
-    CLN: ['Cabin turn · A320','Cabin turn · B787','Cabin turn · A321','Cabin turn · 737'],
-    CLC: ['Deep clean · B777','Deep clean · A350','Overnight groom','Galley reset'],
-  };
+  // Real Mumbai T2 flight numbers — domestic + international mix
+  const FLIGHTS = [
+    'AI-671','AI-864','AI-441','AI-560','AI-993','AI-676',
+    '6E-547','6E-2113','6E-762','6E-186','6E-5024','6E-1408','6E-6321',
+    'UK-995','UK-833','UK-641','UK-517',
+    'SG-8169','SG-431','SG-2755',
+    'IX-183','IX-1146','IX-812',
+    'QP-1341','QP-1809',
+    'EK-500','EK-506','EK-508',
+    'QR-556','QR-544','QR-514',
+    'SQ-424','SQ-425',
+    'EY-204','EY-206',
+    'LH-756','LH-758',
+    'BA-138','BA-198',
+    'TG-318','CX-750','ET-611'
+  ];
 
   // ── Names ──────────────────────────────────────────
   const namesDR = [
@@ -617,53 +648,49 @@
   }
 
   // ── Build one employee's day ────────────────────────
+  // Rules: 3 or 4 tasks × 2h + a 2h OT slot appended. Everything must end ≤ 01:00.
   function buildShifts(team, homeRole, i) {
     const r = seedRand(team.charCodeAt(0)*31 + team.charCodeAt(1)*17 + homeRole.charCodeAt(2) + i*13 + 7);
 
     // 5% full leave
-    if (r() < 0.05) return [{ kind:'off', s: 0, e: TOTAL_MIN, label: 'LEAVE' }];
-    // 8% standby (on-call, no assigned tasks)
-    if (r() < 0.08) {
-      const s = Math.floor(r() * (TOTAL_MIN - 480) / 30) * 30;
-      return [{ kind:'standby', s, e: s + 480, label: 'STANDBY (on-call)' }];
+    if (r() < 0.05) return [{ kind:'off', s: 0, e: TOTAL_MIN, label: 'ON LEAVE' }];
+    // 7% standby (on-call, 8h block)
+    if (r() < 0.075) {
+      const maxSt = TOTAL_MIN - 480;
+      const s = Math.floor(r() * maxSt / 30) * 30;
+      return [{ kind:'standby', s, e: s + 480, label: 'STANDBY · ON-CALL' }];
     }
 
-    // Start time: 30-min aligned. Distribute mostly across daytime,
-    // some evening starts. Range 0 → (TOTAL_MIN - shift length) so it fits.
-    const shiftLen = SHIFT_TASKS * TASK_MIN; // 480
-    const latestStart = TOTAL_MIN - shiftLen; // 660 = 5pm start
-    // Bias: weight earlier starts higher for daytime density
-    const bias = Math.pow(r(), 1.2);
+    const numTasks = r() < 0.55 ? 4 : 3; // ~55% do 4 tasks, ~45% do 3
+    const totalLen = (numTasks + 1) * TASK_MIN; // tasks + OT slot
+    const latestStart = TOTAL_MIN - totalLen; // must end by 01:00
+
+    // 30-min aligned, bias earlier starts for daytime density
+    const bias = Math.pow(r(), 1.15);
     const startMin = Math.floor(bias * latestStart / 30) * 30;
 
     const allowed = ALLOWED[homeRole];
+    // Pick distinct flights for this shift
+    const flightPool = FLIGHTS.slice().sort(() => r() - 0.5);
     const tasks = [];
-    // 4 regular tasks
-    for (let k = 0; k < SHIFT_TASKS; k++) {
-      // Deeper roles bias toward same-or-similar rank; add some variety
+
+    for (let k = 0; k < numTasks; k++) {
       const idx = Math.min(allowed.length - 1, Math.floor(r() * allowed.length));
       const type = allowed[idx];
-      const loc = LOC[type][Math.floor(r() * LOC[type].length)];
       tasks.push({
-        kind: 'task', type, loc,
+        kind: 'task',
+        type,
+        flight: flightPool[k % flightPool.length],
         s: startMin + k * TASK_MIN,
-        e: startMin + (k+1) * TASK_MIN,
+        e: startMin + (k + 1) * TASK_MIN,
       });
     }
-    // 28% probability of 1 OT task, reason attached
-    if (r() < 0.28) {
-      const reasons = ['flight delay 6E-547', 'sick cover — S. Rane', 'unscheduled A320 turn', 'cancel recovery AI-671'];
-      const type = allowed[Math.floor(r() * allowed.length)];
-      const loc = LOC[type][Math.floor(r() * LOC[type].length)];
-      const otStart = startMin + SHIFT_TASKS * TASK_MIN;
-      if (otStart + TASK_MIN <= TOTAL_MIN) {
-        tasks.push({
-          kind: 'ot', type, loc,
-          s: otStart, e: otStart + TASK_MIN,
-          reason: reasons[Math.floor(r() * reasons.length)],
-        });
-      }
-    }
+    // Always append the 2h OT slot (available capacity)
+    tasks.push({
+      kind: 'ot-slot',
+      s: startMin + numTasks * TASK_MIN,
+      e: startMin + (numTasks + 1) * TASK_MIN,
+    });
     return tasks;
   }
 
@@ -761,11 +788,18 @@
         y += 22;
       }
       rosters[t].forEach((emp, i) => {
+        const state = emp.shifts[0] && (emp.shifts[0].kind === 'off' ? 'leave'
+                    : emp.shifts[0].kind === 'standby' ? 'standby' : '');
         const rr = document.createElement('div');
-        rr.className = 'rail-row';
+        rr.className = 'rail-row' + (state ? ' ' + state : '');
+        const badge = state === 'leave'
+          ? `<span class="status leave">LEAVE</span>`
+          : state === 'standby'
+          ? `<span class="status standby">STBY</span>`
+          : '';
         rr.innerHTML = `
           <span class="eid mono">${emp.eid}</span>
-          <span class="nm" title="${emp.name}">${emp.name}</span>
+          <span class="nm" title="${emp.name}">${emp.name}${badge}</span>
           <span class="role"><span class="chip ${emp.home}">${emp.home}</span></span>
         `;
         railScroll.appendChild(rr);
@@ -785,18 +819,21 @@
 
           if (sh.kind === 'off') {
             b.className = 'block off';
-            b.innerHTML = `<span class="loc">${sh.label}</span>`;
+            b.innerHTML = `<span>${sh.label}</span>`;
           } else if (sh.kind === 'standby') {
             b.className = 'block standby';
-            b.innerHTML = `<span class="loc">${sh.label}</span><span class="tm mono">${fmt24(sh.s)}–${fmt24(sh.e)}</span>`;
+            b.innerHTML = `<span>${sh.label}</span><span class="tm mono">${fmt24(sh.s)}–${fmt24(sh.e)}</span>`;
+          } else if (sh.kind === 'ot-slot') {
+            b.className = 'block ot-slot';
+            b.title = `Overtime slot available · ${fmt24(sh.s)}–${fmt24(sh.e)}`;
+            b.innerHTML = `<span class="plus">+</span><span>2h OT slot</span><span class="tm mono">${fmt24(sh.s)}–${fmt24(sh.e)}</span>`;
           } else {
-            b.className = 'block' + (sh.kind === 'ot' ? ' ot' : '');
+            b.className = 'block';
             b.dataset.t = sh.type;
-            const title = sh.kind === 'ot' ? `Overtime — ${sh.reason}` : `${sh.type} · ${sh.loc}`;
-            b.title = `${title}  •  ${fmt24(sh.s)}–${fmt24(sh.e)}`;
+            b.title = `${sh.type} · Flight ${sh.flight}  •  ${fmt24(sh.s)}–${fmt24(sh.e)}`;
             b.innerHTML = `
               <span class="task-chip">${sh.type}</span>
-              <span class="loc">${sh.loc}</span>
+              <span class="flt">${sh.flight}</span>
               <span class="tm mono">${fmt24(sh.s)}–${fmt24(sh.e)}</span>
             `;
           }
@@ -817,17 +854,18 @@
   function updateStats(team) {
     const groups = team === 'all' ? ['dr','rmp','cln'] : [team];
     const nowM = nowMinutes();
-    let on=0, ot=0, sb=0, off=0;
+    let on=0, otAvail=0, sb=0, off=0;
     groups.forEach(t => rosters[t].forEach(emp => {
+      // count OT slots that haven't started yet (still available for allocation)
+      if (emp.shifts.some(x => x.kind === 'ot-slot' && x.s >= nowM)) otAvail++;
       const s = emp.shifts.find(x => x.s <= nowM && nowM < x.e);
       if (!s) return;
       if (s.kind === 'off') off++;
       else if (s.kind === 'standby') sb++;
-      else if (s.kind === 'ot') ot++;
-      else on++;
+      else if (s.kind === 'task') on++;
     }));
     document.getElementById('stat-onshift').textContent = on;
-    document.getElementById('stat-ot').textContent = ot;
+    document.getElementById('stat-ot').textContent = otAvail;
     document.getElementById('stat-standby').textContent = sb;
     document.getElementById('stat-off').textContent = off;
   }
