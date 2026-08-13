@@ -181,11 +181,11 @@
   .tab:hover { color: var(--ink-2); }
   .tab:focus-visible { outline: 2px solid var(--now); outline-offset: -2px; }
   .tab .label {
-    font-size: 10.5px; letter-spacing: 0.14em;
-    text-transform: uppercase; font-weight: 600;
+    font-size: 15px; font-weight: 600; letter-spacing: -0.005em;
+    line-height: 1.15;
   }
-  .tab .name { font-size: 14px; font-weight: 500; }
-  .tab .count { color: var(--ink-3); font-size: 12px; font-family: ui-monospace, monospace; }
+  .tab .name { font-size: 11.5px; color: var(--ink-3); font-weight: 400; }
+  .tab .count { color: var(--ink-3); font-size: 11.5px; font-family: ui-monospace, monospace; }
   .tab .alert-badge {
     display: inline-block; margin-left: 6px;
     font-family: ui-monospace, monospace; font-size: 10px; font-weight: 700;
@@ -199,6 +199,82 @@
   .tab.active[data-team="rmp"] { border-bottom-color: var(--rmp); }
   .tab.active[data-team="cln"] { border-bottom-color: var(--cln); }
   .tab.active[data-team="all"] { border-bottom-color: var(--ink); }
+
+  /* ── Index bar (clickable legend of block types) ─── */
+  .index-bar {
+    display: flex; align-items: center; gap: 8px;
+    padding: 8px 22px;
+    background: var(--surface);
+    border-bottom: 1px solid var(--border);
+    overflow-x: auto;
+  }
+  .index-item {
+    display: inline-flex; align-items: center; gap: 7px;
+    padding: 4px 10px;
+    border: 1px solid var(--border-strong);
+    border-radius: 3px;
+    cursor: pointer;
+    background: transparent;
+    color: var(--ink-2);
+    font: inherit; font-size: 12px;
+    transition: border-color 120ms, color 120ms, background 120ms;
+    white-space: nowrap; flex-shrink: 0;
+  }
+  .index-item:hover { color: var(--ink); border-color: var(--ink-2); }
+  .index-item.active {
+    color: var(--ink); border-color: var(--ink);
+    background: var(--surface-2);
+  }
+  .index-item .marker {
+    display: inline-block; width: 20px; height: 8px; border-radius: 2px;
+    flex-shrink: 0;
+  }
+  .marker.mk-brf   { background: color-mix(in srgb, var(--ink) 25%, transparent); border: 1px solid var(--border-strong); height: 8px; }
+  .marker.mk-task  { background: var(--rmp); }
+  .marker.mk-brk   { background: transparent; border: 1px dashed var(--border-strong);
+                     background-image: repeating-linear-gradient(45deg, color-mix(in srgb, var(--ink) 15%, transparent) 0 2px, transparent 2px 4px);
+                     height: 8px; }
+  .marker.mk-free  { background: transparent; border: 1.5px dashed var(--ink-3); height: 6px; }
+  .marker.mk-ot    { background: transparent; border: 1.5px dashed var(--ot); height: 6px; }
+  .marker.mk-stby  { background: color-mix(in srgb, var(--ot) 25%, transparent); border: 1px dashed var(--ot); height: 8px; }
+  .marker.mk-off   { background: color-mix(in srgb, var(--off) 30%, transparent); border: 1px solid var(--off); height: 8px; }
+  .marker.mk-un    { background: color-mix(in srgb, var(--off) 15%, transparent); border: 1.5px dashed var(--off); height: 8px; }
+  .marker.mk-cov   { background: var(--dr); outline: 1.5px solid rgba(255,255,255,0.7); outline-offset: -3px; height: 8px; }
+
+  .index-info {
+    background: var(--surface-2);
+    border-bottom: 1px solid var(--border);
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 240ms cubic-bezier(.4,0,.2,1);
+  }
+  .index-info.open { max-height: 260px; }
+  .index-info .inner {
+    padding: 14px 22px;
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 6px 14px;
+    align-items: start;
+    font-size: 12.5px;
+    color: var(--ink-2);
+    line-height: 1.5;
+  }
+  .index-info .k {
+    font-family: ui-monospace, monospace;
+    font-size: 10.5px; letter-spacing: 0.14em; text-transform: uppercase;
+    color: var(--ink-3); font-weight: 700; padding-top: 2px;
+  }
+  .index-info .v strong { color: var(--ink); font-weight: 600; }
+  .index-info .v .flavor { color: var(--ink-3); font-style: italic; }
+  .index-info .close-info {
+    justify-self: end; grid-column: 2; align-self: end;
+    background: transparent; border: 1px solid var(--border-strong);
+    color: var(--ink-3); font: inherit; padding: 3px 8px; border-radius: 3px;
+    cursor: pointer; font-family: ui-monospace, monospace;
+    font-size: 10.5px; letter-spacing: 0.1em; text-transform: uppercase;
+    margin-top: 8px;
+  }
+  .index-info .close-info:hover { color: var(--ink); border-color: var(--ink-2); }
 
   /* ── Toolbar ─────────────────────────────────────── */
   .toolbar {
@@ -245,13 +321,10 @@
   /* ── Board ───────────────────────────────────────── */
   .board {
     flex: 1; min-height: 0;
-    display: grid; grid-template-columns: var(--rail-w) 1fr 340px;
+    display: grid; grid-template-columns: var(--rail-w) 1fr;
     background: var(--ground); overflow: hidden;
     border-top: 1px solid var(--border);
-    transition: grid-template-columns 220ms cubic-bezier(.4,0,.2,1);
   }
-  .board.side-closed { grid-template-columns: var(--rail-w) 1fr 0px; }
-  .board.side-closed .side { transform: translateX(340px); opacity: 0; pointer-events: none; }
 
   .rail {
     display: flex; flex-direction: column;
@@ -483,15 +556,29 @@
     flex-shrink: 0;
   }
 
-  /* ── Side panel (insights / detail) ─────────────── */
+  /* ── Side panel (insights / detail) — full-height overlay ─────── */
   .side {
+    position: fixed;
+    top: 0; right: 0; bottom: 0;
+    width: min(520px, 46vw);
     display: flex; flex-direction: column;
     background: var(--surface);
     border-left: 1px solid var(--border-strong);
-    box-shadow: -8px 0 24px -18px rgba(0,0,0,0.35);
+    box-shadow: -16px 0 40px -20px rgba(0,0,0,0.45);
     overflow: hidden; min-height: 0;
-    transition: transform 220ms cubic-bezier(.4,0,.2,1), opacity 180ms;
+    z-index: 60;
+    transform: translateX(0);
+    transition: transform 240ms cubic-bezier(.4,0,.2,1);
   }
+  .side.closed { transform: translateX(105%); }
+  .side-scrim {
+    position: fixed; inset: 0;
+    background: rgba(14,22,32,0.28);
+    z-index: 55;
+    opacity: 1;
+    transition: opacity 240ms;
+  }
+  .side-scrim.hidden { opacity: 0; pointer-events: none; }
   .side-head {
     display: flex; align-items: center; gap: 10px;
     padding: 14px 16px; border-bottom: 1px solid var(--border);
@@ -603,8 +690,10 @@
     font-size: 9.5px; letter-spacing: 0.1em; font-weight: 700;
     padding: 2px 6px; border-radius: 3px;
   }
-  .cand .avail.free { color: #1F8E80; background: color-mix(in srgb, var(--dr) 12%, transparent); }
-  .cand .avail.ot   { color: var(--ot);  background: color-mix(in srgb, var(--ot) 15%, transparent); }
+  .cand .avail.free    { color: #1F8E80; background: color-mix(in srgb, var(--dr) 12%, transparent); }
+  .cand .avail.ot      { color: var(--ot);  background: color-mix(in srgb, var(--ot) 15%, transparent); }
+  .cand .avail.standby { color: var(--ot);  background: color-mix(in srgb, var(--ot) 22%, transparent); border: 1px solid color-mix(in srgb, var(--ot) 45%, transparent); }
+  .cand .avail.early   { color: var(--rmp); background: color-mix(in srgb, var(--rmp) 15%, transparent); }
   .cand button.assign {
     background: var(--ink); color: var(--surface);
     border: 0; font: inherit; padding: 5px 10px; border-radius: 3px;
@@ -738,20 +827,20 @@
 
   <nav class="tabs" role="tablist" id="tabs">
     <button class="tab active" role="tab" data-team="dr">
-      <span class="label" style="color:var(--dr)">DR · Drivers</span>
-      <span class="name">Rakesh Pawar <span class="count">· 20 crew</span> <span class="alert-badge zero" data-alert="dr">0</span></span>
+      <span class="label" style="color:var(--dr)">DR · Drivers <span class="alert-badge zero" data-alert="dr">0</span></span>
+      <span class="name">Sup. Rakesh Pawar <span class="count">· 20 crew</span></span>
     </button>
     <button class="tab" role="tab" data-team="rmp">
-      <span class="label" style="color:var(--rmp)">RMP · Ramp Pickers</span>
-      <span class="name">Vinod Sawant <span class="count">· 20 crew</span> <span class="alert-badge zero" data-alert="rmp">0</span></span>
+      <span class="label" style="color:var(--rmp)">RMP · Ramp Pickers <span class="alert-badge zero" data-alert="rmp">0</span></span>
+      <span class="name">Sup. Vinod Sawant <span class="count">· 20 crew</span></span>
     </button>
     <button class="tab" role="tab" data-team="cln">
-      <span class="label" style="color:var(--cln)">CLN · Cleaning Crew</span>
-      <span class="name">Sunita D'Souza <span class="count">· 20 crew</span> <span class="alert-badge zero" data-alert="cln">0</span></span>
+      <span class="label" style="color:var(--cln)">CLN · Cleaning Crew <span class="alert-badge zero" data-alert="cln">0</span></span>
+      <span class="name">Sup. Sunita D'Souza <span class="count">· 20 crew</span></span>
     </button>
     <button class="tab" role="tab" data-team="all">
-      <span class="label">ADMIN · Combined View</span>
-      <span class="name">All teams <span class="count">· 60 crew</span> <span class="alert-badge zero" data-alert="all">0</span></span>
+      <span class="label">Admin · Combined View <span class="alert-badge zero" data-alert="all">0</span></span>
+      <span class="name">All teams <span class="count">· 60 crew</span></span>
     </button>
   </nav>
 
@@ -761,15 +850,39 @@
     <div class="sup">Date: <strong class="mono">Thu, 13 Aug 2026</strong></div>
     <div class="divider"></div>
     <div class="sup">Window: <strong class="mono" id="win-label">—</strong> <span style="color:var(--ink-3)">(now −3h / +2h)</span></div>
-    <div class="divider"></div>
-    <div class="sup"><strong>15 min BRF</strong> + <strong>8h shift</strong> (2–4 tasks × 1.5h + 30 min brk, rest FREE) + <strong>2h OT</strong> · ends by <strong>01:00</strong></div>
-    <div class="legend">
-      <span class="swatch task"><i></i>Flight</span>
-      <span class="swatch free"><i></i>Free (in-shift)</span>
-      <span class="swatch ot"><i></i>OT slot</span>
-      <span class="swatch standby"><i></i>Standby</span>
-      <span class="swatch off"><i></i>Leave</span>
-    </div>
+  </div>
+
+  <nav class="index-bar" id="index-bar" aria-label="Block types">
+    <button class="index-item" type="button" data-idx="brf">
+      <span class="marker mk-brf"></span>BRF
+    </button>
+    <button class="index-item" type="button" data-idx="task">
+      <span class="marker mk-task"></span>Flight
+    </button>
+    <button class="index-item" type="button" data-idx="brk">
+      <span class="marker mk-brk"></span>Break
+    </button>
+    <button class="index-item" type="button" data-idx="free">
+      <span class="marker mk-free"></span>Free
+    </button>
+    <button class="index-item" type="button" data-idx="ot">
+      <span class="marker mk-ot"></span>OT slot
+    </button>
+    <button class="index-item" type="button" data-idx="standby">
+      <span class="marker mk-stby"></span>Standby
+    </button>
+    <button class="index-item" type="button" data-idx="leave">
+      <span class="marker mk-off"></span>Leave
+    </button>
+    <button class="index-item" type="button" data-idx="unassigned">
+      <span class="marker mk-un"></span>Unassigned
+    </button>
+    <button class="index-item" type="button" data-idx="cov">
+      <span class="marker mk-cov"></span>Coverage
+    </button>
+  </nav>
+  <div class="index-info" id="index-info"></div>
+
   </div>
 
   <div class="ranks" id="ranks">
@@ -818,10 +931,12 @@
       </div>
     </section>
 
-    <aside class="side" id="side">
-      <!-- content injected by JS -->
-    </aside>
   </div>
+
+  <div class="side-scrim hidden" id="side-scrim"></div>
+  <aside class="side closed" id="side">
+    <!-- content injected by JS -->
+  </aside>
 
   <div class="toast" id="toast"></div>
 
@@ -1098,6 +1213,28 @@
   laneInner.style.width = LANE_W + 'px';
   gridOverlay.style.width = LANE_W + 'px';
 
+  function renderExtraCov(cov, y) {
+    const b = document.createElement('div');
+    const left = xFor(cov.taskS);
+    const width = xFor(cov.taskE) - left;
+    b.style.left = left + 'px';
+    b.style.width = width + 'px';
+    b.style.top  = (y + 7) + 'px';
+    b.style.zIndex = 4;
+    b.className = 'block covered';
+    b.dataset.t = cov.type;
+    const badge = cov.kind === 'early' ? 'EARLY COV' : 'STBY COV';
+    const kindTxt = cov.kind === 'early' ? 'early start' : 'standby → task';
+    b.title = `Covering ${cov.flight} (was ${cov.sickName}) · ${kindTxt}  •  ${fmt24(cov.taskS)}–${fmt24(cov.taskE)}`;
+    b.innerHTML = `
+      <span class="task-chip">${cov.type}</span>
+      <span class="flt">${cov.flight}</span>
+      <span class="cov-badge">${badge}</span>
+      <span class="tm mono">${fmt24(cov.taskS)}–${fmt24(cov.taskE)}</span>
+    `;
+    rowsEl.appendChild(b);
+  }
+
   function renderBlock(sh, emp, y, isSick) {
     // For sick employees: skip briefing/breaks/free/ot — they're not present.
     // Only show tasks (as unassigned red blocks or covered notice).
@@ -1246,6 +1383,10 @@
         emp.shifts.forEach(sh => {
           renderBlock(sh, emp, y, isSick);
         });
+        // Extra coverage blocks not tied to a slot (early start, standby)
+        [...coverage.values()]
+          .filter(c => c.coverEid === emp.eid && (c.kind === 'early' || c.kind === 'standby'))
+          .forEach(cov => renderExtraCov(cov, y));
         y += ROW_H;
       });
     });
@@ -1356,10 +1497,15 @@
   });
 
   // ── Insights toggle button ──────────────────────────
-  const board = document.querySelector('.board');
+  const sideEl_ = document.getElementById('side');
+  const scrimEl = document.getElementById('side-scrim');
+  function openSide()  { sideEl_.classList.remove('closed'); scrimEl.classList.remove('hidden'); }
+  function closeSide() { sideEl_.classList.add('closed');    scrimEl.classList.add('hidden'); selectedTaskId = null; }
   document.getElementById('insights-btn').addEventListener('click', () => {
-    board.classList.toggle('side-closed');
+    if (sideEl_.classList.contains('closed')) openSide();
+    else closeSide();
   });
+  scrimEl.addEventListener('click', closeSide);
 
   // ── Insights + detail panel ─────────────────────────
   const sideEl = document.getElementById('side');
@@ -1413,24 +1559,38 @@
   }
 
   // Return availability of an employee at [s,e]:
-  // 'busy' | 'free' | 'ot' | 'brk'
-  // Also returns the ot-slot id if the assignment would consume an OT slot.
+  // 'busy' | 'standby' | 'free' | 'ot' | 'early'
+  // 'standby' — on-call block covers this time (first-pick, no reshuffle)
+  // 'free'    — in-shift free block covers this time
+  // 'ot'      — trailing OT slot covers this time
+  // 'early'   — candidate hasn't started their shift yet; can be pulled in early
   function availabilityAt(emp, s, e) {
     if (sick.has(emp.eid)) return { kind: 'busy' };
-    // Check hard blocks (off, standby)
-    if (emp.shifts.some(x => x.kind === 'off' || x.kind === 'standby')) {
+    if (emp.shifts.some(x => x.kind === 'off')) return { kind: 'busy' };
+
+    // STANDBY: highest priority — they're literally on-call for this
+    const sb = emp.shifts.find(x => x.kind === 'standby');
+    if (sb) {
+      // If already used for another coverage
+      const used = [...coverage.values()].some(c => c.coverEid === emp.eid && c.slotId === sb.id && !(c.taskE <= s || c.taskS >= e));
+      if (used) return { kind: 'busy' };
+      if (sb.s <= s && sb.e >= e) return { kind: 'standby', slotId: sb.id };
       return { kind: 'busy' };
     }
-    let brkHit = false;
+
+    // Detect the person's own shift window (brief start → last non-OT block end)
+    const briefing = emp.shifts.find(x => x.kind === 'briefing');
+    const lastShiftBlock = [...emp.shifts].reverse().find(x =>
+      x.kind === 'task' || x.kind === 'brk-slot' || x.kind === 'free-slot');
+    const shiftStart = briefing ? briefing.s : null;
+    const shiftEnd = lastShiftBlock ? lastShiftBlock.e : null;
+
     let freeSlotId = null;
     let otSlotId = null;
-    let hadAnyOverlap = false;
     for (const sh of emp.shifts) {
       if (sh.e <= s || sh.s >= e) continue;
-      hadAnyOverlap = true;
-      if (sh.kind === 'briefing' || sh.kind === 'task') return { kind: 'busy' };
-      if (sh.kind === 'brk-slot') { brkHit = true; }
-      else if (sh.kind === 'free-slot') {
+      if (sh.kind === 'briefing' || sh.kind === 'task' || sh.kind === 'brk-slot') return { kind: 'busy' };
+      if (sh.kind === 'free-slot') {
         const used = [...coverage.values()].some(c => c.coverEid === emp.eid && c.slotId === sh.id);
         if (used) return { kind: 'busy' };
         if (sh.s <= s && sh.e >= e) freeSlotId = sh.id;
@@ -1441,11 +1601,10 @@
         if (sh.s <= s && sh.e >= e) otSlotId = sh.id;
       }
     }
-    // Prefer FREE (in-shift) → OT (overtime) → BRK (override break) in that order
     if (freeSlotId) return { kind: 'free', freeSlotId };
     if (otSlotId)   return { kind: 'ot', otSlotId };
-    if (brkHit)     return { kind: 'brk' };
-    // No overlap at all means the candidate is completely off-shift — can't be pulled in
+    // EARLY START: sick task ends before this person's shift starts (they'd start early)
+    if (shiftStart !== null && e <= shiftStart) return { kind: 'early' };
     return { kind: 'busy' };
   }
 
@@ -1459,22 +1618,21 @@
       if (av.kind === 'busy') return;
       results.push({ cand, availability: av });
     });
-    // Sort: free > ot > brk; then by rank (senior first? or junior first?)
-    // Business preference: send juniors before pulling anyone off a break.
-    // Order: FREE (junior→senior), OT (junior→senior), BRK (junior→senior)
+    // Priority: STANDBY (no reshuffle) → FREE (in-shift capacity) →
+    //           OT AVAIL (overtime) → EARLY START (pull in early)
     const rankIdx = h => DR_RANK_ORDER.includes(h) ? DR_RANK_ORDER.indexOf(h) : 0;
-    const kindOrder = { free: 0, ot: 1, brk: 2 };
+    const kindOrder = { standby: 0, free: 1, ot: 2, early: 3 };
     results.sort((a, b) => {
       const k = kindOrder[a.availability.kind] - kindOrder[b.availability.kind];
       if (k) return k;
-      return rankIdx(b.cand.home) - rankIdx(a.cand.home); // junior first
+      return rankIdx(b.cand.home) - rankIdx(a.cand.home); // junior first within bucket
     });
     return results;
   }
 
   function openTaskDetail(taskId, sickEid) {
     selectedTaskId = taskId;
-    board.classList.remove('side-closed');
+    openSide();
     render(currentTeam);
     renderSidePanel();
   }
@@ -1546,9 +1704,7 @@
     html += `</div>`;
     sideEl.innerHTML = html;
 
-    document.getElementById('side-close').addEventListener('click', () => {
-      board.classList.add('side-closed');
-    });
+    document.getElementById('side-close').addEventListener('click', closeSide);
     sideEl.querySelectorAll('.gap-item').forEach(el => {
       el.addEventListener('click', () => openTaskDetail(el.dataset.taskId, el.dataset.eid));
     });
@@ -1566,9 +1722,10 @@
     if (!task) { selectedTaskId = null; return renderInsights(); }
 
     const cands = findCandidates(sickEmp, task);
-    const nFree = cands.filter(c => c.availability.kind === 'free').length;
-    const nOt   = cands.filter(c => c.availability.kind === 'ot').length;
-    const nBrk  = cands.filter(c => c.availability.kind === 'brk').length;
+    const nStby  = cands.filter(c => c.availability.kind === 'standby').length;
+    const nFree  = cands.filter(c => c.availability.kind === 'free').length;
+    const nOt    = cands.filter(c => c.availability.kind === 'ot').length;
+    const nEarly = cands.filter(c => c.availability.kind === 'early').length;
 
     const ruleText = sickEmp.home.startsWith('DR')
       ? `Only ${sickEmp.home}, ${DR_RANK_ORDER.slice(DR_RANK_ORDER.indexOf(sickEmp.home)+1).join(', ') || '—'} shown (peers & juniors — no seniors pulled down)`
@@ -1603,19 +1760,22 @@
           <span class="rule">is out — ${ruleText}</span>
         </div>
 
-        <div class="cand-head">Free at this slot <span class="n mono">${nFree}</span></div>
+        <div class="cand-head">Standby (on-call, first pick) <span class="n mono">${nStby}</span></div>
+        <div class="cand-list">${renderCandList(cands.filter(c => c.availability.kind === 'standby'), task)}</div>
+
+        <div class="cand-head" style="margin-top:14px">Free at this slot <span class="n mono">${nFree}</span></div>
         <div class="cand-list">${renderCandList(cands.filter(c => c.availability.kind === 'free'), task)}</div>
 
-        <div class="cand-head" style="margin-top:14px">OT capacity available <span class="n mono">${nOt}</span></div>
+        <div class="cand-head" style="margin-top:14px">Overtime capacity <span class="n mono">${nOt}</span></div>
         <div class="cand-list">${renderCandList(cands.filter(c => c.availability.kind === 'ot'), task)}</div>
 
-        <div class="cand-head" style="margin-top:14px">Break override <span class="n mono">${nBrk}</span></div>
-        <div class="cand-list">${renderCandList(cands.filter(c => c.availability.kind === 'brk'), task)}</div>
+        <div class="cand-head" style="margin-top:14px">Not started shift yet — early start <span class="n mono">${nEarly}</span></div>
+        <div class="cand-list">${renderCandList(cands.filter(c => c.availability.kind === 'early'), task)}</div>
       </div>
     `;
     sideEl.innerHTML = html;
 
-    document.getElementById('side-close').addEventListener('click', () => board.classList.add('side-closed'));
+    document.getElementById('side-close').addEventListener('click', closeSide);
     document.getElementById('side-back').addEventListener('click', backToInsights);
     sideEl.querySelectorAll('button.assign').forEach(btn => {
       btn.addEventListener('click', () => assignCoverage(task, sickEmp, btn.dataset.candEid));
@@ -1627,7 +1787,11 @@
     if (!list.length) return `<div class="empty" style="font-size:11.5px;padding:6px 2px;">— none —</div>`;
     return list.map(({cand, availability}) => {
       const av = availability.kind;
-      const label = av === 'free' ? 'FREE' : av === 'ot' ? 'OT AVAIL' : 'BRK OVERRIDE';
+      const label =
+        av === 'standby' ? 'STANDBY' :
+        av === 'free'    ? 'FREE'    :
+        av === 'ot'      ? 'OT AVAIL':
+        av === 'early'   ? 'EARLY START' : '';
       return `
         <div class="cand">
           <span class="chip ${cand.home}">${cand.home}</span>
@@ -1644,16 +1808,22 @@
     const av = availabilityAt(cand, task.s, task.e);
     coverage.set(task.id, {
       taskId: task.id,
-      slotId: av.freeSlotId || av.otSlotId || null,
+      kind: av.kind,   // 'standby' | 'free' | 'ot' | 'early'
+      slotId: av.slotId || av.freeSlotId || av.otSlotId || null,
       coverEid: cand.eid,
       coverName: cand.name,
       type: task.type,
       flight: task.flight,
       sickEid: sickEmp.eid,
       sickName: sickEmp.name,
-      viaBreak: av.kind === 'brk',
+      taskS: task.s,
+      taskE: task.e,
     });
-    const via = av.kind === 'ot' ? 'OT slot' : av.kind === 'brk' ? 'break override' : 'free in-shift slot';
+    const via =
+      av.kind === 'standby' ? 'standby → task' :
+      av.kind === 'free'    ? 'free in-shift slot' :
+      av.kind === 'ot'      ? 'OT slot' :
+      av.kind === 'early'   ? 'early start' : '';
     showToast(`Assigned <span class="flt">${task.flight}</span> · ${task.type} → ${cand.name} <span style="opacity:0.6">(${via})</span>`);
     selectedTaskId = null;
     render(currentTeam);
@@ -1688,9 +1858,52 @@
     if (next) root.setAttribute('data-theme', next); else root.removeAttribute('data-theme');
   });
 
+  // ── Index bar (clickable block-type explanations) ──
+  const INDEX_INFO = {
+    brf:   { name: 'BRF · Briefing', desc: '15-minute pre-shift briefing. Every non-leave, non-standby employee begins here — the earliest task anywhere on the board is 06:15. Briefing time counts as busy for coverage: a candidate whose briefing overlaps the sick slot is not offered.' },
+    task:  { name: 'Flight · Assigned task', desc: 'A 1.5-hour work assignment tied to a specific flight number. Each task is a distinct block; a 30-min break always follows. Colour encodes the task rank (DRA/DRB/DRC/DRD, RMP/BBA/BMA, CLN/CLC).' },
+    brk:   { name: 'Break', desc: '30-minute rest between tasks. Rendered as a separate hatched block so nothing overlaps. Coverage cannot fit a 1.5-hour flight into a 30-min break; a candidate mid-break is not offered.' },
+    free:  { name: 'FREE · In-shift capacity', desc: 'A 2-hour segment inside the 8-hour shift with no task assigned. This is the first-choice coverage source — the person is already at work, no reshuffling, no overtime pay. Free segments appear as candidates labelled FREE.' },
+    ot:    { name: 'OT slot · 2h available', desc: 'A trailing 2-hour capacity block after the 8-hour shift ends. Every employee has one. Consumed only when the person is assigned coverage as overtime. Appears in the picker as OT AVAIL.' },
+    standby: { name: 'STANDBY · On-call', desc: 'A physically-present employee with no pre-assigned tasks — they were rostered to be at the airport for exactly this situation. First-pick coverage: they take on a task inside their standby window with zero disruption, no overtime, no schedule reshuffle. Roughly 7% of the roster is on standby.' },
+    leave: { name: 'LEAVE · Off-roster', desc: 'Rostered day off or approved leave. Never appears as a candidate. Row is tinted red with a LEAVE pill so supervisors can see who is unavailable at a glance.' },
+    unassigned: { name: 'UNASSIGNED · Needs coverage', desc: 'A task belonging to a person who called in sick after the roster was published. Rendered as a red dashed block on the sick row. Click one to open the picker with eligible substitutes ranked by disruption cost.' },
+    cov:   { name: 'COVERAGE · Reassigned task', desc: 'A task now being worked by a substitute. Solid coloured block with a light inner outline plus a COV / OT COV / EARLY COV / STBY COV badge indicating how the coverage was obtained. The task chip stays the rank of the flight, not the covering person\'s home rank.' },
+  };
+  const indexBar = document.getElementById('index-bar');
+  const indexInfo = document.getElementById('index-info');
+  indexBar.addEventListener('click', (e) => {
+    const btn = e.target.closest('.index-item');
+    if (!btn) return;
+    const key = btn.dataset.idx;
+    const wasActive = btn.classList.contains('active');
+    indexBar.querySelectorAll('.index-item').forEach(x => x.classList.remove('active'));
+    if (wasActive) {
+      indexInfo.classList.remove('open');
+      indexInfo.innerHTML = '';
+      return;
+    }
+    btn.classList.add('active');
+    const info = INDEX_INFO[key];
+    indexInfo.innerHTML = `
+      <div class="inner">
+        <span class="k">${key}</span>
+        <span class="v"><strong>${info.name}</strong><br>${info.desc}</span>
+        <button class="close-info" type="button">Close</button>
+      </div>
+    `;
+    indexInfo.classList.add('open');
+    indexInfo.querySelector('.close-info').addEventListener('click', () => {
+      indexInfo.classList.remove('open');
+      indexBar.querySelectorAll('.index-item').forEach(x => x.classList.remove('active'));
+    });
+  });
+
   render('dr');
   renderSidePanel();
   updateTabBadges();
+  // Auto-open the drawer if there are gaps on load
+  if (countUnassigned('all') > 0) openSide();
   requestAnimationFrame(placeNow);
 })();
 </script>
